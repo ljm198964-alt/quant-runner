@@ -28,6 +28,10 @@ jobs:
         working-directory: m1
         run: python3 m1_runtime_policy.py
 
+      - name: M1 regression tests
+        working-directory: m1
+        run: python3 -m unittest test_m1_formal_runtime.py test_m1_telegram_display.py
+
       - name: Entry timing replay
         working-directory: m1
         run: |
