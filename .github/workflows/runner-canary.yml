@@ -1,0 +1,15 @@
+name: Runner Canary
+
+on:
+  push:
+    paths:
+      - '.github/workflows/runner-canary.yml'
+  workflow_dispatch:
+
+jobs:
+  canary:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Public runner alive
+        run: echo "PUBLIC_RUNNER_OK"
