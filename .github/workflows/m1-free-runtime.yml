@@ -2,6 +2,9 @@ name: M1 Free Runtime
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/m1-free-runtime.yml'
   schedule:
     - cron: '5 4,10,16,22 * * *'
 
@@ -28,12 +31,18 @@ jobs:
           M1_TELEGRAM_CHAT_ID: ${{ secrets.M1_TELEGRAM_CHAT_ID }}
         run: |
           set -euo pipefail
-          for v in PRIVATE_REPO_TOKEN TOTALCORNER_TOKEN M1_GMAIL_USER M1_GMAIL_APP_PASSWORD M1_TELEGRAM_BOT_TOKEN M1_TELEGRAM_CHAT_ID; do
+          for v in PRIVATE_REPO_TOKEN TOTALCORNER_TOKEN; do
             if [ -z "${!v:-}" ]; then
               echo "::error::Missing required secret: $v"
               exit 2
             fi
           done
+          if [ -z "${M1_TELEGRAM_BOT_TOKEN:-}" ] || [ -z "${M1_TELEGRAM_CHAT_ID:-}" ]; then
+            echo "::warning::M1 Telegram secrets are not configured; scan/lock/settlement will run, Telegram delivery may be skipped."
+          fi
+          if [ -z "${M1_GMAIL_USER:-}" ] || [ -z "${M1_GMAIL_APP_PASSWORD:-}" ]; then
+            echo "::warning::M1 Gmail secrets are not configured; email delivery may be skipped."
+          fi
 
       - name: Checkout private M1
         uses: actions/checkout@v4
