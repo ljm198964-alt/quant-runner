@@ -24,6 +24,9 @@ jobs:
           path: m1
           token: ${{ secrets.PRIVATE_REPO_TOKEN }}
 
+      - name: Install M1 test dependencies
+        run: pip install numpy scipy requests
+
       - name: Scope V2 selftest
         working-directory: m1
         run: python3 m1_runtime_policy.py
