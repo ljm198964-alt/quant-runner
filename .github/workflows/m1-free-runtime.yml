@@ -1,0 +1,149 @@
+name: M1 Free Runtime
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '5 4,10,16,22 * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: m1-free-runtime
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 110
+    steps:
+      - name: Check required secrets
+        shell: bash
+        env:
+          PRIVATE_REPO_TOKEN: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+          M1_GMAIL_USER: ${{ secrets.M1_GMAIL_USER }}
+          M1_GMAIL_APP_PASSWORD: ${{ secrets.M1_GMAIL_APP_PASSWORD }}
+          M1_TELEGRAM_BOT_TOKEN: ${{ secrets.M1_TELEGRAM_BOT_TOKEN }}
+          M1_TELEGRAM_CHAT_ID: ${{ secrets.M1_TELEGRAM_CHAT_ID }}
+        run: |
+          set -euo pipefail
+          for v in PRIVATE_REPO_TOKEN TOTALCORNER_TOKEN M1_GMAIL_USER M1_GMAIL_APP_PASSWORD M1_TELEGRAM_BOT_TOKEN M1_TELEGRAM_CHAT_ID; do
+            if [ -z "${!v:-}" ]; then
+              echo "::error::Missing required secret: $v"
+              exit 2
+            fi
+          done
+
+      - name: Checkout private M1
+        uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/totalcorner-research-bridge
+          ref: master
+          fetch-depth: 0
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install runtime
+        run: pip install numpy scipy requests
+
+      - name: Runtime policy selftest
+        run: python m1_runtime_policy.py
+
+      - name: Seed formal history identity index
+        run: python m1_formal_runtime.py seed
+
+      - name: Run M1 scan with retry
+        id: scan
+        env:
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+          TOTALCORNER_TZ_OFFSET: '8'
+        run: |
+          set +e
+          ok=0
+          for attempt in 1 2 3; do
+            echo "M1 scan attempt $attempt"
+            python m1_live_scan.py
+            rc=$?
+            if [ $rc -eq 0 ]; then
+              ok=1
+              break
+            fi
+            sleep $((attempt * 20))
+          done
+          if [ $ok -ne 1 ]; then exit 1; fi
+
+      - name: Auto-resolve Chinese team display names
+        if: always() && steps.scan.outcome == 'success'
+        continue-on-error: true
+        run: python m1_display_autoresolve.py
+
+      - name: Preflight Chinese display names
+        if: always() && steps.scan.outcome == 'success'
+        continue-on-error: true
+        run: python m1_telegram_display.py preflight
+
+      - name: Evaluate market path
+        if: success()
+        run: python m1_market_path_eval.py
+
+      - name: Lock formal signals
+        id: prepare
+        if: always() && steps.scan.outcome == 'success'
+        env:
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+        run: python m1_formal_runtime.py prepare
+
+      - name: Persist scan and locks
+        id: commit_scan
+        if: always() && steps.prepare.outcome == 'success'
+        run: bash m1_commit_state.sh scan
+
+      - name: Settle pending picks
+        id: settle
+        if: always() && (steps.commit_scan.outcome == 'success' || steps.scan.outcome == 'failure')
+        env:
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+          TOTALCORNER_TZ_OFFSET: '8'
+        run: |
+          python m1_formal_runtime.py settle
+          python m1_formal_runtime.py report
+
+      - name: Persist settlement
+        id: commit_formal
+        if: always() && steps.settle.outcome == 'success'
+        run: bash m1_commit_state.sh formal
+
+      - name: Claim pending notifications
+        id: claim
+        if: always() && steps.commit_formal.outcome == 'success'
+        env:
+          M1_GMAIL_USER: ${{ secrets.M1_GMAIL_USER }}
+          M1_GMAIL_APP_PASSWORD: ${{ secrets.M1_GMAIL_APP_PASSWORD }}
+          M1_TELEGRAM_BOT_TOKEN: ${{ secrets.M1_TELEGRAM_BOT_TOKEN }}
+          M1_TELEGRAM_CHAT_ID: ${{ secrets.M1_TELEGRAM_CHAT_ID }}
+        run: python m1_notification.py claim
+
+      - name: Persist notification claims
+        id: commit_claim
+        if: always() && steps.claim.outcome == 'success'
+        run: bash m1_commit_state.sh formal
+
+      - name: Deliver or reconcile notifications
+        id: dispatch
+        if: always() && steps.commit_claim.outcome == 'success'
+        env:
+          M1_GMAIL_USER: ${{ secrets.M1_GMAIL_USER }}
+          M1_GMAIL_APP_PASSWORD: ${{ secrets.M1_GMAIL_APP_PASSWORD }}
+          M1_TELEGRAM_BOT_TOKEN: ${{ secrets.M1_TELEGRAM_BOT_TOKEN }}
+          M1_TELEGRAM_CHAT_ID: ${{ secrets.M1_TELEGRAM_CHAT_ID }}
+        run: |
+          python m1_notification.py dispatch
+          python m1_formal_runtime.py report
+
+      - name: Persist delivery receipts
+        if: always() && steps.dispatch.outcome == 'success'
+        run: bash m1_commit_state.sh delivery
