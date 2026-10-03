@@ -26,12 +26,15 @@ jobs:
           MR1_TG_CHAT_ID: ${{ secrets.MR1_TG_CHAT_ID }}
         run: |
           set -euo pipefail
-          for v in PRIVATE_REPO_TOKEN TOTALCORNER_TOKEN MR1_TG_BOT_TOKEN MR1_TG_CHAT_ID; do
+          for v in PRIVATE_REPO_TOKEN TOTALCORNER_TOKEN; do
             if [ -z "${!v:-}" ]; then
               echo "::error::Missing required secret: $v"
               exit 2
             fi
           done
+          if [ -z "${MR1_TG_BOT_TOKEN:-}" ] || [ -z "${MR1_TG_CHAT_ID:-}" ]; then
+            echo "::warning::MR1 Telegram secrets are not configured; collector/research will run, formal MR1 AI delivery will be skipped."
+          fi
 
       - name: Checkout private MR1
         uses: actions/checkout@v4
@@ -70,6 +73,7 @@ jobs:
           MR1_TG_BOT_TOKEN: ${{ secrets.MR1_TG_BOT_TOKEN }}
           MR1_TG_CHAT_ID: ${{ secrets.MR1_TG_CHAT_ID }}
           MR1_RUNTIME_EXECUTOR: PUBLIC_RUNNER
+          MR1_TELEGRAM_OPTIONAL: '1'
         run: node src/github-shadow-runtime.js
 
       - name: Persist MR1 state
