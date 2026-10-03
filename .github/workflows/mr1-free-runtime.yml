@@ -1,0 +1,100 @@
+name: MR1 Free Runtime
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/5 * * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mr1-free-runtime
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Check required secrets
+        shell: bash
+        env:
+          PRIVATE_REPO_TOKEN: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+          MR1_TG_BOT_TOKEN: ${{ secrets.MR1_TG_BOT_TOKEN }}
+          MR1_TG_CHAT_ID: ${{ secrets.MR1_TG_CHAT_ID }}
+        run: |
+          set -euo pipefail
+          for v in PRIVATE_REPO_TOKEN TOTALCORNER_TOKEN MR1_TG_BOT_TOKEN MR1_TG_CHAT_ID; do
+            if [ -z "${!v:-}" ]; then
+              echo "::error::Missing required secret: $v"
+              exit 2
+            fi
+          done
+
+      - name: Checkout private MR1
+        uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/mr1-shadow
+          ref: master
+          fetch-depth: 0
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+
+      - name: Checkout shared football registry
+        uses: actions/checkout@v4
+        continue-on-error: true
+        with:
+          repository: ljm198964-alt/totalcorner-research-bridge
+          ref: master
+          path: external/football-display-registry
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          sparse-checkout: |
+            data/football_display_names
+            results/totalcorner_ai_teacher
+          persist-credentials: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install
+        run: npm ci --ignore-scripts --no-audit --no-fund
+
+      - name: Record base
+        run: echo "RUNTIME_BASE_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+
+      - name: Bounded runtime
+        env:
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+          MR1_TG_BOT_TOKEN: ${{ secrets.MR1_TG_BOT_TOKEN }}
+          MR1_TG_CHAT_ID: ${{ secrets.MR1_TG_CHAT_ID }}
+          MR1_RUNTIME_EXECUTOR: PUBLIC_RUNNER
+        run: node src/github-shadow-runtime.js
+
+      - name: Persist MR1 state
+        if: always()
+        env:
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+          MR1_TG_BOT_TOKEN: ${{ secrets.MR1_TG_BOT_TOKEN }}
+        run: node src/persist-github-state.js
+
+      - name: Late-horizon research
+        if: always()
+        continue-on-error: true
+        timeout-minutes: 2
+        run: node src/late-horizon-research.js --evaluate
+
+      - name: V6 research
+        if: always()
+        continue-on-error: true
+        timeout-minutes: 2
+        run: node src/v6-cross-market-forward.js
+
+      - name: Persist isolated research state
+        if: always()
+        continue-on-error: true
+        env:
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+          MR1_TG_BOT_TOKEN: ${{ secrets.MR1_TG_BOT_TOKEN }}
+        run: node src/persist-github-state.js
