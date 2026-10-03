@@ -13,7 +13,7 @@ permissions:
 
 concurrency:
   group: m1-free-runtime
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   run:
