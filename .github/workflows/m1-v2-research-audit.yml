@@ -1,5 +1,6 @@
 name: M1 V2 Research Audit
 # replay provider market path
+# refresh display after V2 league curation
 
 on:
   push:
