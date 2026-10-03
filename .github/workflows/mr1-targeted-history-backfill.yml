@@ -1,0 +1,51 @@
+name: MR1 Targeted History Backfill
+
+on:
+  push:
+    paths:
+      - '.github/workflows/mr1-targeted-history-backfill.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout private MR1
+        uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/mr1-shadow
+          ref: master
+          fetch-depth: 0
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install
+        run: npm ci --ignore-scripts --no-audit --no-fund
+
+      - name: Targeted history backfill
+        env:
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+          MR1_LEAGUE_IDS: '145,15,680,177,355,10989,10480'
+          MR1_HISTORY_PAGES: '3'
+          MR1_RPM: '4'
+        run: node src/collect-league-history.js
+
+      - name: Persist backfill
+        run: |
+          git config user.name "mr1-history-backfill"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/raw/league-history-batch-*.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Backfill targeted MR1 league history gaps"
+          for i in 1 2 3; do
+            git pull --rebase origin master && git push origin HEAD:master && exit 0
+            sleep $((i*3))
+          done
+          exit 1
