@@ -1,0 +1,43 @@
+name: MR1 Native Gap Audit
+
+on:
+  push:
+    paths:
+      - '.github/workflows/mr1-native-gap-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - name: Checkout private MR1
+        uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/mr1-shadow
+          ref: master
+          fetch-depth: 0
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Run native gap audit
+        run: node src/native-gap-audit.js
+
+      - name: Persist audit
+        run: |
+          git config user.name "mr1-native-gap-audit"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/mr1-native-gap-audit/summary.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Persist MR1 native candidate gap audit"
+          for i in 1 2 3; do
+            git pull --rebase origin master && git push origin HEAD:master && exit 0
+            sleep $((i*3))
+          done
+          exit 1
