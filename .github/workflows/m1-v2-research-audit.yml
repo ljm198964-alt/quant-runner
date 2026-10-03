@@ -1,0 +1,74 @@
+name: M1 V2 Research Audit
+
+on:
+  push:
+    paths:
+      - '.github/workflows/m1-v2-research-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout private M1
+        uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/totalcorner-research-bridge
+          ref: master
+          path: m1
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+
+      - name: Scope V2 selftest
+        working-directory: m1
+        run: python3 m1_runtime_policy.py
+
+      - name: Entry timing replay
+        working-directory: m1
+        run: |
+          python3 m1_entry_timing_research.py
+          python3 - <<'PY'
+          import json
+          x=json.load(open('results/m1_entry_timing_research_latest.json'))
+          print('TIMING_SUMMARY='+json.dumps({
+            'formal_pick_count':x['formal_pick_count'],
+            'v2_scope_pick_count':x['v2_scope_pick_count'],
+            'excluded_by_v2_scope_count':x['excluded_by_v2_scope_count'],
+            'overall_v2_scope':x['overall_v2_scope'],
+            'by_market':x['by_market'],
+            'by_horizon':x['by_horizon'],
+          },ensure_ascii=False))
+          PY
+
+      - name: Refresh Chinese display audit
+        working-directory: m1
+        run: |
+          python3 m1_telegram_display.py report
+          python3 - <<'PY'
+          import json
+          x=json.load(open('results/m1_telegram_display_unresolved.json'))
+          print('DISPLAY_SUMMARY='+json.dumps({
+            'status':x.get('status'),
+            'current_pool':x.get('current_pool'),
+          },ensure_ascii=False))
+          PY
+
+      - name: Persist research reports
+        working-directory: m1
+        run: |
+          git config user.name "m1-v2-research"
+          git config user.email "actions@users.noreply.github.com"
+          git add results/m1_entry_timing_research_latest.json results/m1_entry_timing_research_latest.md results/m1_telegram_display_unresolved.json
+          if git diff --cached --quiet; then
+            echo "NO_REPORT_CHANGES"
+            exit 0
+          fi
+          git commit -m "Persist M1 V2 timing and display audit"
+          for i in 1 2 3; do
+            git pull --rebase origin master && git push origin HEAD:master && exit 0
+            sleep $((i*3))
+          done
+          exit 1
