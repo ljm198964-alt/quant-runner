@@ -99,6 +99,10 @@ jobs:
         if: success()
         run: python m1_market_path_eval.py
 
+      - name: Update entry timing research
+        if: success()
+        run: python m1_entry_timing_research.py
+
       - name: Lock formal signals
         id: prepare
         if: always() && steps.scan.outcome == 'success'
