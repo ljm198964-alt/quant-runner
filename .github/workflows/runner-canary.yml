@@ -1,10 +1,9 @@
 name: Runner Canary
 
 on:
-  push:
-    paths:
-      - '.github/workflows/runner-canary.yml'
   workflow_dispatch:
+  schedule:
+    - cron: '*/5 * * * *'
 
 jobs:
   canary:
