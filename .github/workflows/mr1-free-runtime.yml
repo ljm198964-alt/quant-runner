@@ -2,6 +2,9 @@ name: MR1 Free Runtime
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/mr1-free-runtime.yml'
   schedule:
     - cron: '*/5 * * * *'
 
