@@ -1,3 +1,4 @@
+# Operational recovery 2026-10-04: invoke the existing push trigger; schedule and strategy unchanged.
 name: M1 Free Runtime
 
 on:
