@@ -62,6 +62,7 @@ jobs:
           assert old in s
           p.write_text(s.replace(old,new))
           PY
+          node src/build-market-implied-v2.js > /tmp/rebuild-market-baseline.json
           node src/rolling-evaluation-v2.js > /tmp/corrected-full.json
           node --input-type=module <<'NODE'
           import fs from 'node:fs';
