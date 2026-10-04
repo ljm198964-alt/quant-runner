@@ -1,0 +1,45 @@
+name: MR1 target history backfill batch 1
+on:
+  push:
+    paths:
+      - '.github/workflows/mr1-target-history-backfill-b1.yml'
+permissions:
+  contents: read
+concurrency:
+  group: totalcorner-api-runtime
+  cancel-in-progress: false
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/mr1-shadow
+          ref: master
+          fetch-depth: 0
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Backfill four highest-priority target leagues
+        env:
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+          MR1_HISTORY_TARGETS_JSON: '{"128":"Japan J2-League","121":"Netherlands Eerste Divisie","514":"Greece Super League 2","11959":"Wales Championship South"}'
+          MR1_HISTORY_MAX_PAGES: '12'
+        run: node src/backfill-research-universe-history.js
+      - name: Persist evidence and history facts
+        run: |
+          set -euo pipefail
+          git config user.name 'mr1-history-backfill'
+          git config user.email 'mr1-history-backfill@users.noreply.github.com'
+          git add -- data/research-universe-history-v1 data/raw/league-history-batch-research-universe-*.json
+          if git diff --cached --quiet; then
+            echo "NO_BACKFILL_CHANGES"
+            exit 0
+          fi
+          git commit -m "Backfill MR1 target-universe history batch 1"
+          git fetch origin master
+          git rebase origin/master
+          git push origin HEAD:master
