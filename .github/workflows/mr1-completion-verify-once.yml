@@ -35,7 +35,7 @@ jobs:
           from pathlib import Path
           root=Path(os.environ['RUNNER_TEMP'])
           def blob(sha):
-              req=urllib.request.Request('https://api.github.com/repos/ljm198964-alt/mr1-shadow/git/blobs/'+sha,headers={'Authorization':'Bearer '+os.environ['PATCH_READ_TOKEN'],'Accept':'application/vnd.github+json'})
+              req=urllib.request.Request('https://api.github.com/repos/ljm198964-alt/mr1-shadow/git/blobs/'+sha,headers={'Authorization':'Bearer '+os.environ['PATCH_READ_TOKEN'].strip(),'Accept':'application/vnd.github+json'})
               with urllib.request.urlopen(req,timeout=30) as r: data=json.load(r)
               content=base64.b64decode(data['content'])
               assert hashlib.sha1(b'blob '+str(len(content)).encode()+b'\0'+content).hexdigest()==sha
