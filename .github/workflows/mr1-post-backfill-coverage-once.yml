@@ -1,0 +1,86 @@
+name: MR1 post-backfill coverage once
+on:
+  push:
+    paths:
+      - '.github/workflows/mr1-post-backfill-coverage-once.yml'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/mr1-shadow
+          ref: master
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Future fixture history coverage with existing evidence only
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          import path from 'node:path';
+          import {loadLeagueHistoryFacts} from './src/history-facts.js';
+          import {indexTeamHistory,buildT24TeamState} from './src/team-state.js';
+          const config=JSON.parse(await fs.readFile('config/strategy-shadow-v1.json','utf8'));
+          const spec=JSON.parse(await fs.readFile('config/validation-spec.json','utf8'));
+          const root='data/prospective-market/shadow-v23';
+          const fixtures=JSON.parse(await fs.readFile(path.join(root,'fixtures.json'),'utf8'));
+          const now=Date.now();
+          const hist=await loadLeagueHistoryFacts({start:now,timezone:config.timezone,scope:spec.competition_scope});
+          const index=indexTeamHistory([...hist.values()]);
+          async function identity(id){
+            const base=path.join(root,'snapshots',id);
+            let hs=[];try{hs=await fs.readdir(base);}catch{return null;}
+            const order=['T0.5','T1','T3','T6','T12','T18','T24','T36','T48','T72'];
+            for(const h of order){
+              if(!hs.includes(h))continue;
+              const dir=path.join(base,h,'identity');
+              let names=[];try{names=(await fs.readdir(dir)).filter(x=>/^attempt-\d+\.json$/.test(x)).sort().reverse();}catch{continue;}
+              for(const n of names){
+                const a=JSON.parse(await fs.readFile(path.join(dir,n),'utf8'));
+                if(a.classification!=='SNAPSHOT_OK'||!a.raw_response)continue;
+                const b=JSON.parse(a.raw_response),m=Array.isArray(b.data)?b.data[0]:b.data;
+                if(String(m?.id)===String(id)&&m.h_id!=null&&m.a_id!=null)return {h:String(m.h_id),a:String(m.a_id)};
+              }
+            }
+            return null;
+          }
+          const rows=[];
+          for(const f of Object.values(fixtures)){
+            if(Date.parse(f.kickoff_at)<=now)continue;
+            const ids=await identity(String(f.match_id));if(!ids)continue;
+            const cutoff=Math.min(now,Date.parse(f.kickoff_at)-86400000);
+            const resultCutoff=cutoff-config.team_state.result_buffer_hours*3600000;
+            const home=(index.teams.get(ids.h)||[]).filter(x=>Date.parse(x.observed_at)<resultCutoff);
+            const away=(index.teams.get(ids.a)||[]).filter(x=>Date.parse(x.observed_at)<resultCutoff);
+            const league=[...hist.values()].filter(x=>x.league===f.league&&Date.parse(x.observed_at)<resultCutoff);
+            const state=buildT24TeamState({match:{match_id:f.match_id,home_team_id:ids.h,away_team_id:ids.a,kickoff_at:f.kickoff_at},history:index.teams,leagueHistory:league,resultAvailabilityBufferHours:config.team_state.result_buffer_hours});
+            const available=Object.values(state).every(Number.isFinite);
+            const age=Math.max(...[home,away].map(x=>x.length?(cutoff-Date.parse(x.at(-1).kickoff_at))/86400000:Infinity));
+            const min=Math.min(home.length,away.length);
+            const quality=league.length>=config.team_state.minimum_league_matches&&min>=10&&age<=21?'HIGH':
+              league.length>=config.team_state.minimum_league_matches&&min>=5&&age<=35?'MEDIUM':'LOW';
+            rows.push({match_id:String(f.match_id),league:f.league,home_history:home.length,away_history:away.length,league_history:league.length,state_available:available,quality});
+          }
+          const byLeague={};
+          for(const r of rows){
+            byLeague[r.league]||={matches:0,state_available:0,HIGH:0,MEDIUM:0,LOW:0};
+            byLeague[r.league].matches++;if(r.state_available)byLeague[r.league].state_available++;byLeague[r.league][r.quality]++;
+          }
+          const summary={
+            generated_at:new Date().toISOString(),
+            future_with_existing_identity:rows.length,
+            state_available:rows.filter(x=>x.state_available).length,
+            quality_HIGH:rows.filter(x=>x.quality==='HIGH').length,
+            quality_MEDIUM:rows.filter(x=>x.quality==='MEDIUM').length,
+            quality_LOW:rows.filter(x=>x.quality==='LOW').length,
+            zero_history:rows.filter(x=>x.home_history===0||x.away_history===0).length,
+            by_league:Object.fromEntries(Object.entries(byLeague).sort((a,b)=>b[1].matches-a[1].matches)),
+            rows
+          };
+          console.log(JSON.stringify(summary,null,2));
+          NODE
