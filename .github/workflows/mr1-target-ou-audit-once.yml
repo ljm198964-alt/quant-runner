@@ -1,0 +1,54 @@
+name: MR1 target universe OU audit once
+on:
+  push:
+    paths:
+      - '.github/workflows/mr1-target-ou-audit-once.yml'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/mr1-shadow
+          ref: master
+          fetch-depth: 1
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+      - name: Summarize existing rolling OU evidence in target universe
+        run: |
+          python3 - <<'PY'
+          import json,math,collections
+          u=json.load(open('config/mr1-research-universe-v1.json'))
+          target=set(u['second_tier_totalcorner_exact'])|set(u['confirmed_existing_dataset_aliases'].values())
+          r=json.load(open('data/processed/rolling-evaluation-v2.json'))
+          out={'report_keys':list(r.keys()),'OU_keys':list(r['markets']['OU'].keys())}
+          ou=r['markets']['OU']
+          cs=ou.get('complete_t24_state',{})
+          out['complete']={
+            'n':cs.get('n'),
+            'market':cs.get('market'),
+            'residual':cs.get('residual'),
+            'incremental':cs.get('incremental'),
+            'score_distribution':cs.get('score_distribution'),
+            'promotion_gate':cs.get('promotion_gate')
+          }
+          # CLV contract audit carries per-row predictions/league in existing report.
+          audit=ou.get('clv_contract_audit') or []
+          rows=[x for x in audit if x.get('league') in target]
+          out['target_clv_rows']=len(rows)
+          if rows:
+            vals=[x.get('clv') for x in rows if isinstance(x.get('clv'),(int,float))]
+            evs=[x.get('expected_value') for x in rows if isinstance(x.get('expected_value'),(int,float))]
+            out['target_clv_mean']=sum(vals)/len(vals) if vals else None
+            out['target_ev_mean']=sum(evs)/len(evs) if evs else None
+            out['target_positive_ev_rate']=sum(v>0 for v in evs)/len(evs) if evs else None
+          # Expose competition-stability rows if report stores them.
+          stab=(cs.get('competition_stability') or {})
+          out['competition_stability_keys']=list(stab.keys()) if isinstance(stab,dict) else []
+          comps=stab.get('competitions') if isinstance(stab,dict) else None
+          if isinstance(comps,list):
+            out['target_competitions']=[x for x in comps if x.get('competition') in target or x.get('league') in target]
+          print('TARGET_OU_AUDIT='+json.dumps(out,separators=(',',':')))
+          PY
