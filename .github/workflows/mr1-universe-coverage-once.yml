@@ -1,0 +1,56 @@
+name: MR1 research universe coverage once
+on:
+  push:
+    paths:
+      - '.github/workflows/mr1-universe-coverage-once.yml'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/mr1-shadow
+          ref: master
+          fetch-depth: 1
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+      - name: Audit research-universe feature coverage
+        run: |
+          python3 - <<'PY'
+          import json,glob,os,collections,datetime,math
+          uni=json.load(open('config/mr1-research-universe-v1.json'))
+          targets=set(uni['second_tier_totalcorner_exact'])|set(uni['confirmed_existing_dataset_aliases'].values())
+          ds=json.load(open('data/processed/t24-dataset.json'))
+          req=['home_recent_adjusted_goal_diff','away_recent_adjusted_goal_diff','home_attack_rate','away_attack_rate','home_defence_rate','away_defence_rate']
+          by={}
+          for r in ds['rows']:
+              if r['league'] not in targets:continue
+              x=by.setdefault(r['league'],{'rows':0,'matches':set(),'complete_matches':set(),'hist_home':[],'hist_away':[]})
+              x['rows']+=1;x['matches'].add(str(r['match_id']))
+              st=r.get('team_state') or {}
+              if all(isinstance(st.get(k),(int,float)) and math.isfinite(st[k]) for k in req):x['complete_matches'].add(str(r['match_id']))
+          out=[]
+          for league in sorted(targets):
+              x=by.get(league,{'rows':0,'matches':set(),'complete_matches':set()})
+              n=len(x['matches']);c=len(x['complete_matches'])
+              out.append({'league':league,'matches':n,'complete_team_state_matches':c,'complete_rate':c/n if n else None,'no_dataset':n==0})
+          # Recent prospective missing features within target universe.
+          cutoff=datetime.datetime.now(datetime.timezone.utc)-datetime.timedelta(days=7)
+          miss=collections.Counter(); evaluated=collections.Counter(); quality=collections.defaultdict(collections.Counter)
+          for p in glob.glob('data/strategy-runs/MR1_STRATEGY_SHADOW_V1_PROSPECTIVE_*/run.json'):
+              try:r=json.load(open(p))
+              except:continue
+              if datetime.datetime.fromisoformat(r['started_at'].replace('Z','+00:00'))<cutoff:continue
+              try:xs=json.load(open(os.path.join(os.path.dirname(p),'all-markets.json')))
+              except:continue
+              for x in xs:
+                  if x.get('league') not in targets:continue
+                  evaluated[x['league']]+=1
+                  quality[x['league']][(x.get('data_quality')or{}).get('team_state')]+=1
+                  if 'MISSING_REQUIRED_TEAM_FEATURES' in (x.get('reasons') or []):miss[x['league']]+=1
+          recent=[{'league':l,'market_observations':evaluated[l],'missing_feature_observations':miss[l],'quality':dict(quality[l])} for l in evaluated]
+          recent.sort(key=lambda x:(-x['missing_feature_observations'],-x['market_observations'],x['league']))
+          print('UNIVERSE_COVERAGE='+json.dumps({'target_leagues':len(targets),'dataset':sorted(out,key=lambda x:(x['complete_rate'] if x['complete_rate'] is not None else -1,x['matches'])),'recent_prospective':recent},separators=(',',':')))
+          PY
