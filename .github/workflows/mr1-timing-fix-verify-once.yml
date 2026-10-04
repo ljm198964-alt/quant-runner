@@ -25,6 +25,8 @@ jobs:
           npm run check
           node --test test-mr1-fetch-timing.js test-strategy-shadow-v1.js test-shadow-v23.js test-v3-runtime-orchestration.js test-v3-runtime-batches.js
       - name: Re-evaluate known T3 snapshot with fixed timing semantics
+        env:
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
         run: |
           mkdir -p /tmp/mr1-manifest
           cat > /tmp/mr1-manifest/inputs.json <<'JSON'
