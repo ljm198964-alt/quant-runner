@@ -29,7 +29,9 @@ jobs:
         run: pip install numpy scipy requests
 
       - name: Apply the inspected integration points
-        run: python ops/m1_apply_immediate_delivery.py
+        run: |
+          python ops/m1_apply_immediate_delivery.py
+          python ops/m1_fix_legacy_quote_fixture.py
 
       - name: Verify streaming, existing accounting and live quote delivery using simulated transports
         env:
@@ -45,7 +47,7 @@ jobs:
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -- m1_live_scan.py m1_formal_runtime.py m1_notification.py m1_commit_state.sh .github/workflows/m1-live-scan.yml
+          git add -- m1_live_scan.py m1_formal_runtime.py m1_notification.py m1_commit_state.sh .github/workflows/m1-live-scan.yml test_m1_formal_runtime.py
           if git diff --cached --quiet; then
             echo 'Immediate delivery is already integrated'
             exit 0
