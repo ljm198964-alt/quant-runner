@@ -1,10 +1,13 @@
-name: MR1 completion isolated check
+name: MR1 exact ID integration verification
 on:
   push:
     paths:
       - '.github/workflows/mr1-completion-verify-once.yml'
 permissions:
   contents: read
+concurrency:
+  group: mr1-free-runtime
+  cancel-in-progress: false
 jobs:
   verify:
     runs-on: ubuntu-latest
@@ -13,10 +16,72 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: ljm198964-alt/mr1-shadow
-          ref: 141d63a68834e5c46738363f16a41a1d8973912b
+          ref: master
+          fetch-depth: 0
           token: ${{ secrets.PRIVATE_REPO_TOKEN }}
-          persist-credentials: false
-      - name: Seal requested implementation and runtime evidence
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Retrieve and verify the isolated repair
+        env:
+          PATCH_READ_TOKEN: ${{ secrets.PRIVATE_REPO_TOKEN }}
+        run: |
+          set -euo pipefail
+          umask 077
+          mkdir -p "$RUNNER_TEMP/verification"
+          git rev-parse HEAD > "$RUNNER_TEMP/verification/base.txt"
+          python3 - <<'PY'
+          import base64,gzip,hashlib,json,os,urllib.request
+          from pathlib import Path
+          root=Path(os.environ['RUNNER_TEMP'])
+          def blob(sha):
+              req=urllib.request.Request('https://api.github.com/repos/ljm198964-alt/mr1-shadow/git/blobs/'+sha,headers={'Authorization':'Bearer '+os.environ['PATCH_READ_TOKEN'],'Accept':'application/vnd.github+json'})
+              with urllib.request.urlopen(req,timeout=30) as r: data=json.load(r)
+              content=base64.b64decode(data['content'])
+              assert hashlib.sha1(b'blob '+str(len(content)).encode()+b'\0'+content).hexdigest()==sha
+              return content
+          pieces=['c08fddaa6e8d1f1050f723cfa284e1b5d5009203','04e1f38c6257abeee44cb588fc1e167f0a70b568','d6a92eefba5f0df5b13b45ac6c404b1a013abbb7']
+          compressed=base64.b64decode(b''.join(blob(s) for s in pieces),validate=True)
+          assert hashlib.sha256(compressed).hexdigest()=='621e6cc5597a942f6ee7f9929429a016216c1a32c29f9fa7596694a352ffbeb5'
+          (root/'repair.patch').write_bytes(gzip.decompress(compressed))
+          probe=blob('4c32c8e521b61b77aa668699f08bc7ce6fb20dfe')
+          assert hashlib.sha256(probe).hexdigest()=='93e0063e1223bc942edaf0224373000d8ca38db86cfdb3775d61ff12ddb0b7c3'
+          (root/'probe.mjs').write_bytes(probe)
+          PY
+          git apply --check "$RUNNER_TEMP/repair.patch"
+          git apply "$RUNNER_TEMP/repair.patch"
+      - name: Verify source and existing behavior in isolation
+        run: |
+          set -euo pipefail
+          npm run check > "$RUNNER_TEMP/verification/syntax.log" 2>&1
+          node --test test-ai-exact-id.js test-v7-ai-picks.js test-v7-ai-picks-telegram.js test-shadow-v23.js test-strategy-shadow-v1.js > "$RUNNER_TEMP/verification/regression.log" 2>&1
+          node test-v3-runtime-orchestration.js > "$RUNNER_TEMP/verification/runtime-orchestration.log" 2>&1
+          node test-v3-runtime-batches.js > "$RUNNER_TEMP/verification/runtime-batches.log" 2>&1
+      - name: Read-only real API and website checks
+        env:
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+          TOTALCORNER_WEB_COOKIE: ${{ secrets.TOTALCORNER_WEB_COOKIE }}
+        run: node "$RUNNER_TEMP/probe.mjs"
+      - name: Persist verified repair without modifying model policy
+        run: |
+          set -euo pipefail
+          git config user.name 'mr1-integration-repair'
+          git config user.email 'mr1-integration-repair@users.noreply.github.com'
+          git add -- src/ai-market-resolver.js src/ai-signal-settlement.js src/v7-ai-picks-telegram.js src/v11-ai-ah-forward.js src/v12-ai-ah-forward-eval.js src/github-shadow-runtime.js test-ai-exact-id.js
+          git commit -m 'Resolve MR1 AI by exact match ID with send-time prices, durable receipts and separate settlement; report shadow MR1 truthfully'
+          git fetch origin master
+          git rebase origin/master
+          git push origin HEAD:master
+          git rev-parse HEAD > "$RUNNER_TEMP/verification/deployed-commit.txt"
+          python3 - <<'PY'
+          from pathlib import Path
+          import hashlib,json,os
+          names=['src/ai-market-resolver.js','src/ai-signal-settlement.js','src/v7-ai-picks-telegram.js','src/v11-ai-ah-forward.js','src/v12-ai-ah-forward-eval.js','src/github-shadow-runtime.js','test-ai-exact-id.js']
+          result={p:hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in names}
+          Path(os.environ['RUNNER_TEMP'],'verification','source-hashes.json').write_text(json.dumps(result,indent=2))
+          PY
+      - name: Seal verification evidence
+        if: always()
         run: |
           set -euo pipefail
           umask 077
@@ -47,17 +112,11 @@ jobs:
           9Z1b
           -----END CERTIFICATE-----
           CERT
-          python3 - <<'PY'
-          import os,tarfile,subprocess
-          from pathlib import Path
-          names=subprocess.check_output(['git','ls-files'],text=True).splitlines()
-          selected=[p for p in names if p.startswith(('src/','config/')) or (p.startswith('test') and p.endswith(('.js','.mjs','.json'))) or p in ('package.json','package-lock.json','data/github-runtime/run-status.json','data/prospective-market/shadow-v23/collector-health-report.json')]
-          with tarfile.open(Path(os.environ['RUNNER_TEMP'])/'source.tar.gz','w:gz') as out:
-              for p in selected: out.add(p,arcname=p,recursive=False)
-          PY
-          openssl cms -encrypt -binary -aes-256-cbc -in "$RUNNER_TEMP/source.tar.gz" -outform DER -out "$RUNNER_TEMP/mr1-source.p7m" "$RUNNER_TEMP/recipient.pem"
-          rm "$RUNNER_TEMP/source.tar.gz"
+          tar -czf "$RUNNER_TEMP/verification.tar.gz" -C "$RUNNER_TEMP" verification
+          openssl cms -encrypt -binary -aes-256-cbc -in "$RUNNER_TEMP/verification.tar.gz" -outform DER -out "$RUNNER_TEMP/mr1-verification.p7m" "$RUNNER_TEMP/recipient.pem"
+          rm "$RUNNER_TEMP/verification.tar.gz"
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
-          name: mr1-completion-sealed
-          path: ${{ runner.temp }}/mr1-source.p7m
+          name: mr1-exact-id-verification-sealed
+          path: ${{ runner.temp }}/mr1-verification.p7m
