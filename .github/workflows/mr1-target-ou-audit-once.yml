@@ -16,39 +16,36 @@ jobs:
           ref: master
           fetch-depth: 1
           token: ${{ secrets.PRIVATE_REPO_TOKEN }}
-      - name: Summarize existing rolling OU evidence in target universe
+      - name: Summarize target-universe OU competition evidence
         run: |
           python3 - <<'PY'
-          import json,math,collections
+          import json
           u=json.load(open('config/mr1-research-universe-v1.json'))
-          target=set(u['second_tier_totalcorner_exact'])|set(u['confirmed_existing_dataset_aliases'].values())
+          second=set(u['second_tier_totalcorner_exact'])
+          opponent=set(u['confirmed_existing_dataset_aliases'].values())
+          target=second|opponent
           r=json.load(open('data/processed/rolling-evaluation-v2.json'))
-          out={'report_keys':list(r.keys()),'OU_keys':list(r['markets']['OU'].keys())}
-          ou=r['markets']['OU']
-          cs=ou.get('complete_t24_state',{})
-          out['complete']={
-            'n':cs.get('n'),
-            'market':cs.get('market'),
-            'residual':cs.get('residual'),
-            'incremental':cs.get('incremental'),
-            'score_distribution':cs.get('score_distribution'),
-            'promotion_gate':cs.get('promotion_gate')
-          }
-          # CLV contract audit carries per-row predictions/league in existing report.
-          audit=ou.get('clv_contract_audit') or []
-          rows=[x for x in audit if x.get('league') in target]
-          out['target_clv_rows']=len(rows)
-          if rows:
-            vals=[x.get('clv') for x in rows if isinstance(x.get('clv'),(int,float))]
-            evs=[x.get('expected_value') for x in rows if isinstance(x.get('expected_value'),(int,float))]
-            out['target_clv_mean']=sum(vals)/len(vals) if vals else None
-            out['target_ev_mean']=sum(evs)/len(evs) if evs else None
-            out['target_positive_ev_rate']=sum(v>0 for v in evs)/len(evs) if evs else None
-          # Expose competition-stability rows if report stores them.
-          stab=(cs.get('competition_stability') or {})
-          out['competition_stability_keys']=list(stab.keys()) if isinstance(stab,dict) else []
-          comps=stab.get('competitions') if isinstance(stab,dict) else None
-          if isinstance(comps,list):
-            out['target_competitions']=[x for x in comps if x.get('competition') in target or x.get('league') in target]
-          print('TARGET_OU_AUDIT='+json.dumps(out,separators=(',',':')))
+          cs=r['markets']['OU']['complete_t24_state']
+          stab=cs.get('competition_stability') or {}
+          groups=stab.get('groups') or []
+          if isinstance(groups,dict):
+              groups=[dict(v,competition=k) if isinstance(v,dict) else {'competition':k,'value':v} for k,v in groups.items()]
+          print('GROUP_EXAMPLE='+json.dumps(groups[:3],separators=(',',':')))
+          selected=[]
+          for g in groups:
+              name=g.get('competition') or g.get('league') or g.get('name')
+              if name in target:
+                  selected.append(g)
+          def metric(g,*keys):
+              for k in keys:
+                  v=g.get(k)
+                  if isinstance(v,(int,float)):return v
+              return None
+          ranked=sorted(selected,key=lambda g:(metric(g,'incremental_log_loss','log_loss_increment','log_loss_gain') if metric(g,'incremental_log_loss','log_loss_increment','log_loss_gain') is not None else -999),reverse=True)
+          print('TARGET_OU_GROUPS='+json.dumps({
+            'n':len(selected),
+            'second_tier_count':sum((g.get('competition') or g.get('league') or g.get('name')) in second for g in selected),
+            'opponent_mapped_count':sum((g.get('competition') or g.get('league') or g.get('name')) in opponent for g in selected),
+            'groups':ranked
+          },separators=(',',':')))
           PY
