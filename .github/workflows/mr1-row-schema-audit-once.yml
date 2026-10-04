@@ -21,6 +21,14 @@ jobs:
           import json
           r=json.load(open('data/processed/rolling-evaluation-v2.json'))
           for m in ['AH','OU']:
-              rows=r['markets'][m].get('all_rows') or []
-              print(m+'_ROW_SCHEMA='+json.dumps({'n':len(rows),'keys':list(rows[0].keys()) if rows else [],'sample':rows[0] if rows else None},separators=(',',':')))
+              x=r['markets'][m].get('all_rows')
+              out={'type':type(x).__name__}
+              if isinstance(x,dict):
+                  out['keys']=list(x.keys())
+                  for k,v in x.items():
+                      if isinstance(v,list) and v:
+                          out['sample_list_key']=k;out['n']=len(v);out['row_keys']=list(v[0].keys());out['sample']=v[0];break
+              elif isinstance(x,list):
+                  out['n']=len(x);out['row_keys']=list(x[0].keys()) if x else [];out['sample']=x[0] if x else None
+              print(m+'_ROW_SCHEMA='+json.dumps(out,separators=(',',':')))
           PY
