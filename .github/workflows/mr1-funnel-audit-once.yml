@@ -1,0 +1,111 @@
+name: MR1 funnel audit once
+on:
+  push:
+    paths:
+      - '.github/workflows/mr1-funnel-audit-once.yml'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/mr1-shadow
+          ref: master
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+      - name: Aggregate prospective funnel
+        run: |
+          python3 - <<'PY'
+          import json,glob,os,collections,datetime
+          rows=[]
+          runs=0
+          for p in glob.glob('data/strategy-runs/*/all-markets.json'):
+              rid=p.split('/')[-2]
+              if 'PROSPECTIVE_' not in rid: continue
+              rp=os.path.join(os.path.dirname(p),'run.json')
+              try: run=json.load(open(rp))
+              except: continue
+              started=run.get('started_at')
+              if not started or started<'2026-09-28T00:00:00': continue
+              try: xs=json.load(open(p))
+              except: continue
+              rows.extend(xs); runs+=1
+          rc=collections.Counter()
+          sc=collections.Counter()
+          mc=collections.Counter()
+          hc=collections.Counter()
+          pairs={}
+          for r in rows:
+              sc[r.get('status')]+=1
+              mc[r.get('market')]+=1
+              key=r.get('source_snapshot_key') or ''
+              h=key.split('/')[-1] if '/' in key else 'UNKNOWN'
+              hc[h]+=1
+              for x in r.get('reasons') or []: rc[x]+=1
+              pairs.setdefault((r.get('run_id'),r.get('match_id')),{})[r.get('market')]=r
+          def passes_except(r,ignored):
+              return all(x in ignored for x in (r.get('reasons') or []))
+          ignored_cases={
+              'TIMING_ONLY':{'STALE_MARKET_QUOTE','AH_OU_TIMESTAMP_SKEW'},
+              'UNCERTAINTY_ONLY':{'UNCERTAINTY_STRESS_FAILED'},
+              'EV_ONLY':{'EV_BELOW_3_PERCENT'},
+              'RESIDUAL_ONLY':{'RESIDUAL_BELOW_MINIMUM'},
+              'QUALITY_ONLY':{'TEAM_STATE_LOW'},
+              'TIMING_PLUS_UNCERTAINTY':{'STALE_MARKET_QUOTE','AH_OU_TIMESTAMP_SKEW','UNCERTAINTY_STRESS_FAILED'}
+          }
+          hypot={k:sum(1 for r in rows if r.get('EV') is not None and passes_except(r,v)) for k,v in ignored_cases.items()}
+          evaluable=[r for r in rows if r.get('EV') is not None]
+          positive=[r for r in evaluable if (r.get('EV') or -99)>0]
+          over3=[r for r in evaluable if (r.get('EV') or -99)>=0.03]
+          residual_ok=[]
+          for r in evaluable:
+              th=.10 if r.get('market')=='AH' else .15
+              if abs(r.get('residual') or 0)>=th: residual_ok.append(r)
+          current_request_fresh=0
+          last_move_stale=0
+          false_stale_examples=[]
+          for r in evaluable:
+              recv=r.get('quote_received_at'); obs=r.get('quote_observed_at')
+              if recv and obs:
+                  try:
+                      R=datetime.datetime.fromisoformat(recv.replace('Z','+00:00'))
+                      O=datetime.datetime.fromisoformat(obs.replace('Z','+00:00'))
+                      age=(R-O).total_seconds()/60
+                      if 0<=age<=2: current_request_fresh+=1
+                      if age>30:
+                          last_move_stale+=1
+                          if len(false_stale_examples)<8:
+                              false_stale_examples.append({'match_id':r.get('match_id'),'market':r.get('market'),'status':r.get('status'),'EV':r.get('EV'),'age_last_move_min':round(age,2),'reasons':r.get('reasons')})
+                  except: pass
+          pair_same_request=0; pair_lastmove_skew_gt10=0; pair_examples=[]
+          for k,v in pairs.items():
+              if 'AH' not in v or 'OU' not in v: continue
+              a,o=v['AH'],v['OU']
+              try:
+                  ar=datetime.datetime.fromisoformat(a['quote_received_at'].replace('Z','+00:00'))
+                  orr=datetime.datetime.fromisoformat(o['quote_received_at'].replace('Z','+00:00'))
+                  ao=datetime.datetime.fromisoformat(a['quote_observed_at'].replace('Z','+00:00'))
+                  oo=datetime.datetime.fromisoformat(o['quote_observed_at'].replace('Z','+00:00'))
+              except: continue
+              reqsk=abs((ar-orr).total_seconds())/60
+              movsk=abs((ao-oo).total_seconds())/60
+              if reqsk<=0.1: pair_same_request+=1
+              if movsk>10:
+                  pair_lastmove_skew_gt10+=1
+                  if len(pair_examples)<8:
+                      pair_examples.append({'match_id':a.get('match_id'),'request_skew_min':round(reqsk,3),'last_move_skew_min':round(movsk,2),'AH_EV':a.get('EV'),'OU_EV':o.get('EV')})
+          out={
+            'runs':runs,'rows':len(rows),'markets':mc,'statuses':sc,'horizons':hc,'reasons':rc,
+            'evaluable':len(evaluable),'positive_EV':len(positive),'EV_ge_3pct':len(over3),'residual_ok':len(residual_ok),
+            'hypothetical_all_other_gates_pass':hypot,
+            'rows_last_market_move_older_30m':last_move_stale,
+            'rows_request_vs_selected_move_within_2m':current_request_fresh,
+            'pairs_same_API_request_within_0_1m':pair_same_request,
+            'pairs_last_move_skew_gt10m':pair_lastmove_skew_gt10,
+            'false_stale_examples':false_stale_examples,
+            'pair_examples':pair_examples
+          }
+          print(json.dumps(out,ensure_ascii=False,default=lambda x:dict(x),indent=2))
+          PY
