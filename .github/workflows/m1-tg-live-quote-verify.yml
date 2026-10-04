@@ -1,0 +1,65 @@
+name: M1 TG live quote verification
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/m1-tg-live-quote-verify.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout M1 implementation
+        uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/totalcorner-research-bridge
+          ref: master
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Simulated quote and delivery checks
+        run: python -m unittest -v test_m1_tg_live_quote
+      - name: Read-only provider quote probe
+        env:
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+          TOTALCORNER_TZ_OFFSET: '8'
+        run: |
+          python - <<'PY'
+          from datetime import datetime, timezone
+          import hashlib
+          import json
+          from pathlib import Path
+          from m1_tg_live_quote import fetch_quote, QuoteUnavailable, VERSION
+          path = Path('results/m1_formal_ledger.json')
+          before = path.read_bytes()
+          ledger = json.loads(before)
+          now = datetime.now(timezone.utc)
+          future = [p for p in ledger.get('picks', {}).values()
+                    if datetime.fromisoformat(p['kickoff'].replace('Z', '+00:00')) > now]
+          summary = {'version': VERSION, 'read_only': True, 'telegram_sent': 0,
+                     'ledger_unchanged': True, 'live_query_attempted': bool(future)}
+          if future:
+              p = min(future, key=lambda p: (p['kickoff'], p['pick_id']))
+              try:
+                  quote = fetch_quote(p)
+                  summary.update(status='LIVE_QUOTE_PARSED',
+                      quote_contract_status=quote['status'],
+                      request_started_at=quote['request_started_at'],
+                      fetched_at=quote['fetched_at'],
+                      provider_changed_at=quote['provider_changed_at'],
+                      finite_selected_price=quote['price_hk'] > 0)
+              except QuoteUnavailable as exc:
+                  summary.update(status='LIVE_QUOTE_UNAVAILABLE', reason=str(exc))
+          else:
+              summary['status'] = 'NO_FUTURE_LEDGER_FIXTURE'
+          summary['ledger_unchanged'] = hashlib.sha256(before).digest() == hashlib.sha256(path.read_bytes()).digest()
+          print(json.dumps(summary, ensure_ascii=False))
+          if summary['status'] != 'LIVE_QUOTE_PARSED' or not summary['ledger_unchanged']:
+              raise SystemExit(1)
+          PY
