@@ -1,0 +1,26 @@
+name: MR1 row schema audit once
+on:
+  push:
+    paths:
+      - '.github/workflows/mr1-row-schema-audit-once.yml'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/mr1-shadow
+          ref: master
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+      - name: Inspect saved rolling row schema
+        run: |
+          python3 - <<'PY'
+          import json
+          r=json.load(open('data/processed/rolling-evaluation-v2.json'))
+          for m in ['AH','OU']:
+              rows=r['markets'][m].get('all_rows') or []
+              print(m+'_ROW_SCHEMA='+json.dumps({'n':len(rows),'keys':list(rows[0].keys()) if rows else [],'sample':rows[0] if rows else None},separators=(',',':')))
+          PY
