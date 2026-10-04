@@ -15,26 +15,8 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  schedule-next:
+  bounded-backfill-pause:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 2
     steps:
-      - name: Trigger MR1 runtime now
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          set -euo pipefail
-          gh api --method POST             "repos/${GITHUB_REPOSITORY}/actions/workflows/mr1-free-runtime.yml/dispatches"             -f ref=main
-          echo "MR1_RUNTIME_DISPATCHED"
-
-      - name: Wait five minutes
-        run: sleep 300
-
-      - name: Continue scheduler chain
-        if: always()
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          set -euo pipefail
-          gh api --method POST             "repos/${GITHUB_REPOSITORY}/actions/workflows/mr1-free-scheduler.yml/dispatches"             -f ref=main
-          echo "MR1_SCHEDULER_CHAINED"
+      - run: echo "MR1_SCHEDULER_PAUSED_FOR_BOUNDED_HISTORY_BACKFILL"
