@@ -1,0 +1,101 @@
+name: MR1 browser evidence read only
+on:
+  push:
+    paths:
+      - '.github/workflows/mr1-browser-evidence-read-once.yml'
+permissions:
+  contents: read
+jobs:
+  read:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/mr1-shadow
+          ref: aa0e0758a61a54dc10bd1da7fd396faf124319d9
+          path: mr1
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          persist-credentials: false
+          sparse-checkout: |
+            data/prospective-market/shadow-v23
+            data/github-runtime/run-status.json
+            data/mr1-v11-ai-ah-forward/summary.json
+            src/ai-picks-page.js
+            src/v7-ai-picks-telegram.js
+      - uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/totalcorner-research-bridge
+          ref: 15f5ba64da8a0a505654c0c1c4687bf670a2605e
+          path: m1
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          persist-credentials: false
+          sparse-checkout: |
+            results/latest.json
+            data/football_display_names
+      - name: Read saved evidence without running production code
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p sealed
+          cat > recipient.pem <<'CERT'
+          -----BEGIN CERTIFICATE-----
+          MIIDJTCCAg2gAwIBAgIUQbEiHkUrOoMuG7v3jTKaoOkfl3UwDQYJKoZIhvcNAQEL
+          BQAwIjEgMB4GA1UEAwwXb25lLW9mZi1yZWFkLW9ubHktYXVkaXQwHhcNMjYxMDA0
+          MTEzOTIzWhcNMjYxMDA2MTEzOTIzWjAiMSAwHgYDVQQDDBdvbmUtb2ZmLXJlYWQt
+          b25seS1hdWRpdDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBALee2c5l
+          pb1lBSR26pukqx6hze47Pl13HcSA3UlROIv4cdOpRZauBD1HCzVJOwsLR0P6gYZX
+          uKZFbdhG76zmep+Rm07O1jxj4TCDxyyIZz8DNnUtSRZYp0UB1uWqBG64dAW2PlRd
+          pgvIzz6CqwQzkRcuFDsq8xNLLYgCxYljDG/6k4rOkEt6Lz1KdfCcO0vNg4zJWzaV
+          ccjSuq4MizQeBknuOqzj/pNAUzG6ghrCwBA+uyerxXDk6PfpoF8KSvYajL/bF1iZ
+          uo6QT/98ejam8SLx3rES35UpW67kn9Vkr3+nx1rt3MQ9hp2ej3z1zyZyk6HxYzsf
+          xc/81ODii6ulPl0CAwEAAaNTMFEwHQYDVR0OBBYEFKbiYV1eiBRikdkTrPlrrf7k
+          X99KMB8GA1UdIwQYMBaAFKbiYV1eiBRikdkTrPlrrf7kX99KMA8GA1UdEwEB/wQF
+          MAMBAf8wDQYJKoZIhvcNAQELBQADggEBAIdt3tGi5SzgdZxpFsrRdmm5P6haSSCD
+          91GmNHA0i96K9na/idZRluFuIGEK9/cqCXo0W6I73lTTOF/xxhA3ND1yM7sviBgD
+          Lxyebs5Ep5LjUYzY2XYJKgInmA+hQd9dXFaRe4wJJNWT7GaGRvoI8ORyqO4evVCf
+          iWBfmWu7tDZvS+y7qicPpI9nCAentFg99kPIsCzpnaHa0h1+FcnVldqopfHb5SDa
+          sO9iatzjZFSXqnDvv/XJ2CWKKMMuxEaE6LTXS4Du51/b5vQvR4AceuOsEb61bgxg
+          5iFXb7ldr25wf0/IjREqGVOU0K5kaN8CyE7KU3oyyENC5rzUmT3qRxU=
+          -----END CERTIFICATE-----
+          CERT
+          python3 - <<'PY'
+          import json, hashlib, gzip
+          from pathlib import Path
+          from datetime import datetime, timezone
+          root=Path('mr1/data/prospective-market/shadow-v23')
+          out={'read_at':datetime.now(timezone.utc).isoformat(),'mr1_commit':'aa0e0758a61a54dc10bd1da7fd396faf124319d9','m1_commit':'15f5ba64da8a0a505654c0c1c4687bf670a2605e','files':{},'quotes':[],'read_errors':[]}
+          def load(p):
+              raw=p.read_bytes()
+              out['files'][str(p)]={'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest()}
+              return json.loads(raw)
+          out['fixtures']=load(root/'fixtures.json')
+          index=root/'snapshot-index.jsonl'
+          raw=index.read_bytes()
+          out['files'][str(index)]={'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest()}
+          rows=[json.loads(x) for x in raw.splitlines() if x.strip()]
+          out['index_rows']=len(rows)
+          for row in rows:
+              if row.get('classification')!='SNAPSHOT_OK': continue
+              try:
+                  p=(root/row['snapshot_path']).resolve()
+                  if not p.is_relative_to(root.resolve()): raise ValueError('path outside snapshot root')
+                  s=load(p)
+                  out['quotes'].append({'index':row,'snapshot':{k:s.get(k) for k in ['match_id','league','home','away','kickoff_at','received_at','prematch_valid','AH','OU','bookmaker','bookmaker_id','source','classification']}})
+              except Exception as exc:
+                  out['read_errors'].append({'match_id':str(row.get('match_id')),'error_type':type(exc).__name__})
+          out['m1_latest']=load(Path('m1/results/latest.json'))
+          out['registry']={str(p):load(p) for p in Path('m1/data/football_display_names').rglob('*.json')}
+          out['mr1_status']=load(Path('mr1/data/github-runtime/run-status.json'))
+          out['ai_summary']=load(Path('mr1/data/mr1-v11-ai-ah-forward/summary.json'))
+          out['parser_source']=Path('mr1/src/ai-picks-page.js').read_text()
+          out['sender_source']=Path('mr1/src/v7-ai-picks-telegram.js').read_text()
+          Path('payload.json.gz').write_bytes(gzip.compress(json.dumps(out,ensure_ascii=False).encode()))
+          print(json.dumps({'read_only':True,'messages_sent':0,'production_state_written':False,'fixture_rows':len(out['fixtures']),'saved_quote_rows':len(out['quotes']),'read_errors':len(out['read_errors'])}))
+          PY
+          openssl cms -encrypt -binary -aes-256-cbc -in payload.json.gz -out sealed/evidence.cms -outform DER recipient.pem
+          rm -f payload.json.gz recipient.pem
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mr1-browser-audit-sealed
+          path: sealed/evidence.cms
