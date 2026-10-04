@@ -149,6 +149,8 @@ jobs:
         id: dispatch
         if: always() && steps.commit_claim.outcome == 'success'
         env:
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+          TOTALCORNER_TZ_OFFSET: '8'
           M1_GMAIL_USER: ${{ secrets.M1_GMAIL_USER }}
           M1_GMAIL_APP_PASSWORD: ${{ secrets.M1_GMAIL_APP_PASSWORD }}
           M1_TELEGRAM_BOT_TOKEN: ${{ secrets.M1_TELEGRAM_BOT_TOKEN }}
