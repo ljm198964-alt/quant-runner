@@ -1,0 +1,63 @@
+name: M1 immediate delivery integration
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/m1-immediate-delivery-integrate.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  integrate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout existing private M1 implementation
+        uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/totalcorner-research-bridge
+          ref: master
+          fetch-depth: 0
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install existing dependencies
+        run: pip install numpy scipy requests
+
+      - name: Apply the inspected integration points
+        run: python ops/m1_apply_immediate_delivery.py
+
+      - name: Verify streaming, existing accounting and live quote delivery using simulated transports
+        env:
+          TOTALCORNER_TOKEN: offline-test
+        run: |
+          python -m unittest -v test_m1_immediate_delivery test_m1_tg_live_quote test_m1_formal_runtime test_m1_telegram_display
+          python -m py_compile m1_live_scan.py m1_formal_runtime.py m1_notification.py m1_immediate_delivery.py
+          bash -n m1_commit_state.sh
+          python ops/m1_apply_immediate_delivery.py
+
+      - name: Persist only the implementation changes
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- m1_live_scan.py m1_formal_runtime.py m1_notification.py m1_commit_state.sh .github/workflows/m1-live-scan.yml
+          if git diff --cached --quiet; then
+            echo 'Immediate delivery is already integrated'
+            exit 0
+          fi
+          git diff --cached --stat
+          git commit -m 'M1: dispatch each formal signal before scanning the next fixture'
+          for attempt in 1 2 3; do
+            git pull --rebase origin master
+            if git push origin HEAD:master; then
+              git log -1 --format='M1_IMPLEMENTATION_COMMIT=%H'
+              exit 0
+            fi
+            sleep "$((attempt * 2))"
+          done
+          exit 1
