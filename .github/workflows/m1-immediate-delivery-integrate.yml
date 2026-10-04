@@ -42,12 +42,14 @@ jobs:
           bash -n m1_commit_state.sh
           python ops/m1_apply_immediate_delivery.py
 
-      - name: Persist only the implementation changes
+      - name: Persist implementation using existing code-write permission
         run: |
           set -euo pipefail
+          # Workflow edits use the separately authorized GitHub connector, not this runner token.
+          git restore -- .github/workflows/m1-live-scan.yml
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -- m1_live_scan.py m1_formal_runtime.py m1_notification.py m1_commit_state.sh .github/workflows/m1-live-scan.yml test_m1_formal_runtime.py
+          git add -- m1_live_scan.py m1_formal_runtime.py m1_notification.py m1_commit_state.sh test_m1_formal_runtime.py
           if git diff --cached --quiet; then
             echo 'Immediate delivery is already integrated'
             exit 0
