@@ -32,7 +32,7 @@ jobs:
           json.dump(d,open(p,'w'))
           print('TARGET_SCOPE_ROWS='+str(len(d['rows'])))
           print('TARGET_SCOPE_MATCHES='+str(len(set(str(r['match_id']) for r in d['rows']))))
-          print('TARGET_SCOPE_LEAGUES='+str(len(set(r['league'] for r in d['rows'])))
+          print('TARGET_SCOPE_LEAGUES='+str(len(set(r['league'] for r in d['rows']))))
           PY
       - name: Dataset league inventory and current evaluation summary
         run: |
