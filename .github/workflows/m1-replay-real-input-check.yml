@@ -1,0 +1,130 @@
+name: M1 replay real-input check
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/m1-replay-real-input-check.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout tested private implementation
+        uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/totalcorner-research-bridge
+          ref: 7919b23e0662433516cda3fbbee45cb1bf03c9d4
+          fetch-depth: 0
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install existing dependencies
+        run: pip install numpy scipy requests
+      - name: Capture real input and replay offline
+        env:
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+          TOTALCORNER_TZ_OFFSET: '8'
+          OPENBLAS_NUM_THREADS: '1'
+        run: |
+          python - <<'PY'
+          import contextlib, hashlib, io, json, os, pathlib, subprocess, time
+          from datetime import datetime, timezone
+          import numpy as np
+          import m1_current as core
+          import m1_live_scan as scanner
+          from m1_replay_capture import CaptureSession, load_record
+          from m1_replay_verify import verify
+          started = datetime.now(timezone.utc)
+          summary = {'source_commit':'7919b23e0662433516cda3fbbee45cb1bf03c9d4',
+                     'mode':'single_real_fixture_engineering_check_not_formal_scan',
+                     'started_at':started.isoformat(), 'telegram_sent':0,
+                     'formal_ledger_modified':False, 'archive_persisted':False,
+                     'real_input_verified':False}
+          destination = pathlib.Path(os.environ['RUNNER_TEMP']) / 'm1-replay-real-summary.json'
+          ledger_path = pathlib.Path('results/m1_formal_ledger.json')
+          ledger_before = hashlib.sha256(ledger_path.read_bytes()).hexdigest()
+          try:
+              latest = json.loads(pathlib.Path('results/latest.json').read_text())
+              choices = []
+              for m in latest.get('matches', []):
+                  if not all(m.get(k) for k in ('fixture_id','league_id','home_team_id','away_team_id','kickoff_bj')):
+                      continue
+                  kickoff = scanner.provider_dt(m['kickoff_bj'])
+                  scope = scanner.scope_status(m.get('league',''),str(m['league_id']),m.get('home',''),m.get('away',''))
+                  if kickoff > started and scope['status'] == 'IN':
+                      choices.append((kickoff, str(m['fixture_id']), m))
+              if not choices:
+                  raise ValueError('No future archived fixture available for this engineering sample')
+              kickoff, fid, m = sorted(choices,key=lambda x:(x[0],x[1]))[0]
+              lid = str(m['league_id'])
+              fixture = {'fixture_id':fid,'kickoff':kickoff.isoformat(),
+                         'competition_id':lid,'competition_name':m['league'],
+                         'home_team':str(m['home_team_id']),'away_team':str(m['away_team_id']),
+                         'home_name':m['home'],'away_name':m['away'],'neutral':False}
+              calibration = json.loads(pathlib.Path('m1_parameters.json').read_text())
+              lead = (kickoff-started).total_seconds()/3600
+              session = CaptureSession(scanner, core)
+              with session:
+                  raw, history_error = scanner.league_history(lid,kickoff,{fixture['home_team'],fixture['away_team']})
+                  history = scanner.to_m1_history(raw,lid,kickoff,started)
+                  forecast = scanner.forecast_fixture(fixture,history,[],calibration,started)
+                  state = scanner.build_team_state(fid,fixture['home_team'],fixture['away_team'],lid,m['kickoff_bj'],raw,raw)
+                  odds = scanner.get('/match/odds/'+fid,columns='asianList,goalList').get('data')
+                  for market,key in (('全场让球','asian_list'),('全场大小球','goal_list')):
+                      pack = scanner.quote_summary(odds,key,started)
+                      if pack is None:
+                          raise ValueError('Required comparison quote unavailable in real-input sample')
+                      scanner.eval_market(np.asarray(forecast['score_probabilities']),market,pack,state,m['home'],m['away'],lead)
+                  session.result = {'run_id':'M1_REPLAY_REAL_CHECK_'+started.strftime('%Y%m%dT%H%M%SZ'),
+                                    'scan_status':'RESEARCH_VALIDATION_ONLY'}
+              report = verify(session.path,replay=True)
+              records = report['records']
+              verified = len(records)==1 and not report['capture_errors'] and all(
+                  r.get('digest_equal') and r.get('state_equal') and r.get('integrity')=='OK'
+                  and r.get('score_probability_max_difference')==0
+                  and r.get('base_max_difference')==0
+                  and len(r.get('market_checks',[]))==2
+                  and all(x.get('equal') for x in r['market_checks']) for r in records)
+              captured = load_record(session.path, session.records[0]['object_ref'])
+              summary.update({'fixture_id':fid,'league_id':lid,'kickoff':kickoff.isoformat(),
+                              'source_scan_id':latest.get('run_id'),
+                              'archive_path':str(session.path),'raw_history_rows':len(raw),
+                              'converted_history_rows':len(history),
+                              'clean_history_rows':len(captured.get('clean_training',{}).get('clean',[])),
+                              'forecast_records':len(records),'market_checks':sum(len(x.get('market_checks',[])) for x in records),
+                              'source_files_verified':len(report['source_integrity']),
+                              'capture_error_count':len(report['capture_errors']),
+                              'history_fetch_partial':history_error is not None,
+                              'score_probability_max_difference':max((r.get('score_probability_max_difference',0) for r in records),default=None),
+                              'base_max_difference':max((r.get('base_max_difference',0) for r in records),default=None),
+                              'forecast_digest_equal':all(r.get('digest_equal') for r in records),
+                              'state_equal':all(r.get('state_equal') for r in records),
+                              'markets_equal':all(q.get('equal') for r in records for q in r.get('market_checks',[])),
+                              'offline_replay_network_used':report['network_used'],
+                              'real_input_verified':verified})
+              summary['formal_ledger_modified'] = hashlib.sha256(ledger_path.read_bytes()).hexdigest()!=ledger_before
+              (session.path/'real_input_replay_report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2))
+              (session.path/'engineering_check.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2))
+              if summary['formal_ledger_modified']:
+                  raise RuntimeError('Unexpected accounting mutation during read-only diagnostic')
+              commit = subprocess.run(['bash','m1_commit_state.sh','replay'],capture_output=True,text=True)
+              summary['archive_persisted'] = commit.returncode==0
+              summary['archive_commit'] = subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()
+              summary['persist_exit_code'] = commit.returncode
+          except Exception as exc:
+              summary['error_type'] = type(exc).__name__
+          finally:
+              summary['finished_at']=datetime.now(timezone.utc).isoformat()
+              text=json.dumps(summary,ensure_ascii=False,indent=2)
+              destination.write_text(text,encoding='utf-8')
+              print(text)
+          raise SystemExit(0 if summary['real_input_verified'] and summary['archive_persisted'] and not summary['formal_ledger_modified'] else 1)
+          PY
+      - name: Return nonsensitive verification summary only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: m1-replay-real-summary
+          path: ${{ runner.temp }}/m1-replay-real-summary.json
