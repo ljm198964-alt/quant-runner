@@ -68,6 +68,7 @@ jobs:
       - name: Bounded runtime
         env:
           TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+          TOTALCORNER_WEB_COOKIE: ${{ secrets.TOTALCORNER_WEB_COOKIE }}
           MR1_TG_BOT_TOKEN: ${{ secrets.MR1_TG_BOT_TOKEN }}
           MR1_TG_CHAT_ID: ${{ secrets.MR1_TG_CHAT_ID }}
           MR1_RUNTIME_EXECUTOR: PUBLIC_RUNNER
