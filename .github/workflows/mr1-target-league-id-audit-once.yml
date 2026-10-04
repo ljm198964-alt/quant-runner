@@ -1,0 +1,32 @@
+name: MR1 target league id audit once
+on:
+  push:
+    paths:
+      - '.github/workflows/mr1-target-league-id-audit-once.yml'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/mr1-shadow
+          ref: master
+          fetch-depth: 1
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+      - name: Map target leagues to saved fixture IDs
+        run: |
+          python3 - <<'PY'
+          import json,collections
+          f=json.load(open('data/prospective-market/shadow-v23/fixtures.json'))
+          priority=['Japan J2-League','Netherlands Eerste Divisie','Greece Super League 2','Wales Championship South','Northern Ireland Championship','Wales Championship North','Ukraine Persha Liga','Scotland Championship','Bosnia & Herzegovina 1st League','Portugal Segunda Liga','Egypt Division 2']
+          out={}
+          for league in priority:
+              rows=[x for x in f.values() if x.get('league')==league]
+              ids=collections.Counter(str(x.get('league_id')) for x in rows if x.get('league_id') is not None)
+              teams=sorted({str(t) for x in rows for t in [x.get('home_team_id'),x.get('away_team_id')] if t is not None})
+              out[league]={'fixture_count':len(rows),'league_ids':dict(ids),'team_ids':teams[:100],'team_count':len(teams)}
+          print('TARGET_LEAGUE_IDS='+json.dumps(out,separators=(',',':')))
+          PY
