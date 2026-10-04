@@ -70,12 +70,14 @@ jobs:
         env:
           TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
           TOTALCORNER_TZ_OFFSET: '8'
+          M1_TELEGRAM_BOT_TOKEN: ${{ secrets.M1_TELEGRAM_BOT_TOKEN }}
+          M1_TELEGRAM_CHAT_ID: ${{ secrets.M1_TELEGRAM_CHAT_ID }}
         run: |
           set +e
           ok=0
           for attempt in 1 2 3; do
             echo "M1 scan attempt $attempt"
-            python m1_live_scan.py
+            python m1_immediate_delivery.py
             rc=$?
             if [ $rc -eq 0 ]; then
               ok=1
