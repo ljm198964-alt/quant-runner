@@ -10,41 +10,28 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Query documented existing match endpoints without importing production
+      - name: Query existing match endpoints without importing production
         env:
           TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p sealed
-          cat > recipient.pem <<'CERT'
-          -----BEGIN CERTIFICATE-----
-          MIIDJTCCAg2gAwIBAgIUQbEiHkUrOoMuG7v3jTKaoOkfl3UwDQYJKoZIhvcNAQEL
-          BQAwIjEgMB4GA1UEAwwXb25lLW9mZi1yZWFkLW9ubHktYXVkaXQwHhcNMjYxMDA0
-          MTEzOTIzWhcNMjYxMDA2MTEzOTIzWjAiMSAwHgYDVQQDDBdvbmUtb2ZmLXJlYWQt
-          b25seS1hdWRpdDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBALee2c5l
-          pb1lBSR26pukqx6hze47Pl13HcSA3UlROIv4cdOpRZauBD1HCzVJOwsLR0P6gYZX
-          uKZFbdhG76zmep+Rm07O1jxj4TCDxyyIZz8DNnUtSRZYp0UB1uWqBG64dAW2PlRd
-          pgvIzz6CqwQzkRcuFDcp8xNLLYgCxYljDG/6k4rOkEt6Lz1KdfCcO0vNg4zJWzaV
-          ccjSuq4MizQeBknuOqzj/pNAUzG6ghrCwBA+uyerxXDk6PfpoF8KSvYajLZeF1iZ
-          uo6QT/98ejam8SLx3rES35UpW67kn9Vkr3+nx1rt3MQ9hp2ej3z1zyZyk6HxYzsf
-          xc/81ODii6ulPl0CAwEAAaNTMFEwHQYDVR0OBBYEFKbiYV1eiBRikdkTrPlrrf7k
-          X99KMB8GA1UdIwQYMBaAFKbiYV1eiBRikdkTrPlrrf7kX99KMA8GA1UdEwEB/wQF
-          MAMBAf8wDQYJKoZIhvcNAQELBQADggEBAIdt3tGi5SzgdZxpFsrRdmm5P6haSSCD
-          91GmNHA0i96K9na/idZRluFuIGEK9/cqCXo0W6I73lTTOF/xxhA3ND1yM7sviBgD
-          Lxyebs5Ep5LjUYzY2XYJKgInmA+hQd9dXFaRe4wJJNWT7GaGRvoI8ORyqO4evVCf
-          iWBfmWu7tDZvS+y7qicPpI9nCAentFg99kPIsCzpnaHa0h1+FcnVldqopfHb5SDa
-          sO9iatzjZFSXqnDvv/XJ2CWKKMMuxEaE6LTXS4Du51/b5vQvR4AceuOsEb61bgxg
-          5iFXb7ldr25wf0/IjREqGVOU0K5kaN8CyE7KU3oyyENC5rzUmT3qRxU=
-          -----END CERTIFICATE-----
-          CERT
           python3 - <<'PY'
-          import os,json,time,gzip
+          import os,json,time,gzip,re,hashlib,ssl
           from pathlib import Path
           from datetime import datetime,timezone
-          from urllib.request import Request,build_opener,HTTPRedirectHandler
+          from urllib.request import Request,build_opener,HTTPRedirectHandler,urlopen
           from urllib.parse import urlencode
           from urllib.error import HTTPError
+          # Public encryption certificate only; the private key never leaves the audit environment.
+          known='https://raw.githubusercontent.com/ljm198964-alt/quant-runner/4b141a877b607402c171cd61cf177b4a67184818/.github/workflows/mr1-browser-evidence-read-once.yml'
+          with urlopen(known,timeout=20) as response: public_source=response.read().decode()
+          found=re.search(r'-----BEGIN CERTIFICATE-----[\s\S]*?-----END CERTIFICATE-----',public_source)
+          if found is None:raise RuntimeError('Missing pinned public recipient certificate')
+          pem='\n'.join(x.strip() for x in found[0].splitlines())+'\n'
+          if hashlib.sha256(ssl.PEM_cert_to_DER_cert(pem)).hexdigest()!='ffba93dfc0ec7acb4ca48d1b46d57d9628c2c98052ca4d9e1685c23fa05fc665':raise RuntimeError('Recipient certificate digest mismatch')
+          Path('recipient.pem').write_text(pem)
           class NoRedirect(HTTPRedirectHandler):
               def redirect_request(self,req,fp,code,msg,headers,newurl):return None
           token=os.environ.get('TOTALCORNER_TOKEN','').strip()
