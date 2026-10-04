@@ -1,4 +1,4 @@
-name: MR1 web structure check
+name: MR1 web reader verification
 on:
   push:
     paths: ['.github/workflows/mr1-web-structure-once.yml']
@@ -9,40 +9,45 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Fetch known pages and retain only public card structure
+      - uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/mr1-shadow
+          ref: ae0e6d51adaac15c1493fa728e42a708aa777165
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test parser and existing contract helpers
         run: |
           mkdir -p web-check
+          set -o pipefail
+          node --test test-ai-page-reader.js test-v7-ai-picks.js test-v7-ai-picks-telegram.js | tee web-check/tests.txt
+      - name: Read live pages without sending messages or writing production state
+        env:
+          TOTALCORNER_WEB_COOKIE: ${{ secrets.TOTALCORNER_WEB_COOKIE }}
+        run: |
           node --input-type=module <<'JS'
           import fs from 'node:fs/promises';
-          const urls=['https://www.totalcorner.com/ai-picks','https://www.totalcorner.com/ai-picks/tomorrow','https://www.totalcorner.com/zh-tw/ai-picks','https://www.totalcorner.com/zh-tw/ai-picks/tomorrow'];
-          const results=[];
-          for (let i=0;i<urls.length;i++) {
-            if(i)await new Promise(r=>setTimeout(r,3000));
-            const row={url:urls[i],observed_at:new Date().toISOString(),authentication:'NONE'};
-            try {
-              const r=await fetch(urls[i],{headers:{'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/154 Safari/537.36','Accept':'text/html,application/xhtml+xml','Accept-Language':'en-US,en;q=0.9'},signal:AbortSignal.timeout(25000),redirect:'error'});
-              row.http_status=r.status;
-              const html=await r.text();
-              row.bytes=Buffer.byteLength(html);
-              row.has_vip_notice=/VIP members only|僅限.{0,12}VIP|仅限.{0,12}VIP/i.test(html);
-              row.title=(html.match(/<title[^>]*>([\s\S]*?)<\/title>/i)||[])[1]||null;
-              row.card_classes=[...new Set([...html.matchAll(/class=["']([^"']*\baip-[^"']*)["']/g)].map(x=>x[1]))];
-              row.card_attribute_examples=[...html.matchAll(/<(?:div|article)[^>]*class=["'][^"']*aip-card[^"']*["'][^>]*>/g)].slice(0,4).map(x=>x[0]);
-              const start=html.search(/<(?:div|article)[^>]*class=["'][^"']*aip-card/);
-              if(r.ok&&start>=0){
-                // This request has no session. Retain content from the public cards only;
-                // omit navigation, forms, scripts, response headers and cookie values.
-                const sample=html.slice(start).split(/<footer|<script/i)[0];
-                await fs.writeFile(`web-check/page-${i}-cards.html`,sample);
-              }
-            } catch(e){row.error_type=e.name;}
-            results.push(row);
+          import {createHash} from 'node:crypto';
+          import {loadAiPages} from './src/ai-picks-page.js';
+          import {summarizeAiFixtureMatching} from './src/ai-source-diagnostics.js';
+          const page=await loadAiPages();
+          const fixtures=JSON.parse(await fs.readFile('data/prospective-market/shadow-v23/fixtures.json','utf8'));
+          const files={};
+          for(const name of ['ai-picks-page.js','v7-ai-picks-core.js','v11-ai-ah-forward.js','v7-ai-picks-telegram.js']){
+            const bytes=await fs.readFile('src/'+name);files[name]=createHash('sha256').update(bytes).digest('hex');
           }
-          await fs.writeFile('web-check/summary.json',JSON.stringify(results,null,2));
-          console.log(JSON.stringify(results));
+          const result={generated_at:new Date().toISOString(),messages_sent:0,production_state_changed:false,
+            website_session_supplied:Boolean(process.env.TOTALCORNER_WEB_COOKIE),source_access:page.source_access,
+            matching:summarizeAiFixtureMatching(page.picks,fixtures),source_sha256:files};
+          const encoded=JSON.stringify(result,null,2);
+          if(process.env.TOTALCORNER_WEB_COOKIE&&encoded.includes(process.env.TOTALCORNER_WEB_COOKIE))throw new Error('Sensitive output prevented');
+          await fs.writeFile('web-check/summary.json',encoded);console.log(encoded);
           JS
-      - name: Save structure evidence
+      - name: Save nonsensitive verification evidence
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: mr1-web-structure
+          name: mr1-web-reader-verified
           path: web-check/
