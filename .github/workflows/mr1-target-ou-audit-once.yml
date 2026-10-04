@@ -42,6 +42,12 @@ jobs:
                   if isinstance(v,(int,float)):return v
               return None
           ranked=sorted(selected,key=lambda g:(metric(g,'incremental_log_loss','log_loss_increment','log_loss_gain') if metric(g,'incremental_log_loss','log_loss_increment','log_loss_gain') is not None else -999),reverse=True)
+          def agg(names):
+              xs=[g for g in groups if (g.get('competition') or g.get('league') or g.get('name')) in names and isinstance(g.get('n'),(int,float)) and g.get('n')>0]
+              n=sum(g['n'] for g in xs)
+              def w(k): return sum(g['n']*g[k] for g in xs if isinstance(g.get(k),(int,float)))/sum(g['n'] for g in xs if isinstance(g.get(k),(int,float))) if any(isinstance(g.get(k),(int,float)) for g in xs) else None
+              return {'groups':len(xs),'n':n,'weighted_log_loss_increment':w('incremental_log_loss'),'weighted_brier_increment':w('incremental_brier'),'positive_log_loss_group_rate':sum(g.get('incremental_log_loss',0)>0 for g in xs)/len(xs) if xs else None,'positive_brier_group_rate':sum(g.get('incremental_brier',0)>0 for g in xs)/len(xs) if xs else None}
+          print('TARGET_OU_AGG='+json.dumps({'second_tier':agg(second),'opponent_mapped':agg(opponent),'union':agg(target)},separators=(',',':')))
           print('TARGET_OU_GROUPS='+json.dumps({
             'n':len(selected),
             'second_tier_count':sum((g.get('competition') or g.get('league') or g.get('name')) in second for g in selected),
