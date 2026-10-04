@@ -1,0 +1,88 @@
+name: MR1 model sign audit once
+on:
+  push:
+    paths:
+      - '.github/workflows/mr1-model-sign-audit-once.yml'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/mr1-shadow
+          ref: master
+          fetch-depth: 1
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Dataset league inventory and current evaluation summary
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const ds=JSON.parse(fs.readFileSync('data/processed/t24-dataset.json'));
+          const by=new Map();
+          for(const r of ds.rows){const x=by.get(r.league)||{AH:0,OU:0,matches:new Set()};x[r.market]++;x.matches.add(String(r.match_id));by.set(r.league,x);}
+          const rows=[...by].map(([league,x])=>({league,matches:x.matches.size,AH:x.AH,OU:x.OU})).sort((a,b)=>b.matches-a.matches);
+          console.log('LEAGUE_INVENTORY='+JSON.stringify(rows));
+          const report=JSON.parse(fs.readFileSync('data/processed/rolling-evaluation-v2.json'));
+          const compact={};
+          for(const m of ['AH','OU']){
+            const x=report.markets[m];
+            compact[m]={
+              complete_n:x.complete_t24_state?.n,
+              incremental:x.complete_t24_state?.incremental,
+              score_incremental:x.complete_t24_state?.score_distribution,
+              promotion_gate:x.complete_t24_state?.promotion_gate,
+              positive_folds:{
+                log_loss:x.complete_t24_state?.folds_with_positive_log_loss_increment,
+                brier:x.complete_t24_state?.folds_with_positive_brier_increment,
+                joint_log_loss:x.complete_t24_state?.folds_with_positive_joint_score_log_loss_increment,
+                joint_brier:x.complete_t24_state?.folds_with_positive_joint_score_brier_increment
+              },
+              ablations:x.ablation_research
+            };
+          }
+          compact.joint=report.joint_residual_correction;
+          console.log('CURRENT_ROLLING_SUMMARY='+JSON.stringify(compact));
+          NODE
+      - name: Re-run rolling evaluation with corrected AH defence sign
+        run: |
+          cp src/residual-model.js /tmp/residual-model.original.js
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('src/residual-model.js')
+          s=p.read_text()
+          old="attack_defence_goal_difference: stateNumber(state, 'home_attack_rate') - stateNumber(state, 'away_defence_rate') - stateNumber(state, 'away_attack_rate') + stateNumber(state, 'home_defence_rate'),"
+          new="attack_defence_goal_difference: stateNumber(state, 'home_attack_rate') + stateNumber(state, 'away_defence_rate') - stateNumber(state, 'away_attack_rate') - stateNumber(state, 'home_defence_rate'),"
+          assert old in s
+          p.write_text(s.replace(old,new))
+          PY
+          node src/rolling-evaluation-v2.js > /tmp/corrected-full.json
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const r=JSON.parse(fs.readFileSync('data/processed/rolling-evaluation-v2.json'));
+          const compact={};
+          for(const m of ['AH','OU']){
+            const x=r.markets[m];
+            compact[m]={
+              complete_n:x.complete_t24_state?.n,
+              incremental:x.complete_t24_state?.incremental,
+              score_incremental:x.complete_t24_state?.score_distribution,
+              promotion_gate:x.complete_t24_state?.promotion_gate,
+              positive_folds:{
+                log_loss:x.complete_t24_state?.folds_with_positive_log_loss_increment,
+                brier:x.complete_t24_state?.folds_with_positive_brier_increment,
+                joint_log_loss:x.complete_t24_state?.folds_with_positive_joint_score_log_loss_increment,
+                joint_brier:x.complete_t24_state?.folds_with_positive_joint_score_brier_increment
+              },
+              last_fold:x.fold_diagnostics?.at(-1)
+            };
+          }
+          compact.joint=r.joint_residual_correction;
+          console.log('CORRECTED_SIGN_SUMMARY='+JSON.stringify(compact));
+          NODE
