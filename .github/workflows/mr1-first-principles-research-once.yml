@@ -1,0 +1,109 @@
+name: MR1 first principles research once
+on:
+  push:
+    paths:
+      - '.github/workflows/mr1-first-principles-research-once.yml'
+permissions:
+  contents: read
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/mr1-shadow
+          ref: master
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+      - name: Development-only defence direction and feature coverage audit
+        run: |
+          python3 - <<'PY'
+          import json,glob,os,math,collections
+          def load(p,default=None):
+              try:return json.load(open(p))
+              except:return default
+          # Latest prospective T24 AH row per match, with raw team state and observed result.
+          latest={}
+          missing=collections.Counter(); missing_leagues=collections.Counter()
+          required=['home_recent_adjusted_goal_diff','away_recent_adjusted_goal_diff','home_attack_rate','away_attack_rate','home_defence_rate','away_defence_rate']
+          for p in glob.glob('data/strategy-runs/*/all-markets.json'):
+              if 'PROSPECTIVE_' not in p: continue
+              xs=load(p,[])
+              for r in xs:
+                  if r.get('market')!='AH': continue
+                  state=(r.get('data_quality') or {}).get('features') or {}
+                  if r.get('source_snapshot_key','').endswith('/T24'):
+                      k=str(r.get('match_id'))
+                      if k not in latest or (r.get('quote_received_at') or '')>(latest[k].get('quote_received_at') or ''): latest[k]=r
+                  if 'MISSING_REQUIRED_TEAM_FEATURES' in (r.get('reasons') or []):
+                      missing_leagues[r.get('league') or 'UNKNOWN']+=1
+                      for f in required:
+                          if state.get(f) is None: missing[f]+=1
+          points=[]
+          for mid,r in latest.items():
+              split=load(f'data/prospective-market/shadow-v23/splits/{mid}.json',{})
+              if split.get('split')!='DEVELOPMENT': continue
+              res=load(f'data/strategy-shadow-ledger/results/{mid}.json')
+              if not res or res.get('status')!='FT': continue
+              state=(r.get('data_quality') or {}).get('features') or {}
+              if any(state.get(f) is None for f in required): continue
+              mu=r.get('market_implied_mu')
+              if mu is None: continue
+              y=float(res['home_goals'])-float(res['away_goals'])-float(mu)
+              recent=float(state['home_recent_adjusted_goal_diff'])-float(state['away_recent_adjusted_goal_diff'])
+              bug=float(state['home_attack_rate'])-float(state['away_defence_rate'])-float(state['away_attack_rate'])+float(state['home_defence_rate'])
+              fixed=float(state['home_attack_rate'])+float(state['away_defence_rate'])-float(state['away_attack_rate'])-float(state['home_defence_rate'])
+              points.append({'id':mid,'kickoff':r.get('kickoff'),'league':r.get('league'),'y':y,'recent':recent,'bug':bug,'fixed':fixed})
+          points.sort(key=lambda x:x['kickoff'])
+          def solve2(a,b,c,d,e,f):
+              det=a*d-b*c
+              if abs(det)<1e-12:return (0,0)
+              return ((e*d-b*f)/det,(a*f-e*c)/det)
+          def fit(train,key):
+              n=len(train)
+              if n<10:return (0,0,0)
+              xs1=[x['recent'] for x in train]; xs2=[x[key] for x in train]; ys=[x['y'] for x in train]
+              m1=sum(xs1)/n;m2=sum(xs2)/n;my=sum(ys)/n
+              s1=(sum((x-m1)**2 for x in xs1)/n)**.5 or 1
+              s2=(sum((x-m2)**2 for x in xs2)/n)**.5 or 1
+              z1=[(x-m1)/s1 for x in xs1];z2=[(x-m2)/s2 for x in xs2]
+              A=sum(x*x for x in z1)+1;B=sum(x*y for x,y in zip(z1,z2));D=sum(y*y for y in z2)+1
+              E=sum(x*(y-my) for x,y in zip(z1,ys));F=sum(x*(y-my) for x,y in zip(z2,ys))
+              r1,r2=solve2(A,B,B,D,E,F); shrink=n/(n+50)
+              c1=max(-.25,min(.25,r1*shrink/s1));c2=max(-.25,min(.25,r2*shrink/s2))
+              inter=max(-.5,min(.5,my-c1*m1-c2*m2))
+              return inter,c1,c2
+          def pred(model,x,key):
+              z=model[0]+model[1]*x['recent']+model[2]*x[key]
+              return max(-.75,min(.75,z))
+          start=min(20,max(10,len(points)//2))
+          tests=[]
+          for i in range(start,len(points)):
+              train=points[:i]; row=points[i]
+              mb=fit(train,'bug'); mf=fit(train,'fixed')
+              tests.append({'id':row['id'],'y':row['y'],'market':0,'bug':pred(mb,row,'bug'),'fixed':pred(mf,row,'fixed')})
+          def metrics(key):
+              if not tests:return {'n':0}
+              err=[x['y']-x[key] for x in tests]
+              return {'n':len(err),'rmse':(sum(e*e for e in err)/len(err))**.5,'mae':sum(abs(e) for e in err)/len(err),'bias':sum(err)/len(err)}
+          final_bug=fit(points,'bug') if points else (0,0,0)
+          final_fixed=fit(points,'fixed') if points else (0,0,0)
+          out={
+            'development_t24_complete_AH_matches':len(points),
+            'walk_forward_initial_train':start,
+            'walk_forward':{'market_only':metrics('market'),'current_bug_feature':metrics('bug'),'corrected_defence_feature':metrics('fixed')},
+            'full_development_fit':{
+              'current_bug':{'intercept':final_bug[0],'recent_coef':final_bug[1],'attack_defence_coef':final_bug[2]},
+              'corrected':{'intercept':final_fixed[0],'recent_coef':final_fixed[1],'attack_defence_coef':final_fixed[2]}
+            },
+            'feature_definition':{
+              'current':'home_attack - away_defence - away_attack + home_defence',
+              'corrected':'home_attack + away_defence - away_attack - home_defence',
+              'defence_rate_meaning':'goals_conceded_per_match; higher is worse'
+            },
+            'missing_required_feature_counts':missing,
+            'top_missing_feature_leagues':missing_leagues.most_common(15),
+            'locked_evaluation_used_for_model_selection':False
+          }
+          print(json.dumps(out,ensure_ascii=False,default=lambda x:dict(x),indent=2))
+          PY
