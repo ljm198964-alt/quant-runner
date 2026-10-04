@@ -1,0 +1,63 @@
+name: MR1 completion isolated check
+on:
+  push:
+    paths:
+      - '.github/workflows/mr1-completion-verify-once.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/mr1-shadow
+          ref: 141d63a68834e5c46738363f16a41a1d8973912b
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          persist-credentials: false
+      - name: Seal requested implementation and runtime evidence
+        run: |
+          set -euo pipefail
+          umask 077
+          cat > "$RUNNER_TEMP/recipient.pem" <<'CERT'
+          -----BEGIN CERTIFICATE-----
+          MIIEHzCCAoegAwIBAgIUDDEj/yXF/TqEsPp415NSBVnHiiAwDQYJKoZIhvcNAQEL
+          BQAwHzEdMBsGA1UEAwwUbXIxLWNvbXBsZXRpb24tbG9jYWwwHhcNMjYxMDA0MTIw
+          NjA0WhcNMjYxMDA2MTIwNjA0WjAfMR0wGwYDVQQDDBRtcjEtY29tcGxldGlvbi1s
+          b2NhbDCCAaIwDQYJKoZIhvcNAQEBBQADggGPADCCAYoCggGBAPXrJsEokDg/eyCq
+          5nkLzGW8mll90IGTa6a9xlWKMp8ednrrY1oXHpQPcyLxOzldeD8YI5MK0kOsj79/
+          9V9CSFllDQYws8oS92J3DMRLHSk279C/asz4zxTvABokwdoKv8x7w2GaNg2SVbzr
+          NHj3NLa0q37VAhxuaYpjRKwFssg59z5KcS/vpQH+WxucVpMZ9LTl9oeVn8eyxUMi
+          1e7sHH7Q5Q5if1/ATmBKSF3AYLx2bUCihSI/NQMhnYPHsoLGiLKRC9ntHKf+TiX+
+          LzBMhf+uTKVEuB26+NFrHtA+inCpGhfKqTz6ZflDln6iYAzsITdmRUWPi0OFiup6
+          TdmdFQIuRm/hbtnMPeHKLs9yubHyxQog7ySzUDHHdZTd+0zh+U+4JbZsGwWzbedT
+          1MyLXwb65unog0VuI+DN+s7wAVbBxLPkTzLC4LasCoSw1r100Qm/8zoLlAbMuJrL
+          Q235FtU0ndq7Vb8nEC/CthQf67ugzglj5Vcu8gRBY2MVu0nsqwIDAQABo1MwUTAd
+          BgNVHQ4EFgQU/xkMMRqwWVTMn9qVdPwCQYfjT1YwHwYDVR0jBBgwFoAU/xkMMRqw
+          WVTMn9qVdPwCQYfjT1YwDwYDVR0TAQH/BAUwAwEB/zANBgkqhkiG9w0BAQsFAAOC
+          AYEAGg9xh7Gl6Y4OVlgXVajwtkzWjNRmndQu4Btf4UH7j51uTRRV1VfrXVRfOQkT
+          ZY0MYrs6C8D+9EppZTRGSAaw+ybIK0dMp52LnEgrM29l6YRIuIiuzjtoym/TEeos
+          9weVmJ9Vpx8scsd2dedhc0RwxSMBOEMAXEXB7vDjz79SyMO/jN+GZryaE+v2KbXs
+          pmjjGyEWnjznY/jnwWG6cybE8HEwo5XtJkRcy2asD06qWEjP/sxuEBNm+/K7T75y
+          yDo1WStGLd8kKNUmxB+mNPhulqNY0kCZ56fPmVK+lybkUrOAVTnFk24eGrHHnhgf
+          SWSX2gFvWVU1PP66AAnr0IfDNh4tMZrE8T6jFZaAMGZfSoc2EdCbus172euRBAWE
+          3QNrRKCoiIhjAzmDLszD+OTElB3J/waWxuF53iRAoITANWnMJarLXD9+bS3cLwcu
+          UFK312VoF6jva0RsMT1TPQMp9cc4WOmdr2jEYC3elmmZ7s04OGuQyHVv1Np7YsJU
+          9Z1b
+          -----END CERTIFICATE-----
+          CERT
+          python3 - <<'PY'
+          import os,tarfile,subprocess
+          from pathlib import Path
+          names=subprocess.check_output(['git','ls-files'],text=True).splitlines()
+          selected=[p for p in names if p.startswith(('src/','config/')) or (p.startswith('test') and p.endswith(('.js','.mjs','.json'))) or p in ('package.json','package-lock.json','data/github-runtime/run-status.json','data/prospective-market/shadow-v23/collector-health-report.json')]
+          with tarfile.open(Path(os.environ['RUNNER_TEMP'])/'source.tar.gz','w:gz') as out:
+              for p in selected: out.add(p,arcname=p,recursive=False)
+          PY
+          openssl cms -encrypt -binary -aes-256-cbc -in "$RUNNER_TEMP/source.tar.gz" -outform DER -out "$RUNNER_TEMP/mr1-source.p7m" "$RUNNER_TEMP/recipient.pem"
+          rm "$RUNNER_TEMP/source.tar.gz"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mr1-completion-sealed
+          path: ${{ runner.temp }}/mr1-source.p7m
