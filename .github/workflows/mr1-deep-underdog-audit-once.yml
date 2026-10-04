@@ -1,0 +1,104 @@
+name: MR1 deep underdog audit once
+on:
+  push:
+    paths:
+      - '.github/workflows/mr1-deep-underdog-audit-once.yml'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/mr1-shadow
+          ref: master
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Deep AH underdog robustness audit
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          import path from 'node:path';
+          import {settleCandidate,strictLine} from './src/strategy-shadow-core.js';
+          import {fitMarketImpliedDistribution,sideStateProbabilities} from './src/market-implied-v2.js';
+          import {expectedValue} from './src/metrics.js';
+          const dataset=JSON.parse(await fs.readFile('data/processed/t24-dataset.json','utf8'));
+          const spec=JSON.parse(await fs.readFile('config/validation-spec.json','utf8'));
+          const cfg=JSON.parse(await fs.readFile('config/strategy-shadow-v1.json','utf8'));
+          const o=spec.market_prior.optimizer,optimizer={gridMin:o.grid_min,gridMax:o.grid_max,gridStep:o.grid_step,lowerBound:o.lower_bound,upperBound:o.upper_bound,refinementSteps:o.refinement_steps};
+          const dogContract=r=>{
+            const line=strictLine(r.line);if(line===null||Math.abs(line)<1.5)return null;
+            return line<0?{direction:'away',line:-line,price:Number(r.away_price)}:{direction:'home',line,price:Number(r.home_price)};
+          };
+          const summarize=xs=>({n:xs.length,pnl:xs.reduce((a,b)=>a+b.pnl,0),roi:xs.length?xs.reduce((a,b)=>a+b.pnl,0)/xs.length:null,
+            avg_price:xs.length?xs.reduce((a,b)=>a+b.price,0)/xs.length:null});
+          const hist=[];
+          for(const r of dataset.rows.filter(x=>x.market==='AH')){
+            const line=strictLine(r.home_line);if(line===null||Math.abs(line)<1.5)continue;
+            const c=line<0?{direction:'away',line:-line,price:Number(r.entry_away_price)}:{direction:'home',line,price:Number(r.entry_home_price)};
+            if(!Number.isFinite(c.price)||c.price<=1)continue;
+            const s=settleCandidate({market:'AH',...c},Number(r.home_goals),Number(r.away_goals));
+            hist.push({match_id:String(r.match_id),kickoff:r.kickoff_at,league:r.league,line:Math.abs(line),price:c.price,pnl:s.realized_pnl});
+          }
+          const byLeague={};
+          for(const x of hist){(byLeague[x.league]??=[]).push(x);}
+          const sorted=[...hist].sort((a,b)=>Date.parse(a.kickoff)-Date.parse(b.kickoff));
+          const ids=[...new Set(sorted.map(x=>x.match_id))],block=new Map(ids.map((id,i)=>[id,Math.min(4,Math.floor(i*5/ids.length))]));
+          const chrono=Array.from({length:5},(_,i)=>summarize(sorted.filter(x=>block.get(x.match_id)===i)));
+          // Deterministic day-cluster bootstrap.
+          const dayMap=new Map();for(const x of hist){const d=x.kickoff.slice(0,10);if(!dayMap.has(d))dayMap.set(d,[]);dayMap.get(d).push(x);}
+          const days=[...dayMap.keys()];let seed=0x5eed1234;
+          const rnd=()=>{seed=(1664525*seed+1013904223)>>>0;return seed/2**32;};
+          const boots=[];
+          for(let b=0;b<2000;b++){let pnl=0,n=0;for(let i=0;i<days.length;i++){const xs=dayMap.get(days[Math.floor(rnd()*days.length)]);for(const x of xs){pnl+=x.pnl;n++;}}boots.push(pnl/n);}
+          boots.sort((a,b)=>a-b);const q=p=>boots[Math.floor(p*(boots.length-1))];
+          const horizons=['T24','T18','T12','T6','T3','T1','T0.5'],prospective={};
+          const root='data/prospective-market/shadow-v23/snapshots',resdir='data/strategy-shadow-ledger/results';
+          const closeCache=new Map();
+          async function closeDist(mid){
+            if(closeCache.has(mid))return closeCache.get(mid);
+            let s;try{s=JSON.parse(await fs.readFile(path.join(root,mid,'T0.5','snapshot.json'),'utf8'));}catch{closeCache.set(mid,null);return null;}
+            if(s.classification!=='SNAPSHOT_OK'||!s.AH||!s.OU){closeCache.set(mid,null);return null;}
+            const ah=strictLine(s.AH.line),ou=strictLine(s.OU.line);if(ah===null||ou===null){closeCache.set(mid,null);return null;}
+            const fit=fitMarketImpliedDistribution({ah:{home_line:ah,away_line:-ah,home_price:Number(s.AH.home_price),away_price:Number(s.AH.away_price)},ou:{over_line:ou,under_line:ou,over_price:Number(s.OU.over_price),under_price:Number(s.OU.under_price)},maxGoals:cfg.maximum_goals_per_team,optimizer});
+            const d=fit.status==='ok'?fit.score_distribution:null;closeCache.set(mid,d);return d;
+          }
+          const t24clv=[];
+          for(const h of horizons){
+            const xs=[];
+            let dirs=[];try{dirs=await fs.readdir(root);}catch{}
+            for(const mid of dirs){
+              let s,r;try{s=JSON.parse(await fs.readFile(path.join(root,mid,h,'snapshot.json'),'utf8'));}catch{continue;}
+              try{r=JSON.parse(await fs.readFile(path.join(resdir,mid+'.json'),'utf8'));}catch{continue;}
+              if(s.classification!=='SNAPSHOT_OK'||!s.AH||r.status!=='FT')continue;
+              const c=dogContract({line:s.AH.line,home_price:s.AH.home_price,away_price:s.AH.away_price});if(!c||!Number.isFinite(c.price)||c.price<=1)continue;
+              const set=settleCandidate({market:'AH',...c},Number(r.home_goals),Number(r.away_goals));
+              let split=null;try{split=JSON.parse(await fs.readFile(path.join('data/prospective-market/shadow-v23/splits',mid+'.json'),'utf8')).split;}catch{}
+              const row={match_id:mid,kickoff:s.kickoff_at,league:s.league,line:c.line,price:c.price,pnl:set.realized_pnl,split};
+              xs.push(row);
+              if(h==='T24'){
+                const d=await closeDist(mid);
+                if(d){
+                  const p=sideStateProbabilities(d,'AH',c.line,c.direction);
+                  const clv=expectedValue(p,{price:c.price},{full_win:c.price-1,half_win:(c.price-1)/2,push:0,half_loss:-.5,full_loss:-1});
+                  t24clv.push({...row,clv});
+                }
+              }
+            }
+            prospective[h]={all:summarize(xs),development:summarize(xs.filter(x=>x.split==='DEVELOPMENT')),locked:summarize(xs.filter(x=>x.split==='LOCKED_EVALUATION'))};
+          }
+          const clvSummary={n:t24clv.length,mean:t24clv.length?t24clv.reduce((a,b)=>a+b.clv,0)/t24clv.length:null,positive_rate:t24clv.length?t24clv.filter(x=>x.clv>0).length/t24clv.length:null,
+            rows:t24clv};
+          console.log(JSON.stringify({
+            definition:'AH underdog at absolute home handicap >= 1.5; fixed before this audit',
+            historical:{...summarize(hist),bootstrap_day_cluster_roi_95pct:[q(.025),q(.975)],chrono_blocks:chrono,
+              top_leagues:Object.entries(byLeague).map(([league,x])=>({league,...summarize(x)})).sort((a,b)=>b.n-a.n).slice(0,20)},
+            prospective_by_horizon:prospective,
+            t24_to_t0_5_clv:clvSummary,
+            caveat:'Exploratory multi-rule family was viewed before this audit; future untouched observations are required before promotion.'
+          },null,2));
+          NODE
