@@ -24,6 +24,7 @@ jobs:
           node-version: '22'
       - run: npm ci --ignore-scripts --no-audit --no-fund
       - name: Backfill low-depth high-frequency target leagues
+        # queued behind batch 2 during bounded scheduler pause
         env:
           TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
           MR1_HISTORY_TARGETS_JSON: '{"15":"Spain Segunda","10989":"Republic of Ireland First Division","355":"Slovakia 2. Liga","417":"Egypt Division 2"}'
