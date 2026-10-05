@@ -1,0 +1,108 @@
+name: MR1 scoped challenger once
+on:
+  push:
+    paths:
+      - '.github/workflows/mr1-scoped-challenger-once.yml'
+permissions:
+  contents: read
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/mr1-shadow
+          ref: master
+          fetch-depth: 1
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Inventory dataset leagues
+        run: |
+          python3 - <<'PY'
+          import json,collections
+          d=json.load(open('data/processed/t24-dataset.json'))
+          c=collections.Counter(r.get('league') for r in d['rows'])
+          print('LEAGUES='+json.dumps(c.most_common(),ensure_ascii=False,separators=(',',':')))
+          PY
+      - name: Baseline current-scope evaluation
+        run: |
+          cp data/processed/t24-dataset.json /tmp/full-dataset.json
+          node src/rolling-evaluation-v2.js >/tmp/baseline.log
+          cp data/processed/rolling-evaluation-v2.json /tmp/baseline.json
+      - name: Build target-scope dataset
+        run: |
+          python3 - <<'PY'
+          import json,re
+          p='data/processed/t24-dataset.json'
+          d=json.load(open(p))
+          opponent_tokens=[
+            'nations league','international','friendly','argentina','brazil','serie a','serie b','la liga','segunda',
+            'eerst','eredivisie','j2','mls','major league soccer','liga mx','mexico','serie a','bundesliga','2. bundesliga',
+            'championship','ligue 1','super league','eliteserien','1. division','superliga','primeira','premier division',
+            'primera a','allsvenskan','superettan','super lig','premier league','ekstraklasa','scottish premiership',
+            'austria','switzerland','belgium','czech','romania','iceland','k league 1','gulf','asean','emperor','cup'
+          ]
+          second_tokens=[
+            'segunda','eerst','j2','serie b','championship','2. bundesliga','2. liga','liga 2','division 1',
+            'first division','superettan','prva liga','persha liga','druga liga','1 lyga','2. snl','super league 2'
+          ]
+          def keep(league):
+            s=(league or '').lower()
+            return any(t in s for t in second_tokens) or any(t in s for t in opponent_tokens)
+          rows=[r for r in d['rows'] if keep(r.get('league'))]
+          d['rows']=rows
+          open(p,'w').write(json.dumps(d))
+          from collections import Counter
+          print('TARGET_SCOPE='+json.dumps({'rows':len(rows),'matches':len(set(r['match_id'] for r in rows)),'leagues':Counter(r.get('league') for r in rows).most_common()},ensure_ascii=False,separators=(',',':')))
+          PY
+      - name: Run old MR1 on target scope
+        run: |
+          node src/rolling-evaluation-v2.js >/tmp/old-target.log
+          cp data/processed/rolling-evaluation-v2.json /tmp/old-target.json
+      - name: Correct AH defence feature sign in isolated workspace and rerun
+        run: |
+          python3 - <<'PY'
+          p='src/residual-model.js'
+          s=open(p).read()
+          old="attack_defence_goal_difference: stateNumber(state, 'home_attack_rate') - stateNumber(state, 'away_defence_rate') - stateNumber(state, 'away_attack_rate') + stateNumber(state, 'home_defence_rate'),"
+          new="attack_defence_goal_difference: stateNumber(state, 'home_attack_rate') + stateNumber(state, 'away_defence_rate') - stateNumber(state, 'away_attack_rate') - stateNumber(state, 'home_defence_rate'),"
+          assert old in s
+          open(p,'w').write(s.replace(old,new))
+          PY
+          node src/rolling-evaluation-v2.js >/tmp/corrected-target.log
+          cp data/processed/rolling-evaluation-v2.json /tmp/corrected-target.json
+      - name: Summarize
+        run: |
+          python3 - <<'PY'
+          import json
+          def load(p): return json.load(open(p))
+          B,O,C=map(load,['/tmp/baseline.json','/tmp/old-target.json','/tmp/corrected-target.json'])
+          def m(rep,market):
+            x=rep['markets'][market]
+            cs=x['complete_t24_state']
+            inc=cs['incremental']
+            sd=cs['score_distribution']
+            return {
+              'rows':x['rows'],'complete_n':cs['n'],
+              'incremental_log_loss':inc.get('incremental_log_loss'),
+              'incremental_brier':inc.get('incremental_brier'),
+              'incremental_joint_score_log_loss':sd.get('incremental_joint_score_log_loss'),
+              'incremental_joint_score_brier':sd.get('incremental_joint_score_brier'),
+              'positive_logloss_folds':cs.get('folds_with_positive_log_loss_increment'),
+              'positive_joint_folds':cs.get('folds_with_positive_joint_score_log_loss_increment'),
+              'promotion_passed':cs.get('promotion_gate',{}).get('passed'),
+              'last_fold_model':x['fold_diagnostics'][-1].get('delta_mu_model' if market=='AH' else 'delta_tau_model')
+            }
+          out={
+            'full_current_scope':{'AH':m(B,'AH'),'OU':m(B,'OU')},
+            'target_scope_old':{'AH':m(O,'AH'),'OU':m(O,'OU')},
+            'target_scope_corrected':{'AH':m(C,'AH'),'OU':m(C,'OU')},
+            'joint_old':O.get('joint_residual_correction',{}).get('incremental_vs_market'),
+            'joint_corrected':C.get('joint_residual_correction',{}).get('incremental_vs_market')
+          }
+          print('SCOPED_CHALLENGER='+json.dumps(out,separators=(',',':')))
+          PY
