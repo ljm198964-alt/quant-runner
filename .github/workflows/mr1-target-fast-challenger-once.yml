@@ -1,0 +1,107 @@
+name: MR1 target-scope fast challenger once
+on:
+  push:
+    paths:
+      - '.github/workflows/mr1-target-fast-challenger-once.yml'
+permissions:
+  contents: read
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/mr1-shadow
+          ref: master
+          fetch-depth: 1
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Build explicit target scope
+        run: |
+          python3 - <<'PY'
+          import json,collections
+          target=set([
+            # second-tier / second-level competitions available in the current T24 corpus
+            'China Division 1','Saudi Arabia Division 1','Lithuania 1 Lyga','Egypt Division 2','Israel Leumit Liga',
+            'Czechia 2. Liga','Iceland 1 Deild','Spain Segunda','England Championship','France Ligue 2','Türkiye 1 Lig',
+            'Italy Serie B','Croatia 1.NL','Netherlands Eerste Divisie','Bulgaria Second League','Republic of Ireland First Division',
+            'Latvia 1. Liga','Albania First Division','Albania Championship','Finland Ykkosliiga','Sweden Superettan',
+            'Norway Division 1','Poland I Liga','Slovenia 2. SNL','Switzerland Challenge League','Hungary NB II',
+            'Portugal Segunda Liga','Georgia First League','Austria 2. Liga','Scotland Championship','Germany Bundesliga II',
+            'Wales Championship North','Wales Championship South','Belgium First Division B','Montenegro Druga Liga',
+            'Malta Challenge League','Romania Liga II','Northern Ireland Championship','South Korea K League 2',
+            'Cyprus Division 2','Japan J2-League','North Macedonia Second League','Ukraine Persha Liga','Kosovo Division 1',
+            'Andorra Second Division',
+            # current-corpus competitions directly overlapping opponent emails
+            'Argentina Primera Division','Brazil Serie A','Brazil Serie B','USA MLS','Mexico Liga MX',
+            'Spain La Liga','Italy Serie A','South Korea K League 1','France Ligue 1','Greece Super League 1',
+            'Norway Eliteserien','Netherlands Eredivisie','Portugal Primeira Liga','Colombia Primera A',
+            'Germany Bundesliga I','Belgium First Division A','Czechia First League','Scotland Premiership',
+            'Austria Bundesliga','Switzerland Super League','Poland Ekstraklasa','Iceland Premier League',
+            'Romania Liga I','Sweden Allsvenskan','Türkiye Super Lig','Ukraine Vyscha Liga','Denmark Superligaen',
+            'Republic of Ireland Premier Division','England Premier League'
+          ])
+          p='data/processed/t24-dataset.json'
+          d=json.load(open(p))
+          before=len(d['rows'])
+          rows=[r for r in d['rows'] if r.get('league') in target]
+          d['rows']=rows
+          open(p,'w').write(json.dumps(d))
+          spec=json.load(open('config/validation-spec.json'))
+          spec['uncertainty']['replicates']=100
+          open('config/validation-spec.json','w').write(json.dumps(spec))
+          counts=collections.Counter(r.get('league') for r in rows)
+          print('TARGET_DATA='+json.dumps({'before_rows':before,'rows':len(rows),'matches':len(set(r['match_id'] for r in rows)),'leagues':len(counts),'top':counts.most_common()},separators=(',',':')))
+          PY
+      - name: Build target market prior
+        run: node src/build-market-implied-v2.js >/tmp/build.log
+      - name: Old model
+        run: |
+          node src/rolling-evaluation-v2.js >/tmp/old.log
+          cp data/processed/rolling-evaluation-v2.json /tmp/old.json
+      - name: Correct AH defence semantics in challenger only
+        run: |
+          python3 - <<'PY'
+          p='src/residual-model.js'
+          s=open(p).read()
+          old="attack_defence_goal_difference: stateNumber(state, 'home_attack_rate') - stateNumber(state, 'away_defence_rate') - stateNumber(state, 'away_attack_rate') + stateNumber(state, 'home_defence_rate'),"
+          new="attack_defence_goal_difference: stateNumber(state, 'home_attack_rate') + stateNumber(state, 'away_defence_rate') - stateNumber(state, 'away_attack_rate') - stateNumber(state, 'home_defence_rate'),"
+          assert old in s
+          open(p,'w').write(s.replace(old,new))
+          PY
+          node src/rolling-evaluation-v2.js >/tmp/corrected.log
+          cp data/processed/rolling-evaluation-v2.json /tmp/corrected.json
+      - name: Summarize target challenger
+        run: |
+          python3 - <<'PY'
+          import json
+          O=json.load(open('/tmp/old.json')); C=json.load(open('/tmp/corrected.json'))
+          def info(rep,m):
+            x=rep['markets'][m]; cs=x['complete_t24_state']
+            folds=x['fold_diagnostics']
+            return {
+              'rows':x['rows'],'complete_n':cs['n'],
+              'incremental':cs['incremental'],
+              'score_distribution':cs['score_distribution'],
+              'promotion_gate':cs['promotion_gate'],
+              'folds':[
+                {'train_end':f['train_end'],'test_start':f['test_start'],'test_end':f['test_end'],
+                 'n':f['complete_state_test_rows'],
+                 'incremental':f['complete_state_incremental'],
+                 'score_incremental':f['complete_state_score_distribution_incremental'],
+                 'delta_mu_intercept':f['delta_mu_model']['intercept'],
+                 'delta_tau_intercept':f['delta_tau_model']['intercept'],
+                 'delta_mu_coefficients':f['delta_mu_model']['coefficients'],
+                 'delta_tau_coefficients':f['delta_tau_model']['coefficients']}
+                for f in folds]
+            }
+          out={
+            'old':{'AH':info(O,'AH'),'OU':info(O,'OU'),'joint':O['joint_residual_correction']},
+            'corrected':{'AH':info(C,'AH'),'OU':info(C,'OU'),'joint':C['joint_residual_correction']}
+          }
+          print('TARGET_CHALLENGER='+json.dumps(out,separators=(',',':')))
+          PY
