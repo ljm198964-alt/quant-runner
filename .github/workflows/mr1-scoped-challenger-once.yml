@@ -31,6 +31,7 @@ jobs:
       - name: Baseline current-scope evaluation
         run: |
           cp data/processed/t24-dataset.json /tmp/full-dataset.json
+          node src/build-market-implied-v2.js >/tmp/build-baseline.log
           node src/rolling-evaluation-v2.js >/tmp/baseline.log
           cp data/processed/rolling-evaluation-v2.json /tmp/baseline.json
       - name: Build target-scope dataset
@@ -61,6 +62,7 @@ jobs:
           PY
       - name: Run old MR1 on target scope
         run: |
+          node src/build-market-implied-v2.js >/tmp/build-target.log
           node src/rolling-evaluation-v2.js >/tmp/old-target.log
           cp data/processed/rolling-evaluation-v2.json /tmp/old-target.json
       - name: Correct AH defence feature sign in isolated workspace and rerun
@@ -73,6 +75,7 @@ jobs:
           assert old in s
           open(p,'w').write(s.replace(old,new))
           PY
+          node src/build-market-implied-v2.js >/tmp/build-corrected.log
           node src/rolling-evaluation-v2.js >/tmp/corrected-target.log
           cp data/processed/rolling-evaluation-v2.json /tmp/corrected-target.json
       - name: Summarize
