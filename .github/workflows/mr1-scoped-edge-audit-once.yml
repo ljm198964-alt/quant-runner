@@ -1,0 +1,64 @@
+name: MR1 scoped league edge audit once
+on:
+  push:
+    paths:
+      - '.github/workflows/mr1-scoped-edge-audit-once.yml'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/mr1-shadow
+          ref: master
+          fetch-depth: 1
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+      - name: Scope OOT competition evidence
+        run: |
+          python3 - <<'PY'
+          import json,re
+          r=json.load(open('data/processed/rolling-evaluation-v2.json'))
+          second=[
+            'England Championship','Italy Serie B','Belgium First Division B','Portugal Segunda Liga',
+            'France Ligue 2','Netherlands Eerste Divisie','Japan J2-League','Northern Ireland Championship',
+            'Scotland Championship','Spain Segunda','Serbia Prva Liga','Ukraine Persha Liga','Austria 2. Liga',
+            'Israel Leumit Liga','Lithuania 1 Lyga','Switzerland Challenge League','Czechia 2. Liga',
+            'Denmark Division 1','Norway Division 1','Republic of Ireland First Division','Slovakia 2. Liga',
+            'Sweden Superettan','Germany Bundesliga II','South Korea K League 2','Romania Liga II',
+            'Hungary NB II','Poland I Liga','Finland Ykkosliiga','Croatia 1.NL','Türkiye 1 Lig',
+            'China Division 1','Saudi Arabia Division 1'
+          ]
+          opp_club=[
+            'Argentina Primera Division','Brazil Serie A','USA MLS','Italy Serie A','Mexico Liga MX',
+            'South Korea K League 1','Denmark Superligaen','Spain La Liga','France Ligue 1',
+            'Norway Eliteserien','Netherlands Eredivisie','Greece Super League 1','Portugal Primeira Liga',
+            'Colombia Primera A','Germany Bundesliga I','Sweden Allsvenskan','Türkiye Super Lig',
+            'Ukraine Vyscha Liga','Republic of Ireland Premier Division','Romania Liga I',
+            'Belgium First Division A','Czechia First League','Scotland Premiership',
+            'Austria Bundesliga','Japan J-League','Poland Ekstraklasa','Switzerland Super League'
+          ]
+          def groups(market):
+            c=r['markets'][market]['complete_t24_state']['competition_stability']['groups']
+            return {x['league']:x for x in c}
+          out={}
+          for market in ['AH','OU']:
+            g=groups(market)
+            def summarize(names):
+              rows=[g[n] for n in names if n in g]
+              n=sum(x['n'] for x in rows)
+              w=lambda key: sum(x['n']*x[key] for x in rows)/n if n else None
+              return {
+                'requested_leagues':len(names),'observed_leagues':len(rows),'n':n,
+                'weighted_incremental_log_loss':w('incremental_log_loss'),
+                'weighted_incremental_brier':w('incremental_brier'),
+                'weighted_incremental_ev':w('incremental_ev'),
+                'positive_log_loss_leagues':sum(x['incremental_log_loss']>0 for x in rows),
+                'positive_brier_leagues':sum(x['incremental_brier']>0 for x in rows),
+                'leagues':sorted(rows,key=lambda x:x['incremental_log_loss'],reverse=True)
+              }
+            out[market]={'second_tier':summarize(second),'opponent_club_top_tier':summarize(opp_club)}
+          print('MR1_SCOPED_EDGE='+json.dumps(out,separators=(',',':')))
+          PY
