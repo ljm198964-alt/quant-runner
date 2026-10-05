@@ -1,0 +1,35 @@
+name: MR1 target history deepen batch 1
+on:
+  push:
+    paths:
+      - '.github/workflows/mr1-target-history-deepen-1.yml'
+permissions:
+  contents: read
+concurrency:
+  group: totalcorner-api-runtime
+  cancel-in-progress: false
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/mr1-shadow
+          ref: master
+          fetch-depth: 0
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Deepen target history
+        env:
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+          MR1_HISTORY_TARGETS_JSON: '{"15":"Spain Segunda","121":"Netherlands Eerste Divisie","128":"Japan J2-League","57":"Portugal Segunda Liga"}'
+          MR1_HISTORY_MAX_PAGES: '20'
+        run: node src/backfill-research-universe-history.js
+      - name: Persist history
+        env:
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+        run: node src/persist-research-history.js
