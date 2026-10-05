@@ -24,12 +24,24 @@ jobs:
           out={}
           for m in ['AH','OU']:
               x=r['markets'][m]
+              abl={}
+              for name,a in (x.get('ablation') or {}).items():
+                  inc=a.get('incremental_vs_market') or {}
+                  score=a.get('score_distribution_metrics') or {}
+                  folds=a.get('folds') or []
+                  abl[name]={
+                    'groups':a.get('groups'),
+                    'incremental_log_loss':inc.get('incremental_log_loss'),
+                    'incremental_brier':inc.get('incremental_brier'),
+                    'incremental_ev':inc.get('incremental_ev'),
+                    'joint_score_log_loss':score.get('joint_score_log_loss'),
+                    'joint_score_brier':score.get('joint_score_brier'),
+                    'fold_incremental_log_loss':[f.get('incremental_vs_market',{}).get('incremental_log_loss') for f in folds],
+                    'fold_incremental_brier':[f.get('incremental_vs_market',{}).get('incremental_brier') for f in folds]
+                  }
               out[m]={
-                'ablation':x.get('ablation'),
-                'complete_incremental':x.get('complete_t24_state',{}).get('incremental'),
-                'complete_score_distribution':x.get('complete_t24_state',{}).get('score_distribution'),
-                'competition_stability':x.get('complete_t24_state',{}).get('competition_stability'),
+                'ablation':abl,
                 'promotion_gate':x.get('complete_t24_state',{}).get('promotion_gate')
               }
-          print('MR1_ABLATION='+json.dumps(out,separators=(',',':')))
+          print('MR1_ABLATION_COMPACT='+json.dumps(out,separators=(',',':')))
           PY
