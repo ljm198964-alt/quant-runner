@@ -22,6 +22,7 @@ jobs:
       - run: npm ci --ignore-scripts --no-audit --no-fund
       - name: Run frozen current model evaluation
         run: |
+          node src/build-market-implied-v2.js > /tmp/build-market-implied.log
           node src/rolling-evaluation-v2.js > /tmp/current.log
           cp data/processed/rolling-evaluation-v2.json /tmp/current.json
       - name: Apply corrected AH defence signs in isolated workspace
