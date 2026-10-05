@@ -1,0 +1,34 @@
+name: MR1 targeted second-tier backfill
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: totalcorner-api-runtime
+  cancel-in-progress: false
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/mr1-shadow
+          ref: master
+          fetch-depth: 0
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Backfill confirmed second-tier research history only
+        env:
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+          MR1_HISTORY_MAX_PAGES: '12'
+          MR1_HISTORY_TARGETS_JSON: >-
+            {"15":"Spain Segunda","57":"Portugal Segunda Liga","63":"Ukraine Persha Liga","121":"Netherlands Eerste Divisie","128":"Japan J2-League","210":"China Division 1","252":"Israel Leumit Liga","270":"Scotland Championship","337":"Serbia Prva Liga","542":"Lithuania 1 Lyga","765":"Northern Ireland Championship","10808":"Kosovo Division 1","10989":"Republic of Ireland First Division","11958":"Wales Championship North","11959":"Wales Championship South"}
+        run: node src/backfill-research-universe-history.js
+      - name: Summary
+        run: |
+          git status --short
+          find data/research-universe-history-v1 -name checkpoint.json -print -exec cat {} \;
