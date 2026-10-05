@@ -1,0 +1,35 @@
+name: MR1 ablation read once
+on:
+  push:
+    paths:
+      - '.github/workflows/mr1-ablation-read-once.yml'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/mr1-shadow
+          ref: master
+          fetch-depth: 1
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+      - name: Read frozen OOT ablations
+        run: |
+          python3 - <<'PY'
+          import json
+          r=json.load(open('data/processed/rolling-evaluation-v2.json'))
+          out={}
+          for m in ['AH','OU']:
+              x=r['markets'][m]
+              out[m]={
+                'ablation':x.get('ablation'),
+                'complete_incremental':x.get('complete_t24_state',{}).get('incremental'),
+                'complete_score_distribution':x.get('complete_t24_state',{}).get('score_distribution'),
+                'competition_stability':x.get('complete_t24_state',{}).get('competition_stability'),
+                'promotion_gate':x.get('complete_t24_state',{}).get('promotion_gate')
+              }
+          print('MR1_ABLATION='+json.dumps(out,separators=(',',':')))
+          PY
