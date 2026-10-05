@@ -1,0 +1,94 @@
+name: Xianji dependency bundle
+
+on:
+  push:
+    branches:
+      - xianji-deps-ci-20261005
+    paths:
+      - '.github/workflows/xianji-dependency-bundle.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  bundle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Write exact package manifest
+        shell: bash
+        run: |
+          mkdir -p /tmp/xianji-deps
+          cat > /tmp/xianji-deps/package.json <<'JSON'
+          {
+            "name": "xianji-app",
+            "main": "expo-router/entry",
+            "version": "1.0.0",
+            "private": true,
+            "dependencies": {
+              "@expo/ui": "~57.0.18",
+              "@expo/vector-icons": "^15.0.2",
+              "@gorhom/bottom-sheet": "^5.2.14",
+              "@react-native-async-storage/async-storage": "2.2.0",
+              "@shopify/flash-list": "2.0.2",
+              "@tanstack/react-query": "^5.102.8",
+              "expo": "~57.0.22",
+              "expo-constants": "~57.0.18",
+              "expo-device": "~57.0.2",
+              "expo-font": "~57.0.4",
+              "expo-glass-effect": "~57.0.3",
+              "expo-image": "~57.0.5",
+              "expo-linear-gradient": "~57.0.2",
+              "expo-linking": "~57.0.10",
+              "expo-media-library": "~57.0.5",
+              "expo-router": "~57.0.21",
+              "expo-secure-store": "~57.0.4",
+              "expo-splash-screen": "~57.0.9",
+              "expo-status-bar": "~57.0.1",
+              "expo-symbols": "~57.0.3",
+              "expo-system-ui": "~57.0.4",
+              "expo-web-browser": "~57.0.3",
+              "punycode": "^2.3.1",
+              "qrcode": "^1.5.4",
+              "react": "19.2.3",
+              "react-dom": "19.2.3",
+              "react-native": "0.86.3",
+              "react-native-gesture-handler": "~2.32.0",
+              "react-native-reanimated": "4.5.1",
+              "react-native-safe-area-context": "~5.7.0",
+              "react-native-screens": "~4.26.0",
+              "react-native-share": "^12.3.1",
+              "react-native-svg": "15.15.4",
+              "react-native-view-shot": "5.1.0",
+              "react-native-web": "~0.21.0",
+              "react-native-worklets": "0.10.1"
+            },
+            "devDependencies": {
+              "@types/qrcode": "^1.5.5",
+              "@types/react": "~19.2.2",
+              "eslint": "^9.39.5",
+              "eslint-config-expo": "~57.0.2",
+              "typescript": "~6.0.3"
+            }
+          }
+          JSON
+      - name: Install dependency graph
+        working-directory: /tmp/xianji-deps
+        run: npm install --no-audit --no-fund
+      - name: Pack portable dependency tree
+        working-directory: /tmp/xianji-deps
+        run: |
+          node -v > dependency-meta.txt
+          npm -v >> dependency-meta.txt
+          du -sh node_modules >> dependency-meta.txt
+          tar -czf xianji-node-modules-linux-x64-node22.tgz node_modules package-lock.json dependency-meta.txt
+          ls -lh xianji-node-modules-linux-x64-node22.tgz
+      - uses: actions/upload-artifact@v4
+        with:
+          name: xianji-node-modules-linux-x64-node22
+          path: /tmp/xianji-deps/xianji-node-modules-linux-x64-node22.tgz
+          compression-level: 0
+          retention-days: 1
