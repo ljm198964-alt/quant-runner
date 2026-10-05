@@ -2,6 +2,8 @@ name: MR1 AI Browser Settlement
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '*/15 * * * *'
   push:
     paths:
       - 'trigger/mr1_ai_browser_settlement.json'
