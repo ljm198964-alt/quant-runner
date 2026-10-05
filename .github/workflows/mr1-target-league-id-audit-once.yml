@@ -16,16 +16,29 @@ jobs:
           ref: master
           fetch-depth: 1
           token: ${{ secrets.PRIVATE_REPO_TOKEN }}
-      - name: Map low-quality target leagues to saved fixture IDs
+      - name: Resolve target league IDs from saved evidence
         run: |
           python3 - <<'PY'
-          import json,collections
-          f=json.load(open('data/prospective-market/shadow-v23/fixtures.json'))
-          priority=['Spain Segunda','Republic of Ireland First Division','Slovakia 2. Liga','Germany Bundesliga II','Portugal Segunda Liga','Egypt Division 2']
-          out={}
-          for league in priority:
-              rows=[x for x in f.values() if x.get('league')==league]
-              ids=collections.Counter(str(x.get('league_id')) for x in rows if x.get('league_id') is not None)
-              out[league]={'fixture_count':len(rows),'league_ids':dict(ids)}
-          print('LOW_QUALITY_LEAGUE_IDS='+json.dumps(out,separators=(',',':')))
+          import json,glob,collections
+          wanted={
+            'Spain Segunda','Netherlands Eerste Divisie','Japan J2-League','England Championship','France Ligue 2','Italy Serie B','Germany Bundesliga II',
+            'Brazil Serie B','Argentina Primera Division','Sweden Superettan','Norway Division 1','Portugal Segunda Liga','Austria 2. Liga','South Korea K League 2',
+            'Belgium First Division B','Cyprus Division 2','North Macedonia Second League','Kosovo Division 1','Andorra Second Division',
+            'Ukraine Persha Liga','Northern Ireland Championship','Scotland Championship','Egypt Division 2','Republic of Ireland First Division'
+          }
+          ids=collections.defaultdict(set)
+          try:
+            d=json.load(open('data/prospective-market/shadow-v23/fixtures.json'))
+            for x in d.values():
+              if x.get('league') in wanted and x.get('league_id') is not None: ids[x['league']].add(str(x['league_id']))
+          except: pass
+          for p in glob.glob('data/raw/league-history*.json'):
+            try:d=json.load(open(p))
+            except:continue
+            for lid,v in (d.get('leagues') or {}).items():
+              name=v.get('name')
+              if name in wanted: ids[name].add(str(lid))
+              for m in (v.get('matches') or [])[:30]:
+                if m.get('l') in wanted and m.get('l_id') is not None: ids[m['l']].add(str(m['l_id']))
+          print('TARGET_IDS='+json.dumps({k:sorted(v) for k,v in sorted(ids.items())},separators=(',',':')))
           PY
