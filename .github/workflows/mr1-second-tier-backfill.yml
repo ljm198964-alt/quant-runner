@@ -31,6 +31,11 @@ jobs:
           MR1_HISTORY_TARGETS_JSON: >-
             {"15":"Spain Segunda","57":"Portugal Segunda Liga","63":"Ukraine Persha Liga","121":"Netherlands Eerste Divisie","128":"Japan J2-League","210":"China Division 1","252":"Israel Leumit Liga","270":"Scotland Championship","337":"Serbia Prva Liga","542":"Lithuania 1 Lyga","765":"Northern Ireland Championship","10808":"Kosovo Division 1","10989":"Republic of Ireland First Division","11958":"Wales Championship North","11959":"Wales Championship South"}
         run: node src/backfill-research-universe-history.js
+      - name: Persist scoped research history
+        env:
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+        run: node src/persist-research-history.js
+
       - name: Summary
         run: |
           git status --short
