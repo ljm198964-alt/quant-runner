@@ -38,6 +38,8 @@ jobs:
         env:
           TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
         run: node src/mr1-ai-browser-forward.js
+      - name: Reconcile saved browser and API identity evidence
+        run: node src/mr1-ai-browser-reconcile.js
       - name: Persist isolated MR1 AI evidence
         if: always()
         shell: bash
