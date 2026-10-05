@@ -1,0 +1,69 @@
+name: MR1 defense-sign audit once
+on:
+  push:
+    paths:
+      - '.github/workflows/mr1-defense-sign-audit-once.yml'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/mr1-shadow
+          ref: master
+          fetch-depth: 1
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Run frozen current model evaluation
+        run: |
+          node src/rolling-evaluation-v2.js > /tmp/current.log
+          cp data/processed/rolling-evaluation-v2.json /tmp/current.json
+      - name: Apply corrected AH defence signs in isolated workspace
+        run: |
+          python3 - <<'PY'
+          p='src/residual-model.js'
+          s=open(p).read()
+          old="attack_defence_goal_difference: stateNumber(state, 'home_attack_rate') - stateNumber(state, 'away_defence_rate') - stateNumber(state, 'away_attack_rate') + stateNumber(state, 'home_defence_rate'),"
+          new="attack_defence_goal_difference: stateNumber(state, 'home_attack_rate') + stateNumber(state, 'away_defence_rate') - stateNumber(state, 'away_attack_rate') - stateNumber(state, 'home_defence_rate'),"
+          assert old in s
+          open(p,'w').write(s.replace(old,new))
+          PY
+          node src/rolling-evaluation-v2.js > /tmp/corrected.log
+          cp data/processed/rolling-evaluation-v2.json /tmp/corrected.json
+      - name: Compare OOT metrics
+        run: |
+          python3 - <<'PY'
+          import json
+          a=json.load(open('/tmp/current.json')); b=json.load(open('/tmp/corrected.json'))
+          def pick(r):
+            out={}
+            for m in ['AH','OU']:
+              x=r['markets'][m]
+              c=x['complete_t24_state']
+              out[m]={
+                'n':c['n'],
+                'incremental':c['incremental'],
+                'score_distribution':c['score_distribution'],
+                'folds_positive_log_loss':c['folds_with_positive_log_loss_increment'],
+                'folds_positive_brier':c['folds_with_positive_brier_increment'],
+                'folds_positive_joint_log_loss':c['folds_with_positive_joint_score_log_loss_increment'],
+                'folds_positive_joint_brier':c['folds_with_positive_joint_score_brier_increment'],
+                'promotion_gate':c['promotion_gate'],
+                'fold_models':[{
+                    'train_end':f['train_end'],
+                    'delta_mu_model':f.get('delta_mu_model'),
+                    'delta_tau_model':f.get('delta_tau_model'),
+                    'complete_state_incremental':f.get('complete_state_incremental'),
+                    'complete_state_score_distribution_incremental':f.get('complete_state_score_distribution_incremental')
+                } for f in x['fold_diagnostics']]
+              }
+            out['joint']=r.get('joint_residual_correction')
+            return out
+          print('MR1_DEFENSE_SIGN_AUDIT='+json.dumps({'current':pick(a),'corrected':pick(b)},separators=(',',':')))
+          PY
