@@ -1,6 +1,9 @@
 name: MR1 targeted second-tier backfill
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/mr1-second-tier-backfill.yml'
 permissions:
   contents: read
 concurrency:
