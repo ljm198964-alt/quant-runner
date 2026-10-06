@@ -1,3 +1,4 @@
+# activate
 name: MR1 discovery round-robin regression
 on:
   push:
