@@ -66,6 +66,10 @@ jobs:
       - name: Seed formal history identity index
         run: python m1_formal_runtime.py seed
 
+      - name: Incremental history cache regression
+        run: python -m unittest test_m1_formal_runtime.FormalRuntimeTest.test_incremental_league_history_cache_refreshes_front_and_stops_at_overlap
+
+
       - name: Run M1 scan with retry
         id: scan
         env:
