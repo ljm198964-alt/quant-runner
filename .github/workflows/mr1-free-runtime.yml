@@ -65,22 +65,10 @@ jobs:
           TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
         run: node src/persist-github-state.js
 
-      - name: Late-horizon research
+      - name: Build V6 AH formal evaluation
         if: always()
-        continue-on-error: true
-        timeout-minutes: 2
-        run: node src/late-horizon-research.js --evaluate
-
-      - name: V6 research
-        if: always()
-        continue-on-error: true
         timeout-minutes: 2
         run: node src/v6-cross-market-forward.js
-
-      - name: Update MR1 AH entry timing shadow race
-        if: always()
-        continue-on-error: true
-        run: node src/v6-ah-entry-timing-shadow.js
 
       - name: Settle existing MR1 V6 AH formal signals
         if: always()
@@ -95,9 +83,8 @@ jobs:
           MR1_TG_CHAT_ID: ${{ secrets.MR1_TG_CHAT_ID }}
         run: node src/v6-ah-formal-notify.js
 
-      - name: Persist isolated research state
+      - name: Persist formal V6 state
         if: always()
-        continue-on-error: true
         env:
           TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
         run: node src/persist-github-state.js
