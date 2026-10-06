@@ -2,11 +2,8 @@ name: M1 Historical Reconciliation
 
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - '.github/workflows/m1-reconcile-runtime.yml'
   schedule:
-    - cron: '45 3 * * *'
+    - cron: '30 2 * * *'
 
 permissions:
   contents: read
