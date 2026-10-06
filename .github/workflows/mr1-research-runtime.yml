@@ -1,0 +1,69 @@
+name: MR1 Research Runtime
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/mr1-research-runtime.yml'
+  schedule:
+    - cron: '2,17,32,47 * * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mr1-research-runtime
+  cancel-in-progress: true
+
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Check required secret
+        shell: bash
+        env:
+          PRIVATE_REPO_TOKEN: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+        run: |
+          set -euo pipefail
+          for v in PRIVATE_REPO_TOKEN TOTALCORNER_TOKEN; do
+            if [ -z "${!v:-}" ]; then
+              echo "::error::Missing required secret: $v"
+              exit 2
+            fi
+          done
+
+      - name: Checkout private MR1
+        uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/mr1-shadow
+          ref: master
+          fetch-depth: 0
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install
+        run: npm ci --ignore-scripts --no-audit --no-fund
+
+      - name: Record base
+        run: echo "RUNTIME_BASE_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+
+      - name: Evaluate late-horizon research
+        continue-on-error: true
+        timeout-minutes: 3
+        run: node src/late-horizon-research.js --evaluate
+
+      - name: Update AH entry-timing and edge-survival shadow
+        continue-on-error: true
+        timeout-minutes: 3
+        run: node src/v6-ah-entry-timing-shadow.js
+
+      - name: Persist research state
+        if: always()
+        env:
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+        run: node src/persist-github-state.js
