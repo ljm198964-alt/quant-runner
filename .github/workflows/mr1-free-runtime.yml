@@ -77,11 +77,6 @@ jobs:
         timeout-minutes: 2
         run: node src/v6-cross-market-forward.js
 
-      - name: Run MR1 OU T1 reverse shadow
-        if: always()
-        continue-on-error: true
-        run: node src/v6-ou-t1-reverse-shadow.js
-
       - name: Settle existing MR1 V6 AH formal signals
         if: always()
         continue-on-error: true
