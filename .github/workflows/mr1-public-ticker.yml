@@ -1,0 +1,40 @@
+name: MR1 Public Ticker
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/mr1-public-ticker.yml'
+  schedule:
+    - cron: '17 */4 * * *'
+
+permissions:
+  actions: write
+  contents: read
+
+concurrency:
+  group: mr1-public-ticker
+  cancel-in-progress: true
+
+jobs:
+  ticker:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    steps:
+      - name: Dispatch MR1 public runtime every five minutes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -u
+          for tick in $(seq 1 60); do
+            echo "MR1_TICK=$tick at $(date -u +%FT%TZ)"
+            gh workflow run mr1-free-runtime.yml               -R ljm198964-alt/quant-runner               --ref main || true
+            sleep 300
+          done
+
+      - name: Hand off to next ticker
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run mr1-public-ticker.yml -R ljm198964-alt/quant-runner --ref main
