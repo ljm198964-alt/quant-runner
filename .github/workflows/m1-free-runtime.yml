@@ -13,8 +13,8 @@ permissions:
   contents: read
 
 concurrency:
-  group: m1-free-runtime
-  cancel-in-progress: true
+  group: m1-ledger-runtime
+  cancel-in-progress: false
 
 jobs:
   run:
