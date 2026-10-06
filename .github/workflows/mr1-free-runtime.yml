@@ -77,6 +77,11 @@ jobs:
         timeout-minutes: 2
         run: node src/v6-cross-market-forward.js
 
+      - name: Update MR1 AH entry timing shadow race
+        if: always()
+        continue-on-error: true
+        run: node src/v6-ah-entry-timing-shadow.js
+
       - name: Settle existing MR1 V6 AH formal signals
         if: always()
         continue-on-error: true
