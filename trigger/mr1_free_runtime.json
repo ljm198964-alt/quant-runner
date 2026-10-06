@@ -1,5 +1,5 @@
 {
-  "reason": "validate discovery round-robin live",
-  "requested_at": "2026-10-06T09:10:00Z",
-  "validation": "future-date-round-robin"
+  "reason": "validate AH uncertainty shadow policies",
+  "requested_at": "2026-10-06T11:16:00Z",
+  "validation": "p75-p90-noise-shadow-race"
 }
