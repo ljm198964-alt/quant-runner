@@ -2,9 +2,6 @@ name: MR1 Research Runtime
 
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - '.github/workflows/mr1-research-runtime.yml'
   schedule:
     - cron: '2,17,32,47 * * * *'
 
