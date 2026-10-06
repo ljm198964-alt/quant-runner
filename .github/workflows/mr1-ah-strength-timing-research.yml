@@ -1,0 +1,40 @@
+name: MR1 AH strength timing research
+on:
+  push:
+    paths:
+      - '.github/workflows/mr1-ah-strength-timing-research.yml'
+permissions:
+  contents: read
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/mr1-shadow
+          ref: master
+          fetch-depth: 0
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: node --check src/v6-ah-strength-timing-research.js
+      - run: node src/v6-ah-strength-timing-research.js
+      - name: Persist result
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/mr1-ah-strength-timing
+          cp -R data/mr1-v6-cross-market/ah-strength-timing-research/. /tmp/mr1-ah-strength-timing/
+          git fetch origin master
+          git reset --hard origin/master
+          rm -rf data/mr1-v6-cross-market/ah-strength-timing-research
+          mkdir -p data/mr1-v6-cross-market/ah-strength-timing-research
+          cp -R /tmp/mr1-ah-strength-timing/. data/mr1-v6-cross-market/ah-strength-timing-research/
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/mr1-v6-cross-market/ah-strength-timing-research
+          git commit -m 'Run MR1 AH strength timing research'
+          git push origin HEAD:master
