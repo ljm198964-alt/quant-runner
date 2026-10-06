@@ -2,6 +2,8 @@ name: MR1 Free Runtime
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '*/5 * * * *'
 
 permissions:
   contents: read
@@ -52,6 +54,16 @@ jobs:
           TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
           MR1_RUNTIME_EXECUTOR: PUBLIC_RUNNER
         run: node src/github-shadow-runtime.js
+
+      - name: Deliver MR1 formal candidates
+        if: success()
+        continue-on-error: true
+        env:
+          MR1_TG_BOT_TOKEN: ${{ secrets.MR1_TG_BOT_TOKEN }}
+          MR1_TG_CHAT_ID: ${{ secrets.MR1_TG_CHAT_ID }}
+        run: |
+          RUN_ID=$(node -e "const fs=require('fs');const x=JSON.parse(fs.readFileSync('data/github-runtime/run-status.json','utf8'));if(x.strategy_run_id)process.stdout.write(x.strategy_run_id)")
+          if [ -n "$RUN_ID" ]; then node src/telegram-formal-notify.js "$RUN_ID"; fi
 
       - name: Persist MR1 state
         if: always()
