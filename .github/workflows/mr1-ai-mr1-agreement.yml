@@ -1,0 +1,38 @@
+name: MR1 AI x MR1 pre-signal agreement
+
+on:
+  push:
+    paths:
+      - '.github/workflows/mr1-ai-mr1-agreement.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout private MR1
+        uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/mr1-shadow
+          ref: master
+          fetch-depth: 0
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run pre-signal agreement audit
+        run: node mr1-ai-mr1-agreement.js
+      - name: Persist research result only
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- data/mr1-ai-browser-forward/mr1-agreement
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Audit MR1 AI pre-signal agreement with MR1'
+          git pull --rebase origin master
+          git push origin HEAD:master
