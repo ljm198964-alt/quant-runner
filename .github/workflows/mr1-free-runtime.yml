@@ -65,6 +65,12 @@ jobs:
       - name: Record base
         run: echo "RUNTIME_BASE_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
 
+      - name: Repair existing MR1 messages to Chinese display
+        env:
+          MR1_TG_BOT_TOKEN: ${{ secrets.MR1_TG_BOT_TOKEN }}
+          MR1_TG_CHAT_ID: ${{ secrets.MR1_TG_CHAT_ID }}
+        run: node src/v6-ah-formal-display-repair.js
+
       - name: MR1 API runtime
         env:
           TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
