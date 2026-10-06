@@ -118,24 +118,9 @@ jobs:
         if: always() && steps.prepare.outcome == 'success'
         run: bash m1_commit_state.sh scan
 
-      - name: Settle pending picks
-        id: settle
-        if: always() && (steps.commit_scan.outcome == 'success' || steps.scan.outcome == 'failure')
-        env:
-          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
-          TOTALCORNER_TZ_OFFSET: '8'
-        run: |
-          python m1_formal_runtime.py settle
-          python m1_formal_runtime.py report
-
-      - name: Persist settlement
-        id: commit_formal
-        if: always() && steps.settle.outcome == 'success'
-        run: bash m1_commit_state.sh formal
-
       - name: Claim pending notifications
         id: claim
-        if: always() && steps.commit_formal.outcome == 'success'
+        if: always() && steps.commit_scan.outcome == 'success'
         env:
           M1_GMAIL_USER: ${{ secrets.M1_GMAIL_USER }}
           M1_GMAIL_APP_PASSWORD: ${{ secrets.M1_GMAIL_APP_PASSWORD }}
