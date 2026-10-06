@@ -59,16 +59,6 @@ jobs:
           MR1_RUNTIME_EXECUTOR: PUBLIC_RUNNER
         run: node src/github-shadow-runtime.js
 
-      - name: Deliver MR1 formal candidates
-        if: success()
-        continue-on-error: true
-        env:
-          MR1_TG_BOT_TOKEN: ${{ secrets.MR1_TG_BOT_TOKEN }}
-          MR1_TG_CHAT_ID: ${{ secrets.MR1_TG_CHAT_ID }}
-        run: |
-          RUN_ID=$(node -e "const fs=require('fs');const x=JSON.parse(fs.readFileSync('data/github-runtime/run-status.json','utf8'));if(x.strategy_run_id)process.stdout.write(x.strategy_run_id)")
-          if [ -n "$RUN_ID" ]; then node src/telegram-formal-notify.js "$RUN_ID"; fi
-
       - name: Persist MR1 state
         if: always()
         env:
@@ -86,6 +76,19 @@ jobs:
         continue-on-error: true
         timeout-minutes: 2
         run: node src/v6-cross-market-forward.js
+
+      - name: Settle existing MR1 V6 AH formal signals
+        if: always()
+        continue-on-error: true
+        run: node src/v6-ah-formal-settlement.js
+
+      - name: Deliver MR1 V6 AH formal signals
+        if: always()
+        continue-on-error: true
+        env:
+          MR1_TG_BOT_TOKEN: ${{ secrets.MR1_TG_BOT_TOKEN }}
+          MR1_TG_CHAT_ID: ${{ secrets.MR1_TG_CHAT_ID }}
+        run: node src/v6-ah-formal-notify.js
 
       - name: Persist isolated research state
         if: always()
