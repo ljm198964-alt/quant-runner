@@ -1,5 +1,5 @@
 {
-  "reason": "validate live MR1 V6 AH formal production after regression PASS",
-  "date": "2026-10-06",
-  "validation": "v6_ah_formal_live"
+  "reason": "validate MR1 after restoring public ticker",
+  "requested_at": "2026-10-06T08:57:00Z",
+  "validation": "mr1_public_runtime_current_state"
 }
