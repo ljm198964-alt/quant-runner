@@ -1,3 +1,4 @@
+# rerun after syntax/assertion fix
 name: MR1 V6 AH regression diagnostic
 
 on:
