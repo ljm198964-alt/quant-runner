@@ -1,0 +1,44 @@
+name: MR1 AI visible Chrome regression
+
+on:
+  push:
+    paths:
+      - '.github/workflows/mr1-ai-visible-chrome-regression.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/mr1-shadow
+          ref: master
+          fetch-depth: 0
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Syntax check
+        run: |
+          node --check src/mr1-ai-local-browser.js
+          node --check src/mr1-ai-one-click.js
+          node --check src/mr1-ai-local-launchd.js
+      - name: Visible browser regression
+        run: node --test test-mr1-ai-visible-browser.js
+      - name: Persist regression result
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p data/mr1-ai-browser-forward
+          printf '{\n  "status": "PASS",\n  "test": "test-mr1-ai-visible-browser.js",\n  "real_browser_started": false,\n  "telegram_real_send": false\n}\n' > data/mr1-ai-browser-forward/visible-browser-regression.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/mr1-ai-browser-forward/visible-browser-regression.json
+          git commit -m 'Verify MR1 AI visible Chrome collector mode'
+          git pull --rebase origin master
+          git push origin HEAD:master
