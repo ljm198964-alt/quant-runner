@@ -1,0 +1,232 @@
+name: M1 national-team reverse-price audit
+
+on:
+  push:
+    paths:
+      - '.github/workflows/m1-national-team-reverse-audit.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout private M1
+        uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/totalcorner-research-bridge
+          ref: master
+          fetch-depth: 0
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Audit exact reverse prices
+        shell: bash
+        run: |
+          python - <<'PY'
+          from __future__ import annotations
+          from collections import defaultdict
+          from decimal import Decimal
+          from pathlib import Path
+          import json
+          from m1_accounting import settlement_pnl
+
+          LEDGER = Path("results/m1_formal_ledger.json")
+          OUT_JSON = Path("results/m1_national_team_reverse_audit.json")
+          OUT_MD = Path("results/m1_national_team_reverse_audit.md")
+          D = Decimal
+
+          ledger = json.loads(LEDGER.read_text(encoding="utf-8"))
+
+          def is_national(lock):
+              comp = str(lock.get("competition") or "")
+              return comp == "International Match" or comp == "Gulf Cup" or comp.startswith("UEFA Nations League")
+
+          def current_settlement(key):
+              rows = ledger.get("settlements", {}).get(key) or []
+              return rows[-1] if rows else None
+
+          def exact_opposite_quote(lock):
+              ev = lock.get("market_evidence") or {}
+              side = str(ev.get("side") or "")
+              target_obs = str(ev.get("observed_at") or lock.get("source_observation") or "")
+              path = ev.get("market_path") or []
+              quote = None
+              for row in path:
+                  if str(row.get("observed_at") or "") == target_obs:
+                      quote = row
+              if quote is None and path:
+                  quote = path[-1]
+              if not quote:
+                  raise ValueError("missing_market_path")
+              p1, p2 = D(str(quote["p1"])), D(str(quote["p2"]))
+              if lock["market"] == "AH":
+                  if side == "HOME":
+                      return {
+                          "side": "AWAY", "selection": lock["away"],
+                          "line": -D(str(lock["line"])), "price": p2,
+                          "quote_observed_at": quote.get("observed_at"),
+                      }
+                  if side == "AWAY":
+                      return {
+                          "side": "HOME", "selection": lock["home"],
+                          "line": -D(str(lock["line"])), "price": p1,
+                          "quote_observed_at": quote.get("observed_at"),
+                      }
+              elif lock["market"] == "OU":
+                  if side == "OVER":
+                      return {
+                          "side": "UNDER", "selection": "小",
+                          "line": D(str(lock["line"])), "price": p2,
+                          "quote_observed_at": quote.get("observed_at"),
+                      }
+                  if side == "UNDER":
+                      return {
+                          "side": "OVER", "selection": "大",
+                          "line": D(str(lock["line"])), "price": p1,
+                          "quote_observed_at": quote.get("observed_at"),
+                      }
+              raise ValueError(f"unsupported_side:{lock['market']}:{side}")
+
+          def state_from_pnl(pnl, hk):
+              if pnl == hk: return "FULL_WIN"
+              if pnl == hk / 2: return "HALF_WIN"
+              if pnl == 0: return "PUSH"
+              if pnl == D("-0.5"): return "HALF_LOSS"
+              if pnl == D("-1"): return "FULL_LOSS"
+              return "OTHER"
+
+          rows = []
+          unresolved = []
+          for key, lock in ledger.get("picks", {}).items():
+              if not is_national(lock):
+                  continue
+              settlement = current_settlement(key)
+              if settlement is None:
+                  continue
+              result_rows = ledger.get("results", {}).get(key) or []
+              if not result_rows:
+                  unresolved.append({"key": key, "reason": "missing_result_evidence"})
+                  continue
+              result = result_rows[-1]
+              try:
+                  reverse = exact_opposite_quote(lock)
+                  reverse_hk = reverse["price"] - D("1")
+                  market_name = "全场让球" if lock["market"] == "AH" else "全场大小球"
+                  reverse_pnl = settlement_pnl(
+                      market_name, reverse["selection"], reverse["line"], reverse_hk,
+                      lock["home"], lock["away"],
+                      int(result["home_goals"]), int(result["away_goals"])
+                  )
+                  rows.append({
+                      "key": key,
+                      "fixture_id": lock["fixture_id"],
+                      "competition": lock["competition"],
+                      "market": lock["market"],
+                      "home": lock["home"], "away": lock["away"],
+                      "original_selection": lock["selection"],
+                      "original_line": lock["line"],
+                      "original_price": lock["price"],
+                      "original_state": settlement["state"],
+                      "original_pnl_u": float(D(str(settlement["pnl_u"]))),
+                      "reverse_selection": reverse["selection"],
+                      "reverse_line": float(reverse["line"]),
+                      "reverse_price": float(reverse["price"]),
+                      "reverse_state": state_from_pnl(reverse_pnl, reverse_hk),
+                      "reverse_pnl_u": float(reverse_pnl),
+                      "quote_observed_at": reverse["quote_observed_at"],
+                      "home_goals": int(result["home_goals"]),
+                      "away_goals": int(result["away_goals"]),
+                  })
+              except Exception as exc:
+                  unresolved.append({"key": key, "reason": f"{type(exc).__name__}:{exc}"})
+
+          def summarize(items):
+              original = sum((D(str(x["original_pnl_u"])) for x in items), D("0"))
+              reverse = sum((D(str(x["reverse_pnl_u"])) for x in items), D("0"))
+              n = len(items)
+              states = lambda field: {s: sum(x[field] == s for x in items)
+                  for s in ("FULL_WIN","HALF_WIN","PUSH","HALF_LOSS","FULL_LOSS","OTHER")}
+              return {
+                  "n": n,
+                  "original_pnl_u": float(original),
+                  "original_roi": float(original / n) if n else None,
+                  "reverse_pnl_u": float(reverse),
+                  "reverse_roi": float(reverse / n) if n else None,
+                  "original_states": states("original_state"),
+                  "reverse_states": states("reverse_state"),
+                  "mean_original_price": float(sum((D(str(x["original_price"])) for x in items), D("0")) / n) if n else None,
+                  "mean_reverse_price": float(sum((D(str(x["reverse_price"])) for x in items), D("0")) / n) if n else None,
+              }
+
+          by_comp = {}
+          for comp in sorted({x["competition"] for x in rows}):
+              by_comp[comp] = summarize([x for x in rows if x["competition"] == comp])
+          by_market = {}
+          for market in ("AH","OU"):
+              by_market[market] = summarize([x for x in rows if x["market"] == market])
+
+          output = {
+              "scope": "Current user-approved M1 national-team competitions only: International Match, UEFA Nations League*, Gulf Cup; settled PICK_LOCKED only.",
+              "method": "Flip the selected side on the identical locked market line and settle using the exact opposite-side decimal price recorded in the same decision-time two-sided quote.",
+              "production_changed": False,
+              "summary": summarize(rows),
+              "by_competition": by_comp,
+              "by_market": by_market,
+              "exact_price_rows": len(rows),
+              "unresolved_count": len(unresolved),
+              "unresolved": unresolved,
+              "rows": rows,
+          }
+          OUT_JSON.write_text(json.dumps(output, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+          s = output["summary"]
+          lines = [
+              "# M1 国家队真实反买审计",
+              "",
+              f"- 已结算且取得同一时点真实反向水位：{s['n']} 单",
+              f"- 原方向：{s['original_pnl_u']:.4f}u，ROI {s['original_roi']:.2%}",
+              f"- 真实反向：{s['reverse_pnl_u']:.4f}u，ROI {s['reverse_roi']:.2%}",
+              f"- 原方向平均十进制赔率：{s['mean_original_price']:.4f}",
+              f"- 反向平均十进制赔率：{s['mean_reverse_price']:.4f}",
+              f"- 未解析：{len(unresolved)} 单",
+              "",
+              "## 分赛事",
+          ]
+          for comp, v in by_comp.items():
+              lines.append(f"- {comp}: n={v['n']}, 原 {v['original_pnl_u']:.4f}u ({v['original_roi']:.2%}), 反 {v['reverse_pnl_u']:.4f}u ({v['reverse_roi']:.2%})")
+          lines += ["", "## 分市场"]
+          for market, v in by_market.items():
+              lines.append(f"- {market}: n={v['n']}, 原 {v['original_pnl_u']:.4f}u ({v['original_roi']:.2%}), 反 {v['reverse_pnl_u']:.4f}u ({v['reverse_roi']:.2%})")
+          lines += ["", "研究审计，不改变 M1 生产选择、阈值或发送逻辑。"]
+          OUT_MD.write_text("\n".join(lines) + "\n", encoding="utf-8")
+          print(json.dumps(output["summary"], ensure_ascii=False))
+          if unresolved:
+              print(json.dumps({"unresolved": unresolved}, ensure_ascii=False))
+          PY
+
+      - name: Persist audit only
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add results/m1_national_team_reverse_audit.json results/m1_national_team_reverse_audit.md
+          if git diff --cached --quiet; then
+            echo "No audit changes"
+            exit 0
+          fi
+          git commit -m "Audit M1 national-team exact reverse prices"
+          for attempt in 1 2 3; do
+            git pull --rebase origin master
+            if git push origin HEAD:master; then
+              exit 0
+            fi
+            sleep $((attempt * 2))
+          done
+          exit 1
