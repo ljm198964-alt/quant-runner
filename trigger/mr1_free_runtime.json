@@ -1,5 +1,5 @@
 {
-  "reason": "validate corrected MR1 formal-delivery status",
+  "reason": "validate live MR1 V6 AH formal production after regression PASS",
   "date": "2026-10-06",
-  "validation": "formal_delivery_status_fix"
+  "validation": "v6_ah_formal_live"
 }
