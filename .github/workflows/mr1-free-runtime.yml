@@ -43,6 +43,18 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.PRIVATE_REPO_TOKEN }}
 
+      - name: Checkout shared Chinese football registry
+        uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/totalcorner-research-bridge
+          ref: master
+          path: external/football-display-registry
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          sparse-checkout: |
+            data/football_display_names
+          sparse-checkout-cone-mode: true
+          persist-credentials: false
+
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
