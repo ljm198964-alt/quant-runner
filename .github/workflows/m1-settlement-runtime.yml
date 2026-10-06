@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: m1-settlement-ledger
+  group: m1-ledger-runtime
   cancel-in-progress: false
 
 jobs:
