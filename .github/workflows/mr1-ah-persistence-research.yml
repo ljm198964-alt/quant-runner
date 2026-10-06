@@ -1,3 +1,4 @@
+# activate
 name: MR1 AH persistence research
 on:
   push:
