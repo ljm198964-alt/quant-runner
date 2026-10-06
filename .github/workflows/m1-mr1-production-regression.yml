@@ -1,0 +1,69 @@
+name: M1 MR1 production regression
+
+on:
+  push:
+    paths:
+      - '.github/workflows/m1-mr1-production-regression.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  m1:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/totalcorner-research-bridge
+          ref: master
+          fetch-depth: 0
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install numpy scipy requests
+      - name: M1 national reverse regression
+        env:
+          TOTALCORNER_TOKEN: TEST
+        run: python test_m1_national_reverse.py
+      - name: Persist M1 regression result
+        run: |
+          set -euo pipefail
+          printf '{\n  "status": "PASS",\n  "test": "test_m1_national_reverse.py",\n  "telegram_real_send": false\n}\n' > results/m1_national_reverse_test.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add results/m1_national_reverse_test.json
+          git commit -m 'Verify M1 national reverse production logic'
+          git pull --rebase origin master
+          git push origin HEAD:master
+
+  mr1:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/mr1-shadow
+          ref: master
+          fetch-depth: 0
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Syntax check
+        run: npm run check
+      - name: MR1 V6 AH formal regression
+        run: node --test test-v6-ah-formal.js
+      - name: Persist MR1 regression result
+        run: |
+          set -euo pipefail
+          mkdir -p data/mr1-v6-cross-market/formal
+          printf '{\n  "status": "PASS",\n  "test": "test-v6-ah-formal.js",\n  "telegram_real_send": false\n}\n' > data/mr1-v6-cross-market/formal/regression-test.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/mr1-v6-cross-market/formal/regression-test.json
+          git commit -m 'Verify MR1 V6 AH formal production chain'
+          git pull --rebase origin master
+          git push origin HEAD:master
