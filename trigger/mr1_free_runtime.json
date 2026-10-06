@@ -1,4 +1,5 @@
 {
-  "reason": "validate MR1 formal-delivery status after notifier connection",
-  "date": "2026-10-06"
+  "reason": "validate corrected MR1 formal-delivery status",
+  "date": "2026-10-06",
+  "validation": "formal_delivery_status_fix"
 }
