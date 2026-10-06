@@ -51,6 +51,11 @@ jobs:
           TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
         run: node src/mr1-ai-browser-settlement.js
 
+      - name: Update clean MR1 AI live performance
+        if: always()
+        continue-on-error: true
+        run: node src/mr1-ai-formal-performance.js
+
       - name: Update MR1 AI optimization research
         if: always()
         continue-on-error: true
@@ -68,7 +73,7 @@ jobs:
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -- data/mr1-ai-browser-forward/settlement data/mr1-ai-browser-forward/settlement-resolution data/mr1-ai-browser-forward/optimization-research data/mr1-ai-browser-forward/collector-watch-status.json
+          git add -- data/mr1-ai-browser-forward/settlement data/mr1-ai-browser-forward/settlement-resolution data/mr1-ai-browser-forward/formal-performance data/mr1-ai-browser-forward/optimization-research data/mr1-ai-browser-forward/collector-watch-status.json
           if git diff --cached --quiet; then exit 0; fi
           git commit -m 'Settle MR1 AI browser-forward contracts'
           # The TotalCorner transport updates local rate-limit/checkpoint files outside
