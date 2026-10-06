@@ -61,5 +61,8 @@ jobs:
           git add -- data/mr1-ai-browser-forward/settlement data/mr1-ai-browser-forward/settlement-resolution
           if git diff --cached --quiet; then exit 0; fi
           git commit -m 'Settle MR1 AI browser-forward contracts'
+          # The TotalCorner transport updates local rate-limit/checkpoint files outside
+          # the isolated settlement paths. Discard those runtime-only changes before rebase.
+          git reset --hard HEAD
           git pull --rebase origin master
           git push origin HEAD:master
