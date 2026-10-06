@@ -1,4 +1,4 @@
-# Operational recovery 2026-10-04: invoke the existing push trigger; schedule and strategy unchanged.
+# Production validation 2026-10-06: national-team reverse execution enabled.
 name: M1 Free Runtime
 
 on:
