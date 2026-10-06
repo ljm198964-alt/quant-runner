@@ -1,3 +1,4 @@
+# activate
 name: MR1 AH stable edge combined research
 on:
   push:
