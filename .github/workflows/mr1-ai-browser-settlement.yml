@@ -56,6 +56,11 @@ jobs:
         continue-on-error: true
         run: node src/mr1-ai-optimization-research.js
 
+      - name: Check MR1 AI local collector freshness
+        if: always()
+        continue-on-error: true
+        run: node src/mr1-ai-collector-watch.js
+
       - name: Persist settlement and research
         if: always()
         shell: bash
@@ -63,7 +68,7 @@ jobs:
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -- data/mr1-ai-browser-forward/settlement data/mr1-ai-browser-forward/settlement-resolution data/mr1-ai-browser-forward/optimization-research
+          git add -- data/mr1-ai-browser-forward/settlement data/mr1-ai-browser-forward/settlement-resolution data/mr1-ai-browser-forward/optimization-research data/mr1-ai-browser-forward/collector-watch-status.json
           if git diff --cached --quiet; then exit 0; fi
           git commit -m 'Settle MR1 AI browser-forward contracts'
           # The TotalCorner transport updates local rate-limit/checkpoint files outside
