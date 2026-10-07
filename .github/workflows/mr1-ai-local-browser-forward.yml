@@ -56,6 +56,13 @@ jobs:
           TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
           CAPTURE_PATH: ${{ inputs.capture_path }}
         run: node src/mr1-ai-browser-forward.js "$CAPTURE_PATH"
+      - name: Verify OU V12 core
+        run: node --test test-mr1-ai-ou-v12.js
+      - name: Resolve OU research signals from this capture
+        env:
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+          CAPTURE_PATH: ${{ inputs.capture_path }}
+        run: node src/mr1-ai-ou-forward-v12.js "$CAPTURE_PATH"
       - name: Reconcile pre-kickoff browser and API evidence
         run: node src/mr1-ai-browser-reconcile.js
       - name: Deliver only this fresh MR1 AI capture
@@ -71,7 +78,7 @@ jobs:
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -- data/mr1-ai-browser-forward data/mr1-v7-ai-picks
+          git add -- data/mr1-ai-browser-forward data/mr1-v7-ai-picks data/mr1-ai-ou-forward-v12
           if git diff --cached --quiet; then exit 0; fi
           git commit -m 'Persist new MR1 AI local-browser evidence'
           git pull --rebase origin master
