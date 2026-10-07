@@ -1,4 +1,4 @@
 {
-  "reason": "repair latest MR1 Korean/Japanese Chinese display",
-  "triggered_at": "2026-10-07T05:42:00Z"
+  "reason": "reapply latest MR1 Chinese mappings",
+  "triggered_at": "2026-10-07T05:47:00Z"
 }
