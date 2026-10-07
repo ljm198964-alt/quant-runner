@@ -103,7 +103,7 @@ jobs:
             fs.readFile(SENT,'utf8'),
             readJson(LEDGER,{entries:{}}),
             loadFootballDisplayRegistry(),
-            readJson(CACHE,{})
+            Promise.resolve({})
           ]);
           const rows=sentText.split(String.fromCharCode(10)).filter(Boolean).map(JSON.parse);
           const fixtureByMatch=new Map();
