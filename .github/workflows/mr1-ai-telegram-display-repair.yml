@@ -53,7 +53,7 @@ jobs:
           const REPORT='data/mr1-ai-browser-forward/telegram-edit-repair.json';
 
           const hasHan=v=>/[\\u3400-\\u9fff]/u.test(String(v??''));
-          const hasLatin=v=>/[A-Za-z]{2,}/u.test(String(v??'').replace(/MR1 AI/gu,''));
+          const hasLatin=v=>/[A-Za-z]{2,}/u.test(String(v??'').replace(/MR1 AI| vs /gu,''));
           const bad=v=>String(v??'').includes('未知')||hasLatin(v);
           const sleep=ms=>new Promise(r=>setTimeout(r,ms));
           const readJson=async(p,f)=>JSON.parse(await fs.readFile(p,'utf8').catch(e=>e.code==='ENOENT'?JSON.stringify(f):Promise.reject(e)));
@@ -111,6 +111,7 @@ jobs:
 
           const report={generated_at:new Date().toISOString(),total:rows.length,candidates:0,edited:0,failed:0,no_fixture:0,no_message_id:0,failures:[]};
           for(const row of rows){
+            if(Number(row.telegram_message_id)<428)continue;
             if(!bad(row.text))continue;
             report.candidates++;
             if(!row.telegram_message_id){report.no_message_id++;continue;}
