@@ -1,0 +1,62 @@
+name: Opponent Settlement Runtime
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/opponent-settlement-runtime.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: opponent-settlement-runtime
+  cancel-in-progress: false
+
+jobs:
+  settle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check required secrets
+        shell: bash
+        env:
+          PRIVATE_REPO_TOKEN: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+        run: |
+          set -euo pipefail
+          for v in PRIVATE_REPO_TOKEN TOTALCORNER_TOKEN; do
+            if [ -z "${!v:-}" ]; then
+              echo "::error::Missing required secret: $v"
+              exit 2
+            fi
+          done
+
+      - name: Checkout private M1/opponent repository
+        uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/totalcorner-research-bridge
+          ref: master
+          fetch-depth: 0
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Settle current opponent picks
+        env:
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+        run: python opponent_settlement.py
+
+      - name: Persist opponent settlement
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- results/opponent_settlement_latest.json results/opponent_settlement_latest.md
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Update opponent settlement'
+          git pull --rebase origin master
+          git push origin HEAD:master
