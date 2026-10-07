@@ -78,7 +78,8 @@ jobs:
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -- data/mr1-ai-browser-forward data/mr1-v7-ai-picks\n          if [ -d data/mr1-ai-ou-forward-v12 ]; then git add -- data/mr1-ai-ou-forward-v12; fi
+          git add -- data/mr1-ai-browser-forward data/mr1-v7-ai-picks
+          if [ -d data/mr1-ai-ou-forward-v12 ]; then git add -- data/mr1-ai-ou-forward-v12; fi
           if git diff --cached --quiet; then exit 0; fi
           git commit -m 'Persist new MR1 AI local-browser evidence'
           git pull --rebase origin master
