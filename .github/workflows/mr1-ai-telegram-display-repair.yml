@@ -52,7 +52,7 @@ jobs:
           const CACHE='data/mr1-ai-browser-forward/display-repair-cache.json';
           const REPORT='data/mr1-ai-browser-forward/telegram-edit-repair.json';
 
-          const hasHan=v=>/[\\u3400-\\u9fff]/u.test(String(v??''));
+          const hasHan=v=>/[㐀-鿿]/u.test(String(v??''));
           const hasLatin=v=>/[A-Za-z]{2,}/u.test(String(v??'').replace(/MR1 AI| vs /gu,''));
           const bad=v=>String(v??'').includes('未知')||hasLatin(v);
           const sleep=ms=>new Promise(r=>setTimeout(r,ms));
