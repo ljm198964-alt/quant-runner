@@ -50,7 +50,7 @@ jobs:
       - name: Reconstruct historical executable OU evidence
         env:
           TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
-        run: node src/mr1-ai-ou-forward-v12.js --bootstrap-limit=50
+        run: node src/mr1-ai-ou-forward-v12.js --bootstrap-limit=150
       - name: Settle reconstructed OU research ledger
         run: node src/mr1-ai-ou-settlement-v12.js
       - name: Persist V12 research ledger
