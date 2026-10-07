@@ -105,7 +105,7 @@ jobs:
             loadFootballDisplayRegistry(),
             readJson(CACHE,{})
           ]);
-          const rows=sentText.split('\\n').filter(Boolean).map(JSON.parse);
+          const rows=sentText.split(String.fromCharCode(10)).filter(Boolean).map(JSON.parse);
           const fixtureByMatch=new Map();
           for(const e of Object.values(ledger.entries||{}))if(e?.fixture?.match_id)fixtureByMatch.set(String(e.fixture.match_id),e.fixture);
 
@@ -140,7 +140,7 @@ jobs:
             }
           }
 
-          await fs.writeFile(SENT,rows.map(x=>JSON.stringify(x)).join('\\n')+'\\n');
+          await fs.writeFile(SENT,rows.map(x=>JSON.stringify(x)).join(String.fromCharCode(10))+String.fromCharCode(10));
           await saveJson(CACHE,cache);
           await saveJson(REPORT,report);
           console.log(JSON.stringify(report));
