@@ -1,0 +1,35 @@
+name: MR1 V6 Current Display Fix
+on:
+  workflow_dispatch:
+jobs:
+  edit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Edit six current messages
+        env:
+          TOKEN: ${{ secrets.MR1_TG_BOT_TOKEN }}
+          CHAT: ${{ secrets.MR1_TG_CHAT_ID }}
+        run: |
+          cat > /tmp/fix.mjs <<'JS'
+          const rows=[
+          [419,'【MR1】2026-10-10 13:00 韩国K1联赛 首尔FC vs 济州SK 全场让球 济州SK +1@0.775'],
+          [420,'【MR1】2026-10-10 14:00 日本J1联赛 福冈黄蜂 vs 冈山绿雉 全场让球 福冈黄蜂 +0.25@0.775'],
+          [424,'【MR1】2026-10-10 21:30 德国甲级联赛 奥格斯堡 vs 拜仁慕尼黑 全场让球 奥格斯堡 +2.25@1.00'],
+          [425,'【MR1】2026-10-10 22:00 挪威超级联赛 博德闪耀 vs 克里斯蒂安松 全场让球 克里斯蒂安松 +3@0.90'],
+          [426,'【MR1】2026-10-10 22:00 苏格兰超级联赛 哈茨 vs 圣米伦 全场让球 圣米伦 +1.5@0.85'],
+          [427,'【MR1】2026-10-10 22:00 苏格兰超级联赛 流浪者 vs 基尔马诺克 全场让球 基尔马诺克 +2.5@0.825']
+          ];
+          let failed=0;
+          for(const [message_id,text] of rows){
+            const r=await fetch('https://api.telegram.org/bot'+process.env.TOKEN+'/editMessageText',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({chat_id:process.env.CHAT,message_id,text}),signal:AbortSignal.timeout(15000)});
+            const b=await r.json().catch(()=>null);
+            const ok=r.ok&&b?.ok===true;
+            console.log(JSON.stringify({message_id,ok,status:r.status,description:b?.description||null}));
+            if(!ok&&!String(b?.description||'').includes('message is not modified'))failed++;
+          }
+          if(failed)process.exit(1);
+          JS
+          node /tmp/fix.mjs
