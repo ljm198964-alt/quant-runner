@@ -51,6 +51,7 @@ jobs:
           TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
           TOTALCORNER_TZ_OFFSET: '8'
         run: |
+          python m1_ou_shadow.py update
           python m1_formal_runtime.py settle
           python m1_ou_shadow.py settle
           python m1_formal_runtime.py report
