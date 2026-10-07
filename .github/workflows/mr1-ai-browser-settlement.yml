@@ -51,6 +51,13 @@ jobs:
           TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
         run: node src/mr1-ai-browser-settlement.js
 
+      - name: Follow first-tier forward OU market
+        if: always()
+        continue-on-error: true
+        env:
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+        run: node src/mr1-ai-ou-market-follow-v12.js
+
       - name: Settle research-only OU V12 contracts
         if: always()
         continue-on-error: true
