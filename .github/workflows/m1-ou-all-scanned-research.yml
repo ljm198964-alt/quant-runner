@@ -1,0 +1,66 @@
+name: M1 OU All Scanned Research
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/m1-ou-all-scanned-research.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check required secrets
+        shell: bash
+        env:
+          PRIVATE_REPO_TOKEN: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+        run: |
+          set -euo pipefail
+          for v in PRIVATE_REPO_TOKEN TOTALCORNER_TOKEN; do
+            if [ -z "${!v:-}" ]; then
+              echo "::error::Missing required secret: $v"
+              exit 2
+            fi
+          done
+
+      - name: Checkout private M1
+        uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/totalcorner-research-bridge
+          ref: master
+          fetch-depth: 0
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install runtime
+        run: pip install numpy scipy requests
+
+      - name: Run all-scanned top-tier club OU research
+        env:
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+          TOTALCORNER_TZ_OFFSET: '8'
+        run: python m1_ou_all_scanned_research.py
+
+      - name: Persist research outputs
+        run: |
+          set -euo pipefail
+          git config user.name "m1-ou-research"
+          git config user.email "actions@users.noreply.github.com"
+          git add results/m1_ou_all_scanned_top_tier_latest.json results/m1_ou_all_scanned_top_tier_latest.md
+          if git diff --cached --quiet; then
+            echo "NO_REPORT_CHANGES"
+            exit 0
+          fi
+          git commit -m "Persist all-scanned top-tier club OU research"
+          for i in 1 2 3; do
+            git pull --rebase origin master && git push origin HEAD:master && exit 0
+            sleep $((i*3))
+          done
+          exit 1
