@@ -1,5 +1,5 @@
 name: Opponent Settlement Runtime
-# coverage-safe pagination v2
+# target-aware pagination v3
 
 on:
   workflow_dispatch:
