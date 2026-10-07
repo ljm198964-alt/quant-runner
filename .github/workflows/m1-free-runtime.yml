@@ -110,6 +110,10 @@ jobs:
         if: success()
         run: python m1_entry_timing_research.py
 
+      - name: Update M1 OU challenger shadow
+        if: success()
+        run: python m1_ou_shadow.py update
+
       - name: Lock formal signals
         id: prepare
         if: always() && steps.scan.outcome == 'success'
