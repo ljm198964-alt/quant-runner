@@ -104,4 +104,8 @@ jobs:
           # the isolated settlement paths. Discard those runtime-only changes before rebase.
           git reset --hard HEAD
           git pull --rebase origin master
-          git push origin HEAD:master
+          # A concurrent collector may advance master between pull and push.
+          # Retry the same commit against the new head without dropping research output.
+          until git push origin HEAD:master; do
+            git pull --rebase origin master
+          done
