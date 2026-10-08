@@ -1,0 +1,43 @@
+name: Crown Bet365 Paired Research
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: crown-bet365-research-only
+  cancel-in-progress: false
+
+jobs:
+  paired-odds:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout research scripts
+        uses: actions/checkout@v4
+
+      - name: Node runtime
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Verify offline matching calculations
+        run: node --test research/crown-vs-bet365-paired.test.mjs
+
+      - name: Fetch matched Bet365 and Crown research quotes
+        env:
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+        run: |
+          test -n "${TOTALCORNER_TOKEN:-}" || { echo "::error::TotalCorner token unavailable"; exit 2; }
+          node research/crown-vs-bet365-paired.mjs
+
+      - name: Upload read-only source comparison
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: crown-bet365-paired-20261008
+          path: research/output/
+          retention-days: 14
+          if-no-files-found: warn

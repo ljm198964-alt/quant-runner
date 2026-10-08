@@ -1,0 +1,257 @@
+{
+  "protocol": "CROWN_VS_BET365_RESEARCH_FIXTURES_20261008",
+  "created_at": "2026-10-08T10:41:24.541926+00:00",
+  "research_only": true,
+  "historical": [
+    {
+      "match_id": "200931947",
+      "label": "Internacional vs Corinthians",
+      "league": "Brazil Serie A",
+      "kickoff_at": "2026-10-07T22:30:00+00:00",
+      "mode": "historical_tg_asof",
+      "tg_contracts": [
+        {
+          "market": "OU",
+          "side": "OVER",
+          "target_line": 2.25,
+          "tg_decimal_price": 1.925,
+          "tg_price_kind": "sent_terms",
+          "tg_sent_at": "2026-10-06T11:21:26.788928+00:00"
+        },
+        {
+          "market": "AH",
+          "side": "HOME",
+          "target_line": -0.25,
+          "tg_decimal_price": 1.95,
+          "tg_price_kind": "sent_terms",
+          "tg_sent_at": "2026-10-06T16:45:21.235529+00:00"
+        }
+      ]
+    },
+    {
+      "match_id": "200931953",
+      "label": "Remo vs Gremio",
+      "league": "Brazil Serie A",
+      "kickoff_at": "2026-10-07T22:30:00+00:00",
+      "mode": "historical_tg_asof",
+      "tg_contracts": [
+        {
+          "market": "AH",
+          "side": "HOME",
+          "target_line": -0.25,
+          "tg_decimal_price": 2.025,
+          "tg_price_kind": "sent_terms",
+          "tg_sent_at": "2026-10-06T11:21:32.679645+00:00"
+        },
+        {
+          "market": "OU",
+          "side": "OVER",
+          "target_line": 2.5,
+          "tg_decimal_price": 1.925,
+          "tg_price_kind": "sent_terms",
+          "tg_sent_at": "2026-10-06T16:45:23.927735+00:00"
+        }
+      ]
+    },
+    {
+      "match_id": "200931956",
+      "label": "Vitoria vs Chapecoense",
+      "league": "Brazil Serie A",
+      "kickoff_at": "2026-10-07T23:00:00+00:00",
+      "mode": "historical_tg_asof",
+      "tg_contracts": [
+        {
+          "market": "AH",
+          "side": "AWAY",
+          "target_line": 0.75,
+          "tg_decimal_price": 1.975,
+          "tg_price_kind": "sent_terms",
+          "tg_sent_at": "2026-10-06T11:21:38.635225+00:00"
+        },
+        {
+          "market": "OU",
+          "side": "OVER",
+          "target_line": 2.5,
+          "tg_decimal_price": 1.875,
+          "tg_price_kind": "sent_terms",
+          "tg_sent_at": "2026-10-06T11:21:43.019367+00:00"
+        }
+      ]
+    },
+    {
+      "match_id": "200931965",
+      "label": "Cruzeiro vs Sao Paulo",
+      "league": "Brazil Serie A",
+      "kickoff_at": "2026-10-08T00:30:00+00:00",
+      "mode": "historical_tg_asof",
+      "tg_contracts": [
+        {
+          "market": "AH",
+          "side": "HOME",
+          "target_line": -0.5,
+          "tg_decimal_price": 1.875,
+          "tg_price_kind": "sent_terms",
+          "tg_sent_at": "2026-10-06T13:23:53.540854+00:00"
+        },
+        {
+          "market": "OU",
+          "side": "OVER",
+          "target_line": 2.5,
+          "tg_decimal_price": 2.0,
+          "tg_price_kind": "sent_terms",
+          "tg_sent_at": "2026-10-06T13:23:58.163157+00:00"
+        }
+      ]
+    },
+    {
+      "match_id": "201200360",
+      "label": "Velez Sarsfield vs Platense",
+      "league": "Argentina Liga Profesional",
+      "kickoff_at": "2026-10-05T22:00:00+00:00",
+      "mode": "historical_tg_asof",
+      "tg_contracts": [
+        {
+          "market": "AH",
+          "side": "HOME",
+          "target_line": -0.5,
+          "tg_decimal_price": 1.925,
+          "tg_price_kind": "sent_terms",
+          "tg_sent_at": "2026-10-04T10:46:47.513528+00:00"
+        },
+        {
+          "market": "OU",
+          "side": "OVER",
+          "target_line": 1.75,
+          "tg_decimal_price": 1.875,
+          "tg_price_kind": "sent_terms",
+          "tg_sent_at": "2026-10-04T10:46:52.964057+00:00"
+        }
+      ]
+    },
+    {
+      "match_id": "201317145",
+      "label": "Independiente Medellin vs Independiente Santa Fe",
+      "league": "Colombia Primera A",
+      "kickoff_at": "2026-10-06T00:00:00+00:00",
+      "mode": "historical_tg_asof",
+      "tg_contracts": [
+        {
+          "market": "AH",
+          "side": "AWAY",
+          "target_line": 0.5,
+          "tg_decimal_price": 1.9,
+          "tg_price_kind": "sent_terms",
+          "tg_sent_at": "2026-10-04T19:41:16.262587+00:00"
+        },
+        {
+          "market": "OU",
+          "side": "OVER",
+          "target_line": 2.5,
+          "tg_decimal_price": 1.9,
+          "tg_price_kind": "sent_terms",
+          "tg_sent_at": "2026-10-04T19:41:20.472981+00:00"
+        }
+      ]
+    },
+    {
+      "match_id": "201150976",
+      "label": "France vs Belgium",
+      "league": "UEFA Nations League A",
+      "kickoff_at": "2026-10-05T18:45:00+00:00",
+      "mode": "historical_tg_asof",
+      "tg_contracts": [
+        {
+          "market": "AH",
+          "side": "AWAY",
+          "target_line": 1.0,
+          "tg_decimal_price": 2.025,
+          "tg_price_kind": "sent_terms",
+          "tg_sent_at": "2026-10-04T07:49:50.514525+00:00"
+        },
+        {
+          "market": "OU",
+          "side": "UNDER",
+          "target_line": 3.25,
+          "tg_decimal_price": null,
+          "tg_price_kind": "unpriced",
+          "tg_sent_at": "2026-10-04T07:49:55.310894+00:00"
+        }
+      ]
+    },
+    {
+      "match_id": "202358638",
+      "label": "Saudi Arabia vs United Arab Emirates",
+      "league": "Gulf Cup",
+      "kickoff_at": "2026-10-06T18:00:00+00:00",
+      "mode": "historical_tg_asof",
+      "tg_contracts": [
+        {
+          "market": "AH",
+          "side": "AWAY",
+          "target_line": 0.25,
+          "tg_decimal_price": 2.0,
+          "tg_price_kind": "sent_terms",
+          "tg_sent_at": "2026-10-05T11:31:00.041581+00:00"
+        },
+        {
+          "market": "OU",
+          "side": "UNDER",
+          "target_line": 1.75,
+          "tg_decimal_price": 2.05,
+          "tg_price_kind": "sent_terms",
+          "tg_sent_at": "2026-10-06T11:20:35.981107+00:00"
+        }
+      ]
+    }
+  ],
+  "upcoming": [
+    {
+      "match_id": "202420223",
+      "label": "Montenegro Prva Liga Arsenal Tivat vs Decic",
+      "kickoff_at": "2026-10-08T12:00:00Z",
+      "mode": "same_fetch_snapshot"
+    },
+    {
+      "match_id": "200934576",
+      "label": "Finland Veikkausliiga KuPS vs AC Oulu",
+      "kickoff_at": "2026-10-08T16:00:00Z",
+      "mode": "same_fetch_snapshot"
+    },
+    {
+      "match_id": "200649013",
+      "label": "Romania Liga I CFR Cluj vs Universitatea Cluj",
+      "kickoff_at": "2026-10-08T17:30:00Z",
+      "mode": "same_fetch_snapshot"
+    },
+    {
+      "match_id": "200562915",
+      "label": "Ireland Premier Division Shamrock Rovers vs Drogheda",
+      "kickoff_at": "2026-10-08T19:00:00Z",
+      "mode": "same_fetch_snapshot"
+    },
+    {
+      "match_id": "200936028",
+      "label": "Japan J League Kashima Antlers vs Gamba Osaka",
+      "kickoff_at": "2026-10-09T10:00:00Z",
+      "mode": "same_fetch_snapshot"
+    },
+    {
+      "match_id": "200933914",
+      "label": "China Super League Zhejiang vs Shanghai Port",
+      "kickoff_at": "2026-10-09T12:00:00Z",
+      "mode": "same_fetch_snapshot"
+    },
+    {
+      "match_id": "201662483",
+      "label": "Turkiye Super Lig Galatasaray vs Kasimpasa",
+      "kickoff_at": "2026-10-09T17:00:00Z",
+      "mode": "same_fetch_snapshot"
+    },
+    {
+      "match_id": "200551003",
+      "label": "Germany Bundesliga Dortmund vs Werder Bremen",
+      "kickoff_at": "2026-10-09T18:30:00Z",
+      "mode": "same_fetch_snapshot"
+    }
+  ]
+}
