@@ -79,6 +79,18 @@ jobs:
         continue-on-error: true
         run: node src/mr1-ai-v13-4-source-freshness.js
 
+      - name: V13.5 other-bookmaker quote test
+        if: always()
+        continue-on-error: true
+        run: node --test test-mr1-ai-v13-5.js
+
+      - name: V13.5 read-only other-bookmaker OU crosscheck
+        if: always()
+        continue-on-error: true
+        env:
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+        run: node src/mr1-ai-v13-5-bookmaker-crosscheck.js
+
       - name: Settle finished browser-forward AH contracts
         env:
           TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
