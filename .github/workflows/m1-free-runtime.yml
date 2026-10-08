@@ -69,6 +69,8 @@ jobs:
       - name: Incremental history cache regression
         run: python -m unittest test_m1_formal_runtime.FormalRuntimeTest.test_incremental_league_history_cache_refreshes_front_and_stops_at_overlap
 
+      - name: Crown-only national OU research tests
+        run: python -m unittest -q test_m1_national_ou_reverse_shadow.py
 
       - name: Run M1 scan with retry
         id: scan
@@ -109,6 +111,11 @@ jobs:
       - name: Update entry timing research
         if: success()
         run: python m1_entry_timing_research.py
+
+      - name: Update Crown national OU reverse forward research
+        if: always() && steps.scan.outcome == 'success'
+        continue-on-error: true
+        run: python m1_national_ou_reverse_shadow.py update
 
       - name: Update M1 OU challenger shadow
         if: success()
