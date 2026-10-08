@@ -1,0 +1,88 @@
+name: Crown Only Source Smoke
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: crown-only-source-smoke
+  cancel-in-progress: false
+
+jobs:
+  crown-source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Read-only harness
+        uses: actions/checkout@v4
+        with:
+          path: quant
+
+      - name: Pull strict MR1 Crown parser
+        uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/mr1-shadow
+          ref: master
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          path: mr1
+          sparse-checkout: src
+
+      - name: Pull strict M1 Crown parser
+        uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/totalcorner-research-bridge
+          ref: master
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          path: m1
+          sparse-checkout: m1_crown_market.py
+          sparse-checkout-cone-mode: false
+
+      - name: Node runtime
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Fetch two independent Crown samples
+        working-directory: quant
+        env:
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+        run: |
+          test -n "${TOTALCORNER_TOKEN:-}" || { echo "::error::Crown token missing"; exit 2; }
+          node research/crown-source-smoke.mjs
+
+      - name: Check same returned Crown response in M1 parser
+        run: |
+          PYTHONPATH=m1 python3 - <<'PY'
+          from m1_crown_market import crown_scan_data,CrownUnavailable
+          from datetime import datetime,timezone
+          import json
+          import pathlib
+          valid=0
+          for mid in ('200936028','200933914'):
+              body=json.loads(pathlib.Path('/tmp/crown-source-smoke-'+mid+'.json').read_text())
+              if not isinstance(body,dict):
+                  print(mid,'CROWN_BODY_ABSENT')
+                  continue
+              try:
+                  parsed=crown_scan_data(body,mid,datetime.now(timezone.utc).isoformat(),8)
+                  assert parsed.get('source_bookmaker')=='crown'
+                  assert parsed.get('source_bookmaker_verified') is True
+                  valid+=1
+                  print(mid,'CROWN_VERIFIED','AH_ROWS',len(parsed.get('asian_list',[])),
+                        'OU_ROWS',len(parsed.get('goal_list',[])))
+              except CrownUnavailable as exc:
+                  print(mid,'CROWN_UNAVAILABLE',str(exc))
+          if not valid:
+              raise SystemExit('M1_CROWN_PARSER_NO_VALID_SOURCE')
+          PY
+
+      - name: Preserve source diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: crown-only-source-smoke-20261008
+          path: quant/research/output/crown-source-smoke.json
+          retention-days: 14
+          if-no-files-found: warn
