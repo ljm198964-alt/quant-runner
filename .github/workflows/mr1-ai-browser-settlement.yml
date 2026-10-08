@@ -69,6 +69,16 @@ jobs:
         continue-on-error: true
         run: node src/mr1-ai-v13-2-price-validation.js
 
+      - name: V13.4 paired-source freshness regression
+        if: always()
+        continue-on-error: true
+        run: node --test test-mr1-ai-v13-4.js
+
+      - name: V13.4 source-specific quote freshness analysis
+        if: always()
+        continue-on-error: true
+        run: node src/mr1-ai-v13-4-source-freshness.js
+
       - name: Settle finished browser-forward AH contracts
         env:
           TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
