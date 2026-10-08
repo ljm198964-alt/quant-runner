@@ -78,6 +78,16 @@ jobs:
         continue-on-error: true
         run: node src/mr1-ai-collector-watch.js
 
+      - name: V13.2 research chronology regression
+        if: always()
+        continue-on-error: true
+        run: node --test test-mr1-ai-v13-2.js
+
+      - name: V13.2 descriptive quote and settlement analysis
+        if: always()
+        continue-on-error: true
+        run: node src/mr1-ai-v13-2-price-validation.js
+
       - name: Persist settlement and research
         if: always()
         shell: bash
