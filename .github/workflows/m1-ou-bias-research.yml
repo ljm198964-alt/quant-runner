@@ -48,13 +48,19 @@ jobs:
       - name: Compare M1 OU with market line on independent holdout
         run: python m1_ou_market_anchor_v3.py
 
+      - name: Verify archived strategy-version changepoint analysis
+        run: python -m unittest -v test_m1_ou_policy_changepoint_v4
+
+      - name: Audit each fixture against its actual saved M1 scan policy
+        run: python m1_ou_policy_changepoint_v4.py
+
       - name: Persist research report only
         shell: bash
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- results/m1_ou_bias_v2_latest.json results/m1_ou_market_anchor_v3_latest.json
+          git add -- results/m1_ou_bias_v2_latest.json results/m1_ou_market_anchor_v3_latest.json results/m1_ou_policy_changepoint_v4_latest.json
           if git diff --cached --quiet; then exit 0; fi
           git commit -m 'Update M1 OU independent-fixture bias study'
           for attempt in 1 2 3 4 5; do
