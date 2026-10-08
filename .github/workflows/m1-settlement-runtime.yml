@@ -67,5 +67,16 @@ jobs:
           TOTALCORNER_TZ_OFFSET: '8'
         run: python m1_national_ou_result_settlement.py settle
 
+      - name: Verify V23 read-only Crown OU result reconciliation
+        continue-on-error: true
+        run: python -m unittest -q test_m1_ou_crown_v23_result_settlement.py
+
+      - name: Reconcile V23 frozen Crown OU forecasts against verified finals
+        continue-on-error: true
+        env:
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+          TOTALCORNER_TZ_OFFSET: '8'
+        run: python m1_ou_crown_v23_result_settlement.py settle
+
       - name: Persist settlement state
         run: bash m1_commit_state.sh formal

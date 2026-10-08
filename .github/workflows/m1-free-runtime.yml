@@ -72,6 +72,9 @@ jobs:
       - name: Crown-only national OU research tests
         run: python -m unittest -q test_m1_national_ou_reverse_shadow.py
 
+      - name: V23 frozen Crown market comparison tests
+        run: python -m unittest -q test_m1_ou_crown_market_challenger_v23.py
+
       - name: Run M1 scan with retry
         id: scan
         env:
@@ -121,6 +124,16 @@ jobs:
         if: always() && steps.scan.outcome == 'success'
         continue-on-error: true
         run: python m1_national_ou_market_anchor_v2.py
+
+      - name: Capture V23 five-way Crown OU forward predictions
+        if: always() && steps.scan.outcome == 'success'
+        continue-on-error: true
+        run: python m1_ou_crown_market_challenger_v23.py update
+
+      - name: Refresh V23 calibration transfer research
+        if: always() && steps.scan.outcome == 'success'
+        continue-on-error: true
+        run: python m1_ou_v23_calibrator_audit.py
 
       - name: Update M1 OU challenger shadow
         if: success()
