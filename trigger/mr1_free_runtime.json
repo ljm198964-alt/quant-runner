@@ -1,4 +1,4 @@
 {
-  "reason": "reapply latest MR1 Chinese mappings",
-  "triggered_at": "2026-10-07T05:47:00Z"
+  "reason": "collect exact MR1 Chinese display gaps without changing model or telegram rules",
+  "triggered_at": "2026-10-08T03:15:00Z"
 }
