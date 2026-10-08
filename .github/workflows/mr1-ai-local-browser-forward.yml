@@ -83,6 +83,11 @@ jobs:
           CAPTURE_PATH: ${{ inputs.capture_path }}
         run: node src/mr1-ai-ou-forward-v12.js "$CAPTURE_PATH"
 
+      - name: V13 read-only price evidence audit
+        if: always()
+        continue-on-error: true
+        run: node src/mr1-ai-v13-price-audit.js
+
       - name: Persist isolated MR1 AI evidence and delivery receipts
         if: always()
         shell: bash
