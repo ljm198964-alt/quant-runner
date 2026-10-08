@@ -117,6 +117,11 @@ jobs:
         continue-on-error: true
         run: python m1_national_ou_reverse_shadow.py update
 
+      - name: Diagnose national OU market-anchoring in separate Crown cohort
+        if: always() && steps.scan.outcome == 'success'
+        continue-on-error: true
+        run: python m1_national_ou_market_anchor_v2.py
+
       - name: Update M1 OU challenger shadow
         if: success()
         run: python m1_ou_shadow.py update
