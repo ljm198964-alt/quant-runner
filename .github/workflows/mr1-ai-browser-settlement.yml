@@ -13,7 +13,8 @@ permissions:
   contents: read
 
 concurrency:
-  group: totalcorner-api-runtime
+  # Isolate settlement from the five-minute collector queue; retain serial settlement writes.
+  group: mr1-ai-browser-settlement
   cancel-in-progress: false
 
 jobs:
