@@ -90,13 +90,33 @@ jobs:
       - name: Evaluate historical M1 OU versus market-only on unseen whole days
         run: python m1_ou_day_block_fusion_v10.py
 
+      - name: Checkout existing MR1 settled-score evidence only
+        uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/mr1-shadow
+          ref: master
+          path: external/mr1-ou-evidence
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          sparse-checkout: |
+            data/mr1-v6-cross-market/settlement/settled-observations.json
+            data/mr1-ai-browser-forward/settlement/settled.json
+            data/mr1-ai-ou-forward-v12/settled.json
+          sparse-checkout-cone-mode: false
+          persist-credentials: false
+
+      - name: V11 cross-repository result integrity tests
+        run: python -m unittest -v test_m1_ou_cross_archive_results_v11
+
+      - name: Recover additional M1 OU final scores from MR1 saved evidence
+        run: python m1_ou_cross_archive_results_v11.py
+
       - name: Persist research report only
         shell: bash
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- results/m1_ou_bias_v2_latest.json results/m1_ou_market_anchor_v3_latest.json results/m1_ou_policy_changepoint_v4_latest.json results/m1_ou_counterfactual_scope_v5_latest.json results/m1_ou_market_distribution_v6_latest.json results/m1_ou_goal_tail_v7_latest.json results/m1_ou_exact_distribution_v8_latest.json results/m1_ou_matchday_cluster_v9_latest.json results/m1_ou_day_block_fusion_v10_latest.json
+          git add -- results/m1_ou_bias_v2_latest.json results/m1_ou_market_anchor_v3_latest.json results/m1_ou_policy_changepoint_v4_latest.json results/m1_ou_counterfactual_scope_v5_latest.json results/m1_ou_market_distribution_v6_latest.json results/m1_ou_goal_tail_v7_latest.json results/m1_ou_exact_distribution_v8_latest.json results/m1_ou_matchday_cluster_v9_latest.json results/m1_ou_day_block_fusion_v10_latest.json results/m1_ou_cross_archive_results_v11_latest.json
           if git diff --cached --quiet; then exit 0; fi
           git commit -m 'Update M1 OU independent-fixture bias study'
           for attempt in 1 2 3 4 5; do
