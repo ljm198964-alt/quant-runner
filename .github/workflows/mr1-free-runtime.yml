@@ -65,6 +65,10 @@ jobs:
       - name: Record base
         run: echo "RUNTIME_BASE_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
 
+      - name: Nonblocking MR1 Chinese delivery and historical edit regressions
+        continue-on-error: true
+        run: node --test test-v6-ah-formal.js test-v6-ah-display-repair-v5.js
+
       - name: Repair existing MR1 messages to Chinese display
         env:
           MR1_TG_BOT_TOKEN: ${{ secrets.MR1_TG_BOT_TOKEN }}
