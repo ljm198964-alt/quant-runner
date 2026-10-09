@@ -111,6 +111,16 @@ jobs:
         continue-on-error: true
         run: node src/mr1-ai-formal-performance.js
 
+      - name: Verify MR1 AI Crown provenance audit
+        if: always()
+        continue-on-error: true
+        run: node --test test-mr1-ai-formal-crown-audit.js
+
+      - name: Audit MR1 AI historical and Crown formal sources
+        if: always()
+        continue-on-error: true
+        run: node src/mr1-ai-formal-crown-audit.js
+
       - name: Update MR1 AI optimization research
         if: always()
         continue-on-error: true
