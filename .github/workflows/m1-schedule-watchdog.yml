@@ -1,0 +1,82 @@
+name: M1 Schedule Watchdog
+
+# Operational backup for missed M1 Free Runtime schedules.
+# This workflow never reads market data, sends Telegram messages, or modifies strategies.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '35 4,10,16,22 * * *'
+
+permissions:
+  actions: write
+  contents: read
+
+concurrency:
+  group: m1-schedule-watchdog
+  cancel-in-progress: false
+
+jobs:
+  check-and-recover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Recover only a missing M1 scan
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPOSITORY: ${{ github.repository }}
+        run: |
+          python3 - <<'PY'
+          import datetime as dt
+          import json
+          import os
+          import urllib.request
+
+          now = dt.datetime.now(dt.timezone.utc)
+          candidates = [
+              (now - dt.timedelta(days=d)).replace(hour=h, minute=5, second=0, microsecond=0)
+              for d in (0, 1) for h in (4, 10, 16, 22)
+          ]
+          slot = max(x for x in candidates if x <= now)
+          delay = (now - slot).total_seconds() / 60
+          if not 20 <= delay <= 90:
+              print(json.dumps({"status": "OUTSIDE_RECOVERY_WINDOW",
+                                "slot_utc": slot.isoformat(), "age_minutes": round(delay, 2)}))
+              raise SystemExit(0)
+
+          repo = os.environ["GH_REPOSITORY"]
+          url = "https://api.github.com/repos/" + repo + "/actions/workflows/m1-free-runtime.yml/runs?per_page=30"
+          headers = {
+              "Authorization": "Bearer " + os.environ["GH_TOKEN"],
+              "Accept": "application/vnd.github+json",
+              "X-GitHub-Api-Version": "2022-11-28",
+              "User-Agent": "M1-Missing-Schedule-Watchdog",
+          }
+          with urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=15) as response:
+              records = json.load(response).get("workflow_runs", [])
+          earlier = slot - dt.timedelta(minutes=5)
+          later = slot + dt.timedelta(minutes=90)
+          attempts = []
+          for row in records:
+              created = dt.datetime.fromisoformat(row["created_at"].replace("Z", "+00:00"))
+              if earlier <= created <= later:
+                  attempts.append({"id": row["id"], "status": row["status"],
+                                   "conclusion": row.get("conclusion"), "created_at": row["created_at"]})
+          if attempts:
+              print(json.dumps({"status": "M1_ALREADY_ATTEMPTED_NO_DUPLICATE",
+                                "slot_utc": slot.isoformat(), "runs": attempts}))
+              # A failed M1 scan needs investigation, not infinite automatic retries.
+              raise SystemExit(0)
+
+          dispatch_url = "https://api.github.com/repos/" + repo + "/actions/workflows/m1-free-runtime.yml/dispatches"
+          body = json.dumps({"ref": "main"}).encode("utf-8")
+          request = urllib.request.Request(dispatch_url, data=body, headers={
+              **headers, "Content-Type": "application/json"
+          }, method="POST")
+          with urllib.request.urlopen(request, timeout=20) as response:
+              if response.status != 204:
+                  raise RuntimeError("M1_WORKFLOW_DISPATCH_NOT_ACCEPTED")
+          print(json.dumps({"status": "M1_MISSING_SCAN_DISPATCHED",
+                            "slot_utc": slot.isoformat(), "age_minutes": round(delay, 2),
+                            "destination": "m1-free-runtime.yml",
+                            "strategy_rules_changed": False, "tg_direct_send": False}))
+          PY
