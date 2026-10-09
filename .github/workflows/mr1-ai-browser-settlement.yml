@@ -146,6 +146,16 @@ jobs:
         continue-on-error: true
         run: node src/mr1-ai-m1-prior-v24.js update external/m1-study/results/m1_formal_ledger.json external/m1-study/results/m1_crown_formal_report.json
 
+      - name: Verify V25 date-stratified confounding research
+        if: always()
+        continue-on-error: true
+        run: node --test test-mr1-ai-m1-prior-v25.js
+
+      - name: Update V25 M1 prior selection-bias diagnostic
+        if: always()
+        continue-on-error: true
+        run: node src/mr1-ai-m1-prior-v25.js
+
       - name: Update MR1 AI optimization research
         if: always()
         continue-on-error: true
@@ -163,7 +173,7 @@ jobs:
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -- data/mr1-ai-browser-forward/settlement data/mr1-ai-browser-forward/settlement-resolution data/mr1-ai-browser-forward/formal-performance data/mr1-ai-browser-forward/optimization-research data/mr1-ai-browser-forward/m1-prior-v24 data/mr1-ai-browser-forward/collector-watch-status.json
+          git add -- data/mr1-ai-browser-forward/settlement data/mr1-ai-browser-forward/settlement-resolution data/mr1-ai-browser-forward/formal-performance data/mr1-ai-browser-forward/optimization-research data/mr1-ai-browser-forward/m1-prior-v24 data/mr1-ai-browser-forward/m1-prior-v25 data/mr1-ai-browser-forward/collector-watch-status.json
           if [ -d data/mr1-ai-ou-forward-v12 ]; then git add -- data/mr1-ai-ou-forward-v12; fi
           if git diff --cached --quiet; then exit 0; fi
           git commit -m 'Settle MR1 AI browser-forward contracts'
