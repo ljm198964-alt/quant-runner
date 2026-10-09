@@ -63,6 +63,9 @@ jobs:
       - name: Reconcile pre-kickoff browser and API evidence
         run: node src/mr1-ai-browser-reconcile.js
 
+      - name: Gate MR1 AI formal sends on Crown-only safety tests
+        run: node --test test-mr1-ai-browser-crown-only.js test-mr1-ai-browser-forward-notify.js test-crown-source.js
+
       - name: Deliver only this fresh MR1 AI capture
         env:
           MR1_TG_BOT_TOKEN: ${{ secrets.MR1_TG_BOT_TOKEN }}
