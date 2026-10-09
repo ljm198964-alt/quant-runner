@@ -97,6 +97,33 @@ jobs:
           done
           if [ $ok -ne 1 ]; then exit 1; fi
 
+      - name: Audit actual M1 scan completeness without blocking valid TG delivery
+        if: always() && steps.scan.outcome == 'success'
+        continue-on-error: true
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          latest = Path("results/latest.json")
+          if not latest.is_file():
+              print("::warning::M1 scan process exited successfully but latest scan receipt was not persisted")
+              raise SystemExit(0)
+          receipt = json.loads(latest.read_text(encoding="utf-8"))
+          status = receipt.get("scan_status", "UNKNOWN")
+          summary = {
+              "run_id": receipt.get("run_id"),
+              "scan_status": status,
+              "new_signal_count": receipt.get("new_signal_count"),
+              "candidate_count": receipt.get("candidate_count"),
+              "error_count": receipt.get("error_count"),
+              "immediate_delivery_errors": len(receipt.get("immediate_delivery_errors") or []),
+          }
+          print("M1_SCAN_COMPLETENESS " + json.dumps(summary, ensure_ascii=False))
+          if status != "COMPLETE":
+              print("::warning::M1 scan was " + str(status) +
+                    "; GitHub job success must not be reported as full league coverage")
+          PY
+
       - name: Auto-resolve Chinese team and competition display names
         if: always() && steps.scan.outcome == 'success'
         continue-on-error: true
