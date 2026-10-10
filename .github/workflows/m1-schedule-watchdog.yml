@@ -61,9 +61,25 @@ jobs:
               if earlier <= created <= later:
                   attempts.append({"id": row["id"], "status": row["status"],
                                    "conclusion": row.get("conclusion"), "created_at": row["created_at"]})
-          if attempts:
+          # A cancelled run with zero jobs never scanned fixtures or sent TG.
+          # Do not let it masquerade as a completed scan attempt. Any run that
+          # started a job, including failures and cancellations, remains protected
+          # by the existing no-duplicate behavior.
+          effective_attempts = []
+          for attempt in attempts:
+              if attempt["conclusion"] == "cancelled":
+                  jobs_url = ("https://api.github.com/repos/" + repo +
+                              "/actions/runs/" + str(attempt["id"]) + "/jobs?per_page=1")
+                  with urllib.request.urlopen(urllib.request.Request(jobs_url, headers=headers), timeout=15) as response:
+                      job_total = json.load(response).get("total_count", 0)
+                  if job_total == 0:
+                      print(json.dumps({"status": "M1_CANCELLED_WITHOUT_JOB",
+                                        "run_id": attempt["id"], "slot_utc": slot.isoformat()}))
+                      continue
+              effective_attempts.append(attempt)
+          if effective_attempts:
               print(json.dumps({"status": "M1_ALREADY_ATTEMPTED_NO_DUPLICATE",
-                                "slot_utc": slot.isoformat(), "runs": attempts}))
+                                "slot_utc": slot.isoformat(), "runs": effective_attempts}))
               # A failed M1 scan needs investigation, not infinite automatic retries.
               raise SystemExit(0)
 
