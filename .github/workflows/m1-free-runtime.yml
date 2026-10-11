@@ -125,11 +125,6 @@ jobs:
                     "; GitHub job success must not be reported as full league coverage")
           PY
 
-      - name: Auto-resolve Chinese team and competition display names
-        if: always() && steps.scan.outcome == 'success'
-        continue-on-error: true
-        run: python m1_display_autoresolve.py
-
       - name: Preflight Chinese display names
         if: always() && steps.scan.outcome == 'success'
         continue-on-error: true

@@ -90,18 +90,18 @@
 - GitHub 仓库树已重新核实：初始 42 个工作流，累计删除 13 个，剩余 29 个。
 - 最新 MR1 Free Runtime 仍在运行；未删除正式 M1、MR1、MR1 AI、对手结算生产入口。对中文库恢复工作流的取消原因尚未核实。
 
-## 2026-10-12 共享中文名称库收敛与当前状态
+## 2026-10-12 共享中文名称库历史恢复快照（运行方式已被下方新节取代）
 - **本节状态被 2026-10-12 全量复核结果更新：** 共享库当前提交 `11f978103e09393573a635911d3fa9ff14c9036f`；12,172 个 team ID 的英文身份全部恢复，canonical 简体中文名 3,640（29.90%），8,532 条仍无唯一可核验中文名。771 个 league ID 中 329 个有 canonical 中文名。M1 历史覆盖 1,933/3,880（49.82%），MR1 历史覆盖 3,562/11,916（29.89%）。旧段落数字仅为当时快照。
 - 最近一次 `Shared Football Identity Recovery` 已在 run `38178789455` 成功结束；持久化检查点记录 58/58 个待查联赛完成、0 个失败、1,374 次累计 TotalCorner API 请求，恢复 295 个英文身份。没有重新 dispatch 已完成的身份采集。
 - 在唯一未映射队名上追加 Reep/Wikidata 严格交叉：仅用主队名/英文别名，做大小写、重音和标点标准化；要求 Reep QID、TotalCorner team ID 均唯一，不做模糊拼写匹配。两轮累计候选中 229 个获得简体中文标签并新增；最近一轮 1,049 个双端唯一候选中 884 个没有简体标签，43 个交叉歧义被排除。其余 8,532 条及逐条原因保存在 `results/football_chinese_bulk_report.json`。
 - M1 与 MR1/MR1 AI 继续读取 `totalcorner-research-bridge/data/football_display_names/`。MR1 AI browser-forward/reconcile 已停止读取其旧 registry snapshot（快照保留为历史证据），改用 workflow checkout 的同一共享库；MR1 代码提交 `c9a6ccc`。解析/隔离测试通过，未改模型、策略、账本或通知规则。
-- 主要报告：`results/football_chinese_bulk_report.md`、`data/football_display_names/coverage.json`；名称源分布和 ID 来源见报告与 `teams.json` 的每行 `source`。
+- 历史报告：`results/football_chinese_bulk_report.md`、`data/football_display_names/coverage.json`；其多文件结构仅作为历史审计，不是现行映射入口。
 - 唯一共享库仍为 M1 仓库 `data/football_display_names/`。M1 formatter 按 team/league ID 读它；M1 scan preflight 只报告展示映射缺口，不阻塞正式锁单。MR1 AH、MR1 AI browser-forward/reconcile 与 MR1 Telegram formatter 从 `external/football-display-registry` 读取同一库，运行 workflow checkout 主仓 master。名称只影响展示，不进入模型字段。
 - `totalcorner-research-bridge` 以 `52fe40d9164560caf3232740762b035ed70391af` 为基础的原统计属于历史快照，现由顶部本轮提交结果替代。英文身份与中文覆盖数字请以顶部新结果为准。
 - 最新已保存 M1 scan `results/latest.json`：88 场、176 个唯一 team ID；175 个有 canonical 中文展示名（99.43%），39 个 league ID 全部覆盖。唯一未确认中文名为 `FC Livyi Bereh`（ID 86544）；不以猜译补齐。扫描报告 `results/m1_telegram_display_unresolved.json` 已重算。
 - 当前扫描池补充名使用 7M、500彩票网、Sofascore、Titan007、FootballAnt、公开中文球队资料等逐条链接的来源；未改既有正确映射。近期重点包含施利马流浪、格兹拉联、波德布雷佐瓦、斯拉文贝鲁波、维京古尔、利雅得青年人、布赖代合作、阿根廷青年人、塔勒瑞斯、纽维尔老男孩等。来源 URL 写在每个 curation row 的 `source.reference`。
 - 已验证共享读取：MR1 `src/football-display-names.js` 实际加载本次 M1 共享库，并对测试 fixture 渲染中文；MR1 AI browser-forward/reconcile、Telegram formatter 均使用该 resolver。`615542b96` 的 MR1 对接测试通过；直接挂载本次共享目录的只读测试 2/2 通过。M1 formatter/coverage/recovery 测试 12/12 通过。
-- `Football display identity recovery` 的早期尝试曾遇到 push/rebase 和报告 staging 失败；后续恢复机制已修复并由 run `38178789455` 成功完成，当前不得重复采集。quant-runner 的手动 workflow 保留；只有新增且可核验的身份数据时才考虑再次运行。
+- run `38178789455` 是已完成的历史身份恢复；旧手动 workflow 已在本次重构中退役，不再重复采集。
 - 公开中文名称来源已使用现成映射库 `qqyg000/lottery-football`（英文别名到中国体育彩票规范名）；精确、唯一的 ID 映射可自动导入，多候选不自动裁决。7M/中文体育彩票及主流中文比分来源的核验链接见执行对话/共享库每条 `source.reference`；继续以 ID 和来源为依据，不按名字近似合并。
 - MR1 代码已有历史显示修正器 `src/v6-ah-formal-display-repair.js`，但目前没有 workflow 调用它；M1 与 MR1 AI 仍缺历史消息批量 edit 的独立部署/回执。不得把未来 formatter 测试说成历史 Telegram 已修复，也不得重发历史正式单。
 - 本轮未改 M1/MR1 策略、模型、阈值、scope、订单/结算账本或正式 Telegram 新单规则。历史 Telegram 仍未批量 edit：MR1 现有 repairer 尚未接入受控流程；M1/MR1 AI 也需要独立、可审计的 edit 任务。任何修复都只能按原 message ID 调 `editMessageText`，不得重发或更改盘口、价格、方向、时间、结算字段。
@@ -115,3 +115,10 @@
 4. **M1 国家队 OU 反买**：历史 25 场反向 +4.05 U、ROI +16.20%；独立 Crown 前瞻截至该快照 0 条合格触发/0 条结算，不得将历史成绩冒充前瞻。来源 `totalcorner-research-bridge/research/m1-ou-challenger-v1/summary.json` 和 `research/m1-national-ou-reverse-v1/forward/summary.json`。
 
 后续研究会话应读取上述原始文件最新生成时间，继续更新样本、结算、ROI、回撤、CLV 和独立前瞻证据；不改变已确认的正式模型运行，不擅自将研究线索升级为 TG 实战。
+
+## 2026-10-12 共享中文名称运行源收敛（本节优先于旧多文件说明）
+- 唯一运行时映射文件为 `ljm198964-alt/totalcorner-research-bridge/data/football_display_names/display_names.json`。它将既有 teams、competitions、aliases、curation、auto-curation、provider overrides 等层精确合并；旧映射层校验等价后退役，历史审计/覆盖证据保留。
+- M1、MR1 AH、MR1 AI 的展示及名称核验读取器统一消费该单文件；映射只用于展示/名称身份文本核验，不进入模型计算。M1 每轮 Wikidata 自动补名步骤已移除，preflight 仅报告展示缺口且不阻塞锁单。
+- 全历史批量身份恢复 workflow 与一次性 harvest 工具已退役，避免重复全库查询。旧报告里的全历史覆盖率仅为历史快照，不代表当前正式赛事范围覆盖率。
+- 后续正式范围统计按 M1 当前范围/正式池、MR1 AH 当前范围/前瞻池、MR1 AI 正式镜像范围实际计算；不得通过猜译补全。不要建立 MR1 私有映射副本或第二个中文名称库。
+- 本次只调整展示数据源和名称恢复工程入口，不修改模型、策略、赛事范围、阈值、账本、结算或正式通知规则。
