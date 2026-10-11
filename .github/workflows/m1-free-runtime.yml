@@ -6,6 +6,7 @@ on:
   push:
     paths:
       - '.github/workflows/m1-free-runtime.yml'
+      - 'trigger/m1-ou-r1-recovery.json'
   schedule:
     - cron: '5 4,10,16,22 * * *'
 
