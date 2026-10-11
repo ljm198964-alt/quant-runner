@@ -1,32 +1,46 @@
-name: TotalCorner Chinese Name Readonly Probe
+name: MR1 Native Gap Audit
+
 on:
+  push:
+    paths:
+      - '.github/workflows/mr1-native-gap-audit.yml'
   workflow_dispatch:
+
 permissions:
   contents: read
+
 jobs:
-  probe:
+  audit:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 6
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout private MR1
+        uses: actions/checkout@v4
         with:
           repository: ljm198964-alt/mr1-shadow
           ref: master
+          fetch-depth: 0
           token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Read provider names without changing profile
-        env:
-          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+
+      - name: Run native gap audit
         run: |
-          node --input-type=module <<'JS'
-          import {TotalCornerReadOnlyClient} from './src/totalcorner-client.js';
-          const client=new TotalCornerReadOnlyClient({token:process.env.TOTALCORNER_TOKEN,requestsPerMinute:12,maxRetries:1});
-          const date=new Date().toISOString().slice(0,10);
-          const response=await client.schedule(date,1);
-          const rows=Array.isArray(response.body?.data)?response.body.data:(response.body?.data?.matches||[]);
-          const sample=rows.slice(0,15).map(x=>({id:x.id??x.match_id,league:x.l??x.league,home:x.h??x.home,away:x.a??x.away,start:x.start}));
-          const han=/[\u3400-\u9fff]/u;
-          console.log(JSON.stringify({probe:'TOTALCORNER_ACCOUNT_LANGUAGE_READONLY',date,sample_count:sample.length,chinese_count:sample.filter(x=>[x.league,x.home,x.away].some(v=>han.test(String(v??'')))).length,sample},null,2));
-          JS
+          node src/native-gap-audit.js
+          node src/native-gate-ablation.js
+          node src/native-data-quality-audit.js
+
+      - name: Persist audit
+        run: |
+          git config user.name "mr1-native-gap-audit"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/mr1-native-gap-audit/summary.json data/mr1-native-gap-audit/ablation.json data/mr1-native-gap-audit/data-quality.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Persist MR1 native candidate gap audit"
+          for i in 1 2 3; do
+            git pull --rebase origin master && git push origin HEAD:master && exit 0
+            sleep $((i*3))
+          done
+          exit 1
