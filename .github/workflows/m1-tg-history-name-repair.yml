@@ -90,6 +90,20 @@ jobs:
                           except (ValueError,TypeError):
                               wait = 30
                           time.sleep(wait + 2)
+                          try:
+                              with urlopen(req,timeout=20) as retry_res:
+                                  retry_body=json.loads(retry_res.read())
+                              if retry_body.get('ok'):
+                                  report['edited'] += 1
+                              else:
+                                  report['failed'] += 1
+                          except HTTPError as retry_err:
+                              retry_detail=retry_err.read().decode('utf-8','replace')[:200]
+                              if retry_err.code==400 and 'message is not modified' in retry_detail:
+                                  report['already_matching'] += 1
+                              else:
+                                  report['failed'] += 1
+                                  report['failures'].append({'message_id':mid,'http_status':retry_err.code,'detail':retry_detail})
                           continue
               except Exception as e:
                   report['failed'] += 1
