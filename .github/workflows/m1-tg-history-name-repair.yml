@@ -85,7 +85,12 @@ jobs:
                       report['failed'] += 1
                       report['failures'].append({'message_id':mid,'http_status':e.code,'detail':detail})
                       if e.code == 429:
-                          break
+                          try:
+                              wait = int(json.loads(detail).get('parameters',{}).get('retry_after',30))
+                          except (ValueError,TypeError):
+                              wait = 30
+                          time.sleep(wait + 2)
+                          continue
               except Exception as e:
                   report['failed'] += 1
                   report['failures'].append({'message_id':mid,'error_type':type(e).__name__})
