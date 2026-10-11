@@ -89,3 +89,15 @@
 - 已删除硬编码六条历史消息的 `mr1-v6-current-display-fix.yml`（提交 `9b90b713`）和被现有正式 M1 派单链路替代的 `m1-immediate-delivery-integrate.yml`（提交 `846ba034`）。
 - GitHub 仓库树已重新核实：初始 42 个工作流，累计删除 13 个，剩余 29 个。
 - 最新 MR1 Free Runtime 仍在运行；未删除正式 M1、MR1、MR1 AI、对手结算生产入口。对中文库恢复工作流的取消原因尚未核实。
+
+## 2026-10-12 共享中文名称库收敛与当前状态
+- 唯一共享库仍为 M1 仓库 `data/football_display_names/`。M1 formatter 按 team/league ID 读它；M1 scan preflight 只报告展示映射缺口，不阻塞正式锁单。MR1 AH、MR1 AI browser-forward/reconcile 与 MR1 Telegram formatter 从 `external/football-display-registry` 读取同一库，运行 workflow checkout 主仓 master。名称只影响展示，不进入模型字段。
+- `totalcorner-research-bridge` 以 `52fe40d9164560caf3232740762b035ed70391af` 为基础，本轮更新了现有 curation/coverage。全库 12,172 个 team ID；11,877 有英文 provider identity；有效 canonical 中文名 2,372（19.49%）；771 个 league ID 中 111 个有中文名。按历史系统标记：M1 3,880 ID 中 1,595 有名（41.11%）；MR1 11,916 ID 中 2,330 有名（19.55%）。这些统计合并 base + auto + human curation，按 ID 去重。
+- 最新已保存 M1 scan `results/latest.json`：88 场、176 个唯一 team ID；175 个有 canonical 中文展示名（99.43%），39 个 league ID 全部覆盖。唯一未确认中文名为 `FC Livyi Bereh`（ID 86544）；不以猜译补齐。扫描报告 `results/m1_telegram_display_unresolved.json` 已重算。
+- 当前扫描池补充名使用 7M、500彩票网、Sofascore、Titan007、FootballAnt、公开中文球队资料等逐条链接的来源；未改既有正确映射。近期重点包含施利马流浪、格兹拉联、波德布雷佐瓦、斯拉文贝鲁波、维京古尔、利雅得青年人、布赖代合作、阿根廷青年人、塔勒瑞斯、纽维尔老男孩等。来源 URL 写在每个 curation row 的 `source.reference`。
+- 已验证共享读取：MR1 `src/football-display-names.js` 实际加载本次 M1 共享库，并对测试 fixture 渲染中文；MR1 AI browser-forward/reconcile、Telegram formatter 均使用该 resolver。`615542b96` 的 MR1 对接测试通过；直接挂载本次共享目录的只读测试 2/2 通过。M1 formatter/coverage/recovery 测试 12/12 通过。
+- `Football display identity recovery` 曾逐联赛串行 TotalCorner 查询：run `38140766273` 完成 1,373 calls、0 API errors，找到 295 个英文身份和 4 个中文候选，但 push 因 master 前进被拒；run `38154953857` 完成 931 calls、0 API errors，恢复 293 个身份和 4 个名称，但因 rebase 前 `.md` 报告未 stage 失败。第三轮 `38161820877` 已按新任务要求取消，未继续 API 查询。该路线有明显串行低效，已停止。
+- quant-runner `main` 已有修正提交 `30724816d7bbb39a04fe9cdc1acfe0bd0224a88c`（master 前进时 rebase）及 `ae1a980...`（把 Markdown 一起 stage）；本轮将删除旧全量身份恢复 workflow，避免再次触发耗时串行 API 扫描。不要重新 dispatch 该旧 workflow。
+- 公开中文名称来源已使用现成映射库 `qqyg000/lottery-football`（英文别名到中国体育彩票规范名）；精确、唯一的 ID 映射可自动导入，多候选不自动裁决。7M/中文体育彩票及主流中文比分来源的核验链接见执行对话/共享库每条 `source.reference`；继续以 ID 和来源为依据，不按名字近似合并。
+- MR1 代码已有历史显示修正器 `src/v6-ah-formal-display-repair.js`，但目前没有 workflow 调用它；M1 与 MR1 AI 仍缺历史消息批量 edit 的独立部署/回执。不得把未来 formatter 测试说成历史 Telegram 已修复，也不得重发历史正式单。
+- 本轮未改 M1/MR1 策略、模型、阈值、scope、订单/结算账本或正式 Telegram 新单规则。历史 Telegram 仍未批量 edit：MR1 现有 repairer 尚未接入受控流程；M1/MR1 AI 也需要独立、可审计的 edit 任务。任何修复都只能按原 message ID 调 `editMessageText`，不得重发或更改盘口、价格、方向、时间、结算字段。
