@@ -91,13 +91,13 @@
 - 最新 MR1 Free Runtime 仍在运行；未删除正式 M1、MR1、MR1 AI、对手结算生产入口。对中文库恢复工作流的取消原因尚未核实。
 
 ## 2026-10-12 共享中文名称库收敛与当前状态
-- **本节状态被 2026-10-12 全量复核结果更新：** 共享库最新提交 `d353f4a`；12,172 个 team ID 的英文身份全部恢复，canonical 简体中文名 3,475（28.55%），8,697 条仍无唯一可核验中文名。771 个 league ID 中 329 个有 canonical 中文名。M1 历史覆盖 1,855/3,880（47.81%），MR1 历史覆盖 3,410/11,916（28.62%）。旧段落数字仅为当时快照。
+- **本节状态被 2026-10-12 全量复核结果更新：** 共享库当前提交 `11f978103e09393573a635911d3fa9ff14c9036f`；12,172 个 team ID 的英文身份全部恢复，canonical 简体中文名 3,640（29.90%），8,532 条仍无唯一可核验中文名。771 个 league ID 中 329 个有 canonical 中文名。M1 历史覆盖 1,933/3,880（49.82%），MR1 历史覆盖 3,562/11,916（29.89%）。旧段落数字仅为当时快照。
 - 最近一次 `Shared Football Identity Recovery` 已在 run `38178789455` 成功结束；持久化检查点记录 58/58 个待查联赛完成、0 个失败、1,374 次累计 TotalCorner API 请求，恢复 295 个英文身份。没有重新 dispatch 已完成的身份采集。
-- 在唯一未映射队名上追加了 Reep/Wikidata 严格交叉：仅 exact English name 且 Reep QID、TotalCorner team ID 均唯一；622 个候选中 64 个有简体中文标签并新增，558 个无简体标签，24 个同名交叉歧义排除。没有模糊匹配或按 team ID 猜名。其余 8,697 条及逐条原因保存在 `results/football_chinese_bulk_report.json`。
+- 在唯一未映射队名上追加 Reep/Wikidata 严格交叉：仅用主队名/英文别名，做大小写、重音和标点标准化；要求 Reep QID、TotalCorner team ID 均唯一，不做模糊拼写匹配。两轮累计候选中 229 个获得简体中文标签并新增；最近一轮 1,049 个双端唯一候选中 884 个没有简体标签，43 个交叉歧义被排除。其余 8,532 条及逐条原因保存在 `results/football_chinese_bulk_report.json`。
 - M1 与 MR1/MR1 AI 继续读取 `totalcorner-research-bridge/data/football_display_names/`。MR1 AI browser-forward/reconcile 已停止读取其旧 registry snapshot（快照保留为历史证据），改用 workflow checkout 的同一共享库；MR1 代码提交 `c9a6ccc`。解析/隔离测试通过，未改模型、策略、账本或通知规则。
 - 主要报告：`results/football_chinese_bulk_report.md`、`data/football_display_names/coverage.json`；名称源分布和 ID 来源见报告与 `teams.json` 的每行 `source`。
 - 唯一共享库仍为 M1 仓库 `data/football_display_names/`。M1 formatter 按 team/league ID 读它；M1 scan preflight 只报告展示映射缺口，不阻塞正式锁单。MR1 AH、MR1 AI browser-forward/reconcile 与 MR1 Telegram formatter 从 `external/football-display-registry` 读取同一库，运行 workflow checkout 主仓 master。名称只影响展示，不进入模型字段。
-- `totalcorner-research-bridge` 以 `52fe40d9164560caf3232740762b035ed70391af` 为基础的原统计属于历史快照，现由顶部 `d353f4a` 结果替代。英文身份与中文覆盖数字请以顶部新结果为准。
+- `totalcorner-research-bridge` 以 `52fe40d9164560caf3232740762b035ed70391af` 为基础的原统计属于历史快照，现由顶部本轮提交结果替代。英文身份与中文覆盖数字请以顶部新结果为准。
 - 最新已保存 M1 scan `results/latest.json`：88 场、176 个唯一 team ID；175 个有 canonical 中文展示名（99.43%），39 个 league ID 全部覆盖。唯一未确认中文名为 `FC Livyi Bereh`（ID 86544）；不以猜译补齐。扫描报告 `results/m1_telegram_display_unresolved.json` 已重算。
 - 当前扫描池补充名使用 7M、500彩票网、Sofascore、Titan007、FootballAnt、公开中文球队资料等逐条链接的来源；未改既有正确映射。近期重点包含施利马流浪、格兹拉联、波德布雷佐瓦、斯拉文贝鲁波、维京古尔、利雅得青年人、布赖代合作、阿根廷青年人、塔勒瑞斯、纽维尔老男孩等。来源 URL 写在每个 curation row 的 `source.reference`。
 - 已验证共享读取：MR1 `src/football-display-names.js` 实际加载本次 M1 共享库，并对测试 fixture 渲染中文；MR1 AI browser-forward/reconcile、Telegram formatter 均使用该 resolver。`615542b96` 的 MR1 对接测试通过；直接挂载本次共享目录的只读测试 2/2 通过。M1 formatter/coverage/recovery 测试 12/12 通过。
