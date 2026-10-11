@@ -99,12 +99,6 @@ jobs:
           MR1_TG_CHAT_ID: ${{ secrets.MR1_TG_CHAT_ID }}
         run: node src/v6-ah-formal-notify.js
 
-      - name: Repair existing MR1 messages to Chinese display
-        env:
-          MR1_TG_BOT_TOKEN: ${{ secrets.MR1_TG_BOT_TOKEN }}
-          MR1_TG_CHAT_ID: ${{ secrets.MR1_TG_CHAT_ID }}
-        run: node src/v6-ah-formal-display-repair.js
-
       - name: Persist formal V6 state
         if: always()
         env:
