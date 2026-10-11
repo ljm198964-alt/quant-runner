@@ -131,3 +131,10 @@
 - 新增校验项含布拉格杜克拉、斯塔泽舒夫、卢多戈雷茨B队、瓦赫达麦加、亚达禾、阿尔纳泽马、阿尔泰伊、奥斯特拉瓦巴尼克B队、蒙塔纳、斯梅代雷沃、PAOK沙朗历基B队；源链接保存在 registry 行内。未能找到可靠主流中文名的仍保持 unresolved，不以机器翻译填充。
 - 最新提交只改共享 registry 与正式范围统计；M1 单测 20/20 通过，MR1 共享 registry/browser-forward 定向测试 5/5、`npm test` 通过。其余本机未提交更改属于既有用户文件，未纳入提交。
 - 云端 smoke run `38182821814` 仍是 runner 启动前遭账户支付/支出限制拦截，不能据此宣称云端部署验证通过；本轮没有触发生产扫描、Telegram 或账本写入。
+
+## 2026-10-12 中文名称库全量身份/来源复核
+- 最新共享库提交：`2a607c9acedd07adfc91b6c0a55294221623e0ee`；唯一库仍是 M1 仓库 `data/football_display_names/display_names.json`。本轮精确复核已保存的 24,888 行 `lottery-football` 名称表及其全部 TotalCorner 身份别名，新增 team_id `1407` / `T.N.S.` → `新圣徒`（Sporttery 明确 English alias `The New Saints`），没有按 ID 猜名，也没有合并球队 ID。
+- 最终全库 12,172/12,172 英文身份可恢复；canonical_zh 3,652（30.00%），未映射 8,520；已记录身份冲突 0、译名冲突 0。115 条旧 `curated_transliteration` 保留但单独标识，不计入可追溯来源数（3,537）。未映射逐条及原因写入共享库旁审计清单，不是第二份名称库。
+- 更新后的正式范围：M1 1,203/1,576（76.33%），MR1 AH 1,283/1,921（66.79%），M1+MR1 去重并集 1,640/2,468（66.45%），M1 OU-R1 52/52。MR1 AI 与 M1 共享同一展示登记读取路径。
+- M1 单测 20/20，MR1 shared registry/browser-forward 5/5；本地同一 canonical 文件在 M1、MR1 两个 formatter 中都把 `T.N.S.` 渲染为「新圣徒」。
+- 远端 MR1 只读 registry smoke `38185225540` 及历史批量恢复 run `38138357332` 均在 runner 启动前失败；GitHub annotation 的具体原因是账户近期付款失败或支出限制，两个 job 均无执行 steps/log。不能记为云端 PASS；共享库 Git push 本身已成功。未触发任何策略运行、Telegram 或账本写入。
