@@ -1,0 +1,59 @@
+name: Shared Football Identity Recovery
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: shared-football-identity-recovery
+  cancel-in-progress: false
+
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout private shared registry and existing recovery program
+        uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/totalcorner-research-bridge
+          ref: master
+          path: bridge
+          fetch-depth: 0
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run existing identity and name recovery program
+        working-directory: bridge
+        env:
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+        run: python ops/football_display_bulk_recovery.py
+
+      - name: Persist shared registry and evidence report
+        working-directory: bridge
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add \
+            data/football_display_names/teams.json \
+            data/football_display_names/competitions.json \
+            data/football_display_names/auto_curation.json \
+            data/football_display_names/aliases.json \
+            data/football_display_names/coverage.json \
+            data/football_display_names/audit_sample_50.md \
+            results/football_chinese_bulk_report.json \
+            results/football_chinese_bulk_report.md
+          if git diff --cached --quiet; then
+            echo 'No new identity or display-name evidence to persist.'
+            exit 0
+          fi
+          git commit -m 'Recover shared football identities and Chinese names'
+          git pull --rebase origin master
+          git push origin HEAD:master
