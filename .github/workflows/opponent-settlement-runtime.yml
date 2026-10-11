@@ -6,6 +6,7 @@ on:
   push:
     paths:
       - '.github/workflows/opponent-settlement-runtime.yml'
+      - 'trigger/opponent-settlement-refresh.json'
 
 permissions:
   contents: read
