@@ -1,4 +1,5 @@
 name: M1 TG Historical Chinese Name Repair
+# Re-run existing history-only Chinese display correction against latest shared registry.
 on:
   workflow_dispatch:
   push:
