@@ -1,0 +1,5 @@
+{
+  "purpose": "Run existing M1 formal Crown scan and Telegram dispatch after OU pause fix",
+  "requested_at": "2026-10-11T14:45:00Z",
+  "strategy_changes": false
+}
