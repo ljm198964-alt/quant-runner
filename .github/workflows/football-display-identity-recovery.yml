@@ -28,32 +28,42 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Run existing identity and name recovery program
+      - name: Run resumable identity recovery batches
         working-directory: bridge
         env:
           TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
-        run: python ops/football_display_bulk_recovery.py
-
-      - name: Persist shared registry and evidence report
-        working-directory: bridge
-        shell: bash
         run: |
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add \
-            data/football_display_names/teams.json \
-            data/football_display_names/competitions.json \
-            data/football_display_names/auto_curation.json \
-            data/football_display_names/aliases.json \
-            data/football_display_names/coverage.json \
-            data/football_display_names/audit_sample_50.md \
-            results/football_chinese_bulk_report.json \
-            results/football_chinese_bulk_report.md
-          if git diff --cached --quiet; then
-            echo 'No new identity or display-name evidence to persist.'
-            exit 0
-          fi
-          git commit -m 'Recover shared football identities and Chinese names'
-          git pull --rebase origin master
-          git push origin HEAD:master
+          persist_batch() {
+            git add \
+              data/football_display_names/teams.json \
+              data/football_display_names/competitions.json \
+              data/football_display_names/auto_curation.json \
+              data/football_display_names/aliases.json \
+              data/football_display_names/coverage.json \
+              data/football_display_names/identity_api_recovery_state.json \
+              data/football_display_names/audit_sample_50.md \
+              results/football_chinese_bulk_report.json \
+              results/football_chinese_bulk_report.md
+            if git diff --cached --quiet; then return 0; fi
+            git commit -m 'Persist resumable football identity recovery batch'
+            git pull --rebase origin master
+            git push origin HEAD:master
+          }
+          for batch in 1 2 3 4; do
+            echo "Starting bounded identity recovery batch ${batch}."
+            run_status=0
+            FOOTBALL_IDENTITY_MAX_API_CALLS=250 python ops/football_display_bulk_recovery.py || run_status=$?
+            persist_batch
+            if [[ "$run_status" != "0" ]]; then
+              echo "Recovery process exited with status ${run_status}; persisted its last safe checkpoint."
+              exit "$run_status"
+            fi
+            complete=$(python -c 'import json; from pathlib import Path; p=Path("data/football_display_names/identity_api_recovery_state.json"); print(str(bool(json.loads(p.read_text()).get("complete"))).lower() if p.exists() else "false")')
+            if [[ "$complete" == "true" ]]; then
+              echo 'All API-eligible league identity recovery is complete.'
+              break
+            fi
+          done
