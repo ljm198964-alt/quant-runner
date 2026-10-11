@@ -1,0 +1,101 @@
+name: M1 TG Historical Chinese Name Repair
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  edit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout M1 and shared football registry
+        uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/totalcorner-research-bridge
+          ref: master
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Correct names only in existing M1 Telegram messages
+        env:
+          M1_TELEGRAM_BOT_TOKEN: ${{ secrets.M1_TELEGRAM_BOT_TOKEN }}
+          M1_TELEGRAM_CHAT_ID: ${{ secrets.M1_TELEGRAM_CHAT_ID }}
+        run: |
+          python - <<'PY'
+          import json, os, re, time
+          from urllib.request import Request, urlopen
+          from urllib.error import HTTPError
+          from pathlib import Path
+          from m1_telegram_display import load_display_names, _competition, _team
+
+          ledger = json.loads(Path('results/m1_formal_ledger.json').read_text(encoding='utf-8'))
+          names = load_display_names()
+          bot, chat = os.environ.get('M1_TELEGRAM_BOT_TOKEN'), os.environ.get('M1_TELEGRAM_CHAT_ID')
+          if not bot or not chat: raise RuntimeError('M1_TELEGRAM_NOT_CONFIGURED')
+          report = {'total_sent':0,'candidate':0,'edited':0,'already_matching':0,
+                    'skipped_no_receipt':0,'skipped_no_mapping':0,'failed':0,'failures':[]}
+          for key, channels in ledger.get('notifications',{}).items():
+              n = channels.get('telegram') or {}
+              if n.get('status') != 'SENT': continue
+              report['total_sent'] += 1
+              mid = str(n.get('provider_message_id') or '')
+              original = n.get('sent_message') or ''
+              lock = ledger.get('picks',{}).get(key)
+              if not mid.isdecimal() or not original or not lock:
+                  report['skipped_no_receipt'] += 1
+                  continue
+              changes = []
+              for raw, resolved in (
+                  (lock.get('competition') or lock.get('league'),_competition(lock,names)),
+                  (lock.get('home'),_team(lock,'home',names)),
+                  (lock.get('away'),_team(lock,'away',names))
+              ):
+                  zh, found = resolved
+                  if found and raw and isinstance(zh,str) and zh != raw and raw in original:
+                      changes.append((str(raw),zh))
+              text = original
+              for en,zh in sorted(changes,key=lambda p:len(p[0]),reverse=True):
+                  text = text.replace(en,zh)
+              if text == original:
+                  report['skipped_no_mapping'] += 1
+                  continue
+              report['candidate'] += 1
+              req = Request(
+                'https://api.telegram.org/bot'+bot+'/editMessageText',
+                data=json.dumps({'chat_id':chat,'message_id':int(mid),'text':text}).encode(),
+                headers={'Content-Type':'application/json'}
+              )
+              try:
+                  with urlopen(req,timeout=20) as res:
+                      body = json.loads(res.read())
+                  if not body.get('ok'): raise RuntimeError('TELEGRAM_NOT_OK')
+                  report['edited'] += 1
+              except HTTPError as e:
+                  detail = e.read().decode('utf-8','replace')[:200]
+                  if e.code == 400 and 'message is not modified' in detail:
+                      report['already_matching'] += 1
+                  else:
+                      report['failed'] += 1
+                      report['failures'].append({'message_id':mid,'http_status':e.code,'detail':detail})
+                      if e.code == 429:
+                          break
+              except Exception as e:
+                  report['failed'] += 1
+                  report['failures'].append({'message_id':mid,'error_type':type(e).__name__})
+              time.sleep(0.8)
+          Path('m1-tg-historical-display-report.json').write_text(
+              json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8'
+          )
+          print('M1_TELEGRAM_HISTORY_REPAIR '+json.dumps(report,ensure_ascii=False))
+          PY
+      - name: Upload edit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: m1-tg-historical-display-report
+          path: m1-tg-historical-display-report.json
+          if-no-files-found: ignore
