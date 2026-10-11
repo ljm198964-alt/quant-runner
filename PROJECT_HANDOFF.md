@@ -84,3 +84,8 @@
 - 未删除正式 M1、MR1、MR1 AI、对手结算生产入口；MR1 Free Runtime 在最近运行列表中继续执行。未删除任何正式账本、研究数据、TG 回执。
 - `Football display identity recovery` 最新运行列表出现 cancelled，尚未确认取消原因；中文库工作由 Codex 重构中，不得将其视为已完成。
 - 剩余工作流需要逐项判断生产/研究依赖，不得为了压低数量擅自删除。
+
+## 2026-10-12 GitHub Actions 第三批清理
+- 已删除硬编码六条历史消息的 `mr1-v6-current-display-fix.yml`（提交 `9b90b713`）和被现有正式 M1 派单链路替代的 `m1-immediate-delivery-integrate.yml`（提交 `846ba034`）。
+- GitHub 仓库树已重新核实：初始 42 个工作流，累计删除 13 个，剩余 29 个。
+- 最新 MR1 Free Runtime 仍在运行；未删除正式 M1、MR1、MR1 AI、对手结算生产入口。对中文库恢复工作流的取消原因尚未核实。
