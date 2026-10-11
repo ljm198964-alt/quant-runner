@@ -46,7 +46,7 @@ jobs:
               if n.get('status') != 'SENT': continue
               report['total_sent'] += 1
               mid = str(n.get('provider_message_id') or '')
-              original = n.get('sent_message') or ''
+              original = n.get('sent_message') or n.get('raw_line') or ''
               lock = ledger.get('picks',{}).get(key)
               if not mid.isdecimal() or not original or not lock:
                   report['skipped_no_receipt'] += 1
