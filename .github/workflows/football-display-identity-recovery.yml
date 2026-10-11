@@ -1,0 +1,46 @@
+name: Football display identity recovery
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: football-display-identity-recovery
+  cancel-in-progress: false
+
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - name: Checkout quant-runner
+        uses: actions/checkout@v4
+      - name: Checkout private shared registry
+        uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/totalcorner-research-bridge
+          ref: master
+          path: totalcorner-research-bridge
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Recover stored identities and exact Chinese aliases
+        working-directory: totalcorner-research-bridge
+        env:
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+        run: python ops/football_display_bulk_recovery.py
+      - name: Commit and push shared registry recovery
+        working-directory: totalcorner-research-bridge
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/football_display_names results/football_chinese_bulk_report.json
+          if git diff --cached --quiet; then
+            echo "No shared display registry changes to commit."
+            exit 0
+          fi
+          git commit -m "Complete football display identity recovery"
+          git push origin HEAD:master
