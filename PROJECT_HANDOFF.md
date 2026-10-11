@@ -63,3 +63,10 @@
 - GitHub Actions `38148601775` 已成功：扫描 `COMPLETE`、28 条新信号、45 条候选、0 扫描错误、0 即时派单错误；后续 `telegram_sent=1`、`telegram_unknown=0`、正式账本回写成功（提交 `24a694e`）。该运行早于 `e26b1df`。
 - GitHub Actions `38148606525` 最新检查仍 `in_progress`，扫描步骤已成功，锁单/派单/账本回写尚待完成。继续检查，不得当作失败或成功。
 - 生产工作流仍从私有仓库 checkout，公开 Runner 尚未完全独立。
+
+## 2026-10-12 实战统计更新（以源文件 generated_at 为准）
+- M1 正式报告 `results/m1_formal_report.json`，生成 UTC `2026-10-11T15:37:30.556621`：AH 已发105、结算79、待结26、+4.295U、ROI+5.44%；OU含旧线已发100、结算69、待结31、-0.425U、ROI-0.62%；总计已发205、结算148、待结57、+3.870U、ROI+2.61%。R1 新线不得与旧线混算。
+- MR1 AH 正式报告 `data/mr1-v6-cross-market/formal/performance.json`，生成 UTC `2026-10-11T17:29:17.266Z`：结算81、待结36、-1.155U、ROI-1.43%，状态全赢33/半赢6/走水6/半输4/全输32；此前盈利快照已过时。
+- MR1 AI 正式报告 `data/mr1-ai-browser-forward/formal-performance/summary.json`，生成 UTC `2026-10-11T14:22:56.677Z`：正式TG回执18、结算17、待结1、-5.750U、ROI-33.82%。不得与 MR1 AH 混用。
+- 对手报告 `results/opponent_settlement_latest.json`，生成 UTC `2026-10-10T06:28:02`：来源227、结算179、未解决48、+0.185U、ROI+0.10%；AH 98单+2.325U，OU 81单-2.140U。该数据明显较旧。
+- 本节是历史核查快照，下一次必须重新读取生产报告，不能冒充实时数据。
