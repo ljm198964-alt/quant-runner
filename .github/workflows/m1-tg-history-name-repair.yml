@@ -1,6 +1,9 @@
 name: M1 TG Historical Chinese Name Repair
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/m1-tg-history-name-repair.yml'
 
 permissions:
   contents: read
