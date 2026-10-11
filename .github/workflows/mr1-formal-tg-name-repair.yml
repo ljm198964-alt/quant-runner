@@ -1,0 +1,80 @@
+name: MR1 Formal Telegram Historical Name Repair
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mr1-historical-telegram-name-edits
+  cancel-in-progress: false
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout original MR1 data
+        uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/mr1-shadow
+          ref: master
+          fetch-depth: 0
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+      - name: Checkout existing Chinese football registry
+        uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/totalcorner-research-bridge
+          ref: master
+          path: external/football-display-registry
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          sparse-checkout: |
+            data/football_display_names
+          sparse-checkout-cone-mode: true
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Edit Telegram historical messages without changing wager terms
+        env:
+          MR1_TG_BOT_TOKEN: ${{ secrets.MR1_TG_BOT_TOKEN }}
+          MR1_TG_CHAT_ID: ${{ secrets.MR1_TG_CHAT_ID }}
+        shell: bash
+        run: |
+          node --input-type=module <<'JS'
+          import {repairV6FormalDisplay} from './src/v6-ah-formal-display-repair.js';
+          const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+          const total={edited:0,failed:0,already_processed:0,unresolved:0,requests:0};
+          while(true){
+            const r=await repairV6FormalDisplay();
+            total.requests++;
+            total.edited+=r.edited||0;
+            total.failed+=(r.failed||0)-(r.rate_limited?1:0);
+            total.already_processed=r.skipped;
+            total.unresolved=r.display_unresolved;
+            console.log('MR1_NAME_ONLY_EDIT_BATCH '+JSON.stringify({
+              edited:r.edited,eligible:r.eligible,skipped:r.skipped,
+              unresolved:r.display_unresolved,failed:r.failed,
+              rate_limited:Boolean(r.rate_limited),retry_after_seconds:r.retry_after_seconds||null
+            }));
+            if(!r.rate_limited)break;
+            const seconds=Number(r.retry_after_seconds);
+            if(!Number.isFinite(seconds)||seconds<=0)
+              throw new Error('TELEGRAM_RATE_LIMIT_DELAY_NOT_PROVIDED');
+            await sleep((seconds+2)*1000);
+          }
+          console.log('MR1_NAME_ONLY_EDIT_TOTAL '+JSON.stringify(total));
+          JS
+      - name: Persist edit receipts, not trading data
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/mr1-v6-cross-market/formal/display-repair-status-v5.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Persist MR1 historical Telegram Chinese name edits'
+          git pull --rebase origin master
+          git push origin HEAD:master
