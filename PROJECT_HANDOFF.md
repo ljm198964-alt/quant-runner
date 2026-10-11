@@ -70,3 +70,10 @@
 - MR1 AI 正式报告 `data/mr1-ai-browser-forward/formal-performance/summary.json`，生成 UTC `2026-10-11T14:22:56.677Z`：正式TG回执18、结算17、待结1、-5.750U、ROI-33.82%。不得与 MR1 AH 混用。
 - 对手报告 `results/opponent_settlement_latest.json`，生成 UTC `2026-10-10T06:28:02`：来源227、结算179、未解决48、+0.185U、ROI+0.10%；AH 98单+2.325U，OU 81单-2.140U。该数据明显较旧。
 - 本节是历史核查快照，下一次必须重新读取生产报告，不能冒充实时数据。
+
+## 2026-10-12 GitHub Actions 工程清理
+- 用户明确要求由 GPT 直接清理，不交 Codex；目标减少废弃和重复工作流，不影响正式模型生产。
+- 已盘点公开 `quant-runner`：清理前 42 个工作流文件。
+- 第一批已删除 4 个完成用途的一次性工作流：`m1-ou-r1-tg-test.yml` (`d180fdbb`)、`mr1-model-sign-audit-once.yml` (`41885c1f`)、`mr1-universe-coverage-once.yml` (`2a939b99`)、`mr1-row-schema-audit-once.yml` (`f9af4af9`)。
+- 第一批清理后预计 38 个工作流文件，仍需复核最新仓库树及运行状态。未删除任何正式账本、TG 回执、研究结果或生产定时工作流。
+- 其他旧研究/临时工作流尚未确认实际依赖，不得把它们写成已清理；后续继续盘点触发、依赖、最近运行及历史用途后处理。
