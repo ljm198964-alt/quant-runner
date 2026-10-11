@@ -1,6 +1,9 @@
 name: TotalCorner Chinese Name Readonly Probe
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/mr1-totalcorner-zh-probe.yml'
 permissions:
   contents: read
 jobs:
