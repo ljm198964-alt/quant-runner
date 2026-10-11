@@ -101,3 +101,13 @@
 - 公开中文名称来源已使用现成映射库 `qqyg000/lottery-football`（英文别名到中国体育彩票规范名）；精确、唯一的 ID 映射可自动导入，多候选不自动裁决。7M/中文体育彩票及主流中文比分来源的核验链接见执行对话/共享库每条 `source.reference`；继续以 ID 和来源为依据，不按名字近似合并。
 - MR1 代码已有历史显示修正器 `src/v6-ah-formal-display-repair.js`，但目前没有 workflow 调用它；M1 与 MR1 AI 仍缺历史消息批量 edit 的独立部署/回执。不得把未来 formatter 测试说成历史 Telegram 已修复，也不得重发历史正式单。
 - 本轮未改 M1/MR1 策略、模型、阈值、scope、订单/结算账本或正式 Telegram 新单规则。历史 Telegram 仍未批量 edit：MR1 现有 repairer 尚未接入受控流程；M1/MR1 AI 也需要独立、可审计的 edit 任务。任何修复都只能按原 message ID 调 `editMessageText`，不得重发或更改盘口、价格、方向、时间、结算字段。
+
+## 2026-10-12 用户明确要求持续跟踪的非正式研究线索
+用户要求：保留以下亮眼方向持续跟踪，不得跨会话遗忘。**这不是批准实战发单，也不是新增自动晋级 Gate、数量门槛或策略规则。** 正式 TG 统计与研究样本必须隔离。
+
+1. **MR1 OU T1 小球反买大球**：历史模拟 56 场，反向 +6.575 U、ROI +11.74%；LOCKED_EVALUATION 16 场，+0.8125 U、ROI +5.08%。反向平均 CLV -0.0404，正 CLV 比率约 7.4%，需同步跟踪这一不利信号。来源 `mr1-shadow/data/mr1-v6-cross-market/ou-t1-reverse-validation/summary.json`。
+2. **M1 俱乐部 OU 强残差与市场确认**：先期 12 场开发样本冻结残差阈值 0.683，后段 7 场 +2.425 U、ROI +34.64%；其中强残差 3 场 +2.025 U、ROI +67.5%，强残差且市场确认 2 场 +1.65 U、ROI +82.5%。小样本、子集重叠，不得重复计算独立样本。来源 `totalcorner-research-bridge/research/m1-ou-challenger-v1/summary.json`；前瞻跟踪 `research/m1-ou-challenger-v1/forward-shadow-report.json`（最新 38 条俱乐部诊断，11 已结算）。
+3. **MR1 AH 连续盘口确认/P75 噪声确认**：开发样本 4 场 +2.65 U、ROI +66.25%；尚不能视为锁定评估成功。来源 `mr1-shadow/data/mr1-v6-cross-market/ah-stable-edge-combined-research/summary.json`。
+4. **M1 国家队 OU 反买**：历史 25 场反向 +4.05 U、ROI +16.20%；独立 Crown 前瞻截至该快照 0 条合格触发/0 条结算，不得将历史成绩冒充前瞻。来源 `totalcorner-research-bridge/research/m1-ou-challenger-v1/summary.json` 和 `research/m1-national-ou-reverse-v1/forward/summary.json`。
+
+后续研究会话应读取上述原始文件最新生成时间，继续更新样本、结算、ROI、回撤、CLV 和独立前瞻证据；不改变已确认的正式模型运行，不擅自将研究线索升级为 TG 实战。
