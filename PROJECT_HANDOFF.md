@@ -77,3 +77,10 @@
 - 第一批已删除 4 个完成用途的一次性工作流：`m1-ou-r1-tg-test.yml` (`d180fdbb`)、`mr1-model-sign-audit-once.yml` (`41885c1f`)、`mr1-universe-coverage-once.yml` (`2a939b99`)、`mr1-row-schema-audit-once.yml` (`f9af4af9`)。
 - 第一批清理后预计 38 个工作流文件，仍需复核最新仓库树及运行状态。未删除任何正式账本、TG 回执、研究结果或生产定时工作流。
 - 其他旧研究/临时工作流尚未确认实际依赖，不得把它们写成已清理；后续继续盘点触发、依赖、最近运行及历史用途后处理。
+
+## 2026-10-12 GitHub Actions 第二批清理
+- 在第一批 4 个之外，又删除 7 个一次性/固定批次入口：`mr1-defense-sign-audit-once.yml` (`1d9fa015`)、`mr1-target-ou-audit-once.yml` (`10e44153`)、`mr1-totalcorner-zh-probe.yml` (`eb604f5d`)、`mr1-target-history-backfill-b1.yml` (`f68bb040`)、`mr1-target-history-backfill-b2.yml` (`1136d920`)、`mr1-target-history-backfill-b3.yml` (`d5940918`)、`mr1-target-history-deepen-1.yml` (`04d9ef06`)。
+- 公开仓库工作流文件数经最新 GitHub 树核实：原 42，累计删除 11，剩余 31。
+- 未删除正式 M1、MR1、MR1 AI、对手结算生产入口；MR1 Free Runtime 在最近运行列表中继续执行。未删除任何正式账本、研究数据、TG 回执。
+- `Football display identity recovery` 最新运行列表出现 cancelled，尚未确认取消原因；中文库工作由 Codex 重构中，不得将其视为已完成。
+- 剩余工作流需要逐项判断生产/研究依赖，不得为了压低数量擅自删除。
