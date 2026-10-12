@@ -174,3 +174,8 @@
 - 来源页面：欧洲顶级足球俱乐部列表、亚洲足球俱乐部列表、南美洲足球俱乐部列表；只取带中文名和英文/外文名列的球队行，未把城市列或荣誉字段误当队名，也未做模糊拼写匹配。候选确认包括迪纳摩城、埃斯卡尔德斯体育俱乐部、加巴拉、索菲亚火车头、内姆梅卡柳、青岛西海岸、艾费哈、石油联盟等；英文注释括号已从来源展示标签清理，底层身份原文及 ID 不变。
 - M1 回归测试 20/20 通过；MR1 shared registry/AI-forward 测试 5/5 通过，完整 `npm test` 通过。测试期间第一次从 MR1 目录误启动 M1 Python 测试，因测试模块不在该目录而导入失败；随即在 M1 仓库正确重跑并 20/20 通过。没有生产 workflow、TG 或账本操作。
 - MR1 AH/MR1 AI/M1 TG formatter 继续消费唯一共享 registry；历史 TG 消息本轮未编辑或重发。新映射只进入展示 registry，不改模型、策略、scope、阈值、账本、结算或 Telegram 投递规则。
+
+## 2026-10-12 正式范围中文名称续补（三）
+- 共享 registry 最新提交 `c4d58b1d2d81e721ee1e8669b28bc22fd5f20e88` 已推送至 `totalcorner-research-bridge/master`。本次从中文维基洲际顶级联赛表中精确匹配 23 个 formal-scope ID 的英文/中文同表球队行；没有使用 fuzzy match。新增映射数据及审计清单在共享库，采集/验证程序 `ops/curate_formal_scope_public_club_tables.py`。
+- 最新实算：formal union 2,468 中已匹配 1,773、未匹配 695（71.84%）；M1 1,332/1,576（84.52%）；MR1 AH 1,338/1,921（69.65%）；MR1 AI 镜像 1,332/1,576（84.52%）；M1 OU-R1 52/52。全共享库 12,276 IDs、canonical 3,789（30.87%）、英文身份 12,276/12,276。
+- M1 测试 20/20；MR1 shared registry/AI-forward 5/5，`npm test` 通过。只验证展示解析，本轮无生产 runtime、TG、订单或结算操作。M1/MR1/MR1 AI 策略和范围均未改变。
