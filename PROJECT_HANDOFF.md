@@ -688,3 +688,8 @@
 - 在 `b9795b7` 后又核实并加入 3 个正式球队：76 Igdir Belediyespor（85676）→厄德尔（捷报中文队页）；Esenler Erokspor（76129）→埃森勒尔埃罗克体育（Sofascore 简中）；Krumovgrad（108427）→克鲁莫夫格勒（Tips.GG 中文赛事实录，并以俱乐部官方历史核对旧名关系）。保留原 ID/英文名及身份，未将别队、预备队或同名球队合并。共享提交 `183dc32` 已推送 `totalcorner-research-bridge/master`。
 - 最新实际 coverage：formal union 2,468，canonical 2,071，unresolved 397（83.91%）；M1 1,445/1,553（93.05%）；M1 OU-R1 52/52（100%）；MR1 AH 1,586/1,921（82.55%）；MR1 AI declared mirror 1,445/1,553（93.05%）。唯一共享库 12,276 IDs、4,087 canonical。完整 unresolved 名单及每条原因在 `data/football_display_names/formal_scope_coverage.json`。
 - M1 Telegram display/repair tests 8/8 通过，`git diff --check` 通过。仅更改唯一共享名称数据/报告/curator；无 TG 发送或历史消息编辑，未修改任何模型、策略、账本、结算或 Telegram 规则。
+
+## 2026-10-12 正式范围中文名称续补（九十五）
+- 在共享库 `183dc32` 后新增 3 个有明确简中球队页配对的 formal IDs：Al-Ula（151747）→阿尔乌拉（17500）；Nordic United FC（119002）→北欧联合（7M）；Baglan Dragons（124892）→巴格兰龙（Tips.GG）。ID/英文 provider identity/aliases 原样保留。共享提交 `d790b64` 已推送 `totalcorner-research-bridge/master`。
+- 最新实算 formal union 2,468：canonical 2,074、unresolved 394（84.04%）；M1 1,445/1,553（93.05%）；M1 OU-R1 52/52（100%）；MR1 AH 1,589/1,921（82.72%）；MR1 AI declared mirror 1,445/1,553（93.05%）。共享 registry 12,276 IDs、4,090 canonical names。未匹配完整名单及各条保留原因位于共享 `data/football_display_names/formal_scope_coverage.json`。
+- M1 Telegram display/repair tests 8/8 pass；`git diff --check` pass。仅变更唯一共享显示库及其 curation/coverage 产物；未修改模型、策略、盘口、账本、结算、Telegram 规则，未发送或编辑历史 Telegram。
