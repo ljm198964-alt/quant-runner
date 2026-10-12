@@ -515,3 +515,11 @@
 - 共享库新增 Sektzia Nes Tziona（team_id 5450）→耐斯茨奥纳，来源为 7M 中文球队档案（https://team.7m.com.cn/10048/index.shtml）；采用该来源中文名的简体字规范形式，保留来源繁体名“耐斯茨奧納”及 provider 英文身份/ID。
 - 最新 formal union 2,468：canonical 1,981、unresolved 487（80.27%）；M1 1,538/1,576（97.59%）；M1 OU-R1 52/52；MR1 AH 1,514/1,921（78.81%）；MR1 AI declared mirror 1,538/1,576（97.59%）。完整 unresolved 列表及原因见共享 `formal_scope_coverage.json`。
 - 验证：M1 定向 pytest 20/20、MR1 shared registry tests 2/2。未触发 Telegram、未修改交易模型/策略/账本/结算；仅更新共享名称、审计与交接，继续处理剩余 487 项。
+
+## 2026-10-12 正式范围中文名称续补与历史 TG 核验（六十七）
+- 共享名称库已推送至 `totalcorner-research-bridge` master `0a390db`；Runner 记录共享库 batch 66，并追加本次真实历史通知修复回执。
+- 三条既有、专用于名称编辑的 workflow 均完成：M1 `38211696706`（成功）；MR1 AH `38211700043`（成功）；MR1 AI `38211703325`（成功）。均只调用原消息 edit API/保存各系统自己的修复状态，没有重新发送策略消息、触发扫描或新建 Pick。
+- 实际结果：M1 AH 与 M1 OU-R1 共用 ledger/formatter，37 条已保存原文候选全部 `ALREADY_MATCHING`，新编辑 0、失败 0；另 99 条没有 ledger 原文、70 条仍无可替换的已确认名称。MR1 AH 0 条需要编辑，124 条已处理/跳过，unresolved 0、failed 0。MR1 AI 新编辑 0；9 条候选均因 Telegram 返回 `400 message to edit not found` 失败，另 192 条仍 unresolved；未重发。完整 status/report 分别保存在 M1 ledger repair artifact 和 MR1 自己的 `telegram-edit-repair.json` / formal repair status 中。
+- 当前共享正式范围：2,468 个 ID，canonical 1,981、unresolved 487、覆盖 80.27%；M1 1,538/1,576（97.59%）；M1 OU-R1 52/52（100%）；MR1 AH 1,514/1,921（78.81%）；MR1 AI declared mirror 1,538/1,576（97.59%）。逐项 unresolved 及原因见共享 `formal_scope_coverage.json`。
+- 定向验证：M1 pytest 20/20；MR1 共用库与 AI formatter/parser 测试 8/8。单独 V6 formal runtime 集成测试未计入通过数：其断言价格为 `@0.93`，实际格式文本仍为原 fixture 锁定水位 `@0.90`，此项与中文映射无关，本轮未改交易字段/策略。
+- 不曾修改 M1/MR1 策略、模型、盘口、交易账本或结算。后续继续只为剩余 487 个正式范围 ID 寻找有来源的 canonical 中文名；Telegram 尚未编辑的限制与回执如上，不以重发替代。
