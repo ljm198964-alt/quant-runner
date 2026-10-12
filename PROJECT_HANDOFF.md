@@ -479,3 +479,8 @@
 - 共享 registry 新增 Dhamk（team_id 22197）→达马克，来源为 7M 中文球队档案（https://team.7m.com.cn/5282/index_gb.shtml）；原 provider name、ID、别名、来源及核验时间写入唯一 `display_names.json`。本轮其他检索到的低级别队伍没有找到足以确认常用中文队名的中文来源，仍保留 unresolved，不做机器音译。
 - 最新正式范围 union 2,468：canonical 1,973、unresolved 495（79.94%）；M1 1,530/1,576（97.08%）；M1 OU-R1 52/52（100%）；MR1 AH 1,506/1,921（78.40%）；MR1 AI declared mirror 1,530/1,576（97.08%）。逐项未匹配原因见共享 `data/football_display_names/formal_scope_coverage.json`。
 - 验证：M1 Telegram display/runtime 定向 pytest 20/20；MR1 shared-registry tests 2/2。仅更改展示映射/审计数据/本交接，未调用生产 Telegram API或编辑历史消息，未改策略、模型、账本或结算。未匹配条目尚有 495 个，继续按可核验中文来源补齐。
+
+## 2026-10-12 正式范围中文名称续补（六十）
+- 共享库新增 Olympic El Qanah（team_id 10778）→艾尔夸纳尔奥林匹克，来源为 FootyStats 简中球队页（https://footystats.org/cn/clubs/olympic-el-qanah-17841）。本范围另有 provider 名 Olympic El Qanal 的不同 ID；没有强行合并，待取得可确认其身份等同的证据。
+- 当前 formal union 2,468：canonical 1,974、unresolved 494（79.98%）；M1 1,531/1,576（97.14%）；M1 OU-R1 52/52；MR1 AH 1,507/1,921（78.45%）；MR1 AI declared mirror 1,531/1,576（97.14%）。完整剩余明细与 reason 见共享 `formal_scope_coverage.json`。
+- 验证：M1 display/runtime pytest 20/20；MR1 shared-registry tests 2/2。仅更新共享名称库、审计报告及本交接；没有执行 Telegram API编辑/发送，模型、策略、订单和结算未改；继续处理剩余 494 项。
