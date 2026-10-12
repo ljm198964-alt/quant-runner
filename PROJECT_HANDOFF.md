@@ -718,3 +718,8 @@
 - 为正式 ID 补入冰岛球队：Grotta Seltjarnarnes（8623）→格罗塔、Njardvik（8935）→尼哈德维克，均由 7M 简中球队档案按英文身份与当地信息核对；原 provider identity、ID 保留。共享提交 `8ebde007a10027881876469bb0cc5da11d0a7f7b` 已推送 master。
 - 最新实算 formal union 2,468：canonical 2,086、unresolved 382（84.52%）；M1 1,452/1,553（93.50%）；M1 OU-R1 52/52；MR1 AH 1,600/1,921（83.29%）；MR1 AI declared mirror M1 1,452/1,553（93.50%）。共享库 12,276 IDs、4,102 canonical。尚未匹配的完整球队 ID/name/reason 见唯一共享库 `data/football_display_names/formal_scope_coverage.json`。
 - M1 display/repair 单测 8/8 通过；无生产 TG 发送或历史消息编辑。历史 TG repair dry-run 的 M1 计数见上一节，其他三链还未完成可验证的编辑盘点；没有更改策略、模型、订单或结算。
+
+## 2026-10-12 正式范围中文名称续补（一百零一）
+- 新增 Hegelmann Litauen（team_id 31954）→赫格尔曼立陶宛（Tips.GG 简中俱乐部页，俱乐部资料核对其旧名/现名）；Tikves Kavadarci（39947）→蒂克韦什（7M 简中球队页）。保留原 team ID/provider identity 和 aliases。共享提交 `c781cb3bbb310eb5156e33a9f3c19f6184997a97` 已推送 master。
+- 最新 formal union 2,468：canonical 2,088、unresolved 380（84.60%）；M1 1,454/1,553（93.63%）；M1 OU-R1 52/52（100%）；MR1 AH 1,602/1,921（83.39%）；MR1 AI declared mirror 1,454/1,553（93.63%）。唯一共享 registry 12,276 IDs、4,104 canonical；未匹配逐 ID 清单见 `data/football_display_names/formal_scope_coverage.json`。
+- M1 display/repair tests 8/8 pass；未进行正式 Telegram 编辑或发送。仅修改共享映射和 coverage/curation 产物，不触及策略/模型/账本/结算。
