@@ -626,3 +626,8 @@
 - 共享 registry 新增 3 个经中文来源与 provider identity 核对的正式队名：Banha（team_id 6273）→班哈、Ingulets Petrovo（31952）→因古列茨、Nesebar（30104）→PFC尼塞巴尔。来源分别为 Tips.GG 中文队名/比赛页；各原 team_id、provider_name 和 league_ids 保留，未合并球队。共享库提交 `6f42e5cbf3381fd63afdf37af3b09d82495b5154` 已推送 `totalcorner-research-bridge/master`。
 - formal union 仍为 2,468 IDs；canonical 2,023、unresolved 445（81.97%）。共享库 12,276 IDs、4,039 canonical。M1 基础正式范围统计经现行 `m1_runtime_policy.scope_status` 重建为 1,556 IDs，其中 1,432 canonical、124 unresolved（92.03%）；当前扫描摘要的 176 个 ID 未带 ID 明细，单独维持 175/176，未擅自合并。脚本现不再按泛化 `systems` 标签累加 M1，避免产生超过 100% 的错误值。MR1 AH 沿用既有正式范围快照口径，未伪称完成重算。
 - M1 display/repair unittest 8/8 通过；`git diff --check` 通过。只改 shared display registry、coverage/batch report 和中文映射整理脚本；无模型、策略、账本、结算或 Telegram 发送逻辑变更。本轮尚未运行云端历史 TG 编辑 workflow，故不报告历史消息实际修改结果。
+
+## 2026-10-12 正式范围中文名称续补（八十四）
+- 新增 7M 可核验记录 Tartu JK Welco（team_id 29760）→塔尔图维尔克；7M 球队页将繁体“塔圖維爾克”与英文原名并列，canonical 使用简体展示，英文和繁体保留为 alias。共享提交 `50d523982582c8409846b71b7e26bbb3a7c6b346` 已推送 master。
+- 当前 union 2,468：canonical 2,024、unresolved 444（82.01%）；共享库 12,276 IDs、4,040 canonical。M1 可审计基础范围 1,556 中 1,432 已映射（92.03%）；另有当前 M1 scan 聚合 175/176，因缺 team ID 清单暂不并入。M1 OU-R1 仍 52/52。MR1 AH 原快照统计仍为 1,543/1,921（80.32%），但其 1,921 总集未能从当前共享文件完全重建，本轮新增 MR1 范围球队已单独说明，不把陈旧聚合数冒充重新核算结果。
+- M1 display/repair unittest 8/8 通过；本轮仍未运行云端历史 Telegram 编辑流程，未编辑或重发历史消息。未改任何模型、策略、订单、结算或通知逻辑。
