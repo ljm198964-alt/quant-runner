@@ -197,7 +197,7 @@
 - M1 tests 20/20、MR1 focused 5/5 和完整 `npm test` 再次通过。只更新名称展示数据/审计，未触发 production/TG，未修改任何模型、策略或账本。
 
 ## 2026-10-12 正式范围中文名称续补（七）
-- 共享 registry 提交 `c654c31`（完整 SHA 以 M1 仓库记录为准）已推送到 `totalcorner-research-bridge/master`。仍使用唯一 `data/football_display_names/display_names.json`，新增 8 个有公开中文球队资料来源、并与正式 TotalCorner team ID 直接交叉核实的名称：艾玛卡沙、艾尔明亚、法尤姆FC、艾尔扎尔夸、卡夫尔、阿拉布达曼豪尔、阿斯旺FC、埃及电信。来源和 ID 均保存在 registry 与批次审计。
+- 共享 registry 提交 `c654c317d5e0c427231582e8c92a2a91cb7c0cb8` 已推送到 `totalcorner-research-bridge/master`。仍使用唯一 `data/football_display_names/display_names.json`，新增 8 个有公开中文球队资料来源、并与正式 TotalCorner team ID 直接交叉核实的名称：艾玛卡沙、艾尔明亚、法尤姆FC、艾尔扎尔夸、卡夫尔、阿拉布达曼豪尔、阿斯旺FC、埃及电信。来源和 ID 均保存在 registry 与批次审计。
 - 最新文件实算：正式并集 2,468，已映射 1,802、未映射 666（73.01%）；M1 1,360/1,576（86.29%）；MR1 AH 1,361/1,921（70.85%）；MR1 AI 声明镜像 M1 1,360/1,576（86.29%）；M1 OU-R1 52/52。全共享库 12,276 IDs、canonical 3,818（31.10%）。
 - 对拼写相近但身份交叉不足的 Abo Qir Semad 暂不补名，继续 unresolved，避免仅凭联赛或音译相似合并。批处理脚本为 `ops/curate_formal_scope_footystats_batch.py`，拒绝覆盖已有 canonical，并在写入前校验正式范围身份。
 - M1 display/formal-runtime 相关测试 20/20 通过。此次只改展示 registry/审计文件；没有生产扫描、Telegram 发送或编辑，也未改模型、策略、赛事范围、阈值、正式账本或结算。待办：继续处理 formal unresolved 清单；分别审计 M1、M1 OU-R1、MR1 AH、MR1 AI 现有 TG 消息的可编辑原始 message ID，并仅对可确认的历史消息执行获授权的文字替换；尚无本轮实际编辑回执。
