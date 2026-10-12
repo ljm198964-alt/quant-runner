@@ -397,3 +397,8 @@
 - 共享 registry 提交 `209d318d5a4c0e854de9fdcd7c1c234ecce3dc29` 已推送至 `totalcorner-research-bridge/master`。新增 Giannina（ID 2746）→吉安尼纳（雷速简中球队资料）及 Kavala（ID 7802）→卡瓦拉（360百科球队资料）；ID、provider 原名、别名、来源和核验时间保存在唯一 `display_names.json`。
 - 最新正式范围：2,468 IDs，canonical 1,934、unresolved 534（78.36%）；M1 1,492/1,576（94.67%）；M1 OU-R1 52/52（100%）；MR1 AH 1,477/1,921（76.89%）；MR1 AI declared mirror 1,492/1,576（94.67%）。共享 registry 12,276 IDs、3,950 canonical。完整未匹配及逐项原因见共享 `data/football_display_names/formal_scope_coverage.json`。
 - M1 formatter/runtime 定向 pytest 20/20、MR1 shared-registry tests 2/2 通过；无生产 Actions/TG 发送或编辑。本轮未改模型、策略、正式订单、结算或通知规则。历史 Telegram 编辑仍未完成：当前回合未调用生产 Telegram API；不得将 formatter 测试视为历史消息修复。
+
+## 2026-10-12 正式范围中文名称续补（四十四）
+- 共享 registry 新提交 `4e07b4ecb2c9338df3bbf24d01a08b3430da3741` 已推送。新增 OFK Igalo（ID 2569）→伊高洛（球天下中文球队资料）和 Zurrieq FC（ID 3347）→祖里耶克（雷速中文球队资料）。未将仅有外文身份资料的其他候选猜译入库。
+- 最新实际 coverage：正式范围 2,468，canonical 1,936、unresolved 532（78.44%）；M1 1,494/1,576（94.80%）；M1 OU-R1 52/52；MR1 AH 1,479/1,921（76.99%）；MR1 AI declared mirror 1,494/1,576（94.80%）。共享 registry 12,276 IDs、3,952 canonical。剩余逐项清单及原因见共享 `formal_scope_coverage.json`。
+- 历史 Telegram 未编辑/重发，生产 TG/API 未触发；不能把共享 formatter 测试视为正式消息修复。模型、策略、账本、结算和派单条件保持不变。
