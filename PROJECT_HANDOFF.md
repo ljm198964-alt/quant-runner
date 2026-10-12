@@ -167,3 +167,10 @@
 - 已发送消息审计（没有发送新消息）：M1 AH 与 M1 OU-R1 共用的历史修复 dry-run 仍有 37 条候选，但 Telegram 对既有 37 条返回 `ALREADY_MATCHING`，本轮没有新 edit；另有 99 条缺原消息文本、70 条名称仍未映射。MR1 AH 既有修复累计实际编辑 6 条，后续 123 条已处理/无新变化，本轮没有新 edit。MR1 AI 9 条旧消息的历史 edit 曾全部返回 `400: message to edit not found`，当前仍不可编辑；另 192 条仍缺可确认修复资料。没有重发任何历史订单，没有改变盘口、方向、水位、账本或结算。
 - 云端正式链没有触发生产扫描或 Telegram。共享文件已推送，未来 checkout master 的格式器可读到新名称；但本轮未取得新的云端 runtime 回执，因此仅记本地 PASS，不宣称云端运行验证完成。历史消息中的 Telegram message-id/chat 目标限制仍需有可编辑的原始消息证据才能处理。
 - 未修改 M1/MR1/MR1 AI 模型、策略、赛事范围、阈值、皇冠来源、正式订单、结算、通知规则或调度。quant-runner 的本 handoff 需随本节单独提交。
+
+## 2026-10-12 正式范围中文名称续补（二）
+- 共享库最新提交 `c4d58b1d2d81e721ee1e8669b28bc22fd5f20e88` 已推送并核对 `totalcorner-research-bridge/master`。唯一 registry 保持不变；本次新增 23 个正式 scope team IDs，来自中文维基洲际顶级联赛表中中文队名与英文队名同一行的精确对应，涉及欧洲、亚洲和南美页面。来源 URL 与精确英文行记录在 registry 和批次报告；脚本 `ops/curate_formal_scope_public_club_tables.py` 在写入前检查 ID 仍 unresolved、不覆盖已有 canonical 名，并校验英文身份的重音/俱乐部后缀规范化精确相等。
+- 本次覆盖变化：正式 union 2,468 中 canonical 1,773、unresolved 695（71.84%）；M1 1,332/1,576（84.52%）；MR1 AH 1,338/1,921（69.65%）；MR1 AI 声明镜像 1,332/1,576（84.52%）；M1 OU-R1 52/52。共享库 12,276 IDs、canonical 3,789（30.87%），provider English identity 12,276/12,276。逐条余项见 `data/football_display_names/formal_scope_coverage.json` 的 `unresolved_records`。
+- 来源页面：欧洲顶级足球俱乐部列表、亚洲足球俱乐部列表、南美洲足球俱乐部列表；只取带中文名和英文/外文名列的球队行，未把城市列或荣誉字段误当队名，也未做模糊拼写匹配。候选确认包括迪纳摩城、埃斯卡尔德斯体育俱乐部、加巴拉、索菲亚火车头、内姆梅卡柳、青岛西海岸、艾费哈、石油联盟等；英文注释括号已从来源展示标签清理，底层身份原文及 ID 不变。
+- M1 回归测试 20/20 通过；MR1 shared registry/AI-forward 测试 5/5 通过，完整 `npm test` 通过。测试期间第一次从 MR1 目录误启动 M1 Python 测试，因测试模块不在该目录而导入失败；随即在 M1 仓库正确重跑并 20/20 通过。没有生产 workflow、TG 或账本操作。
+- MR1 AH/MR1 AI/M1 TG formatter 继续消费唯一共享 registry；历史 TG 消息本轮未编辑或重发。新映射只进入展示 registry，不改模型、策略、scope、阈值、账本、结算或 Telegram 投递规则。
