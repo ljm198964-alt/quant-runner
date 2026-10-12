@@ -523,3 +523,8 @@
 - 当前共享正式范围：2,468 个 ID，canonical 1,981、unresolved 487、覆盖 80.27%；M1 1,538/1,576（97.59%）；M1 OU-R1 52/52（100%）；MR1 AH 1,514/1,921（78.81%）；MR1 AI declared mirror 1,538/1,576（97.59%）。逐项 unresolved 及原因见共享 `formal_scope_coverage.json`。
 - 定向验证：M1 pytest 20/20；MR1 共用库与 AI formatter/parser 测试 8/8。单独 V6 formal runtime 集成测试未计入通过数：其断言价格为 `@0.93`，实际格式文本仍为原 fixture 锁定水位 `@0.90`，此项与中文映射无关，本轮未改交易字段/策略。
 - 不曾修改 M1/MR1 策略、模型、盘口、交易账本或结算。后续继续只为剩余 487 个正式范围 ID 寻找有来源的 canonical 中文名；Telegram 尚未编辑的限制与回执如上，不以重发替代。
+
+## 2026-10-12 正式范围中文名称续补（六十八）
+- 共享库新增 Ravan Baku（team_id 2716）→拉万巴库；Sofascore 中文资料使用“拉万巴库”，与中文维基条目“拉雲巴古”交叉核验，保留繁体别名及原 provider 英文身份/ID。
+- 当前 formal union 2,468：canonical 1,982、unresolved 486（80.31%）；M1 1,539/1,576（97.65%）；M1 OU-R1 52/52（100%）；MR1 AH 1,514/1,921（78.81%）；MR1 AI declared mirror 1,539/1,576（97.65%）。逐项 unresolved 及原因以共享 `formal_scope_coverage.json` 为准。
+- M1 定向 pytest 20/20、MR1 registry tests 2/2 通过。该映射在三条 TG 历史修复 workflow 完成后才新增，故需再运行 M1/MR1 AI 各自现有名称编辑流程确认是否有新增可修复原消息；不发送新通知。模型、策略、正式账本和结算保持不变。
