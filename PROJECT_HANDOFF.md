@@ -464,3 +464,8 @@
 - 共享 registry 新增 5 条有中文赛事/球队页支持的映射：Ionikos（6120）→伊奥尼科斯；Zakynthos（5780）→扎金索斯；Bijelo Brdo（3662）→白山；Chernomorets Burgas（28530）→黑海堡尔加斯；FK Metalac GM（6365）→梅塔拉茨队。来源均为 Tips.GG 简中球队/比赛页，provider identity、ID、别名和引用保留。
 - 最新正式范围 union 2,468：canonical 1,967、unresolved 501（79.70%）；M1 1,524/1,576（96.70%）；M1 OU-R1 52/52；MR1 AH 1,503/1,921（78.24%）；MR1 AI declared mirror 1,524/1,576（96.70%）。完整逐项未匹配及原因保存在共享 `formal_scope_coverage.json`。
 - M1 formatter/runtime pytest 20/20、MR1 shared registry tests 2/2 通过。仅改显示名数据/交接；未编辑或发送 TG，也未改模型、策略、正式账本或结算；继续处理剩余 501 项。
+
+## 2026-10-12 正式范围中文名称续补（五十七）
+- 共享 registry 新增 3 个来源可核验的正式队名：FK Kukesi（13481）→库克西队；Bodrumspor（15286）→博德鲁姆体育；FK Graficar Beograd（29414）→贝尔格莱德制图师队。分别由 Tips.GG 中文阿尔巴尼亚比赛、土耳其球队页和塞尔维亚比赛页明确配对，ID/provider identity/aliases/source 保留。
+- 最新正式范围 union 2,468：canonical 1,970、unresolved 498（79.82%）；M1 1,527/1,576（96.89%）；M1 OU-R1 52/52；MR1 AH 1,505/1,921（78.34%）；MR1 AI declared mirror 1,527/1,576（96.89%）。完整 unresolved 清单与原因仍以共享 `formal_scope_coverage.json` 为准。
+- M1 定向 pytest 20/20、MR1 registry tests 2/2 通过。未调用 Telegram API，未修改模型/策略/正式账本/结算；继续处理剩余 498 项。
