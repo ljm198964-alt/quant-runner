@@ -372,3 +372,8 @@
 - 共享 registry 提交 `c0580d75351d07bcac6fc302d16955bddc24a78b` 已推送至 `totalcorner-research-bridge/master`。在公开中文资料中核实 Hamrun Spartans（ID 7652）→阿姆伦斯巴达，采用球迷屋中文球队档案的简体常用名称，并保留英文/带附加符号名称别名。该 ID 属于 M1+MR1 AH 范围。
 - 最新正式范围 union 2,468：已匹配 1,875，未匹配 593（75.97%）；M1 1,434/1,576（90.99%）；M1 OU-R1 52/52；MR1 AH 1,427/1,921（74.28%）；MR1 AI mirror 1,434/1,576（90.99%）。逐队未匹配及原因留在共享 `formal_scope_coverage.json`。
 - M1 display/runtime 定向测试 20/20 通过；Telegram 未编辑/发送，生产 workflow 未触发。策略与账本未变。
+
+## 2026-10-12 正式范围中文名称续补（三十九）
+- 共享 registry 提交 `0901a5dd1a080e23293a364cb524276cda0f6407` 已推送至 `totalcorner-research-bridge/master`。本轮新增 4 个有公开中文足球记录支持的映射：Mezokovesd Zsory（1537）→迈泽克韦什德；Soroksar（1543）→索罗克萨尔；Energetik Mingechevir（2126）→明盖恰乌尔能量；Apollon Kalamarias（2205）→阿波罗卡拉马里亚。各行保留 provider ID/name、aliases、来源与核验时间。
+- 当前覆盖：正式范围 2,468，canonical 1,921，unresolved 547（77.84%）；M1 1,479/1,576（93.85%）；M1 OU-R1 52/52；MR1 AH 1,465/1,921（76.26%）；MR1 AI declared mirror 1,479/1,576（93.85%）。共享库 12,276 IDs、3,937 canonical。剩余逐队清单及 reason 见共享 `data/football_display_names/formal_scope_coverage.json`。
+- M1 formatter/runtime pytest 20/20、MR1 shared-registry 测试 2/2 通过。未运行生产 workflow，未编辑/发送 Telegram；当前本机无 M1 Telegram 凭据，故不声称完成历史消息编辑。未改模型、策略、范围、正式账本或结算。
