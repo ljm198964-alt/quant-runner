@@ -432,3 +432,10 @@
 - 共享库提交 `2860dfd190aefb3594eabc9dfd7f4092653e8f9d` 已推送到 `totalcorner-research-bridge/master`。新增 Hrvace（ID 6452）→贺瓦斯（雷速简中球队资料）、FK Csikszereda Miercurea Ciuc（4886）→米耶尔库雷亚丘克（Sofascore 简中球队页）、Al Jeel（5403）→阿尔吉尔（Sofascore 简中球队页）。三个映射均有可核验中文来源，provider identity/ID、别名、来源与时间写入唯一 `display_names.json`；没有把本批只找到外文来源的候选猜译入库。
 - 最新正式范围：union 2,468，canonical 1,949，unresolved 519（78.97%）；M1 1,506/1,576（95.56%）；M1 OU-R1 52/52（100%）；MR1 AH 1,490/1,921（77.56%）；MR1 AI declared mirror 1,506/1,576（95.56%）。共享库 12,276 IDs、3,965 canonical。完整 unresolved 清单和逐项原因见共享 `data/football_display_names/formal_scope_coverage.json`。
 - 验证：M1 formatter/runtime pytest 20/20 通过；MR1 共用 registry 读取测试 2/2 通过。MR1 测试命令为 `FOOTBALL_DISPLAY_REGISTRY_DIR=/Users/mac/Documents/totalcorner-research-bridge/data/football_display_names node --test test-football-display-names.js`。未调用 Telegram API，因此没有历史消息编辑成功；当前终端环境无 M1/MR1 Telegram 环境变量，生产编辑需通过现有安全凭据运行链执行。未改模型、策略、赛事范围、正式账本或结算。
+
+## 2026-10-12 Telegram 中文历史显示被动验收（五十一）
+- 使用现有 quant-runner 工作流分别运行 M1 `38208422182`、MR1 formal `38208422303`、MR1 AI `38208422297`；三者均以 success 结束。没有发新消息/订单。
+- M1 修复回执：37 条具备原始文案且映射可计算的既有通知均由 Telegram 返回 `ALREADY_MATCHING`（实际编辑 0、失败 0）；99 条缺少已持久化原文被安全跳过；70 条仍未命中映射。账本包含 AH/OU 通知，故该执行也覆盖已有 M1 OU-R1 通知。
+- MR1 formal：124 条检查结果均跳过、edited 0、failed 0、display unresolved 0；现有报告未细分跳过原因，因此不将其表述为实际编辑。
+- MR1 AI：检查 201 条；9 条有映射变更候选，Telegram 对 9 条均返回 `400 Bad Request: message to edit not found`（edited 0）；192 条保持未解析/没有可用中文替换。错误及逐条回执已由运行器提交 `584a07145675cdc6dd40ffd42effb7905159f8d3` 持久化。
+- 本轮新增映射提交为 `2860dfd190aefb3594eabc9dfd7f4092653e8f9d`；最新正式范围 union 2,468，mapped 1,949、unresolved 519（78.97%）。完整剩余队伍和 reason 保存在共享 `data/football_display_names/formal_scope_coverage.json`。M1 测试 20/20、MR1 shared display 测试 2/2 通过。策略、模型、账本、结算和通知条件未改。
