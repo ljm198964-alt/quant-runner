@@ -179,3 +179,9 @@
 - 共享 registry 最新提交 `c4d58b1d2d81e721ee1e8669b28bc22fd5f20e88` 已推送至 `totalcorner-research-bridge/master`。本次从中文维基洲际顶级联赛表中精确匹配 23 个 formal-scope ID 的英文/中文同表球队行；没有使用 fuzzy match。新增映射数据及审计清单在共享库，采集/验证程序 `ops/curate_formal_scope_public_club_tables.py`。
 - 最新实算：formal union 2,468 中已匹配 1,773、未匹配 695（71.84%）；M1 1,332/1,576（84.52%）；MR1 AH 1,338/1,921（69.65%）；MR1 AI 镜像 1,332/1,576（84.52%）；M1 OU-R1 52/52。全共享库 12,276 IDs、canonical 3,789（30.87%）、英文身份 12,276/12,276。
 - M1 测试 20/20；MR1 shared registry/AI-forward 5/5，`npm test` 通过。只验证展示解析，本轮无生产 runtime、TG、订单或结算操作。M1/MR1/MR1 AI 策略和范围均未改变。
+
+## 2026-10-12 正式范围中文名称续补（四）
+- 共享库最新提交 `1bdc1263a5ad5878a33500239efc622df764af36` 已推送到 `totalcorner-research-bridge/master`。本轮新增 11 个正式范围 team ID，来源包括中文洲际/威尔士球队名表、7M、雷速及球探资料；脚本 `ops/curate_formal_scope_club_tables_batch2.py` 仅允许未映射正式 ID，通过重音、F.C./A.F.C. 写法及 Utd→United 明确缩写规范化后的精确身份匹配，不使用模糊拼写，也拒绝覆盖已有 canonical。
+- 新增名称：图兹拉自由、恩维加多、帕特里奥坦斯、纽约城、西雅图海湾者、费罗尔竞技、邓迪联、卡纳芬镇、普雷斯塔廷城、拉内利、斯芬杜特斯。逐项来源写在 registry `source.reference` 和批次报告；西雅图海湾人、博亚卡爱国者、费罗尔竞赛会等作为别名保存。
+- 最新统计：formal union 2,468 中 canonical 1,784、unresolved 684（72.29%）；M1 1,343/1,576（85.22%）；MR1 AH 1,345/1,921（70.02%）；MR1 AI 声明镜像 1,343/1,576（85.22%）；M1 OU-R1 52/52。全共享库 12,276 IDs、canonical 3,800（30.95%）、provider English identity 12,276/12,276。余项逐条见 `formal_scope_coverage.json` 的 `unresolved_records`。
+- 本轮 M1 display/formal-runtime 测试 20/20 通过；MR1 shared registry/AI-forward 5/5，完整 `npm test` 通过。仅更新展示名称与审计数据；未运行生产扫描、发送/编辑 TG，未改模型、策略、范围、阈值、账本、结算或通知规则。
