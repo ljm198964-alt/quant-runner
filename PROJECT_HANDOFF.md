@@ -545,3 +545,8 @@
 - MR1 AI 工作流初次 `38212348400` 的消息编辑结果为 9 条 Telegram 400 `message to edit not found`、192 unresolved，回执 push 遇同类并发冲突；串行重跑 `38212591122` 成功并持久化同样结果。没有新增编辑、没有重发。
 - 最新正式范围：union 2,468、canonical 1,983、unresolved 485（80.35%）；M1 1,540/1,576（97.72%）；M1 OU-R1 52/52；MR1 AH 1,515/1,921（78.87%）；MR1 AI declared mirror 1,540/1,576（97.72%）。全量 unresolved 明细与逐项原因在共享 coverage JSON。
 - 验证仍为 M1 formatter/runtime pytest 20/20，MR1 共享 registry tests 2/2。无模型/策略/盘口/ledger/settlement 改动；当前已确认的 TG 历史可修复消息均已是中文，剩余限制为缺失原文、无已确认映射以及 Telegram 原消息不存在。
+
+## 2026-10-12 正式范围中文名称续补（七十二）
+- 共享 registry 新增 Estudiantes Rio Cuarto（team_id 30795）→里奥夸尔托学生队，来源 Tips.GG 简中球队页；TotalCorner provider 原名与页面队名对应，球队 ID、别名及引用留存。
+- 最新 formal union 2,468：canonical 1,984、unresolved 484（80.39%）；M1 1,541/1,576（97.78%）；M1 OU-R1 52/52；MR1 AH 1,516/1,921（78.92%）；MR1 AI declared mirror 1,541/1,576（97.78%）。完整 unresolved 及原因以共享 coverage JSON 为准。
+- M1 display/runtime pytest 20/20、MR1 registry tests 2/2 通过。该映射更新后待复核已有 M1/MR1 AH/MR1 AI 历史名称编辑流程；只操作原消息，不发送新的策略消息。
