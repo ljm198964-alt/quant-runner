@@ -342,6 +342,11 @@
 - 最新正式范围统计：2,468 IDs，canonical 1,910，unresolved 558（77.39%）；M1 1,468/1,576（93.15%）；M1 OU-R1 52/52；MR1 AH 1,455/1,921（75.74%）；MR1 AI declared mirror 1,468/1,576（93.15%）。共享库 12,276 IDs、3,926 canonical；未匹配明细见 `formal_scope_coverage.json`。
 - M1 定向测试20/20，MR1 shared-registry读取测试2/2通过。未触发生产workflow、未发或编辑TG；策略、模型、账本、结算未改。继续处理剩余558项。
 
+## 2026-10-12 正式范围中文名称续补（三十七）
+- 共享库 `totalcorner-research-bridge/master` 推送 `fe5abfe9b74ae82f8639765a9e5588ff94641c88`。新增 Zira IK（ID 3855）→兹拉（球迷屋简中球队资料）；FK Sumqayit（4309）→萨姆加耶特（Sofascore 简中球队页）；Lokomotiv Tbilisi（7661）→第比利斯火车头（7M 简中球队页）。来源、Team ID/provider 原名与 aliases 均在唯一 registry。
+- 最新正式覆盖：union 2,468，canonical 1,913，unresolved 555（77.51%）；M1 1,471/1,576（93.34%）；M1 OU-R1 52/52；MR1 AH 1,458/1,921（75.90%）；MR1 AI declared mirror 1,471/1,576（93.34%）。共享库 12,276 IDs、3,929 canonical。完整未匹配列表及 reason 见 coverage JSON。
+- M1 定向 pytest 20/20、MR1 shared-registry测试2/2通过；新增三队 MR1 读取渲染为中文。未运行生产 Actions/TG，无模型、策略、账本、结算变化；剩余555项持续处理。
+
 ## 2026-10-12 正式范围中文名称续补（十七）
 - 共享 registry 提交 `29a8dcd6e953fd04be232fe46310ec3ce31378d3` 已推送至 `totalcorner-research-bridge/master`。在续补（十六）基础上新增 2 条精确身份映射：B93 Copenhagen（ID 3622）→哥本哈根B93，Sofascore 简中球队页；Dukla Banska Bystrica（ID 3460）→班斯卡比斯特里察杜克拉，Sofascore 简中球队页。两条均属于 M1 与 MR1 AH 范围，原英文 provider identity、ID、别名及来源保留在共享 registry。
 - 最新范围：formal union 2,468，canonical 中文 1,871，unresolved 597（75.81%）；M1 1,430/1,576（90.74%）；M1 OU-R1 52/52；MR1 AH 1,423/1,921（74.08%）；MR1 AI mirror 1,430/1,576（90.74%）。未匹配完整清单仍位于共享 `formal_scope_coverage.json`，当前 597 条均为 `NO_VERIFIED_CANONICAL_ZH`。
