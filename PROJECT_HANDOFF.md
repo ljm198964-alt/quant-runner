@@ -280,6 +280,12 @@
 - 本地 formatter 对两队渲染通过；M1 定向测试20/20、MR1共享库读取测试2/2。额外交叉比对 legacy M1显示报告未发现可直接复用的正式未匹配ID中文名；exact alias 命中 Jeddah Club（42718）但现有同名 alias关联到吉达联合（3397），联赛ID显示它们不是同一队，因此保留 unresolved，没有错误合并。
 - 没有修改任何策略/账本/结算或发送条件；生产 workflow、历史 Telegram 编辑/重发均未执行。继续按来源证据补齐其余队名。
 
+## 2026-10-12 正式范围中文名称续补（二十五）
+- 共享 registry 提交 `53938b0`（完整 SHA：`53938b0b...`；以 `totalcorner-research-bridge/master` 实际 HEAD 为准）已推送。本轮依据 Tips.GG 简中 El Shams 球队页新增 ID 3887 →“埃尔夏姆队”，对应正式 provider identity `El Shams`，原 ID/英文名及来源链接保留在唯一共享 `display_names.json`；未覆盖既有名称。
+- 最新 coverage 文件实算：formal union 2,468，canonical 1,883、unresolved 585（76.30%）；M1 1,442/1,576（91.50%）；M1 OU-R1 52/52（100%）；MR1 AH 1,435/1,921（74.70%）；MR1 AI declared mirror 1,442/1,576（91.50%）。MR1 AI confidence≥50 保留的历史 cohort 是 181/182（99.45%），未重建 cohort membership。共享库 12,276 team IDs、3,899 canonical。完整 unresolved 清单及原因仍以 `data/football_display_names/formal_scope_coverage.json` 为准。
+- M1 display/formal-runtime 定向测试 20/20 通过，`git diff --check` 通过。名称数据仍由 M1 formatter 和 MR1 shared-registry loader 共用；本轮未改 formatter、生产模型、策略、账本、结算、调度或 Telegram 派单逻辑。
+- 本轮未运行生产 workflow，未发送或编辑 Telegram。历史 TG 实际 edits=0：没有可用的专用凭据/可编辑原消息证据，不能声称历史消息已修复。继续逐条来源核验剩余 585 个正式范围 ID，不以机器音译填充。
+
 ## 2026-10-12 正式范围中文名称续补（十七）
 - 共享 registry 提交 `29a8dcd6e953fd04be232fe46310ec3ce31378d3` 已推送至 `totalcorner-research-bridge/master`。在续补（十六）基础上新增 2 条精确身份映射：B93 Copenhagen（ID 3622）→哥本哈根B93，Sofascore 简中球队页；Dukla Banska Bystrica（ID 3460）→班斯卡比斯特里察杜克拉，Sofascore 简中球队页。两条均属于 M1 与 MR1 AH 范围，原英文 provider identity、ID、别名及来源保留在共享 registry。
 - 最新范围：formal union 2,468，canonical 中文 1,871，unresolved 597（75.81%）；M1 1,430/1,576（90.74%）；M1 OU-R1 52/52；MR1 AH 1,423/1,921（74.08%）；MR1 AI mirror 1,430/1,576（90.74%）。未匹配完整清单仍位于共享 `formal_scope_coverage.json`，当前 597 条均为 `NO_VERIFIED_CANONICAL_ZH`。
