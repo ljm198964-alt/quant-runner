@@ -407,3 +407,8 @@
 - 共享 registry 提交 `5f5b13098533a140a00634fdfb9afdfdaab9d6ea` 已推送。新增 FK Indija（ID 3746）→因吉亚，来源为中文球队资料页；英文身份、ID、拼写别名、来源和核验时间已写入共享库。
 - 最新实算：formal union 2,468，canonical 1,937、unresolved 531（78.48%）；M1 1,495/1,576（94.86%）；M1 OU-R1 52/52；MR1 AH 1,480/1,921（77.04%）；MR1 AI declared mirror 1,495/1,576（94.86%）。共享 registry 12,276 IDs、3,953 canonical。逐项 unresolved/reason 在 `formal_scope_coverage.json`。
 - 当前回合仅本地验证与 registry 数据提交；未编辑/发送正式 Telegram，未改模型、策略、正式账本/结算。
+
+## 2026-10-12 正式范围中文名称续补（四十六）
+- 共享 registry 提交 `2665893a59debbb10b3037cee2ec655d34d3cbeb` 已推送。新增 FC Bihor Oradea（ID 1967）→比霍尔奥拉迪亚（中文比赛预览明确使用“FC 比霍尔奥拉迪亚”）和 Felgueiras 1932（ID 6094）→费尔盖拉什（Sofascore 简中球队页），均保留精确 provider identity/ID 与别名。
+- 最新实际 coverage：formal union 2,468，canonical 1,939、unresolved 529（78.57%）；M1 1,497/1,576（94.99%）；M1 OU-R1 52/52；MR1 AH 1,481/1,921（77.10%）；MR1 AI declared mirror 1,497/1,576（94.99%）。共享 registry 12,276 IDs、3,955 canonical。其余清单和逐项原因见 `formal_scope_coverage.json`。
+- 本批为展示映射数据更新；未触发生产 Actions/TG 或历史消息编辑；模型、策略、账本、结算和通知规则未变。
