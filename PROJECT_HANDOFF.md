@@ -274,6 +274,12 @@
 - 最新实际覆盖：formal union 2,468，canonical 1,882、unresolved 586（76.26%）；M1 1,441/1,576（91.43%）；M1 OU-R1 52/52；MR1 AH 1,434/1,921（74.65%）；MR1 AI declared mirror 1,441/1,576（91.43%）；置信度≥50 observed cohort 181/182（旧 cohort 快照）。共享库 12,276 IDs、3,898 canonical。未匹配逐项均在共享 `formal_scope_coverage.json`，本次未映射条目继续为 NO_VERIFIED_CANONICAL_ZH。
 - M1 formatter 隔离渲染新增名称，定向测试 20/20 通过；MR1 通过运行时共享库目录测试 2/2 通过。生产 workflow 未触发、历史 Telegram 未编辑或重发；系统专用 Bot 凭据和可核对 message-id/evidence 仍不可用。没有策略或正式账本修改。
 
+## 2026-10-12 正式范围中文名称续补（二十四）
+- 继续核验 Hamilton（2376）和 Viktoria Zizkov（3560）的来源、队名与正式赛事身份。Viktoria 的中文条目列出全名 FK Viktoria Žižkov，并在简体内容中用“日热科夫胜利足球俱乐部”；Hamilton 的正式范围仅涉及苏格兰联赛，中文球队资料将 Hamilton 识别为 Hamilton Academical。两项均添加到共享库并随 `d6bbe732bae671136f7db5087e1733bd521f193d` 推送。
+- 当前 authoritative 统计：formal union 2,468；canonical 1,882；unresolved 586（76.26%）；M1 1,441/1,576（91.43%）；M1 OU-R1 52/52；MR1 AH 1,434/1,921（74.65%）；MR1 AI declared mirror 1,441/1,576（91.43%）。共享库 12,276 IDs、3,898 canonical。此数字基于共享 JSON 实算，不再使用旧的718作为当前未匹配数。
+- 本地 formatter 对两队渲染通过；M1 定向测试20/20、MR1共享库读取测试2/2。额外交叉比对 legacy M1显示报告未发现可直接复用的正式未匹配ID中文名；exact alias 命中 Jeddah Club（42718）但现有同名 alias关联到吉达联合（3397），联赛ID显示它们不是同一队，因此保留 unresolved，没有错误合并。
+- 没有修改任何策略/账本/结算或发送条件；生产 workflow、历史 Telegram 编辑/重发均未执行。继续按来源证据补齐其余队名。
+
 ## 2026-10-12 正式范围中文名称续补（十七）
 - 共享 registry 提交 `29a8dcd6e953fd04be232fe46310ec3ce31378d3` 已推送至 `totalcorner-research-bridge/master`。在续补（十六）基础上新增 2 条精确身份映射：B93 Copenhagen（ID 3622）→哥本哈根B93，Sofascore 简中球队页；Dukla Banska Bystrica（ID 3460）→班斯卡比斯特里察杜克拉，Sofascore 简中球队页。两条均属于 M1 与 MR1 AH 范围，原英文 provider identity、ID、别名及来源保留在共享 registry。
 - 最新范围：formal union 2,468，canonical 中文 1,871，unresolved 597（75.81%）；M1 1,430/1,576（90.74%）；M1 OU-R1 52/52；MR1 AH 1,423/1,921（74.08%）；MR1 AI mirror 1,430/1,576（90.74%）。未匹配完整清单仍位于共享 `formal_scope_coverage.json`，当前 597 条均为 `NO_VERIFIED_CANONICAL_ZH`。
