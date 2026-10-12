@@ -489,3 +489,8 @@
 - 共享库新增 SC Poltava（team_id 53034）→SC波尔塔瓦；新球体育（Titan007）中文球队档案明确以“SC波尔塔瓦”配对英文名 SC Poltava（https://info.titan007.com/cn/team/Summary.aspx?TeamID=43904）。
 - 最新 formal union 2,468：canonical 1,975、unresolved 493（80.02%）；M1 1,532/1,576（97.21%）；M1 OU-R1 52/52；MR1 AH 1,508/1,921（78.50%）；MR1 AI declared mirror 1,532/1,576（97.21%）。剩余项详见共享 coverage JSON。
 - M1 display/runtime pytest 20/20、MR1 shared registry tests 2/2 通过。仅更改名称展示基础设施及交接；无 Telegram API 操作，无策略/模型/账本/结算改动，继续补其余 493 个正式范围未匹配项。
+
+## 2026-10-12 正式范围中文名称续补（六十二）
+- 共享库新增 Gyeongju (W)（team_id 41028）→庆州女足；Tips.GG 中文女足球队页以“庆州 (女子)”标识 Gyeongju (w)（https://tips.gg/cn/team/gyeongju-fc-w-football/）。保留女子队身份和原英文名，不与男子队 ID 6048 合并。
+- 最新 formal union 2,468：canonical 1,976、unresolved 492（80.06%）；M1 1,533/1,576（97.27%）；M1 OU-R1 52/52；MR1 AH 1,509/1,921（78.55%）；MR1 AI declared mirror 1,533/1,576（97.27%）。剩余逐项 reason 见共享 `formal_scope_coverage.json`。
+- M1 display/runtime pytest 20/20，MR1 shared-registry tests 2/2。只更新共享展示映射/审计/交接，不触发 Telegram，未改模型、策略、账本或结算；继续处理 492 条未匹配。
