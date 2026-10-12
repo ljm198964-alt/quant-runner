@@ -583,3 +583,10 @@
 - 本版定向测试：M1 pytest 20/20；MR1 shared registry/browser-forward/formatter/parser Node tests 8/8。
 - 对此版本运行既有历史 TG 名称编辑流程并全部成功：M1 `38214736179`（eligible 37、edited 0、already matching 37、缺原文 99、unmapped 70、failed 0）；MR1 AH `38214740925`（edited 0、processed 125、unresolved 0、failed 0）；MR1 AI `38214745642`（201 条中 9 candidates、edited 0、192 unresolved、9 failed，Telegram 均报 400 `message to edit not found`）。因此没有历史消息实际改字成功，也没有重发。运行只检查/编辑既有消息，不派发信号或策略扫描。
 - 继续复用同一 registry 的 M1 AH、M1 OU-R1、MR1 AH、MR1 AI 展示层；未修改模型、策略、盘口条件、交易字段、账本、settlement 或 Telegram 发送规则。余下 475 项仍需按来源逐项补齐。
+
+## 2026-10-12 正式范围中文名称续补（七十八）
+- 共享 registry 已推送到 `totalcorner-research-bridge/master`，提交 `0eae45e2b55678ea7636fd18facca1d625fbdd82`。本轮为 20 个未映射正式 team ID 添加有中文公开来源的名称：Kremin（4426）克雷明、HB Torshavn（13484）托尔斯港、Spartak Pleven（14806）普列文斯巴达、Al-Jabalain（39314）查巴莱、IF Vestri（30761）韦斯特里、Shaanxi Athletic（40143）陕西长安竞技、SalPa（11689）莎埃帕、Ballymena（41377）巴利米纳联、Rudar Velenje（42157）韦莱涅鲁达、FC Minai（49142）米奈足球俱乐部、Smiltene（14544）斯米尔特内、Vllaznia（42913）维拉斯尼亚、Pogon Grodzisk Mazowiecki（10464）波贡马佐维克、Puchov（32395）MSK贝塞夫、Trepca 89（39890）查比卡89、Septemvri Sofia（41502）索菲亚塞普泰姆夫里、Al Jubail（43725）朱拜勒、Samgurali（42019）萨古拉利、Sileks（32900）施历斯、Bylis Ballsh（43721）拜利斯。来源及 provider identity/aliases 逐条保存在唯一 `display_names.json`。
+- 最新实算 formal union 2,468：canonical 2,013、unresolved 455（81.56%）；M1 1,570/1,576（99.62%）；M1 OU-R1 52/52（100%）；MR1 AH 1,538/1,921（80.06%）；MR1 AI declared mirror 1,570/1,576（99.62%）。全共享库 12,276 个 team ID，4,029 个 canonical 中文名；remaining unresolved 全量在 `formal_scope_coverage.json`，未以无来源翻译填充。
+- M1 runtime/display 18 tests 通过；MR1 shared display/browser-forward/formal notifier/AI formatter 7 tests 通过。没有更改任何策略、模型、赛事范围、订单、结算、TG 发送规则。
+- 新版名称库已触发既有历史消息名称编辑工作流：M1 run `38216991349`、MR1 AH `38216995917`、MR1 AI `38217000632`。本交接追加时三者仍 `in_progress`；需后续读取各自 artifact/log 后记录实际编辑、失败/不可编辑及 unresolved 数，不得把启动当作修复成功，也不得重发历史消息。
+- 后续从剩余 455 项继续逐项查可核验中文来源；未确认名称保持英文 provider identity 和 `NO_VERIFIED_CANONICAL_ZH` 状态。
