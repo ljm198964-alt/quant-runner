@@ -494,3 +494,9 @@
 - 共享库新增 Gyeongju (W)（team_id 41028）→庆州女足；Tips.GG 中文女足球队页以“庆州 (女子)”标识 Gyeongju (w)（https://tips.gg/cn/team/gyeongju-fc-w-football/）。保留女子队身份和原英文名，不与男子队 ID 6048 合并。
 - 最新 formal union 2,468：canonical 1,976、unresolved 492（80.06%）；M1 1,533/1,576（97.27%）；M1 OU-R1 52/52；MR1 AH 1,509/1,921（78.55%）；MR1 AI declared mirror 1,533/1,576（97.27%）。剩余逐项 reason 见共享 `formal_scope_coverage.json`。
 - M1 display/runtime pytest 20/20，MR1 shared-registry tests 2/2。只更新共享展示映射/审计/交接，不触发 Telegram，未改模型、策略、账本或结算；继续处理 492 条未匹配。
+
+## 2026-10-12 正式范围中文名称续补（六十三）
+- 共享库新增两条：Gyeongju (W)（41028）→庆州女足（Tips.GG 中文女足档案）；FC Petrzalka（41471）→柏沙卡（7M 中文球队档案）。另新增 Jeddah Club（42718）→阿尔拉比亚（FootyStats 简中球队档案）。
+- 审计并修复一处旧别名冲突：删除 team_id 3397（吉达联合）的错误/歧义别名“Jeddah Club”，因为该名对应独立 Saudi First Division 队 team_id 42718；以 FootyStats 的 Jeddah Club/阿尔拉比亚球队页交叉确认。其他正确 canonical、team ID 和交易数据未动。
+- 最新 formal union 2,468：canonical 1,978、unresolved 490（80.15%）；M1 1,535/1,576（97.40%）；M1 OU-R1 52/52；MR1 AH 1,511/1,921（78.66%）；MR1 AI declared mirror 1,535/1,576（97.40%）。剩余明细及逐项 reason 在共享 `formal_scope_coverage.json`。
+- M1 display/runtime pytest 20/20，MR1 shared registry tests 2/2 通过。未编辑或发送 Telegram；只改共享显示名/别名冲突与交接，模型、策略、订单、结算不变。继续处理剩余 490 项。
