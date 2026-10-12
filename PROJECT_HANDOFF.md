@@ -528,3 +528,8 @@
 - 共享库新增 Ravan Baku（team_id 2716）→拉万巴库；Sofascore 中文资料使用“拉万巴库”，与中文维基条目“拉雲巴古”交叉核验，保留繁体别名及原 provider 英文身份/ID。
 - 当前 formal union 2,468：canonical 1,982、unresolved 486（80.31%）；M1 1,539/1,576（97.65%）；M1 OU-R1 52/52（100%）；MR1 AH 1,514/1,921（78.81%）；MR1 AI declared mirror 1,539/1,576（97.65%）。逐项 unresolved 及原因以共享 `formal_scope_coverage.json` 为准。
 - M1 定向 pytest 20/20、MR1 registry tests 2/2 通过。该映射在三条 TG 历史修复 workflow 完成后才新增，故需再运行 M1/MR1 AI 各自现有名称编辑流程确认是否有新增可修复原消息；不发送新通知。模型、策略、正式账本和结算保持不变。
+
+## 2026-10-12 正式范围中文名称续补（六十九）
+- 在共享库 `0cb06d0` 推送 Ravan Baku 映射后，复跑既有 M1 与 MR1 AI 名称修复：M1 workflow `38212009365` 成功，结果仍为 eligible 37 / already matching 37 / edited 0 / missing original text 99 / unmapped 70 / failed 0；MR1 AI workflow `38212013783` 成功，仍为 9 条候选、编辑 0、9 条 `400 message to edit not found`、192 条 unresolved。新映射没有产生新的历史可编辑消息。
+- 故历史 Telegram 最终实际编辑成功数仍为 0；M1 现有可核实消息已是目标名称，MR1 AH 全部 124 条状态已处理且无待改文本，MR1 AI 的 9 条失败因消息不在目标 Bot 可编辑范围内无法修复。没有重发或改变投注内容。
+- 最新共享正式覆盖维持 batch 68 数字：union 2,468 / 1,982 canonical / 486 unresolved（80.31%）；M1 1,539/1,576（97.65%）；M1 OU-R1 52/52；MR1 AH 1,514/1,921（78.81%）；MR1 AI declared mirror 1,539/1,576（97.65%）。本地共享 registry 与 formatter 测试通过；未修改策略、模型、正式 ledger 或 settlement。
