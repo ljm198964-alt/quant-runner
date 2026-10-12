@@ -244,3 +244,9 @@
 - 测试：M1 定向 pytest 20/20；MR1 `npm test` 全量通过；JSON 解析及 `git diff --check` 通过。没有运行生产 Actions、策略、账本、结算、TG。
 - 历史 M1 TG names-only dry-run 更新后：37 条具备原文及可映射字段；99 条缺 ledger 保存的原始消息文本；70 条仍缺映射；dry-run failed=0。当前进程环境不存在 M1/MR1 Telegram bot credentials，未编辑任何消息（成功0、失败0）；不借用另一系统 credentials、不重发订单。后续真实编辑需各系统各自可用 bot credentials 和 Telegram 可编辑原消息。
 - 云端 Actions 仍受账户付款/支出限制，未触发或记为 PASS。所有更名仅展示层数据，不改 M1/MR1/MR1 AI 策略、模型、盘口、赛事范围、通知条件或账本。
+
+## 2026-10-12 正式范围中文名称续补（十五）
+- 接续时先 fetch 核对远端 master，确认共享仓库当前仍在上一提交 `132183e27c916ed2c276c61807d65a7bbb3a4e9d`；任务消息所说“718”与该最新正式范围文件不一致，覆盖 JSON 当时实际是 604 unresolved。本轮新增 2 个准确配对：Pietà Hotspurs（ID 502）→佩塔（中文百科明确配英文队名）；Carmarthen Town（TotalCorner provider 简写 Carmarthen，ID 1459）→卡马森城（中文维基俱乐部条目）。
+- 共享库新提交 `cee1e57` 已 push。最新 authoritative `formal_scope_coverage.json`：正式 union 2,468，canonical 1,866、unresolved 602、coverage 75.61%；M1 1,425/1,576（90.42%）；M1 OU-R1 52/52；MR1 AH 1,419/1,921（73.87%）；MR1 AI declared mirror 1,425/1,576（90.42%）。
+- M1 展示 formatter 对 ID 502、1459 隔离渲染分别得到「佩塔」「卡马森城」。M1 定向测试 20/20 通过；共享 JSON、覆盖与审计数据重新生成并校验。中文维基欧洲顶级联赛全量表交叉尝试未产生严格英文身份命中，未按近似字符串自动导入。
+- 本轮没有配置 M1/MR1 Telegram credentials，未进行消息编辑或发送；此前干跑仍为 37 eligible、99 条无原文、70 条未映射。正式 TG live 修复未完成。生产 Actions 未触发。
