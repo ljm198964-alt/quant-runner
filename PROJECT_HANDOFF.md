@@ -422,3 +422,8 @@
 - 共享 registry 新提交 `92ad545f7564ab34a7a2042b7a5652c2114c90f8` 已推送。新增 Makedonija Gj. P.（ID 4606）→乔尔切彼得罗夫马其顿尼亚，采用中文俱乐部条目所列全名，保留 provider 缩写及英文全名 aliases。
 - 最新覆盖：正式范围 2,468，canonical 1,943、unresolved 525（78.73%）；M1 1,501/1,576（95.24%）；M1 OU-R1 52/52；MR1 AH 1,485/1,921（77.30%）；MR1 AI declared mirror 1,501/1,576（95.24%）。共享 registry 12,276 IDs、3,959 canonical。完整剩余项及原因见共享 `formal_scope_coverage.json`。
 - M1 display/runtime 定向测试 20/20、MR1 shared-registry 测试 2/2 通过。仅更新显示层数据，没有生产 TG 编辑/发送或策略、账本、结算变更。
+
+## 2026-10-12 正式范围中文名称续补（四十九）
+- 共享 registry 新提交 `3984a22790eed66856ea381f4e1377c8b606163a` 已推送。新增 Admira Wacker Mödling（ID 8740）→阿德米拉华卡默德林（百度百科球队资料）；Borac Čačak（9162）→查查克博拉克（百度百科球队资料）；PAEEK（9752）→佩伊克（乐彩网中文球队概述）。
+- 最新 coverage：formal union 2,468，canonical 1,946、unresolved 522（78.85%）；M1 1,504/1,576（95.43%）；M1 OU-R1 52/52；MR1 AH 1,487/1,921（77.41%）；MR1 AI declared mirror 1,504/1,576（95.43%）。共享 registry 12,276 IDs、3,962 canonical。剩余逐项清单及 reason 见 `formal_scope_coverage.json`。
+- 更新限于共享显示名称库与交接文档；生产 Telegram 未发送/编辑，模型、策略、账本和结算未改。
