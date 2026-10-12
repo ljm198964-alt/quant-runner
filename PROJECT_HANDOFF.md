@@ -281,7 +281,7 @@
 - 没有修改任何策略/账本/结算或发送条件；生产 workflow、历史 Telegram 编辑/重发均未执行。继续按来源证据补齐其余队名。
 
 ## 2026-10-12 正式范围中文名称续补（二十五）
-- 共享 registry 提交 `53938b0`（完整 SHA：`53938b0b...`；以 `totalcorner-research-bridge/master` 实际 HEAD 为准）已推送。本轮依据 Tips.GG 简中 El Shams 球队页新增 ID 3887 →“埃尔夏姆队”，对应正式 provider identity `El Shams`，原 ID/英文名及来源链接保留在唯一共享 `display_names.json`；未覆盖既有名称。
+- 共享 registry 提交 `53938b00c91806ce07653d3e384abe4ebc8b20cf` 已推送。本轮依据 Tips.GG 简中 El Shams 球队页新增 ID 3887 →“埃尔夏姆队”，对应正式 provider identity `El Shams`，原 ID/英文名及来源链接保留在唯一共享 `display_names.json`；未覆盖既有名称。
 - 最新 coverage 文件实算：formal union 2,468，canonical 1,883、unresolved 585（76.30%）；M1 1,442/1,576（91.50%）；M1 OU-R1 52/52（100%）；MR1 AH 1,435/1,921（74.70%）；MR1 AI declared mirror 1,442/1,576（91.50%）。MR1 AI confidence≥50 保留的历史 cohort 是 181/182（99.45%），未重建 cohort membership。共享库 12,276 team IDs、3,899 canonical。完整 unresolved 清单及原因仍以 `data/football_display_names/formal_scope_coverage.json` 为准。
 - M1 display/formal-runtime 定向测试 20/20 通过，`git diff --check` 通过。名称数据仍由 M1 formatter 和 MR1 shared-registry loader 共用；本轮未改 formatter、生产模型、策略、账本、结算、调度或 Telegram 派单逻辑。
 - 本轮未运行生产 workflow，未发送或编辑 Telegram。历史 TG 实际 edits=0：没有可用的专用凭据/可编辑原消息证据，不能声称历史消息已修复。继续逐条来源核验剩余 585 个正式范围 ID，不以机器音译填充。
