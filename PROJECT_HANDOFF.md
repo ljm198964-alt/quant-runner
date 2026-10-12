@@ -392,3 +392,8 @@
 - 共享 registry 提交 `cec5affae7c131f31099db502885f96d5db9f646` 已推送。新增 WSG Swarovski Wattens（ID 3704）→WSG蒂罗尔，奥地利 Bundesliga 官方资料核对 2021 更名，复用共享库 WSG Tirol（85219）的标准中文名；Odra Opole（7038）→奥波莱（球天下中文资料）；HK Kópavogur（8685）→HK科帕沃格（球天下中文资料）。
 - 最新范围：formal 2,468，canonical 1,932，unresolved 536（78.28%）；M1 1,490/1,576（94.54%）；M1 OU-R1 52/52；MR1 AH 1,475/1,921（76.78%）；MR1 AI mirror 1,490/1,576（94.54%）。共享库 12,276 IDs、3,948 canonical。完整待补清单及每条原因在共享 `formal_scope_coverage.json`。
 - M1 定向测试 20/20、MR1 registry 测试 2/2 和三条新增名称 formatter 隔离渲染通过。未触发生产 workflow/TG，模型、策略、账本和结算未改。
+
+## 2026-10-12 正式范围中文名称续补（四十三）
+- 共享 registry 提交 `209d318d5a4c0e854de9fdcd7c1c234ecce3dc29` 已推送至 `totalcorner-research-bridge/master`。新增 Giannina（ID 2746）→吉安尼纳（雷速简中球队资料）及 Kavala（ID 7802）→卡瓦拉（360百科球队资料）；ID、provider 原名、别名、来源和核验时间保存在唯一 `display_names.json`。
+- 最新正式范围：2,468 IDs，canonical 1,934、unresolved 534（78.36%）；M1 1,492/1,576（94.67%）；M1 OU-R1 52/52（100%）；MR1 AH 1,477/1,921（76.89%）；MR1 AI declared mirror 1,492/1,576（94.67%）。共享 registry 12,276 IDs、3,950 canonical。完整未匹配及逐项原因见共享 `data/football_display_names/formal_scope_coverage.json`。
+- M1 formatter/runtime 定向 pytest 20/20、MR1 shared-registry tests 2/2 通过；无生产 Actions/TG 发送或编辑。本轮未改模型、策略、正式订单、结算或通知规则。历史 Telegram 编辑仍未完成：当前回合未调用生产 Telegram API；不得将 formatter 测试视为历史消息修复。
