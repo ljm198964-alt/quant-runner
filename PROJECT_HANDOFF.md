@@ -569,3 +569,10 @@
 - 对最终共享库版本完成本地验证：M1 display/runtime pytest 20/20；MR1 registry、browser-forward、AI formatter/parser 定向 Node 测试 8/8。
 - 最新版历史 Telegram 只编辑校正工作流均 success：M1 run `38213593018`（报告 eligible 37、edited 0、already matching 37、缺历史原文 99、无映射 70、failed 0；覆盖 M1 AH 和 M1 OU-R1）；MR1 AH run `38213597764`（edited 0、skipped 125、unresolved 0、failed 0）；MR1 AI run `38213602140`（201 条中 9 个可评估候选、edited 0、192 unresolved、9 failed，Telegram 对 9 条均返回 `400 message to edit not found`）。因此本轮历史消息实际编辑数为 0；不存在可安全编辑的目标文本，不以重发代替，失败项和缺数据项如实保留。
 - 三个工作流均仅针对原消息做名称校正并保存各自回执；没有发送新 Pick、触发策略扫描或改比赛/盘口/方向/水位，也未修改模型、策略、正式账本、settlement 或 MR1 AI 发送规则。后续继续只对剩余 481 个 formal-scope unresolved ID 寻找来源可核验的 canonical 中文名。
+
+## 2026-10-12 正式范围中文名称续补与 Telegram 实际复核（七十六）
+- 再补入唯一共享库 2 个正式 ID：Lija Athletic（3348）→丽加竞技、Slavija Sarajevo（4131）→萨拉热窝斯拉维亚队；均由 Tips.GG 中文赛事实录直接以英文队名和中文名配对，保留精确 provider identity/ID、aliases、reference。共享最新提交 `e05f9e3b4a6cdcce5634cabc134f3156a940d5a6`。
+- 当前 formal union 2,468：canonical 1,989、unresolved 479（80.59%）；M1 1,544/1,576（97.97%）；M1 OU-R1 52/52（100%）；MR1 AH 1,519/1,921（79.07%）；MR1 AI declared mirror 1,544/1,576（97.97%）。共享全库 12,276 team IDs，4,005 canonical 中文名。尚未确认条目和原因完整列于共享 `formal_scope_coverage.json`。
+- 本地定向测试通过：M1 pytest 20/20；MR1 canonical registry、browser-forward 和 Telegram formatter/parser Node 测试 8/8。
+- 本版共享 registry 的三个既有历史消息名称修复 workflow 均成功：M1 `38213931932`（eligible 37 / edited 0 / already matching 37 / missing original text 99 / unmapped 70 / failed 0）；MR1 AH `38213936620`（edited 0 / already processed 125 / unresolved 0 / failed 0）；MR1 AI `38213940539`（201 条中 9 candidates、edited 0、192 unresolved、9 failed，Telegram 原消息均返回 400 `message to edit not found`）。即本轮实际编辑仍为 0，不重发历史单。
+- 未更改比赛信息、盘口、方向、水位、模型、策略、正式 ledger、结算或 Telegram 发送规则；继续逐批按可核验来源处理余下 479 项。
