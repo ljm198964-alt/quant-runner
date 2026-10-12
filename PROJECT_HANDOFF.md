@@ -250,3 +250,10 @@
 - 共享库新提交 `cee1e57` 已 push。最新 authoritative `formal_scope_coverage.json`：正式 union 2,468，canonical 1,866、unresolved 602、coverage 75.61%；M1 1,425/1,576（90.42%）；M1 OU-R1 52/52；MR1 AH 1,419/1,921（73.87%）；MR1 AI declared mirror 1,425/1,576（90.42%）。
 - M1 展示 formatter 对 ID 502、1459 隔离渲染分别得到「佩塔」「卡马森城」。M1 定向测试 20/20 通过；共享 JSON、覆盖与审计数据重新生成并校验。中文维基欧洲顶级联赛全量表交叉尝试未产生严格英文身份命中，未按近似字符串自动导入。
 - 本轮没有配置 M1/MR1 Telegram credentials，未进行消息编辑或发送；此前干跑仍为 37 eligible、99 条无原文、70 条未映射。正式 TG live 修复未完成。生产 Actions 未触发。
+
+## 2026-10-12 正式范围中文名称续补（十六）
+- 共享 registry 提交 `fbc712b90d10676951ff72cf39bebd88e5634049` 已推送至 `totalcorner-research-bridge/master`。基于最新共享库实际文件继续处理；交接旧快照的 718 unresolved 已过时，本轮开始前正式清单为 600。本轮新增 3 个有可核验来源的 canonical：Middelfart（ID 2890）→米德法特、HB Køge（ID 750）→赫福尔格（均为 7M 球队页）；Al Taawon（ID 6300）→布赖代合作（FootyStats 简中球队档案，TotalCorner ID 页面确认对应 Al Taawon）。provider identity、team ID、aliases 和 source URL 均写入唯一共享 `display_names.json`。
+- 最新正式范围实算：union 2,468，中文已匹配 1,869，未匹配 599，覆盖 75.73%；M1 1,428/1,576（90.61%）；M1 OU-R1 52/52（100%）；MR1 AH 1,421/1,921（73.97%）；MR1 AI 声明镜像 1,428/1,576（90.61%）。共享库 12,276 IDs、3,885 canonical。完整 599 条未匹配及逐条原因见共享 `data/football_display_names/formal_scope_coverage.json`。
+- 本地显示验收：M1 formatter 对 Middelfart/HB Køge 输出「米德法特 vs 赫福尔格」，对 Al Taawon/Al Ittihad 输出「布赖代合作 vs 吉达联合」；M1 formatter/display-repair/formal-runtime 测试 20/20 通过。MR1 通过 `external/football-display-registry` 只读 checkout 读取唯一共享库；加载共享文件后的两组 fixture 中文渲染通过，MR1 `npm test` 通过。没有修改两边 formatter 或策略。
+- 历史 Telegram：本轮未编辑或重发既有消息。安全环境没有可用于各自 provider 的已授权凭据及完整原始可编辑消息证据，历史 live edit=0；不能把本地渲染记为 TG 实际修复。未触发生产 workflow；账户级 Actions 支出限制仍阻止云端 smoke。
+- 本批不覆盖任何既有 canonical；未确认名称继续保留 provider identity 并标记 `NO_VERIFIED_CANONICAL_ZH`。
