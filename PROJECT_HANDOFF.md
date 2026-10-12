@@ -236,3 +236,11 @@
 - 当前 formal union 2,468，mapped 1,861、unresolved 607（75.41%）；M1 1,420/1,576（90.10%）；MR1 AH 1,414/1,921（73.61%）；MR1 AI 镜像 1,420/1,576（90.10%）；M1 OU-R1 52/52；shared registry 12,276 IDs、canonical 3,877（31.58%）。完整未匹配清单及原因以 `formal_scope_coverage.json` 为准。
 - M1 formatter 已用真实共享库隔离渲染新增 team_id，显示为中文队名与方向；MR1 AH formatter 亦读取同一 registry 并渲染中文。M1 display/repair/formal runtime tests 20/20；MR1 `npm test` passed；JSON/diff 检查通过。M1 历史 TG dry-run：37 条有可替换原文、99 条缺原文、70 条仍缺名称映射。dry-run 未发消息；本机没有 M1 专用 Telegram credentials，所以历史 TG 实际 edits=0。没有生产扫描、订单/结算写入或策略更改。
 - Runner 尚受账户级支出限制，云端 smoke 未运行；不要将本机 formatter 测试说成生产 TG live PASS。继续剩余 607 项来源核验，并在安全可用的 M1/MR1 各自凭据及原始 editable message 证据后才执行历史文字编辑。
+
+## 2026-10-12 正式范围中文名称续补（十四）
+- 共享 registry 提交 `132183e3a7a98f3e195690a0e28506334d553c0c` 已 push 至 totalcorner-research-bridge/master。本轮在唯一 `display_names.json` 新增 3 个已核验 formal IDs：MFK Chrudim（ID 1899）→赫鲁迪姆（Sofascore 简中球队页）；Fylkir Reykjavik（ID 3170）→费基亚（7M 球队页）；Gornik Leczna（ID 524）→莱茨纳（球探/Titan007 球队页）。来源、英文 identity、ID、aliases 同存于 registry；已确认 canonical 未覆盖。
+- 最新实算 formal union 2,468：mapped 1,864，unresolved 604，覆盖 75.53%；M1 1,423/1,576（90.29%）；M1 OU-R1 52/52（100%）；MR1 AH 1,417/1,921（73.76%）；MR1 AI 声明镜像 M1 为 1,423/1,576（90.29%）。共享库 12,276 IDs、3,880 canonical。完整未匹配项与逐条原因见共享库 `data/football_display_names/formal_scope_coverage.json`。
+- Telegram 显示接入复核：M1 AH 与 M1 OU-R1 通过 `m1_notification.py` 共用 `m1_telegram_display.py`，读取共享 registry；MR1 AH formatter、MR1 AI forward notify 通过 `football-display-names.js` 读取同一 registry。三个新增队名已用两侧 formatter 隔离渲染为中文；MR1 样本联赛 ID 114 尚无 canonical，展示层仍按现有 fallback 输出原名，尚不能宣称赛事名全中文。
+- 测试：M1 定向 pytest 20/20；MR1 `npm test` 全量通过；JSON 解析及 `git diff --check` 通过。没有运行生产 Actions、策略、账本、结算、TG。
+- 历史 M1 TG names-only dry-run 更新后：37 条具备原文及可映射字段；99 条缺 ledger 保存的原始消息文本；70 条仍缺映射；dry-run failed=0。当前进程环境不存在 M1/MR1 Telegram bot credentials，未编辑任何消息（成功0、失败0）；不借用另一系统 credentials、不重发订单。后续真实编辑需各系统各自可用 bot credentials 和 Telegram 可编辑原消息。
+- 云端 Actions 仍受账户付款/支出限制，未触发或记为 PASS。所有更名仅展示层数据，不改 M1/MR1/MR1 AI 策略、模型、盘口、赛事范围、通知条件或账本。
