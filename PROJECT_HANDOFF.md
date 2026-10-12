@@ -642,3 +642,8 @@
 - Tips.GG 北爱尔兰足球中文赛事实录明确显示 Knockbreda＝诺克布雷达；为正式 team_id 5168 写入该 canonical 及来源证据，保留原始 provider name。共享提交 `b1d7a92aaf01e113690741dad8e03f5ce377cf63` 已推送 master。
 - union 2,468：canonical 2,027、unresolved 441（82.13%）；M1 可审计基础范围 1,432/1,556（92.03%），独立当期 scan 175/176；MR1 AH 1,550/1,921（80.69%）；M1 OU-R1 52/52。共享全库 12,276 IDs、4,043 canonical。
 - M1 display/repair tests 8/8 通过；没有启动/编辑/重发 Telegram 历史消息。本次只改展示名称记录和 coverage/curation 数据，不改模型与交易运行链。
+
+## 2026-10-12 正式范围中文名称续补（八十七）
+- 7M 中文球队档案以“FC列日 (RFC Liege)”并列标注俱乐部名。已为 TotalCorner team_id 13878 添加 canonical“FC列日”、来源与别名，未更改原始名称或 ID。共享提交 `8a8a5f394ec0c212dc1af127842d8da328d45c12` 已推送 master。
+- formal union 2,468：canonical 2,028、unresolved 440（82.17%）；共享库 12,276 IDs、4,044 canonical；M1 可审计基础范围 1,432/1,556（92.03%），当期 scan 175/176；MR1 AH 1,551/1,921（80.74%）；M1 OU-R1 52/52。
+- M1 display/repair tests 8/8 通过。该提交只更新名称数据/整理脚本与统计，无策略或模型变化；历史消息编辑仍未实际执行。
