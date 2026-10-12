@@ -317,6 +317,11 @@
 - 当前实际统计：正式范围 2,468，canonical 1,898，unresolved 570（76.90%）；M1 1,456/1,576（92.39%）；M1 OU-R1 52/52；MR1 AH 1,448/1,921（75.38%）；MR1 AI declared mirror 1,456/1,576（92.39%）。MR1 AI 历史 observed confidence≥50 cohort 181/182；共享库 12,276 team IDs、3,914 canonical。完整 unresolved 和 reason 以共享 `formal_scope_coverage.json` 为准。
 - M1 display/formal-runtime 定向测试20/20，MR1 shared-registry tests 2/2；本轮三队均经 MR1 formatter 只读隔离渲染为中文。未运行生产 Actions、未发/编辑 Telegram；模型、策略、正式订单、结算及通知规则未修改。继续来源核验剩余570项。
 
+## 2026-10-12 正式范围中文名称续补（三十二）
+- 共享库 `totalcorner-research-bridge/master` 新提交 `f6c5855f5b6847ad1d4cd7b0746312e1e428a679`。新增3条来源核验映射：Banants Yerevan（ID 4142）→乌拉尔图（中文球队条目说明 FC Banants 更名为 FC Urartu）；FC Kryvbas Kriviy Rih（15199）→克里沃罗格克里夫巴斯（Sofascore 简中队页）；Arsenal Kiev（14919）→基辅兵工厂（中文球队条目以 Arsenal Kyiv 对照）。provider identity、ID、别名和来源保存在唯一 `display_names.json`。
+- 最新 coverage 实算：正式范围 2,468，canonical 1,901，unresolved 567（77.03%）；M1 1,459/1,576（92.58%）；M1 OU-R1 52/52；MR1 AH 1,449/1,921（75.43%）；MR1 AI declared mirror 1,459/1,576（92.58%）。共享 registry 12,276 IDs、3,917 canonical。逐项 unresolved 及原因以共享 `formal_scope_coverage.json` 为准。
+- M1 display/formal-runtime 定向测试 20/20 通过；MR1 shared-registry tests 2/2 通过，新三 ID 共享库读取正常。本轮没有触碰生产链或历史 TG；未运行/修改 Telegram。其余策略、账本、结算及派单逻辑未变。继续逐条核验剩余567项。
+
 ## 2026-10-12 正式范围中文名称续补（十七）
 - 共享 registry 提交 `29a8dcd6e953fd04be232fe46310ec3ce31378d3` 已推送至 `totalcorner-research-bridge/master`。在续补（十六）基础上新增 2 条精确身份映射：B93 Copenhagen（ID 3622）→哥本哈根B93，Sofascore 简中球队页；Dukla Banska Bystrica（ID 3460）→班斯卡比斯特里察杜克拉，Sofascore 简中球队页。两条均属于 M1 与 MR1 AH 范围，原英文 provider identity、ID、别名及来源保留在共享 registry。
 - 最新范围：formal union 2,468，canonical 中文 1,871，unresolved 597（75.81%）；M1 1,430/1,576（90.74%）；M1 OU-R1 52/52；MR1 AH 1,423/1,921（74.08%）；MR1 AI mirror 1,430/1,576（90.74%）。未匹配完整清单仍位于共享 `formal_scope_coverage.json`，当前 597 条均为 `NO_VERIFIED_CANONICAL_ZH`。
