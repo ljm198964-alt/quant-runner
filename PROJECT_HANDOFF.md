@@ -140,7 +140,7 @@
 - 远端 MR1 只读 registry smoke `38185225540` 及历史批量恢复 run `38138357332` 均在 runner 启动前失败；GitHub annotation 的具体原因是账户近期付款失败或支出限制，两个 job 均无执行 steps/log。不能记为云端 PASS；共享库 Git push 本身已成功。未触发任何策略运行、Telegram 或账本写入。
 
 ## 2026-10-12 全量身份恢复续核（最终）
-- 共享库最新提交：`5c0618f7245f81e9dd8c0c94d23f951e9a9e8da9`。只读扫描当前 MR1 master `a2997be5f8e8a9418b21ac2c64cd9437fb08a525` 的 124,392 个存档文件，712,870 次身份观察；将此前共享库缺失的 104 个 MR1 team ID 和原文证据路径加入唯一运行时登记。104 个均有唯一英文 provider identity，未用 ID 猜队名；其中 4 个新增来源核验的中文名。MR1 旧样本有 2 个仅大小写/女足标记差异，存为 aliases。
+- 共享库最新提交：`ae67d2f4075de83006b5ba03612294fae81ec168`。只读扫描当前 MR1 master `a2997be5f8e8a9418b21ac2c64cd9437fb08a525` 的 124,392 个存档文件，712,870 次身份观察；将此前共享库缺失的 104 个 MR1 team ID 和原文证据路径加入唯一运行时登记。104 个均有唯一英文 provider identity，未用 ID 猜队名；其中 4 个新增来源核验的中文名。MR1 旧样本有 2 个仅大小写/女足标记差异，存为 aliases。4 个新增中文名均保留独立 identity_source 与 canonical 中文名来源。
 - 最终共享库 12,276 个 team ID，provider 英文身份 12,276/12,276；canonical 中文 3,656，未匹配 8,620，覆盖 29.78%。其中 3,541 条有可追溯来源或引用；115 条旧 `curated_transliteration` 保留但不计为已核验主流译名。身份冲突 0，已标注译名冲突 0，精确英文 alias 歧义 4；771 个 league ID 中 329 个有 canonical 中文名。
 - 正式范围快照：M1 1,203/1,576（76.33%）；MR1 AH 1,283/1,921（66.79%）；M1+MR1 union 1,640/2,468（66.45%）；M1 OU-R1 52/52。104 个新存档 ID 没有 league_id 证据，不纳入正式范围分母。
 - 本地验证：M1 20/20 tests；MR1 shared-display/browser-forward 5/5 tests。共享数据新增 7M/中文来源核验：FC Jazz→爵士FC、Hougang United FC→后港联、Balestier Khalsa FC→马里士他卡沙、Newcastle Jets→纽卡斯尔喷气机。没有改 M1/MR1/MR1 AI 模型、策略、阈值、账本、结算、通知或调度。
