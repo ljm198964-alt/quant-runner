@@ -500,3 +500,8 @@
 - 审计并修复一处旧别名冲突：删除 team_id 3397（吉达联合）的错误/歧义别名“Jeddah Club”，因为该名对应独立 Saudi First Division 队 team_id 42718；以 FootyStats 的 Jeddah Club/阿尔拉比亚球队页交叉确认。其他正确 canonical、team ID 和交易数据未动。
 - 最新 formal union 2,468：canonical 1,978、unresolved 490（80.15%）；M1 1,535/1,576（97.40%）；M1 OU-R1 52/52；MR1 AH 1,511/1,921（78.66%）；MR1 AI declared mirror 1,535/1,576（97.40%）。剩余明细及逐项 reason 在共享 `formal_scope_coverage.json`。
 - M1 display/runtime pytest 20/20，MR1 shared registry tests 2/2 通过。未编辑或发送 Telegram；只改共享显示名/别名冲突与交接，模型、策略、订单、结算不变。继续处理剩余 490 项。
+
+## 2026-10-12 正式范围中文名称续补（六十四）
+- 共享库新增 JK Nõmme United（team_id 29759）→诺梅联队，来源为 Tips.GG 简体中文球队页（https://tips.gg/cn/team/fc-nomme-united-football/）；原始 provider identity、拉丁字母拼写别名和精确 ID 保留。
+- 最新 formal union 2,468：canonical 1,979、unresolved 489（80.19%）；M1 1,536/1,576（97.46%）；M1 OU-R1 52/52；MR1 AH 1,512/1,921（78.71%）；MR1 AI declared mirror 1,536/1,576（97.46%）。未匹配详单见共享 coverage JSON。
+- M1 display/runtime pytest 20/20、MR1 shared registry tests 2/2 通过。未改生产 Telegram、模型、策略、正式 ledger 或 settlement；继续补齐剩余 489 项。
