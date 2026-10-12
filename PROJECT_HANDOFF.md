@@ -302,6 +302,11 @@
 - 最新实际范围：2,468 个 formal IDs，canonical 1,890、unresolved 578（76.58%）；M1 1,449/1,576（91.94%）；M1 OU-R1 52/52；MR1 AH 1,442/1,921（75.07%）；MR1 AI declared mirror 1,449/1,576（91.94%）。历史 observed confidence≥50 cohort 181/182；共享库 12,276 IDs、3,906 canonical。具体 unresolved 清单仍以共享 `formal_scope_coverage.json` 为准。
 - M1 display/formal-runtime 测试 20/20，MR1 shared-registry 测试 2/2；MR1 对本轮及前批新 ID 的 formatter 隔离渲染均输出中文。没有生产 workflow/TG 操作；策略、正式账本、结算、派单规则均未修改。继续核证剩余 578 项。
 
+## 2026-10-12 正式范围中文名称续补（二十九）
+- 本轮继续增加两次来源核验并推送到共享库：`19ac5f3291551fe19635231b1d095b3ba7c25a4a` 增加 Iwaki SC（41151）→磐城FC、FK Žalgiris Vilnius（33136）→维尔纽斯扎尔吉里斯、Rigas FS（11336）→里加足球学校；`ebc49567eb9ca3267de4a1125c246a2bf9fd460f` 增加 Hillerød（15189）→希勒罗、Etar 1924 Veliko Tarnovo（41501）→伊塔尔；`0ac9f75952c8ec2a9ec7f9684059063bafb4c065` 增加 Al Fayhaa（53649）→费哈、Ballkani（106837）→巴尔干尼。来源包含 7M、Sofascore、中文维基条目和球迷屋球队档案；ID、provider identity、aliases/source 保留于唯一共享 registry。
+- 当前正式范围实算：2,468 个 ID，canonical 1,892、unresolved 576（76.66%）；M1 1,451/1,576（92.07%）；M1 OU-R1 52/52；MR1 AH 1,443/1,921（75.12%）；MR1 AI declared mirror 1,451/1,576（92.07%）。共享 registry 12,276 个 team IDs、3,908 canonical；MR1 AI confidence≥50 的保留 cohort 为 181/182（历史分组）。逐条 unresolved 和原因见共享 `formal_scope_coverage.json`。
+- M1 formatter/formal-runtime 定向测试 20/20 通过；MR1 共享库显示读取测试 2/2 通过，并对本轮相关新增 ID 做过隔离 formatter 渲染。没有生产 workflow、Telegram 发送或编辑；未改模型、策略、正式账本、结算、派单条件。剩余 576 项继续逐一核证，不对不清晰身份猜译。
+
 ## 2026-10-12 正式范围中文名称续补（十七）
 - 共享 registry 提交 `29a8dcd6e953fd04be232fe46310ec3ce31378d3` 已推送至 `totalcorner-research-bridge/master`。在续补（十六）基础上新增 2 条精确身份映射：B93 Copenhagen（ID 3622）→哥本哈根B93，Sofascore 简中球队页；Dukla Banska Bystrica（ID 3460）→班斯卡比斯特里察杜克拉，Sofascore 简中球队页。两条均属于 M1 与 MR1 AH 范围，原英文 provider identity、ID、别名及来源保留在共享 registry。
 - 最新范围：formal union 2,468，canonical 中文 1,871，unresolved 597（75.81%）；M1 1,430/1,576（90.74%）；M1 OU-R1 52/52；MR1 AH 1,423/1,921（74.08%）；MR1 AI mirror 1,430/1,576（90.74%）。未匹配完整清单仍位于共享 `formal_scope_coverage.json`，当前 597 条均为 `NO_VERIFIED_CANONICAL_ZH`。
