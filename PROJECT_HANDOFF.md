@@ -673,3 +673,8 @@
 - 共享库提交 `c82a146` 和 `a0d2a79` 已推送 master。最新 formal union 2,468：canonical 2,056、unresolved 412（83.31%）；M1 1,441/1,553（92.79%）；M1 OU-R1 52/52（100%）；MR1 AH 1,572/1,921（81.83%）；MR1 AI declared mirror 1,441/1,553（92.79%）。全共享库 12,276 IDs、4,072 canonical 中文名。最新完整 unresolved 清单和逐项 `NO_VERIFIED_CANONICAL_ZH` 原因以 `data/football_display_names/formal_scope_coverage.json` 为准。
 - M1 Telegram display/repair tests 8/8 pass；`git diff --check` pass。此次没有重跑历史 TG 编辑、不发送消息、不触碰正式 ledger/策略/模型/结算。非策略用户文件 `.gitignore`、`package-lock.json`、`__pycache__/`、`results/competitor_zou/` 未纳入提交。
 - 调查发现 WDQS 对此客户端触发 429（每分钟限额），没有用其不完整结果回填；一个精确 same-league canonical-alias 反查得到 Bur Fouad 映射，另 4 条可交叉核验的 spelling/duplicate ID 映射来自保留证据。剩余 412 个仍需继续查证；不做机械音译或猜名。
+
+## 2026-10-12 正式范围中文名称续补（九十二）
+- 在共享库提交 `a0d2a79` 后，本轮从中文公开球队页/官方记录继续确认 6 个 ID：Liaoning Ironman（143671）→辽宁铁人；Dingnan Ganilan FC（161724）→定南赣联；SJK Akatemia（79459）→SJK学院；Kispest Honved（185126）→布达佩斯洪韦德；NK Posusje（54098）→波苏谢；Szeged-Csanad Grosics（69648）→塞格德农学院。保留 provider name、team_id、别名和来源；SJK Academy 身份单独保留。搜索发现 FK Zhenys 女队中文名，不与男子 FK Zhenys 混用；FC Elimai Semey 本轮无足够中文来源，仍未匹配。
+- 共享库提交 `482ecb2` 与 `6bfee8c` 已推送 master。当前 formal union 2,468：canonical 2,062、unresolved 406（83.55%）；M1 1,443/1,553（92.92%）；M1 OU-R1 52/52；MR1 AH 1,578/1,921（82.14%）；MR1 AI declared mirror M1 1,443/1,553（92.92%）。完整剩余清单及未确认原因以共享 `formal_scope_coverage.json` 为准。
+- M1 display/repair tests 8/8 pass，`git diff --check` pass。仅改唯一共享 display registry、curation/audit data 和 curator；无 TG 发送/编辑、无策略、模型、正式 ledger 或结算改动。未加入到本地本任务仓库的其他工作树变更保持原样。
