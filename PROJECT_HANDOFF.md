@@ -269,6 +269,11 @@
 - 最新实算：formal union 2,468，canonical 1,880，unresolved 588（76.18%）；M1 1,439/1,576（91.31%）；M1 OU-R1 52/52；MR1 AH 1,432/1,921（74.55%）；MR1 AI declared mirror 1,439/1,576（91.31%）。共享 registry 12,276 IDs、3,896 canonical；588 条均因 `NO_VERIFIED_CANONICAL_ZH` 暂未匹配，具体清单见共享 `formal_scope_coverage.json`。
 - M1 formatter 隔离渲染“特马利卡”，M1 定向测试 20/20 通过；MR1 对共享注册表的测试/解析保持通过。无模型、策略、账本、结算或 Telegram 行为变化。历史 TG 仍未编辑：环境没有系统专用 Bot 凭据，也没有本轮逐条可编辑原文证据；生产 workflow 未触发。
 
+## 2026-10-12 正式范围中文名称续补（二十三）
+- 接续共享库 `421208fef14e01504dff8cd7864eda113029b8b7`，新增 Hamilton（ID 2376）→汉密尔顿学院；其 scope leagues 是苏格兰 Premiership/Championship/League One，中文俱乐部资料将 Hamilton 对应到 Hamilton Academical。新增 Viktoria Zizkov（ID 3560）→日热科夫胜利；中文俱乐部条目明确列出 FK Viktoria Žižkov 全名。新 mappings/aliases/source 均进入唯一共享库，提交 `d6bbe732bae671136f7db5087e1733bd521f193d` 已推送 master。
+- 最新实际覆盖：formal union 2,468，canonical 1,882、unresolved 586（76.26%）；M1 1,441/1,576（91.43%）；M1 OU-R1 52/52；MR1 AH 1,434/1,921（74.65%）；MR1 AI declared mirror 1,441/1,576（91.43%）；置信度≥50 observed cohort 181/182（旧 cohort 快照）。共享库 12,276 IDs、3,898 canonical。未匹配逐项均在共享 `formal_scope_coverage.json`，本次未映射条目继续为 NO_VERIFIED_CANONICAL_ZH。
+- M1 formatter 隔离渲染新增名称，定向测试 20/20 通过；MR1 通过运行时共享库目录测试 2/2 通过。生产 workflow 未触发、历史 Telegram 未编辑或重发；系统专用 Bot 凭据和可核对 message-id/evidence 仍不可用。没有策略或正式账本修改。
+
 ## 2026-10-12 正式范围中文名称续补（十七）
 - 共享 registry 提交 `29a8dcd6e953fd04be232fe46310ec3ce31378d3` 已推送至 `totalcorner-research-bridge/master`。在续补（十六）基础上新增 2 条精确身份映射：B93 Copenhagen（ID 3622）→哥本哈根B93，Sofascore 简中球队页；Dukla Banska Bystrica（ID 3460）→班斯卡比斯特里察杜克拉，Sofascore 简中球队页。两条均属于 M1 与 MR1 AH 范围，原英文 provider identity、ID、别名及来源保留在共享 registry。
 - 最新范围：formal union 2,468，canonical 中文 1,871，unresolved 597（75.81%）；M1 1,430/1,576（90.74%）；M1 OU-R1 52/52；MR1 AH 1,423/1,921（74.08%）；MR1 AI mirror 1,430/1,576（90.74%）。未匹配完整清单仍位于共享 `formal_scope_coverage.json`，当前 597 条均为 `NO_VERIFIED_CANONICAL_ZH`。
