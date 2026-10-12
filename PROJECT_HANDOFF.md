@@ -708,3 +708,8 @@
 - 新增 3 条经简体中文足球资料交叉核对的 formal team ID：JDFS Alberts（10525）→阿尔伯茨JDFS（Tips.GG 中文俱乐部页）；FK Kaspyi Aktau（13793）→卡斯比阿克套（7M 简中页，NowScore 对英文身份交叉核验；与其独立 B 队 ID 分开）；Nevezis（10852）→内韦日斯（中文足球俱乐部条目）。共享库提交 `8429ccdddcdbb130eaf463cc1acc6fb0455fedf6` 已推送 `totalcorner-research-bridge/master`。
 - 最新 coverage 文件实算 formal union 2,468：canonical 2,082、unresolved 386（84.36%）；M1 1,451/1,553（93.43%）；M1 OU-R1 52/52（100%）；MR1 AH 1,595/1,921（83.03%）；MR1 AI 声明镜像 M1 范围 1,451/1,553（93.43%）。唯一共享 registry 12,276 IDs、4,098 canonical。逐 ID 未匹配清单及 `NO_VERIFIED_CANONICAL_ZH` 原因保存在共享库 `data/football_display_names/formal_scope_coverage.json`，不以临时音译凑数。
 - M1 Telegram display/repair unittest 8/8 通过，`git diff --check` 通过。仅更新唯一共享名称 registry、scope coverage、batch audit 和 curation script。未运行云端正式 TG 链、未编辑或重发历史消息；没有修改 M1/MR1/MR1 AI 模型、策略、订单、结算或 TG 规则。
+
+## 2026-10-12 正式范围中文名称续补（九十九）
+- 再加入两个经简体中文足球来源确认的 formal IDs：FK Otrant Ulcinj（33964）→奥特兰特（FootyStats 简中页面；俱乐部官网核验 Otrant Olympic 与 Ulcinj 身份），Aegir（12947）→埃吉尔（Sofascore 简中队页）。此外，续补提交内保留前序已加入的 JDFS Alberts（10525）、FK Kaspyi Aktau（13793）和 Nevezis（10852）；统一共享提交 `20019a09fc4fd09ca8b9cc222d245d00abab9718` 已推送 `totalcorner-research-bridge/master`。
+- 最新实算 formal union 2,468：canonical 2,084、unresolved 384（84.44%）；M1 1,453/1,553（93.56%）；M1 OU-R1 52/52（100%）；MR1 AH 1,597/1,921（83.13%）；MR1 AI declared mirror M1 1,453/1,553（93.56%）。唯一共享库 12,276 IDs、4,100 canonical。逐条未匹配 ID 与原因仍以共享 `data/football_display_names/formal_scope_coverage.json` 为准。
+- M1 Telegram display/repair 测试 8/8 通过，`git diff --check` 通过。已对当前 M1 formal ledger 做不发送 dry-run：37 条具备 names-only edit 条件，99 条缺少原始文本，70 条未命中中文映射；dry-run 未调用 Telegram API。M1 OU-R1、MR1 AH、MR1 AI 历史消息尚未逐链执行编辑，不能计作修复。没有新增 workflow；也未改模型、策略、正式订单、结算或 Telegram 规则。
