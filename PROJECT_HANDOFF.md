@@ -262,3 +262,9 @@
 - 共享 registry 提交 `29a8dcd6e953fd04be232fe46310ec3ce31378d3` 已推送至 `totalcorner-research-bridge/master`。在续补（十六）基础上新增 2 条精确身份映射：B93 Copenhagen（ID 3622）→哥本哈根B93，Sofascore 简中球队页；Dukla Banska Bystrica（ID 3460）→班斯卡比斯特里察杜克拉，Sofascore 简中球队页。两条均属于 M1 与 MR1 AH 范围，原英文 provider identity、ID、别名及来源保留在共享 registry。
 - 最新范围：formal union 2,468，canonical 中文 1,871，unresolved 597（75.81%）；M1 1,430/1,576（90.74%）；M1 OU-R1 52/52；MR1 AH 1,423/1,921（74.08%）；MR1 AI mirror 1,430/1,576（90.74%）。未匹配完整清单仍位于共享 `formal_scope_coverage.json`，当前 597 条均为 `NO_VERIFIED_CANONICAL_ZH`。
 - M1 display/runtime 定向测试 20/20 通过；新 ID formatter 渲染待随共享库提交后复核。未发送或编辑 Telegram；未触发生产 scan 或 GitHub Actions。策略、账本、通知条件不变。
+
+## 2026-10-12 正式范围中文名称续补（十八）
+- 共享 registry 提交 `f0018c7d1d1a1b861f3799d406db46dff791b585` 已推送至 `totalcorner-research-bridge/master`。本轮继续从公开中文足球资料核验并新增 Mgarr United（ID 1798）→姆加尔联，来源为 FootyStats 简中球队档案；该条处于 M1+MR1 AH 范围。对应来源和 aliases 写入共享 registry，不将音译猜测作为补库依据。
+- 最新 formal union 2,468：canonical 1,872，unresolved 596，覆盖 75.85%；M1 1,431/1,576（90.80%）；M1 OU-R1 52/52；MR1 AH 1,424/1,921（74.13%）；MR1 AI mirror 1,431/1,576（90.80%）。完整未匹配及原因以共享 `formal_scope_coverage.json` 为准。
+- M1 display/runtime 定向测试 20/20 通过；Telegram 未编辑/重发，未触发生产 workflow。策略、账本、阈值、正式通知条件未改。
+- 共享库提交 SHA 待本轮推送后填入。
