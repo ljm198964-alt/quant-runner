@@ -604,3 +604,8 @@
 - 当前实算 formal union 2,468：canonical 2,016、unresolved 452（81.69%）；M1 1,573/1,576（99.81%）；M1 OU-R1 52/52；MR1 AH 1,541/1,921（80.22%）；MR1 AI declared mirror 1,573/1,576（99.81%）。共享库 12,276 IDs、4,032 canonical names。
 - M1 display/repair unittest 8/8 通过。7M 来源：[阿尔卡纳（Olympic Al Qanah）球队档案](https://team.7m.com.cn/7510/index_gb.shtml)。MR1 云端只读 registry smoke 上轮 run `38218108249` 在 0 个 job steps 后失败；本轮未重复派发。历史 Telegram repair workflows 仍不在当前 workflow 清单，未编辑或重发任何消息。
 - 未修改生产模型、策略、账本、结算、Telegram 内容/规则；未有可靠来源的球队保留 unresolved。
+
+## 2026-10-12 正式范围中文名称续补（八十一）
+- 新增两条 Khazar Lankaran/Lenkoran 拼写记录，分别保留 TotalCorner team_id 4307（M1，league_id 299，provider `Khazar Lenkoran`）与 5990（M1，league_id 299，provider `Khazar Lankaran`），canonical 均为“哈扎尔连科兰”；没有跨 ID 合并，只按各自原 identity 记录。中文历史赛程由澳客及新浪赛事页将俱乐部名用于阿塞拜疆赛事实录。共享提交 `96712ab` 已推送 master。
+- 最新实算 formal union 2,468：canonical 2,018、unresolved 450（81.77%）；M1 1,575/1,576（99.94%）；M1 OU-R1 52/52；MR1 AH 1,543/1,921（80.32%）；MR1 AI declared mirror 1,575/1,576（99.94%）。共享 registry 12,276 IDs、4,034 canonical names。
+- M1 display/repair unittest 8/8 通过。来源：[澳客阿塞超赛程与哈扎尔连科兰中文记录](https://www.okooo.com/soccer/league/709/schedule/11033/)、[新浪球队对阵历史中的哈扎尔连科兰](https://match.sports.sina.com.cn/football/team_vs.php?id=1887825)。未修改任何生产模型、策略、ledger、settlement 或 Telegram 发送规则。
