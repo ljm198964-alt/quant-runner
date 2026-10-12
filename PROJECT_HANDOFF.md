@@ -322,6 +322,11 @@
 - 最新 coverage 实算：正式范围 2,468，canonical 1,901，unresolved 567（77.03%）；M1 1,459/1,576（92.58%）；M1 OU-R1 52/52；MR1 AH 1,449/1,921（75.43%）；MR1 AI declared mirror 1,459/1,576（92.58%）。共享 registry 12,276 IDs、3,917 canonical。逐项 unresolved 及原因以共享 `formal_scope_coverage.json` 为准。
 - M1 display/formal-runtime 定向测试 20/20 通过；MR1 shared-registry tests 2/2 通过，新三 ID 共享库读取正常。本轮没有触碰生产链或历史 TG；未运行/修改 Telegram。其余策略、账本、结算及派单逻辑未变。继续逐条核验剩余567项。
 
+## 2026-10-12 正式范围中文名称续补（三十三）
+- 共享库 `totalcorner-research-bridge/master` 新提交 `4037f447a4dd4aec38f20398df9b18ee22e5bb8f`。本轮新增 Bregalnica Stip（ID 489）→什蒂普布雷加尔尼察（中文维基俱乐部条目）；Belenenses（561）→贝伦人（中文俱乐部资料）；Batman Petrolspor（3682）→巴特曼石油体育俱乐部（Tips.GG 简中对阵资料）。ID、provider identity、aliases、来源均入唯一 registry。
+- authoritative formal coverage：2,468 个 ID，canonical 1,904，unresolved 564（77.15%）；M1 1,462/1,576（92.77%）；M1 OU-R1 52/52（100%）；MR1 AH 1,451/1,921（75.53%）；MR1 AI declared mirror 1,462/1,576（92.77%）。共享库 12,276 IDs、3,920 canonical。完整 unresolved 列表/原因见共享 coverage JSON。
+- M1 定向 pytest 20/20 通过。未运行生产 workflow、未编辑或发送历史 TG；无策略/模型/正式账本变更。继续核验剩余564项。
+
 ## 2026-10-12 正式范围中文名称续补（十七）
 - 共享 registry 提交 `29a8dcd6e953fd04be232fe46310ec3ce31378d3` 已推送至 `totalcorner-research-bridge/master`。在续补（十六）基础上新增 2 条精确身份映射：B93 Copenhagen（ID 3622）→哥本哈根B93，Sofascore 简中球队页；Dukla Banska Bystrica（ID 3460）→班斯卡比斯特里察杜克拉，Sofascore 简中球队页。两条均属于 M1 与 MR1 AH 范围，原英文 provider identity、ID、别名及来源保留在共享 registry。
 - 最新范围：formal union 2,468，canonical 中文 1,871，unresolved 597（75.81%）；M1 1,430/1,576（90.74%）；M1 OU-R1 52/52；MR1 AH 1,423/1,921（74.08%）；MR1 AI mirror 1,430/1,576（90.74%）。未匹配完整清单仍位于共享 `formal_scope_coverage.json`，当前 597 条均为 `NO_VERIFIED_CANONICAL_ZH`。
