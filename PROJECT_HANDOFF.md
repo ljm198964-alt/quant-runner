@@ -387,3 +387,8 @@
 - 共享 registry 提交 `49b8952dfc64d78f0070560669c58882181607a0` 已推送至 `totalcorner-research-bridge/master`。新增 Altay（3794）→阿尔泰体育俱乐部（雷速简中）；LKS Lodz（9392）→LKS洛迪兹（雷速简中）；FC Elva（9416）→埃尔瓦FC（Sofascore简中）；Suwon FMC (W)（10243）→水原FMC女足（7M简中）；Hwacheon KSPO (W)（10710）→华川KSPO女足（7M简中）；FCV Dender EH（17871）→FCV丹达（7M中文页面）。保留身份与别名，女足身份未与男队合并。
 - 最新正式范围：2,468 IDs，canonical 1,929、unresolved 539（78.16%）；M1 1,487/1,576（94.35%）；M1 OU-R1 52/52；MR1 AH 1,473/1,921（76.68%）；MR1 AI declared mirror 1,487/1,576（94.35%）。共享库 12,276 IDs、3,945 canonical。完整剩余列表及逐项原因见共享 `formal_scope_coverage.json`。
 - M1 定向 pytest 20/20、MR1 shared-registry tests 2/2 通过；六条名称隔离渲染通过。未触发生产任务或 TG；未修改任何模型、策略、正式订单或结算。
+
+## 2026-10-12 正式范围中文名称续补（四十二）
+- 共享 registry 提交 `cec5affae7c131f31099db502885f96d5db9f646` 已推送。新增 WSG Swarovski Wattens（ID 3704）→WSG蒂罗尔，奥地利 Bundesliga 官方资料核对 2021 更名，复用共享库 WSG Tirol（85219）的标准中文名；Odra Opole（7038）→奥波莱（球天下中文资料）；HK Kópavogur（8685）→HK科帕沃格（球天下中文资料）。
+- 最新范围：formal 2,468，canonical 1,932，unresolved 536（78.28%）；M1 1,490/1,576（94.54%）；M1 OU-R1 52/52；MR1 AH 1,475/1,921（76.78%）；MR1 AI mirror 1,490/1,576（94.54%）。共享库 12,276 IDs、3,948 canonical。完整待补清单及每条原因在共享 `formal_scope_coverage.json`。
+- M1 定向测试 20/20、MR1 registry 测试 2/2 和三条新增名称 formatter 隔离渲染通过。未触发生产 workflow/TG，模型、策略、账本和结算未改。
