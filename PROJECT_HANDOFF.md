@@ -703,3 +703,8 @@
 - 新增 Corum FK（team_id 75036）→乔鲁姆；Futmetrix 简中球队资料页直接将 Corum FK 标为“乔鲁姆”，原始 team ID/name 和联赛身份保留。共享提交 `fcb0cd1` 已推送 master。
 - 最新实算 formal union 2,468：canonical 2,079、unresolved 389（84.24%）；M1 1,445/1,553（93.05%）；M1 OU-R1 52/52；MR1 AH 1,594/1,921（82.87%）；MR1 AI declared mirror M1 1,445/1,553（93.05%）。共享 registry 12,276 IDs、4,095 canonical names。其余清单按 `formal_scope_coverage.json` 为准。
 - M1 display/repair tests 8/8 pass，`git diff --check` pass。只改共享 display registry/curation/coverage，不改任何模型、策略、账本、结算或 Telegram 生产行为。
+
+## 2026-10-12 正式范围中文名称续补（九十八）
+- 新增 3 条经简体中文足球资料交叉核对的 formal team ID：JDFS Alberts（10525）→阿尔伯茨JDFS（Tips.GG 中文俱乐部页）；FK Kaspyi Aktau（13793）→卡斯比阿克套（7M 简中页，NowScore 对英文身份交叉核验；与其独立 B 队 ID 分开）；Nevezis（10852）→内韦日斯（中文足球俱乐部条目）。共享库提交 `8429ccdddcdbb130eaf463cc1acc6fb0455fedf6` 已推送 `totalcorner-research-bridge/master`。
+- 最新 coverage 文件实算 formal union 2,468：canonical 2,082、unresolved 386（84.36%）；M1 1,451/1,553（93.43%）；M1 OU-R1 52/52（100%）；MR1 AH 1,595/1,921（83.03%）；MR1 AI 声明镜像 M1 范围 1,451/1,553（93.43%）。唯一共享 registry 12,276 IDs、4,098 canonical。逐 ID 未匹配清单及 `NO_VERIFIED_CANONICAL_ZH` 原因保存在共享库 `data/football_display_names/formal_scope_coverage.json`，不以临时音译凑数。
+- M1 Telegram display/repair unittest 8/8 通过，`git diff --check` 通过。仅更新唯一共享名称 registry、scope coverage、batch audit 和 curation script。未运行云端正式 TG 链、未编辑或重发历史消息；没有修改 M1/MR1/MR1 AI 模型、策略、订单、结算或 TG 规则。
