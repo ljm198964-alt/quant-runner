@@ -533,3 +533,8 @@
 - 在共享库 `0cb06d0` 推送 Ravan Baku 映射后，复跑既有 M1 与 MR1 AI 名称修复：M1 workflow `38212009365` 成功，结果仍为 eligible 37 / already matching 37 / edited 0 / missing original text 99 / unmapped 70 / failed 0；MR1 AI workflow `38212013783` 成功，仍为 9 条候选、编辑 0、9 条 `400 message to edit not found`、192 条 unresolved。新映射没有产生新的历史可编辑消息。
 - 故历史 Telegram 最终实际编辑成功数仍为 0；M1 现有可核实消息已是目标名称，MR1 AH 全部 124 条状态已处理且无待改文本，MR1 AI 的 9 条失败因消息不在目标 Bot 可编辑范围内无法修复。没有重发或改变投注内容。
 - 最新共享正式覆盖维持 batch 68 数字：union 2,468 / 1,982 canonical / 486 unresolved（80.31%）；M1 1,539/1,576（97.65%）；M1 OU-R1 52/52；MR1 AH 1,514/1,921（78.81%）；MR1 AI declared mirror 1,539/1,576（97.65%）。本地共享 registry 与 formatter 测试通过；未修改策略、模型、正式 ledger 或 settlement。
+
+## 2026-10-12 正式范围中文名称续补（七十）
+- 共享库新增 TotalCorner team_id 2101（provider `MP`）→米凯利。其唯一正式范围联赛 ID 122 已在同一 registry 对应芬兰 Ykkösliiga；Sofascore 中文 MP 球队页对应城市 Mikkeli，并列出 Ykkösliiga，故身份匹配由 provider 缩写、联赛与中文来源交叉确认；附加 MP Mikkeli/Mikkelin Palloilijat 别名。
+- 最新正式范围 union 2,468：canonical 1,983、unresolved 485（80.35%）；M1 1,540/1,576（97.72%）；M1 OU-R1 52/52（100%）；MR1 AH 1,515/1,921（78.87%）；MR1 AI declared mirror 1,540/1,576（97.72%）。逐项未匹配及原因见共享 `formal_scope_coverage.json`。
+- 本地 M1 display/runtime pytest 20/20、MR1 registry tests 2/2 通过。此 ID 同属 M1/MR1 正式范围，映射推送后将再运行相关既有历史名称编辑工作流；只尝试原消息改字，不发新策略消息，不改交易规则/记录。
