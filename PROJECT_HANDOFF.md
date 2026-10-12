@@ -667,3 +667,9 @@
 - 同一批新 registry 发布后，MR1 AH 修复 run `38223585697` success：edited 0、skipped/already processed 125、unresolved 0、failed 0；回执提交 `3c2d586da12c245f2a5379eea582cd4756620b23`。MR1 AI 修复 run `38223686575` success：历史总计 201，9 条候选、edited 0、192 unresolved、9 failed（Telegram 400 `message to edit not found`）；回执提交 `463d2224186e04f0a5042a835eead8d902e5c6b1`。没有重发历史 Pick。
 - 本机没有 M1/MR1 Telegram 环境变量；不得读取或复用另一系统凭据。代码路径通过隔离测试，但在该次云端历史修复 workflow 完成之前，不能宣称历史 TG 中文修复成功。
 - GitHub Actions 的 M1/MR1 AH/MR1 AI 历史名称修复 workflow 均完成，无需新增 workflow；没有触发正式 scan、发送测试消息或生产 Pick。运行链接：M1 https://github.com/ljm198964-alt/quant-runner/actions/runs/38223169902 ，MR1 AH https://github.com/ljm198964-alt/quant-runner/actions/runs/38223585697 ，MR1 AI https://github.com/ljm198964-alt/quant-runner/actions/runs/38223686575 。
+
+## 2026-10-12 正式范围中文名称续补（九十一）
+- 在 `805253d` 后继续检查唯一共享库及 418 项 unresolved。基于同库已验证别名、比赛联赛归属和中文来源，新增 6 个正式 ID：Bur Fouad（92834）→福阿德港SC；FK Sujeska（35609）→苏捷斯卡；PAS Gianena（43047）→吉安尼纳；FC Zorya（52914）→佐尔娅；FK Fushe Kosova（95879）→科索沃波列；Instituto Córdoba（175622）→科尔多瓦学院。均保留独立 team_id/provider_name，不合并实体；相关 exact crosswalk 与证据说明写入 shared registry 和现有批量 curator。未采纳同名但联赛/身份不一致的 fuzzy 建议。
+- 共享库提交 `c82a146` 和 `a0d2a79` 已推送 master。最新 formal union 2,468：canonical 2,056、unresolved 412（83.31%）；M1 1,441/1,553（92.79%）；M1 OU-R1 52/52（100%）；MR1 AH 1,572/1,921（81.83%）；MR1 AI declared mirror 1,441/1,553（92.79%）。全共享库 12,276 IDs、4,072 canonical 中文名。最新完整 unresolved 清单和逐项 `NO_VERIFIED_CANONICAL_ZH` 原因以 `data/football_display_names/formal_scope_coverage.json` 为准。
+- M1 Telegram display/repair tests 8/8 pass；`git diff --check` pass。此次没有重跑历史 TG 编辑、不发送消息、不触碰正式 ledger/策略/模型/结算。非策略用户文件 `.gitignore`、`package-lock.json`、`__pycache__/`、`results/competitor_zou/` 未纳入提交。
+- 调查发现 WDQS 对此客户端触发 429（每分钟限额），没有用其不完整结果回填；一个精确 same-league canonical-alias 反查得到 Bur Fouad 映射，另 4 条可交叉核验的 spelling/duplicate ID 映射来自保留证据。剩余 412 个仍需继续查证；不做机械音译或猜名。
