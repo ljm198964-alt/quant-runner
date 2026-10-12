@@ -332,6 +332,11 @@
 - 最新正式范围统计：2,468 IDs，canonical 1,906，unresolved 562（77.23%）；M1 1,464/1,576（92.89%）；M1 OU-R1 52/52；MR1 AH 1,453/1,921（75.64%）；MR1 AI declared mirror 1,464/1,576（92.89%）。共享库 12,276 IDs、3,922 canonical。逐项待核清单见共享 `formal_scope_coverage.json`。
 - M1 定向测试 20/20 通过；未触发生产 workflow 或 Telegram，不涉及策略、订单/结算账本变动。继续补齐余下562项。
 
+## 2026-10-12 正式范围中文名称续补（三十五）
+- 共享库 `totalcorner-research-bridge/master` 已推送 `d898fab92cc1425ee913a6c8e7a879ff703bc8d7`。新增 FK Skendija 79（ID 3742）→斯肯迪亚（球天下中文球队页，将 Shkendija Tetovo 对应为斯肯迪亚）；FK Gostivar（ID 3744）→戈斯蒂瓦尔（Sofascore 简中球员资料中的现役球队显示名）。canonical、精确 team ID/provider 名、alias 和来源留在唯一共享 registry。
+- 当前范围实算：formal union 2,468，canonical 1,908，unresolved 560（77.31%）；M1 1,466/1,576（93.02%）；M1 OU-R1 52/52；MR1 AH 1,453/1,921（75.64%）；MR1 AI mirror 1,466/1,576（93.02%）。共享 registry 12,276 IDs、3,924 canonical；未匹配清单/原因见 formal_scope_coverage.json。
+- M1 定向 pytest 20/20 通过。无生产 workflow/TG 操作，无模型、策略、正式账本/结算改动；剩余560项继续逐条核验。
+
 ## 2026-10-12 正式范围中文名称续补（十七）
 - 共享 registry 提交 `29a8dcd6e953fd04be232fe46310ec3ce31378d3` 已推送至 `totalcorner-research-bridge/master`。在续补（十六）基础上新增 2 条精确身份映射：B93 Copenhagen（ID 3622）→哥本哈根B93，Sofascore 简中球队页；Dukla Banska Bystrica（ID 3460）→班斯卡比斯特里察杜克拉，Sofascore 简中球队页。两条均属于 M1 与 MR1 AH 范围，原英文 provider identity、ID、别名及来源保留在共享 registry。
 - 最新范围：formal union 2,468，canonical 中文 1,871，unresolved 597（75.81%）；M1 1,430/1,576（90.74%）；M1 OU-R1 52/52；MR1 AH 1,423/1,921（74.08%）；MR1 AI mirror 1,430/1,576（90.74%）。未匹配完整清单仍位于共享 `formal_scope_coverage.json`，当前 597 条均为 `NO_VERIFIED_CANONICAL_ZH`。
