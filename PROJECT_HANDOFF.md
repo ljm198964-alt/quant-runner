@@ -201,3 +201,9 @@
 - 最新文件实算：正式并集 2,468，已映射 1,802、未映射 666（73.01%）；M1 1,360/1,576（86.29%）；MR1 AH 1,361/1,921（70.85%）；MR1 AI 声明镜像 M1 1,360/1,576（86.29%）；M1 OU-R1 52/52。全共享库 12,276 IDs、canonical 3,818（31.10%）。
 - 对拼写相近但身份交叉不足的 Abo Qir Semad 暂不补名，继续 unresolved，避免仅凭联赛或音译相似合并。批处理脚本为 `ops/curate_formal_scope_footystats_batch.py`，拒绝覆盖已有 canonical，并在写入前校验正式范围身份。
 - M1 display/formal-runtime 相关测试 20/20 通过。此次只改展示 registry/审计文件；没有生产扫描、Telegram 发送或编辑，也未改模型、策略、赛事范围、阈值、正式账本或结算。待办：继续处理 formal unresolved 清单；分别审计 M1、M1 OU-R1、MR1 AH、MR1 AI 现有 TG 消息的可编辑原始 message ID，并仅对可确认的历史消息执行获授权的文字替换；尚无本轮实际编辑回执。
+
+## 2026-10-12 正式范围中文名称续补（八）
+- 最新共享 registry 提交 `70f237cf2ec134ec455dd43cc89298bf15dcf223` 已 push 到 `totalcorner-research-bridge/master`。相较上一节又新增 4 个正式 ID：南蒂罗尔、阿特罗米托斯、索菲亚斯拉维亚、帕提萨尼；各项保留原 TotalCorner ID/英文身份、中文资料来源及别名，不建立第二份名称库。
+- 最新文件实算：formal union 2,468，已匹配 1,806，未匹配 662，覆盖 73.18%；M1 1,365/1,576（86.61%）；MR1 AH 1,366/1,921（71.11%）；MR1 AI 声明镜像 1,365/1,576（86.61%）；M1 OU-R1 52/52；共享库 12,276 IDs、canonical 3,822（31.13%）。全量 unresolved 逐条原因以共享文件 `data/football_display_names/formal_scope_coverage.json` 为准。
+- 验收：M1 display/formal-runtime 测试 20/20；MR1 `npm test` 通过。隔离渲染证明新 ID 经 MR1 `football-display-names.js` 及 M1 formatter 输出 canonical 中文，M1 AH/OU-R1 共用 `m1_notification.py` 的 formatter；MR1 runtime 从 M1 仓库 master checkout 同一 shared registry。M1历史编辑 dry-run 37 条具备原文的候选、99 条缺保存原文、70 条名称未匹配；本机没有 M1 TG 凭据，未执行任何编辑。MR1 AH 现有 v5 审计为 123 条跳过/无变化；MR1 AI 最近 9 条编辑失败、192 条未解决，本轮不重试或重发。尚无本轮实际 TG 历史编辑回执。
+- GitHub Actions 云端 smoke 未启动；本轮没有触发生产 runtime 或测试消息。仅名称/显示层变更，没有修改任何模型、策略、范围、投注/结算账本或 TG 派单规则。下一步继续处理剩余 662 个 ID，并在拥有安全 Telegram 运行环境和可编辑原始消息时处理历史展示文本。
