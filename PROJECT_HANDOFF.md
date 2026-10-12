@@ -312,6 +312,11 @@
 - 最新 authoritative coverage：formal union 2,468，canonical 1,895、unresolved 573（76.78%）；M1 1,454/1,576（92.26%）；M1 OU-R1 52/52；MR1 AH 1,446/1,921（75.27%）；MR1 AI declared mirror 1,454/1,576（92.26%）。历史 AI observed confidence≥50 cohort 181/182；全共享库 12,276 team IDs、3,911 canonical。完整 unresolved 清单与逐条原因见共享 `formal_scope_coverage.json`。
 - M1 定向 pytest 20/20 通过；MR1 shared-registry 测试2/2通过，三条新增名称隔离渲染正确。只改展示映射和审计，不运行生产 workflow/TG，也不修改模型、策略、范围、账本、结算或通知条件；继续处理余下573项。
 
+## 2026-10-12 正式范围中文名称续补（三十一）
+- 共享 registry 提交 `4bcbeb64c174223ab82cd5cf1f039374ea6043e7` 已推送。本轮新增 Hajer（2706）→哈哲尔（球天下球队资料）、Enosis Paralimni（6227）→伊诺西斯（FootyStats 简中赛程/杯赛资料）、MOL Fehervar FC（53149）→维迪奥顿（中文俱乐部资料将 Fehérvár FC 与 MOL Vidi 名称联系到该俱乐部，且与共享库既有 Videoton/Fehervar IDs 使用同一稳定中文名）。全部 team ID、provider name、aliases 和 reference 写入同一 `display_names.json`。
+- 当前实际统计：正式范围 2,468，canonical 1,898，unresolved 570（76.90%）；M1 1,456/1,576（92.39%）；M1 OU-R1 52/52；MR1 AH 1,448/1,921（75.38%）；MR1 AI declared mirror 1,456/1,576（92.39%）。MR1 AI 历史 observed confidence≥50 cohort 181/182；共享库 12,276 team IDs、3,914 canonical。完整 unresolved 和 reason 以共享 `formal_scope_coverage.json` 为准。
+- M1 display/formal-runtime 定向测试20/20，MR1 shared-registry tests 2/2；本轮三队均经 MR1 formatter 只读隔离渲染为中文。未运行生产 Actions、未发/编辑 Telegram；模型、策略、正式订单、结算及通知规则未修改。继续来源核验剩余570项。
+
 ## 2026-10-12 正式范围中文名称续补（十七）
 - 共享 registry 提交 `29a8dcd6e953fd04be232fe46310ec3ce31378d3` 已推送至 `totalcorner-research-bridge/master`。在续补（十六）基础上新增 2 条精确身份映射：B93 Copenhagen（ID 3622）→哥本哈根B93，Sofascore 简中球队页；Dukla Banska Bystrica（ID 3460）→班斯卡比斯特里察杜克拉，Sofascore 简中球队页。两条均属于 M1 与 MR1 AH 范围，原英文 provider identity、ID、别名及来源保留在共享 registry。
 - 最新范围：formal union 2,468，canonical 中文 1,871，unresolved 597（75.81%）；M1 1,430/1,576（90.74%）；M1 OU-R1 52/52；MR1 AH 1,423/1,921（74.08%）；MR1 AI mirror 1,430/1,576（90.74%）。未匹配完整清单仍位于共享 `formal_scope_coverage.json`，当前 597 条均为 `NO_VERIFIED_CANONICAL_ZH`。
