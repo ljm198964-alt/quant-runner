@@ -454,3 +454,8 @@
 - 共享库本轮新增 3 条来源可核验映射：Fgura United（4265）→富格拉联队、Gudja United（4267）→古德加联合（Tips.GG 中文马耳他杯赛资料明确显示对应名称）；Taffs Well（3989）→塔夫斯韦尔（Tips.GG 中文球队页）。唯一 `display_names.json` 保留 team_id、原 provider 英文名、aliases、source 与核验时间。
 - 当前正式范围 union 2,468：canonical 1,960、unresolved 508（79.42%）；M1 1,517/1,576（96.26%）；M1 OU-R1 52/52；MR1 AH 1,497/1,921（77.93%）；MR1 AI declared mirror 1,517/1,576（96.26%）。完整未匹配条目与逐项原因以共享 `formal_scope_coverage.json` 为准。
 - M1 定向 pytest 20/20、MR1 shared registry tests 2/2 通过。只更新共享名称数据及交接记录；未触发生产 Telegram 或历史消息修改，未修改模型、策略、正式账本或结算；继续处理剩余 508 项。
+
+## 2026-10-12 正式范围中文名称续补（五十五）
+- 共享库再新增 2 条正式范围中文映射：Melita FC Saint Julian（3342）→梅利塔圣朱利安队（Tips.GG 中文马耳他赛事实录）；Bekescsabai Elore SE（3492）→贝克什巴（Tips.GG 中文匈牙利比赛记录，并以匈牙利俱乐部资料核对 Békéscsaba 1912 Előre 身份）。原 provider 名、ID、aliases、来源均留在唯一 registry。
+- 最新 formal union 2,468：canonical 1,962、unresolved 506（79.50%）；M1 1,519/1,576（96.38%）；M1 OU-R1 52/52；MR1 AH 1,499/1,921（78.03%）；MR1 AI declared mirror 1,519/1,576（96.38%）。完整 unresolved 明细仍以共享 `formal_scope_coverage.json` 为准。
+- M1 pytest 20/20、MR1 shared-registry 测试 2/2 通过。仅更新显示名称映射/交接，无 Telegram API 调用，无模型、策略、账本、结算改动；继续处理剩余 506 项。
