@@ -590,3 +590,4 @@
 - M1 runtime/display 18 tests 通过；MR1 shared display/browser-forward/formal notifier/AI formatter 7 tests 通过。没有更改任何策略、模型、赛事范围、订单、结算、TG 发送规则。
 - 新版名称库的既有历史消息名称编辑工作流实际结果：M1 run `38216991349` success（eligible 37、edited 0、already matching 37、缺原文 99、未映射 70、failed 0）；MR1 AH `38216995917` success（edited 0、processed/skipped 125、unresolved 0、failed 0）；MR1 AI 第一次 `38217000632` 的名称编辑步骤执行完成，但与 MR1 AH 并发推送回执时发生 branch ref race，随后串行重跑 `38217285572` success 并已持久化。AI 最终仍是 total 201、9 candidates、edited 0、unresolved 192、failed 9；9 条均为 Telegram 400 `message to edit not found`。历史 TG 实际改字 0；没有重发消息。
 - 后续从剩余 455 项继续逐项查可核验中文来源；未确认名称保持英文 provider identity 和 `NO_VERIFIED_CANONICAL_ZH` 状态。
+- 来源审计补正：复核发现 Samgurali（42019）的首次引用是 7M 赛程页而非该队中文名称页；后改为中文维基球队条目（该条目/中文联赛资料使用“萨古拉利”），只更正 source reference/kind/evidence_note 和 verified_at，不变更 canonical/identity。更正提交 `dd2b599`，formal-scope 统计不变。已知来源分布在更正后：中文维基 8、7M 6、雷速 2，另中国足协、球探天下、Wikidata、球迷屋各 1。
