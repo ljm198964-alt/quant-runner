@@ -632,3 +632,8 @@
 - 当前 union 2,468：canonical 2,024、unresolved 444（82.01%）；共享库 12,276 IDs、4,040 canonical。M1 可审计基础范围 1,556 中 1,432 已映射（92.03%）；另有当前 M1 scan 聚合 175/176，因缺 team ID 清单暂不并入。M1 OU-R1 仍 52/52。MR1 AH 既有正式范围总集 1,921，按本轮新增且经赛事范围交叉验证的 4 个 ID 更新为 1,547 canonical、374 unresolved（80.53%）；总集本身仍沿用原正式范围快照口径。
 - M1 display/repair unittest 8/8 通过；本轮仍未运行云端历史 Telegram 编辑流程，未编辑或重发历史消息。未改任何模型、策略、订单、结算或通知逻辑。
 - 覆盖统计修正另推共享提交 `790cf57cbcc81dba9fad60a7247d83a1e6d07cba`；M1 统计已从历史累计误值改为 runtime policy 下可审计的身份/正式账本基础范围，当前扫描 176 个 ID 仍独立展示，避免把缺失 ID 明细的扫描摘要并入造成虚假精确度。
+
+## 2026-10-12 正式范围中文名称续补（八十五）
+- 再新增两条经 Tips.GG 中文埃及足球赛事实录核对的队名：Dekernes（team_id 10774）→德克恩斯；Al Nasr Taaden（team_id 8692，来源页面采用拼写 Nasr Taadeen）→拿斯尔塔丁。仅增加来源别名，不更改 provider identity/ID/联赛。共享提交 `f7bd59a1e0736be4879be02fb214909e7be211c6` 已推送 master。
+- formal union 2,468：canonical 2,026、unresolved 442（82.09%）；共享全库 12,276 IDs、4,042 canonical。M1 可审计基础范围 1,556 中 1,432 mapped（92.03%），独立当前 scan 175/176；MR1 AH 1,549/1,921（80.64%）；M1 OU-R1 52/52。
+- M1 display/repair unittest 8/8 通过。MR1 AI Telegram formatter 与 AI-pick parser tests 5/5 通过，且指定共享库路径隔离渲染新补名称成功。未运行正式发送或历史消息编辑；未更改模型、策略、账本、结算和通知规则。
