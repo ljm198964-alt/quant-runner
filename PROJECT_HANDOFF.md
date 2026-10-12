@@ -377,3 +377,8 @@
 - 共享 registry 提交 `0901a5dd1a080e23293a364cb524276cda0f6407` 已推送至 `totalcorner-research-bridge/master`。本轮新增 4 个有公开中文足球记录支持的映射：Mezokovesd Zsory（1537）→迈泽克韦什德；Soroksar（1543）→索罗克萨尔；Energetik Mingechevir（2126）→明盖恰乌尔能量；Apollon Kalamarias（2205）→阿波罗卡拉马里亚。各行保留 provider ID/name、aliases、来源与核验时间。
 - 当前覆盖：正式范围 2,468，canonical 1,921，unresolved 547（77.84%）；M1 1,479/1,576（93.85%）；M1 OU-R1 52/52；MR1 AH 1,465/1,921（76.26%）；MR1 AI declared mirror 1,479/1,576（93.85%）。共享库 12,276 IDs、3,937 canonical。剩余逐队清单及 reason 见共享 `data/football_display_names/formal_scope_coverage.json`。
 - M1 formatter/runtime pytest 20/20、MR1 shared-registry 测试 2/2 通过。未运行生产 workflow，未编辑/发送 Telegram；当前本机无 M1 Telegram 凭据，故不声称完成历史消息编辑。未改模型、策略、范围、正式账本或结算。
+
+## 2026-10-12 正式范围中文名称续补（四十）
+- 共享 registry 提交 `bcd3c0de3f88adea28bea18e80804aaaf858d591` 已推送至 `totalcorner-research-bridge/master`。在续补（三十九）后新增 CS Tunari（ID 2907）→图纳里（Sofascore 简中球队页）及 Laçi（ID 8736）→拉奇（中文足球俱乐部条目）；均保留原 provider identity、ID、别名及来源。
+- 最新正式范围：2,468 IDs，canonical 1,923、unresolved 545（77.92%）；M1 1,481/1,576（93.97%）；M1 OU-R1 52/52；MR1 AH 1,467/1,921（76.37%）；MR1 AI declared mirror 1,481/1,576（93.97%）。共享库 12,276 IDs、3,939 canonical。未匹配全量清单及逐项原因见共享 `formal_scope_coverage.json`。
+- M1 定向 pytest 20/20、MR1 registry 读取测试 2/2 通过，六条本轮/上一批映射隔离渲染成功。未运行生产 workflow，未发/编辑历史 Telegram；生产 TG 凭据不可用。未修改模型、策略、正式账本或结算。
