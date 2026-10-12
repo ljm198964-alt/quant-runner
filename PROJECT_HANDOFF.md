@@ -505,3 +505,8 @@
 - 共享库新增 JK Nõmme United（team_id 29759）→诺梅联队，来源为 Tips.GG 简体中文球队页（https://tips.gg/cn/team/fc-nomme-united-football/）；原始 provider identity、拉丁字母拼写别名和精确 ID 保留。
 - 最新 formal union 2,468：canonical 1,979、unresolved 489（80.19%）；M1 1,536/1,576（97.46%）；M1 OU-R1 52/52；MR1 AH 1,512/1,921（78.71%）；MR1 AI declared mirror 1,536/1,576（97.46%）。未匹配详单见共享 coverage JSON。
 - M1 display/runtime pytest 20/20、MR1 shared registry tests 2/2 通过。未改生产 Telegram、模型、策略、正式 ledger 或 settlement；继续补齐剩余 489 项。
+
+## 2026-10-12 正式范围中文名称续补（六十五）
+- 共享库新增 Ethnikos Achna（team_id 14056）→艾治拿斯，来源为 7M 中文球队档案（https://team.7m.com.cn/553/index.shtml），页面列出 Ethnikos Achna FC 与中文队名；provider 原名及常见拼写别名保留在唯一 registry。
+- 最新正式范围 union 2,468：canonical 1,980、unresolved 488（80.23%）；M1 1,537/1,576（97.53%）；M1 OU-R1 52/52（100%）；MR1 AH 1,513/1,921（78.76%）；MR1 AI declared mirror 1,537/1,576（97.53%）。未匹配明细及逐项原因以共享 `formal_scope_coverage.json` 为准。
+- M1 display/runtime pytest 20/20、MR1 shared-registry tests 2/2 通过。只更新共享展示映射/审计与交接；未编辑或发送 Telegram，未改模型、策略、正式账本或结算；继续处理剩余 488 项。
