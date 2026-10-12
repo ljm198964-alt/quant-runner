@@ -742,3 +742,9 @@
 - 更新后从 `formal_scope_coverage.json` 实算：正式并集 2,468，canonical 2,106、未匹配 362、覆盖 85.33%；M1 1,458/1,553（93.88%）；M1 OU-R1 52/52（100%）；MR1 AH 1,620/1,921（84.33%）；MR1 AI 声明镜像 M1 为 1,458/1,553（93.88%）；MR1 AI observed confidence≥50 历史 cohort 181/182（99.45%，成员范围沿用原快照）。共享库 12,276 team IDs、4,122 canonical；未匹配 ID、联赛、系统和 `NO_VERIFIED_CANONICAL_ZH` 原因见共享 `data/football_display_names/formal_scope_coverage.json`。
 - M1 pytest 20/20；MR1 使用唯一共享 registry 的 formatter/parser 定向 Node tests 4/4。历史名称修复实际运行：M1 runner run `38230790424` success，37 eligible 中 AH 16、OU 21 均 `ALREADY_MATCHING`，实际编辑 0，缺原始发送文本 99、未命中名称 70、失败 0；MR1 AH run `38231035875` success，125 skipped/already processed、edited 0、unresolved 0、failed 0，receipt commit `408bb3907fbac0435b584a3233c1da6474018a3e`；MR1 AI run `38231163138` success，201 total、9 candidates、edited 0、192 unresolved、9 failed，失败均为 Telegram HTTP 400 `message to edit not found`，receipt commit `e26d64a9b0a96375a570eedd3c71202975c99178`。本轮没有成功改写历史消息，也没有重发历史 Pick。
 - MR1 项目本地只读 formatter 测试前先 fast-forward 到当时远端 master `0fb03810e7`，本地仓库未产生提交。runner handoff 更新为本节；共享中文库仍未覆盖的 362 项继续留空待核实。没有修改任何模型、策略、范围、盘口、正式交易 ledger 或 settlement 规则。
+
+## 2026-10-12 19:32 北京时间 M1 调度缺失与紧急恢复
+- M1 正式工作流 `m1-free-runtime.yml` schedule 为 UTC 04:05/10:05/16:05/22:05；最新定时运行 `38191159491` 在 UTC 2026-10-12 01:15 开始并成功，但 UTC 04:05 和 10:05 对应运行缺失。现有 `m1-schedule-watchdog.yml` 同样没有对应补偿运行，工作流仍 active。不要将一次成功冒充持续调度恢复。
+- 旧失败运行 `38171198684` 失败于 `Persist scan and locks`；详细错误尚未取得，不能推断是策略问题。
+- 已经通过 GitHub API 真实触发 M1 正式工作流 `38243313565`（UTC 2026-10-12 11:32:32），已从 queued 进入 in_progress，secrets 检查成功，checkout 进行中。链接 https://github.com/ljm198964-alt/quant-runner/actions/runs/38243313565 。
+- **待完成**：检查此运行的真实扫描、正式锁单、TG 发送回执、账本回写；调查 GitHub schedule/watchdog 漏触发原因，并解决持续调度可靠性。用户目标是完全恢复，不是仅触发一次。未改变 M1 策略或盘口来源。
