@@ -538,3 +538,10 @@
 - 共享库新增 TotalCorner team_id 2101（provider `MP`）→米凯利。其唯一正式范围联赛 ID 122 已在同一 registry 对应芬兰 Ykkösliiga；Sofascore 中文 MP 球队页对应城市 Mikkeli，并列出 Ykkösliiga，故身份匹配由 provider 缩写、联赛与中文来源交叉确认；附加 MP Mikkeli/Mikkelin Palloilijat 别名。
 - 最新正式范围 union 2,468：canonical 1,983、unresolved 485（80.35%）；M1 1,540/1,576（97.72%）；M1 OU-R1 52/52（100%）；MR1 AH 1,515/1,921（78.87%）；MR1 AI declared mirror 1,540/1,576（97.72%）。逐项未匹配及原因见共享 `formal_scope_coverage.json`。
 - 本地 M1 display/runtime pytest 20/20、MR1 registry tests 2/2 通过。此 ID 同属 M1/MR1 正式范围，映射推送后将再运行相关既有历史名称编辑工作流；只尝试原消息改字，不发新策略消息，不改交易规则/记录。
+
+## 2026-10-12 正式范围中文名称续补与 Telegram 复核（七十一）
+- 将 team_id 2101→米凯利推送后，M1 历史名称工作流 `38212342672` 完成：仍 37 条目标文本已在 Telegram 中、edited 0、already matching 37、缺原始文本 99、无映射 70、失败 0。
+- MR1 AH 工作流初次 `38212345596` 的 Telegram 编辑步骤成功（eligible 0、skip 124、unresolved 0、failed 0），但状态提交遇并发 push 冲突；串行重跑 `38212531699` 成功，status 已持久化：eligible 0、edited 0、skipped 125、unresolved 0、failed 0。
+- MR1 AI 工作流初次 `38212348400` 的消息编辑结果为 9 条 Telegram 400 `message to edit not found`、192 unresolved，回执 push 遇同类并发冲突；串行重跑 `38212591122` 成功并持久化同样结果。没有新增编辑、没有重发。
+- 最新正式范围：union 2,468、canonical 1,983、unresolved 485（80.35%）；M1 1,540/1,576（97.72%）；M1 OU-R1 52/52；MR1 AH 1,515/1,921（78.87%）；MR1 AI declared mirror 1,540/1,576（97.72%）。全量 unresolved 明细与逐项原因在共享 coverage JSON。
+- 验证仍为 M1 formatter/runtime pytest 20/20，MR1 共享 registry tests 2/2。无模型/策略/盘口/ledger/settlement 改动；当前已确认的 TG 历史可修复消息均已是中文，剩余限制为缺失原文、无已确认映射以及 Telegram 原消息不存在。
