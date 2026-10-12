@@ -190,3 +190,8 @@
 - 共享 registry 最新提交 `8a31f0a9e066c475516874f1840f7f9034c2d253` 已推送到 `totalcorner-research-bridge/master`。本轮根据 7M 中文球队档案新增 7 个精确匹配 team ID：克拉科维亚、涅波沃米采、尤尼史洛波西亚、哥利亚布沙、辛迪亚泰哥维斯特、梅塔洛格布斯、CS布加勒斯特迪纳摩。每条保存 7M 页面来源和原 TotalCorner identity；名称库及 scope coverage 均从最新提交数据更新。
 - 最新实算：formal union 2,468 中 canonical 1,791、unresolved 677（72.57%）；M1 1,350/1,576（85.66%）；MR1 AH 1,351/1,921（70.33%）；MR1 AI 声明镜像 1,350/1,576（85.66%）；M1 OU-R1 52/52。全共享库 12,276 IDs、canonical 3,807（31.01%），provider English identity 12,276/12,276。未匹配条目及原因见共享 `formal_scope_coverage.json`。
 - 新增脚本 `ops/curate_formal_scope_7m_batch3.py` 在写入前校验 ID 仍属正式 unresolved 集、拒绝覆盖已有 canonical，并以可核验 7M 英文/中文球队档案作为来源。M1 display/formal-runtime 测试 20/20；MR1 shared registry/AI-forward 5/5，完整 `npm test` 通过。没有触发生产运行或 Telegram 发送/编辑，也未改模型、策略、赛事范围、阈值、账本或结算。
+
+## 2026-10-12 正式范围中文名称续补（六）
+- 在 7M 档案批次之后再补 3 个正式 ID：敖德萨黑海人、普莱斯堤纳、哈尔科夫冶金1925。共享提交 `899c06492f96816c12de18a546e14a35b9536710` 已推送；来源分别为雷速球队档案及 7M 对应球队档案，并保留原 provider identity。两个近似但可能有不同实体历史的 Metalurh Zaporizhya ID 暂不合并，继续列为 unresolved。
+- 当前正式 union 2,468 中 canonical 1,794、unresolved 674（72.69%）；M1 1,350/1,576（85.66%）；MR1 AH 1,354/1,921（70.48%）；MR1 AI 声明镜像 1,350/1,576（85.66%）；M1 OU-R1 52/52。全共享库 12,276 IDs、canonical 3,810（31.04%）。逐条余项仍以 `formal_scope_coverage.json` 为准。
+- M1 tests 20/20、MR1 focused 5/5 和完整 `npm test` 再次通过。只更新名称展示数据/审计，未触发 production/TG，未修改任何模型、策略或账本。
