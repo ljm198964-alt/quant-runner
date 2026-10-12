@@ -657,3 +657,11 @@
 - 为 TotalCorner MLS team_id 33406（provider `New England`）新增 canonical“新英格兰革命”；以中文维基俱乐部条目核验常用名称，league_id 85 消除与新英格兰革命B队的歧义，B队未合并。共享提交 `da9c43de72751ae0597f43eef416d261ba0326bb` 已推送 master。
 - 同步把 M1 基础覆盖重算纳入队名层 hard-exclusion（如 University/reserve/youth），避免只按联赛计入被政策排除的球队。当前 M1 可审计基础范围 1,432/1,553（92.21%）；独立 scan 175/176。正式 union 2,468：2,030 canonical、438 unresolved（82.25%）；MR1 AH 1,552/1,921（80.79%）；M1 OU-R1 52/52；共享库 12,276 IDs、4,046 canonical。
 - M1 display/repair tests 8/8 通过。未发送或编辑 TG 消息，未改模型/策略/账本/结算。
+
+## 2026-10-12 正式范围中文名称续补（九十）
+- 按用户最新任务继续使用唯一 `display_names.json`；没有历史身份全量重扫。本轮增加 20 个来源核验 team ID：Shkendija 79 Tetovo、Kampaniakos Chalastras、Dundela、Senglea Athletic、Vittoriosa Stars、Zejtun Corinthians、St Andrews（马耳他）、Swieqi Utd、Port Fouad、Tamiya Youth Center、Al Marekh、Egypt Insurance、Talayie Alaistul、M S Koum Hamada、Telephonaat Bani Suweif、Makadi FC、Harras Al Hodoud、Markaz Shabab Koom Hamada、Maleyat Kafr El Zayat、Gomhoryet Shebin。保留 provider identity、team_id 和别名；青年队身份未与成年队合并。部分同队异写仅复用已有 canonical，team ID 未合并。
+- 共享库已推送提交 `805253dd9f54ed70341947f01e7bc1ccabb6cd3d`。最新正式 union 2,468：canonical 2,050、unresolved 418（83.06%）。M1 1,436/1,553（92.47%）；M1 OU-R1 52/52（100%）；MR1 AH 1,569/1,921（81.68%）；MR1 AI 声明镜像 M1 为 1,436/1,553（92.47%），已存 prospective pool 1,718/1,857（92.57%）。最新 M1 scan pool 175/176（99.43%）；MR1 AH prospective fixture pool 1,529/1,934 slots（79.06%，含 IDless alias 解析）。完整 418 项及逐项 `NO_VERIFIED_CANONICAL_ZH` 原因保存在共享 `data/football_display_names/formal_scope_coverage.json`，不得以猜译补齐。
+- M1 formatter 与历史修复 dry-run 使用唯一 registry；MR1 AH 和 MR1 AI runtime 均从同一共享 registry 加载。M1 display/repair unittest 8/8 通过；MR1 registry、AI formatter/parser 与交付定向 Node tests 7/7 通过。覆盖统计从提交数据重算，无模型策略、范围、盘口、订单、结算或通知规则修改。
+- 最新历史 Telegram dry-run：37 条可作名称替换候选、99 条缺 ledger 原文、70 条仍无映射；dry-run 本身未编辑。按用户授权触发既有 `m1-tg-history-name-repair.yml`，run `38223169902` success；artifact 实证 `eligible=37, edited=0, already_matching=37, skipped_missing_original_text=99, skipped_unmapped=70, failed=0`。因此本轮历史 M1 TG 实际编辑 0 条，37 条已是当前中文，不重发。MR1 AH/AI 历史消息未触发编辑。
+- 本机没有 M1/MR1 Telegram 环境变量；不得读取或复用另一系统凭据。代码路径通过隔离测试，但在该次云端历史修复 workflow 完成之前，不能宣称历史 TG 中文修复成功。
+- GitHub Actions 历史修复 workflow 成功，无需新增 workflow；没有触发正式 scan、发送测试消息或生产 Pick。产物链接：https://github.com/ljm198964-alt/quant-runner/actions/runs/38223169902 。
