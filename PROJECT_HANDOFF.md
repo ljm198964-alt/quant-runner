@@ -258,6 +258,12 @@
 - 历史 Telegram：本轮未编辑或重发既有消息。安全环境没有可用于各自 provider 的已授权凭据及完整原始可编辑消息证据，历史 live edit=0；不能把本地渲染记为 TG 实际修复。未触发生产 workflow；账户级 Actions 支出限制仍阻止云端 smoke。
 - 本批不覆盖任何既有 canonical；未确认名称继续保留 provider identity 并标记 `NO_VERIFIED_CANONICAL_ZH`。
 
+## 2026-10-12 正式范围中文名称续补（二十一）
+- 接续共享库 `c0580d75351d07bcac6fc302d16955bddc24a78b`，当前唯一库已推送提交 `701ef84`（完整 SHA 见 `totalcorner-research-bridge/master`）。用现有精确 ID 防覆盖脚本新增4条：Abo Qir Semad（5987）→艾柏卡尔瑟梅德（7M）；Wuxi Wugou（83267）→无锡吴钩（新浪体育）；Shanghai Jiading Huilong（83468）→上海嘉定汇龙（新浪体育）；Dalian Young Boy（143714）→大连英博（懂球帝官方更名报道）。来源及 provider identity/aliases 均写入唯一 `display_names.json`；未确认条目继续保留未匹配，不做临时音译。
+- 最新 authoritative 统计：formal union 2,468，canonical 1,879、unresolved 589（76.13%）；M1 1,438/1,576（91.24%）；M1 OU-R1 52/52（100%）；MR1 AH 1,431/1,921（74.49%）；MR1 AI declared mirror 1,438/1,576（91.24%）；MR1 AI observed confidence≥50 cohort 181/182（99.45%，该分组仍是旧快照）。共享库 12,276 team IDs、3,895 canonical。未匹配原因/逐队清单以 `formal_scope_coverage.json` 为准。
+- M1 formatter 隔离渲染四队名称成功；M1 定向 pytest 20/20 通过。MR1 通过 `FOOTBALL_DISPLAY_REGISTRY_DIR` 直接读取当前共享库；MR1 display tests 2/2 通过，两个 fixture 均输出中文。MR1 正式 workflow 在运行时 checkout 共享仓库 `master`，本地验证证明新库可消费；生产 Action 未触发。
+- 本轮未编辑或重发任何历史 Telegram 消息。当前执行环境未配置 M1/MR1 Bot 凭据，且未取得可供本轮确认的账本 message-id ↔ 原文完整快照；历史实发修复仍未完成。不得将 formatter/本地测试说成 TG 实际修复。各模型策略、账本、结算及通知规则未改；Actions 仍受账户支出限制，不重复触发。
+
 ## 2026-10-12 正式范围中文名称续补（十七）
 - 共享 registry 提交 `29a8dcd6e953fd04be232fe46310ec3ce31378d3` 已推送至 `totalcorner-research-bridge/master`。在续补（十六）基础上新增 2 条精确身份映射：B93 Copenhagen（ID 3622）→哥本哈根B93，Sofascore 简中球队页；Dukla Banska Bystrica（ID 3460）→班斯卡比斯特里察杜克拉，Sofascore 简中球队页。两条均属于 M1 与 MR1 AH 范围，原英文 provider identity、ID、别名及来源保留在共享 registry。
 - 最新范围：formal union 2,468，canonical 中文 1,871，unresolved 597（75.81%）；M1 1,430/1,576（90.74%）；M1 OU-R1 52/52；MR1 AH 1,423/1,921（74.08%）；MR1 AI mirror 1,430/1,576（90.74%）。未匹配完整清单仍位于共享 `formal_scope_coverage.json`，当前 597 条均为 `NO_VERIFIED_CANONICAL_ZH`。
