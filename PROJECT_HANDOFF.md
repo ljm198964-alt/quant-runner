@@ -444,3 +444,8 @@
 - 共享库新增 4 条正式范围映射并推送，提交 `50776476904b8b5c8c205ca6bb4b48e4de84f404`：Mladost Podgorica（511）→迪托格特（Titan007中文赛程名，结合UEFA更名资料确认为OFK Titograd；未与其他Mladost合并）；Rad Belgrade（2851）→拉德足球俱乐部（Wikidata/中文维基标签）；FK Baku（4031）→巴库足球俱乐部（中文维基）；UAE U23（4391）→阿联酋U23（懂球帝球队页）。
 - 最新 formal union 2,468：canonical 1,953、unresolved 515、覆盖79.13%；M1 1,510/1,576（95.81%）；M1 OU-R1 52/52；MR1 AH 1,490/1,921（77.56%）；MR1 AI declared mirror 1,510/1,576（95.81%）。完整剩余 ID/英文名/联赛/系统/reason 仍在共享 `formal_scope_coverage.json`。
 - formatter按ID隔离渲染本批与上一批共7条正确；M1定向 pytest 20/20、MR1共享 registry 读取测试2/2通过。未运行新生产TG编辑。模型、策略、账本、结算未改；继续处理剩余515项。
+
+## 2026-10-12 正式范围中文名称续补（五十三）
+- 共享库已推送提交 `220da8659498af924e44ac02291ca40a4b4f7201`，新增 Egyptian/Cypriot 四队：Eastern Company（7819）→东方公司（智博埃及足球数据表）；Al Majd（7705）→阿尔马吉德（Tips.GG中文埃及比赛页）；Karmiotissa（8497）→卡尔米奥提萨（Tips.GG中文赛程/球队页）；Suez Montakhab（7568）→苏伊士蒙塔哈布（雷速中文赛果页）。英文 identity、team_id、别名及来源保留于唯一共享库。
+- 最新 formal union 2,468：canonical 1,957、unresolved 511（79.29%）；M1 1,514/1,576（96.07%）；M1 OU-R1 52/52；MR1 AH 1,494/1,921（77.77%）；MR1 AI declared mirror 1,514/1,576（96.07%）。完整剩余清单及逐项 reason 见共享 `formal_scope_coverage.json`。
+- 四个新增 ID formatter 验证通过；M1定向 pytest 20/20、MR1共享名称测试2/2通过。没有编辑或重发 Telegram，也没有改模型、策略、账本、结算；继续处理剩余511项。
