@@ -474,3 +474,8 @@
 - 共享 registry 新增 2 条经中文足球资料核验的球队：Hasselt（30173）→哈瑟尔特队（Tips.GG 简中球队页）；FK Backa Topola（30089）→巴奇卡托波拉（7M 中文球队档案）。保留原英文 provider identity、ID、别名及来源。
 - 最新正式范围 union 2,468：canonical 1,972、unresolved 496（79.90%）；M1 1,529/1,576（97.02%）；M1 OU-R1 52/52；MR1 AH 1,506/1,921（78.40%）；MR1 AI declared mirror 1,529/1,576（97.02%）。完整 unresolved 项及 reason 见共享 `formal_scope_coverage.json`。
 - M1 tests 20/20、MR1 shared-registry tests 2/2 通过。只更新名称映射和交接；未触发 Telegram 或生产任务，未改模型、策略、账本、结算；继续处理剩余 496 项。
+
+## 2026-10-12 正式范围中文名称续补（五十九）
+- 共享 registry 新增 Dhamk（team_id 22197）→达马克，来源为 7M 中文球队档案（https://team.7m.com.cn/5282/index_gb.shtml）；原 provider name、ID、别名、来源及核验时间写入唯一 `display_names.json`。本轮其他检索到的低级别队伍没有找到足以确认常用中文队名的中文来源，仍保留 unresolved，不做机器音译。
+- 最新正式范围 union 2,468：canonical 1,973、unresolved 495（79.94%）；M1 1,530/1,576（97.08%）；M1 OU-R1 52/52（100%）；MR1 AH 1,506/1,921（78.40%）；MR1 AI declared mirror 1,530/1,576（97.08%）。逐项未匹配原因见共享 `data/football_display_names/formal_scope_coverage.json`。
+- 验证：M1 Telegram display/runtime 定向 pytest 20/20；MR1 shared-registry tests 2/2。仅更改展示映射/审计数据/本交接，未调用生产 Telegram API或编辑历史消息，未改策略、模型、账本或结算。未匹配条目尚有 495 个，继续按可核验中文来源补齐。
