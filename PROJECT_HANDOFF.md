@@ -550,3 +550,9 @@
 - 共享 registry 新增 Estudiantes Rio Cuarto（team_id 30795）→里奥夸尔托学生队，来源 Tips.GG 简中球队页；TotalCorner provider 原名与页面队名对应，球队 ID、别名及引用留存。
 - 最新 formal union 2,468：canonical 1,984、unresolved 484（80.39%）；M1 1,541/1,576（97.78%）；M1 OU-R1 52/52；MR1 AH 1,516/1,921（78.92%）；MR1 AI declared mirror 1,541/1,576（97.78%）。完整 unresolved 及原因以共享 coverage JSON 为准。
 - M1 display/runtime pytest 20/20、MR1 registry tests 2/2 通过。该映射更新后待复核已有 M1/MR1 AH/MR1 AI 历史名称编辑流程；只操作原消息，不发送新的策略消息。
+
+## 2026-10-12 正式范围中文名称续补与 TG 复核（七十三）
+- 在新增 Estudiantes Rio Cuarto 映射后，重跑已有名称编辑流程：M1 `38212825405` 成功，eligible 37、already_matching 37、edited 0、缺 ledger 原文 99、unmapped 70、failed 0；M1 AH 与 OU-R1 共用此账本/formatter。
+- MR1 AH `38212829492` 成功：eligible 0、edited 0、skipped 125、display unresolved 0、failed 0；回执提交成功。MR1 AI `38212833318` 成功：total 201、9 candidates、edited 0、9 failed（Telegram 400 `message to edit not found`）、192 unresolved；结果已持久化到 MR1 自有修复报告。
+- 历史 TG 此轮及此前各轮实际编辑成功仍为 0：已经是中文的原消息均不改；M1 99 条缺保存原文、70 条无确认映射；MR1 AI 九条 Telegram 目标 Bot 无法找到原消息、192 条 unresolved。未重发任何 Pick，未改交易字段/账本/结算。
+- 最新共享 registry `9203628`：正式范围 union 2,468，canonical 1,984，unresolved 484（80.39%）；M1 1,541/1,576（97.78%）；M1 OU-R1 52/52；MR1 AH 1,516/1,921（78.92%）；MR1 AI declared mirror 1,541/1,576（97.78%）。M1 定向测试 20/20，MR1 registry 测试 2/2。
