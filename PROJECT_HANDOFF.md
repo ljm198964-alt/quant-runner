@@ -224,3 +224,9 @@
 - M1 formatter (`m1_telegram_display.py`) 和已有消息编辑脚本都读取该唯一 registry；MR1 AH/AI 运行工作流通过私有只读 checkout 拉取相同共享库。隔离验证没有更改 Telegram。历史 TG 编辑尚未执行：本机未配置 M1 bot credentials；不使用其它系统凭据，也不重发历史订单。MR1 runtime 未触发，云端因既有 GitHub 支出限制暂不可验收。
 - 本地 `python3 -m pytest -q test_m1_telegram_display.py test_m1_telegram_display_repair.py test_m1_formal_runtime.py`：20 passed；三个 JSON 文件解析通过，`git diff --check` 通过。根 package 未定义 `npm test`，因此不把该命令错误视为失败，也未声称 MR1 云端验收通过。
 - 下一步按正式 unresolved 清单继续逐项核验；不要对身份不确定的队伍猜译。Telegram 历史编辑须在安全提供对应 M1/M1 OU-R1/MR1 AH/MR1 AI 专用凭据、确认原始消息 ID/原文和对应可编辑通道后逐条执行，仅替换球队/赛事显示名称，不改订单内容或结算。
+
+## 2026-10-12 正式范围中文名称续补（十二）
+- 共享 registry 已推送提交 `98ce58cb6fd39449a3f957b706899c6d63621525`。本轮追加 10 条带公开资料引用的正式映射：加斯梅登、乌利斯、格林达维克、泛亚加亚、哈尼亚、科特布斯、瑟兰、斯米尔尼阿波罗、特里耐克、普塔达韦城。原 provider identity/team ID 均保留；异体/旧名仅放 aliases。
+- 当前文件重新统计：formal union 2,468，mapped 1,834、unresolved 634（74.31%）；M1 1,393/1,576（88.39%）；MR1 AH 1,388/1,921（72.25%）；MR1 AI mirror 1,393/1,576（88.39%）；M1 OU-R1 52/52；共享 registry 12,276 IDs、canonical 3,850（31.36%）。最新未匹配球队和逐项 reason 以 `data/football_display_names/formal_scope_coverage.json` 为准。
+- M1 展示、消息编辑脚本读取同一共享 registry，MR1 Actions runtime 通过只读 checkout 加载；formatter/repair/runtime 定向测试 20/20 通过，JSON 校验及 `git diff --check` 通过。`package.json` 未定义 npm test script。
+- 本轮未运行生产 scan、未发送/编辑 Telegram，也未修改策略/账本。历史消息编辑仍受本机无 M1 Telegram 专用凭据阻挡；不得借用 MR1 凭据或重新发送旧 Pick。GitHub Actions runner 既有支出限制尚未解除，云端 smoke 不宣称通过。
