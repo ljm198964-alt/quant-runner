@@ -382,3 +382,8 @@
 - 共享 registry 提交 `bcd3c0de3f88adea28bea18e80804aaaf858d591` 已推送至 `totalcorner-research-bridge/master`。在续补（三十九）后新增 CS Tunari（ID 2907）→图纳里（Sofascore 简中球队页）及 Laçi（ID 8736）→拉奇（中文足球俱乐部条目）；均保留原 provider identity、ID、别名及来源。
 - 最新正式范围：2,468 IDs，canonical 1,923、unresolved 545（77.92%）；M1 1,481/1,576（93.97%）；M1 OU-R1 52/52；MR1 AH 1,467/1,921（76.37%）；MR1 AI declared mirror 1,481/1,576（93.97%）。共享库 12,276 IDs、3,939 canonical。未匹配全量清单及逐项原因见共享 `formal_scope_coverage.json`。
 - M1 定向 pytest 20/20、MR1 registry 读取测试 2/2 通过，六条本轮/上一批映射隔离渲染成功。未运行生产 workflow，未发/编辑历史 Telegram；生产 TG 凭据不可用。未修改模型、策略、正式账本或结算。
+
+## 2026-10-12 正式范围中文名称续补（四十一）
+- 共享 registry 提交 `49b8952dfc64d78f0070560669c58882181607a0` 已推送至 `totalcorner-research-bridge/master`。新增 Altay（3794）→阿尔泰体育俱乐部（雷速简中）；LKS Lodz（9392）→LKS洛迪兹（雷速简中）；FC Elva（9416）→埃尔瓦FC（Sofascore简中）；Suwon FMC (W)（10243）→水原FMC女足（7M简中）；Hwacheon KSPO (W)（10710）→华川KSPO女足（7M简中）；FCV Dender EH（17871）→FCV丹达（7M中文页面）。保留身份与别名，女足身份未与男队合并。
+- 最新正式范围：2,468 IDs，canonical 1,929、unresolved 539（78.16%）；M1 1,487/1,576（94.35%）；M1 OU-R1 52/52；MR1 AH 1,473/1,921（76.68%）；MR1 AI declared mirror 1,487/1,576（94.35%）。共享库 12,276 IDs、3,945 canonical。完整剩余列表及逐项原因见共享 `formal_scope_coverage.json`。
+- M1 定向 pytest 20/20、MR1 shared-registry tests 2/2 通过；六条名称隔离渲染通过。未触发生产任务或 TG；未修改任何模型、策略、正式订单或结算。
