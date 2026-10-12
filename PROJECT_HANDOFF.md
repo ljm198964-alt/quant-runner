@@ -212,3 +212,8 @@
 - 共享 registry 最新提交 `bff46c865c2c6223e98f2672dc12982b778b7de6` 已推送至 `totalcorner-research-bridge/master`，新增 4 个正式 team ID：墨西哥美洲队、蒂华纳、札幌冈萨多、埃斯比约；名称均附对应球队中文资料和英文 identity source。复用同一 shared registry，不新增库。
 - 最新统计：正式并集 2,468，已匹配 1,810，未匹配 658（73.34%）；M1 1,369/1,576（86.87%）；MR1 AH 1,369/1,921（71.26%）；MR1 AI 声明镜像 1,369/1,576（86.87%）；M1 OU-R1 52/52；全共享库 12,276 IDs、canonical 3,826（31.17%）。逐项未匹配原因由 `formal_scope_coverage.json` 提供。
 - M1 display/formal-runtime 测试 20/20 通过。名称变更仍只限展示层；没有生产运行、TG 派单/编辑或账本/模型/策略修改。剩余 unresolved 继续按联赛分组核证，不作机器猜译。
+
+## 2026-10-12 正式范围中文名称续补（十）
+- 共享 registry 提交 `fd619093348d06c6caf99bfed9bb6a3eccffc5b0` 已推送；本轮新增华雷斯（ID 14139）和马萨特兰（ID 68824），均来自 7M 对应球队资料页并与正式英文 identity 核验。
+- 最新统计：formal union 2,468，已匹配 1,812、未匹配 656（73.42%）；M1 1,371/1,576（86.99%）；MR1 AH 1,370/1,921（71.32%）；MR1 AI 镜像 1,371/1,576（86.99%）；M1 OU-R1 52/52；共享库 12,276 IDs、canonical 3,828（31.18%）。完整未匹配表与 reason_detail 仍在同一 `formal_scope_coverage.json`。
+- M1 display/formal-runtime 测试 20/20 通过；本次只改展示库及其审计。未触发生产任务、TG 编辑/发送或模型、策略、范围、正式账本改动。
