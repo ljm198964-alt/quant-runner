@@ -637,3 +637,8 @@
 - 再新增两条经 Tips.GG 中文埃及足球赛事实录核对的队名：Dekernes（team_id 10774）→德克恩斯；Al Nasr Taaden（team_id 8692，来源页面采用拼写 Nasr Taadeen）→拿斯尔塔丁。仅增加来源别名，不更改 provider identity/ID/联赛。共享提交 `f7bd59a1e0736be4879be02fb214909e7be211c6` 已推送 master。
 - formal union 2,468：canonical 2,026、unresolved 442（82.09%）；共享全库 12,276 IDs、4,042 canonical。M1 可审计基础范围 1,556 中 1,432 mapped（92.03%），独立当前 scan 175/176；MR1 AH 1,549/1,921（80.64%）；M1 OU-R1 52/52。
 - M1 display/repair unittest 8/8 通过。MR1 AI Telegram formatter 与 AI-pick parser tests 5/5 通过，且指定共享库路径隔离渲染新补名称成功。未运行正式发送或历史消息编辑；未更改模型、策略、账本、结算和通知规则。
+
+## 2026-10-12 正式范围中文名称续补（八十六）
+- Tips.GG 北爱尔兰足球中文赛事实录明确显示 Knockbreda＝诺克布雷达；为正式 team_id 5168 写入该 canonical 及来源证据，保留原始 provider name。共享提交 `b1d7a92aaf01e113690741dad8e03f5ce377cf63` 已推送 master。
+- union 2,468：canonical 2,027、unresolved 441（82.13%）；M1 可审计基础范围 1,432/1,556（92.03%），独立当期 scan 175/176；MR1 AH 1,550/1,921（80.69%）；M1 OU-R1 52/52。共享全库 12,276 IDs、4,043 canonical。
+- M1 display/repair tests 8/8 通过；没有启动/编辑/重发 Telegram 历史消息。本次只改展示名称记录和 coverage/curation 数据，不改模型与交易运行链。
