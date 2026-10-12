@@ -157,3 +157,13 @@
 - 本地验收：M1 display/formal-runtime 相关测试 20/20 通过；MR1 shared registry/AI forward 定向测试 5/5 通过，完整 `npm test` 通过。两边直接读取最终 registry 的中文渲染 smoke 通过；当前 pool preflight `strategy_gate=false`。没有运行生产 workflow、发送 Telegram 或改写 ledger。
 - GitHub Actions 本轮未能做云端 smoke；已知当前账户付款/支出限制会使 runner 启动前拦截，不能登记云端 PASS。Git 数据 push 成功。
 - 本机 M1 仓库保留未提交的既有用户修改 `.gitignore`、`package-lock.json`、`__pycache__/`、`results/competitor_zou/`，未纳入本次提交。策略、模型、Crown 来源、scope、账本、结算及通知规则均未修改。
+
+## 2026-10-12 正式范围中文名称续补（本轮）
+- 共享库最新提交：`8098ed2dcc3e2ab141344270187fe8cc766f29ae`，已 push 到 `totalcorner-research-bridge/master`。只修改唯一共享 `display_names.json`、正式范围覆盖/批次审计，以及可重复校验并导入国家/地区代表队中文名的 `ops/curate_formal_scope_national_teams.py`；未新增第二份名称库。
+- 基于最新正式清单核对后，新增 22 个具有可核验中文来源的 team ID（含中华台北、缅甸、佛得角、安提瓜和巴布达、文莱、老挝、尼泊尔、巴斯克、加泰罗尼亚、不丹、蒙古、关岛、阿富汗、毛里求斯、土库曼斯坦、吉布提、乍得、中国澳门、桑给巴尔、美属维尔京群岛、斯威士兰等）。名称及逐条 source/reference 保存在共享 registry 和 `curated_batch_report_20261012.json`。未映射项没有猜译；准确性优先。
+- 最新正式范围统计：M1+MR1 去重 union 2,468 个 team ID，已映射 1,750、未映射 718，覆盖 70.91%；M1 1,309/1,576（83.06%）；MR1 AH 1,324/1,921（68.92%）；MR1 AI 声明镜像范围 1,309/1,576（83.06%）；M1 OU-R1 52/52（100%）。全共享库 12,276 个 team ID，canonical 中文 3,766，provider 英文身份 12,276/12,276；全库中文覆盖 30.68%。各口径均由最新文件计算，不能与此前快照混用。
+- 来源复用/核验：本轮检查已有体育彩票映射、QiuXiaoCe/公开映射及 Wikidata 中文标签；精确匹配没有产生可安全新增的球队结果。额外补充的 22 项来源分布：7 项成熟中文足球资料页、3 项 7M、1 项 Sofascore、11 项 Wikidata 国家/地区简体标签并结合 International Match 代表队身份。疑似同名或无法证明是目标球队的候选均保留 unresolved。完整 718 条清单和逐条原因见共享库 `data/football_display_names/formal_scope_coverage.json`。
+- 中文显示本地验收：M1 formatter/preflight 及相关回归测试 20/20 通过；MR1 共享 registry/AI forward 定向测试 5/5 通过，完整 `npm test` 通过。M1 与 MR1 resolver 均直接读取该唯一共享文件；新增国家队/地区队样例隔离渲染为中文。MR1 仓库本轮未修改。
+- 已发送消息审计（没有发送新消息）：M1 AH 与 M1 OU-R1 共用的历史修复 dry-run 仍有 37 条候选，但 Telegram 对既有 37 条返回 `ALREADY_MATCHING`，本轮没有新 edit；另有 99 条缺原消息文本、70 条名称仍未映射。MR1 AH 既有修复累计实际编辑 6 条，后续 123 条已处理/无新变化，本轮没有新 edit。MR1 AI 9 条旧消息的历史 edit 曾全部返回 `400: message to edit not found`，当前仍不可编辑；另 192 条仍缺可确认修复资料。没有重发任何历史订单，没有改变盘口、方向、水位、账本或结算。
+- 云端正式链没有触发生产扫描或 Telegram。共享文件已推送，未来 checkout master 的格式器可读到新名称；但本轮未取得新的云端 runtime 回执，因此仅记本地 PASS，不宣称云端运行验证完成。历史消息中的 Telegram message-id/chat 目标限制仍需有可编辑的原始消息证据才能处理。
+- 未修改 M1/MR1/MR1 AI 模型、策略、赛事范围、阈值、皇冠来源、正式订单、结算、通知规则或调度。quant-runner 的本 handoff 需随本节单独提交。
