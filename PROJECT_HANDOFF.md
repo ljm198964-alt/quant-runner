@@ -556,3 +556,16 @@
 - MR1 AH `38212829492` 成功：eligible 0、edited 0、skipped 125、display unresolved 0、failed 0；回执提交成功。MR1 AI `38212833318` 成功：total 201、9 candidates、edited 0、9 failed（Telegram 400 `message to edit not found`）、192 unresolved；结果已持久化到 MR1 自有修复报告。
 - 历史 TG 此轮及此前各轮实际编辑成功仍为 0：已经是中文的原消息均不改；M1 99 条缺保存原文、70 条无确认映射；MR1 AI 九条 Telegram 目标 Bot 无法找到原消息、192 条 unresolved。未重发任何 Pick，未改交易字段/账本/结算。
 - 最新共享 registry `9203628`：正式范围 union 2,468，canonical 1,984，unresolved 484（80.39%）；M1 1,541/1,576（97.78%）；M1 OU-R1 52/52；MR1 AH 1,516/1,921（78.92%）；MR1 AI declared mirror 1,541/1,576（97.78%）。M1 定向测试 20/20，MR1 registry 测试 2/2。
+
+## 2026-10-12 正式范围中文名称续补（七十四）
+- 共享名称库新增 TotalCorner team_id 4221（provider `San Jose`）→圣何塞地震。正式范围记录归属 MLS（league_id 85）；Sofascore 简中球队档案将 San Jose Earthquakes 称为“圣何塞地震”，7M 中文档案以“圣荷西地震”对应同一球队。采用简体主流名称并把繁体名/完整英文名保留为 alias；未改变 provider identity、ID 或球队实体。
+- 当前正式范围 union 2,468：canonical 1,985、unresolved 483（80.43%）；M1 1,542/1,576（97.84%）；M1 OU-R1 52/52；MR1 AH 1,517/1,921（78.97%）；MR1 AI declared mirror 1,542/1,576（97.84%）。共享 registry 总计 12,276 个 team ID、4,001 个 canonical 中文名；完整 unresolved 清单与逐项原因见共享 `formal_scope_coverage.json`。
+- 本轮 M1 display/runtime pytest 20/20、MR1 shared-registry 与 AI formatter/parser 定向测试 8/8 通过。映射来源：[Sofascore 简中 San Jose Earthquakes 档案](https://www.sofascore.com/zh/football/team/san-jose-earthquakes/21825)；[7M 圣荷西地震档案](https://team.7m.com.cn/133/index.shtml)。
+- 此项映射已提交共享库后，需复跑既有 M1、MR1 AH、MR1 AI 历史消息名称修复工作流并记录真实回执。不得重发历史 Pick；不修改 M1/MR1 策略、模型、正式账本或结算。
+
+## 2026-10-12 正式范围中文名称续补与 Telegram 实际复核（七十五）
+- 在唯一共享 registry 中再新增 2 个有中文赛事实录配对的正式 ID：Caerau Ely（919）→凯劳埃利、AFA Olaine（2220）→AFA奥莱内；共享提交 `94ad6d822b6b4c2d861388bd385f0f95afd9e9a3`。此前 San Jose 映射提交 `8a9be4f2a83f643e06d23685e494b7eb6a59b531`，之后再提交此批，均保留原英文 provider identity、ID、aliases 和来源。
+- 最新正式范围 union 2,468：canonical 1,987、unresolved 481（80.51%）；M1 1,544/1,576（97.97%）；M1 OU-R1 52/52（100%）；MR1 AH 1,519/1,921（79.07%）；MR1 AI declared mirror 1,544/1,576（97.97%）。全共享库 12,276 team IDs、4,003 canonical 中文名。逐项未匹配和原因保存在共享 `data/football_display_names/formal_scope_coverage.json`，没有猜译。
+- 对最终共享库版本完成本地验证：M1 display/runtime pytest 20/20；MR1 registry、browser-forward、AI formatter/parser 定向 Node 测试 8/8。
+- 最新版历史 Telegram 只编辑校正工作流均 success：M1 run `38213593018`（报告 eligible 37、edited 0、already matching 37、缺历史原文 99、无映射 70、failed 0；覆盖 M1 AH 和 M1 OU-R1）；MR1 AH run `38213597764`（edited 0、skipped 125、unresolved 0、failed 0）；MR1 AI run `38213602140`（201 条中 9 个可评估候选、edited 0、192 unresolved、9 failed，Telegram 对 9 条均返回 `400 message to edit not found`）。因此本轮历史消息实际编辑数为 0；不存在可安全编辑的目标文本，不以重发代替，失败项和缺数据项如实保留。
+- 三个工作流均仅针对原消息做名称校正并保存各自回执；没有发送新 Pick、触发策略扫描或改比赛/盘口/方向/水位，也未修改模型、策略、正式账本、settlement 或 MR1 AI 发送规则。后续继续只对剩余 481 个 formal-scope unresolved ID 寻找来源可核验的 canonical 中文名。
