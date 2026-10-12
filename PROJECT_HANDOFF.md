@@ -286,6 +286,12 @@
 - M1 display/formal-runtime 定向测试 20/20 通过，`git diff --check` 通过。名称数据仍由 M1 formatter 和 MR1 shared-registry loader 共用；本轮未改 formatter、生产模型、策略、账本、结算、调度或 Telegram 派单逻辑。
 - 本轮未运行生产 workflow，未发送或编辑 Telegram。历史 TG 实际 edits=0：没有可用的专用凭据/可编辑原消息证据，不能声称历史消息已修复。继续逐条来源核验剩余 585 个正式范围 ID，不以机器音译填充。
 
+## 2026-10-12 正式范围中文名称续补（二十六）
+- 共享库提交 `e3e5314e09af62981157d6de30981f8e57f25160` 已推送到 `totalcorner-research-bridge/master`。依据中文球队资料新增 Lamia（ID 2803）→拉米亚（Tips.GG 中文球队页、球天下球队页）及 Skeid（ID 4189）→斯凯德（FootyStats 简中球队档案、Tips.GG 对阵页）；精确英文身份、ID、别名及来源写入唯一 registry，没有覆盖现有 canonical。来源链接分别为 `https://tips.gg/cn/team/lamia-football/`、`https://footystats.org/cn/clubs/skeid-fotball-7729`。
+- 最新 coverage 实算：formal union 2,468，canonical 1,885、unresolved 583（76.38%）；M1 1,444/1,576（91.62%）；M1 OU-R1 52/52（100%）；MR1 AH 1,437/1,921（74.80%）；MR1 AI declared mirror 1,444/1,576（91.62%）。旧 observed confidence≥50 cohort 181/182（99.45%，历史 cohort 未重建）；共享 registry 12,276 team IDs、3,901 canonical。逐项 unresolved 原因和完整清单以共享 `formal_scope_coverage.json` 为准。
+- M1 display/formal-runtime pytest 20/20 通过，`git diff --check` 通过；MR1 针对共享 registry 的读取/展示测试 2/2 通过。本轮仅处理展示名称数据和审计，不改模型、策略、范围、正式账本、结算、通知规则。
+- 没有运行生产 workflow、发送或编辑 Telegram。历史 TG 实际编辑仍为 0；系统专用凭据及逐条可编辑原消息证据不在当前安全执行环境。继续 source-backed 核验剩余 583 个正式范围球队。
+
 ## 2026-10-12 正式范围中文名称续补（十七）
 - 共享 registry 提交 `29a8dcd6e953fd04be232fe46310ec3ce31378d3` 已推送至 `totalcorner-research-bridge/master`。在续补（十六）基础上新增 2 条精确身份映射：B93 Copenhagen（ID 3622）→哥本哈根B93，Sofascore 简中球队页；Dukla Banska Bystrica（ID 3460）→班斯卡比斯特里察杜克拉，Sofascore 简中球队页。两条均属于 M1 与 MR1 AH 范围，原英文 provider identity、ID、别名及来源保留在共享 registry。
 - 最新范围：formal union 2,468，canonical 中文 1,871，unresolved 597（75.81%）；M1 1,430/1,576（90.74%）；M1 OU-R1 52/52；MR1 AH 1,423/1,921（74.08%）；MR1 AI mirror 1,430/1,576（90.74%）。未匹配完整清单仍位于共享 `formal_scope_coverage.json`，当前 597 条均为 `NO_VERIFIED_CANONICAL_ZH`。
