@@ -145,3 +145,15 @@
 - 正式范围快照：M1 1,203/1,576（76.33%）；MR1 AH 1,283/1,921（66.79%）；M1+MR1 union 1,640/2,468（66.45%）；M1 OU-R1 52/52。104 个新存档 ID 没有 league_id 证据，不纳入正式范围分母。
 - 本地验证：M1 20/20 tests；MR1 shared-display/browser-forward 5/5 tests。共享数据新增 7M/中文来源核验：FC Jazz→爵士FC、Hougang United FC→后港联、Balestier Khalsa FC→马里士他卡沙、Newcastle Jets→纽卡斯尔喷气机。没有改 M1/MR1/MR1 AI 模型、策略、阈值、账本、结算、通知或调度。
 - GitHub Actions 只读 smoke 的已知结果仍是 runner 启动前被账户付款/支出限制拦截；无步骤日志，云端 smoke 不可记 PASS。本次只推共享名称库数据和审计，不触发生产扫描或 Telegram。
+
+## 2026-10-12 共享足球中文名正式范围补齐（最新）
+- M1/共享库最新提交：`e66ae3c958dbb7f043cc1a4f97baa91cf919a7d5`，已 push 到 `totalcorner-research-bridge/master`。唯一运行时库仍为 `data/football_display_names/display_names.json`；没有新增 MR1 私有名称库。
+- 在正式未匹配清单上新增 88 个 team ID：13 个有中文足球来源的逐队名称、70 个由唯一已映射基础球队名加 TotalCorner 明示的 U 年龄/二队/B队/女足/奥运/预备队标记形成的稳定展示名、3 个唯一共享库别名复用、2 个 Sporttery/中文数据别名映射。所有来源和 identity/base ID 记录在 registry 对应行。
+- 最终实际文件统计：球队 ID 12,276；英文 provider identity 12,276/12,276；canonical 中文 3,744；全库 unresolved 8,532；全库覆盖 30.50%。现有英文身份冲突 0、标记译名冲突 0；4 个新增重复 canonical label 组经核对属于同队 provider 别名或国家队拼写变体，ID 均保留独立；全库重复 canonical 名称 review signal 共 43 组。771 个赛事 ID 中 329 个有中文名。
+- 正式范围：M1 1,287/1,576（81.66%）；MR1 AH 1,323/1,921（68.87%）；M1+MR1 去重并集 1,728/2,468（70.02%）；MR1 AI 声明范围镜像 M1，为 1,287/1,576；M1 OU-R1 52/52。MR1 AI confidence>=50 的 91-entry/182-team 子队列按历史快照保留为 181/182，本批没有重建其单独成员资格；不要把它和声明镜像范围混算。
+- 最新已保存 M1 scan `M1_20261012T011531Z` 有 32 场/64 个唯一 team ID，63 个已映射（98.44%），唯一 unresolved 为 FC Livyi Bereh（ID 86544）；经本轮检索仍缺可靠主流简体中文队名，保留 unresolved。正式范围剩余 740 条逐 ID 留在 `formal_scope_coverage.json` 与 `curated_batch_report_20261012.json`，reason_detail 均说明本轮没有建立唯一、有来源的 canonical 名称；不得猜译。
+- 中国体育彩票映射源 `qqyg000/lottery-football` 本次按 24,888 行 CSV 全表精确/规范化唯一匹配；formal unresolved 中新增 2 个可验证命中（PK-35、Ankaragucu）。本轮亦检查现有共享英文 alias 命中；无其他可唯一复用项。没有重跑全历史身份恢复、调用 TotalCorner API 或猜 ID。
+- Reader/接入：M1 formatter、M1 non-blocking preflight；MR1 AH、MR1 AI browser-forward/reconcile、Telegram formatters 均读取同一共享文件。MR1 workflow checkout `totalcorner-research-bridge/master`。本批无需修改 MR1 生产代码。
+- 本地验收：M1 display/formal-runtime 相关测试 20/20 通过；MR1 shared registry/AI forward 定向测试 5/5 通过，完整 `npm test` 通过。两边直接读取最终 registry 的中文渲染 smoke 通过；当前 pool preflight `strategy_gate=false`。没有运行生产 workflow、发送 Telegram 或改写 ledger。
+- GitHub Actions 本轮未能做云端 smoke；已知当前账户付款/支出限制会使 runner 启动前拦截，不能登记云端 PASS。Git 数据 push 成功。
+- 本机 M1 仓库保留未提交的既有用户修改 `.gitignore`、`package-lock.json`、`__pycache__/`、`results/competitor_zou/`，未纳入本次提交。策略、模型、Crown 来源、scope、账本、结算及通知规则均未修改。
