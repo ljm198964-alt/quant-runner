@@ -652,3 +652,8 @@
 - 7M 中文球队页将 Veres Rivne 对应为“维勒斯”；为现有 TotalCorner ID 33592（provider `Veres`）补入 canonical 及来源，保留原始身份。共享提交 `4d52f68d7124c8a82e2953fa67051736e0ce57b4` 已推送 master。
 - 当前 formal union 2,468：canonical 2,029、unresolved 439（82.21%）；共享库 12,276 IDs、4,045 canonical。M1 可审计范围 1,431/1,553（92.14%），current scan 单独为 175/176；MR1 AH 快照 1,551/1,921（80.74%）；OU-R1 52/52。
 - M1 display/repair tests 8/8 通过。没有发送或编辑 TG 消息；模型/策略、正式账本和结算均未改。
+
+## 2026-10-12 正式范围中文名称续补（八十九）
+- 为 TotalCorner MLS team_id 33406（provider `New England`）新增 canonical“新英格兰革命”；以中文维基俱乐部条目核验常用名称，league_id 85 消除与新英格兰革命B队的歧义，B队未合并。共享提交 `da9c43de72751ae0597f43eef416d261ba0326bb` 已推送 master。
+- 同步把 M1 基础覆盖重算纳入队名层 hard-exclusion（如 University/reserve/youth），避免只按联赛计入被政策排除的球队。当前 M1 可审计基础范围 1,432/1,553（92.21%）；独立 scan 175/176。正式 union 2,468：2,030 canonical、438 unresolved（82.25%）；MR1 AH 1,552/1,921（80.79%）；M1 OU-R1 52/52；共享库 12,276 IDs、4,046 canonical。
+- M1 display/repair tests 8/8 通过。未发送或编辑 TG 消息，未改模型/策略/账本/结算。
