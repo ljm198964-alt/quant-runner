@@ -449,3 +449,8 @@
 - 共享库已推送提交 `220da8659498af924e44ac02291ca40a4b4f7201`，新增 Egyptian/Cypriot 四队：Eastern Company（7819）→东方公司（智博埃及足球数据表）；Al Majd（7705）→阿尔马吉德（Tips.GG中文埃及比赛页）；Karmiotissa（8497）→卡尔米奥提萨（Tips.GG中文赛程/球队页）；Suez Montakhab（7568）→苏伊士蒙塔哈布（雷速中文赛果页）。英文 identity、team_id、别名及来源保留于唯一共享库。
 - 最新 formal union 2,468：canonical 1,957、unresolved 511（79.29%）；M1 1,514/1,576（96.07%）；M1 OU-R1 52/52；MR1 AH 1,494/1,921（77.77%）；MR1 AI declared mirror 1,514/1,576（96.07%）。完整剩余清单及逐项 reason 见共享 `formal_scope_coverage.json`。
 - 四个新增 ID formatter 验证通过；M1定向 pytest 20/20、MR1共享名称测试2/2通过。没有编辑或重发 Telegram，也没有改模型、策略、账本、结算；继续处理剩余511项。
+
+## 2026-10-12 正式范围中文名称续补（五十四）
+- 共享库本轮新增 3 条来源可核验映射：Fgura United（4265）→富格拉联队、Gudja United（4267）→古德加联合（Tips.GG 中文马耳他杯赛资料明确显示对应名称）；Taffs Well（3989）→塔夫斯韦尔（Tips.GG 中文球队页）。唯一 `display_names.json` 保留 team_id、原 provider 英文名、aliases、source 与核验时间。
+- 当前正式范围 union 2,468：canonical 1,960、unresolved 508（79.42%）；M1 1,517/1,576（96.26%）；M1 OU-R1 52/52；MR1 AH 1,497/1,921（77.93%）；MR1 AI declared mirror 1,517/1,576（96.26%）。完整未匹配条目与逐项原因以共享 `formal_scope_coverage.json` 为准。
+- M1 定向 pytest 20/20、MR1 shared registry tests 2/2 通过。只更新共享名称数据及交接记录；未触发生产 Telegram 或历史消息修改，未修改模型、策略、正式账本或结算；继续处理剩余 508 项。
