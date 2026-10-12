@@ -439,3 +439,8 @@
 - MR1 formal：124 条检查结果均跳过、edited 0、failed 0、display unresolved 0；现有报告未细分跳过原因，因此不将其表述为实际编辑。
 - MR1 AI：检查 201 条；9 条有映射变更候选，Telegram 对 9 条均返回 `400 Bad Request: message to edit not found`（edited 0）；192 条保持未解析/没有可用中文替换。错误及逐条回执已由运行器提交 `584a07145675cdc6dd40ffd42effb7905159f8d3` 持久化。
 - 本轮新增映射提交为 `2860dfd190aefb3594eabc9dfd7f4092653e8f9d`；最新正式范围 union 2,468，mapped 1,949、unresolved 519（78.97%）。完整剩余队伍和 reason 保存在共享 `data/football_display_names/formal_scope_coverage.json`。M1 测试 20/20、MR1 shared display 测试 2/2 通过。策略、模型、账本、结算和通知条件未改。
+
+## 2026-10-12 正式范围中文名称续补（五十二）
+- 共享库新增 4 条正式范围映射并推送，提交 `50776476904b8b5c8c205ca6bb4b48e4de84f404`：Mladost Podgorica（511）→迪托格特（Titan007中文赛程名，结合UEFA更名资料确认为OFK Titograd；未与其他Mladost合并）；Rad Belgrade（2851）→拉德足球俱乐部（Wikidata/中文维基标签）；FK Baku（4031）→巴库足球俱乐部（中文维基）；UAE U23（4391）→阿联酋U23（懂球帝球队页）。
+- 最新 formal union 2,468：canonical 1,953、unresolved 515、覆盖79.13%；M1 1,510/1,576（95.81%）；M1 OU-R1 52/52；MR1 AH 1,490/1,921（77.56%）；MR1 AI declared mirror 1,510/1,576（95.81%）。完整剩余 ID/英文名/联赛/系统/reason 仍在共享 `formal_scope_coverage.json`。
+- formatter按ID隔离渲染本批与上一批共7条正确；M1定向 pytest 20/20、MR1共享 registry 读取测试2/2通过。未运行新生产TG编辑。模型、策略、账本、结算未改；继续处理剩余515项。
