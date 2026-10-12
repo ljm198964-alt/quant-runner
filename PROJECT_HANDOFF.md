@@ -614,3 +614,10 @@
 - 复用经验证的既有 Misr Lel Makasa 中文名称，为正式 ID 17050（provider `Misr El Maqasha`，league_id 417，M1/MR1）新增 canonical“艾玛卡沙”；英文写法关系由 Wikidata 与埃及联赛历史记录交叉确认，中文 canonical 来自已有 FootyStats 简中俱乐部页/共享库 team_id 3466。独立保留 ID 17050，不覆盖或合并原记录。共享提交 `c0d1e24` 已推送 master。
 - 当前实算 formal union 2,468：canonical 2,019、unresolved 449（81.81%）；M1 1,576/1,576（100%）；M1 OU-R1 52/52；MR1 AH 1,542/1,921（80.27%）；MR1 AI declared mirror 1,576/1,576（100%）。共享库 12,276 IDs、4,035 canonical names。
 - M1 display/repair unittest 8/8 通过。来源：[现有 FootyStats 中文球队页](https://footystats.org/cn/clubs/misr-lel-makasa-1120)、[Wikidata Misr Lel Makkasa 实体](https://www.wikidata.org/wiki/Q3049707)、[埃及联赛历史表中两种拼写](https://en.wikipedia.org/wiki/2010%E2%80%9311_Egyptian_Premier_League)。没有修改任何策略、账本、结算或通知规则。
+
+## 2026-10-12 用户明确要求 MR1 AH / MR1 AI 停止正式 Telegram 派单，改为影子跟踪
+- 用户最新决定：所有带【MR1】和【MR1 AI】签名的**新正式策略通知**暂停发送 Telegram；两条模型继续运行研究/影子记录和模拟成绩。M1 AH、M1 OU R1 不受影响。
+- MR1 AH：公开 Runner `mr1-free-runtime.yml` 移除 `Deliver MR1 V6 AH formal signals` 步骤，提交 `03b6b327c7f15434af0ae5a9c627c4c768544f66`。采集、V6 forward、既有正式订单结算及持久化保留。新的 AH 研究评估仍由 forward 记录；不能把未发 TG 的信号算成正式成绩。
+- MR1 AI：`mr1-shadow/src/v7-ai-picks-telegram.js` 改为新合格信号写 `data/mr1-ai-shadow/signals/<id>.json` 而不调用 TG 发送，提交 `96d4e23b045e9076ee412de6143eca7e223cf778`；`persist-mr1-ai-state.js` 纳入独立影子目录，提交 `ac0723fd7e0947181a38a30df0ddd1153a11d798`。不写正式 `telegram-ah-sent.jsonl`，已有正式 TG 订单继续独立结算。
+- **验证状态**：代码已提交；尚未取得新生产运行成功回执；MR1 AI 影子订单后续实际赛果结算尚未完成实现与核实。不得把仅保存影子候选冒充影子已结算成绩。
+- 后续检查其他潜在 MR1 / MR1 AI TG 发送入口及并行调度；验证真实运行不再发送新 TG，影子记录能持续生成和结算。不要擅自恢复正式 TG。
