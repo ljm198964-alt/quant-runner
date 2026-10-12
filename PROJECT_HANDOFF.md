@@ -217,3 +217,10 @@
 - 共享 registry 提交 `fd619093348d06c6caf99bfed9bb6a3eccffc5b0` 已推送；本轮新增华雷斯（ID 14139）和马萨特兰（ID 68824），均来自 7M 对应球队资料页并与正式英文 identity 核验。
 - 最新统计：formal union 2,468，已匹配 1,812、未匹配 656（73.42%）；M1 1,371/1,576（86.99%）；MR1 AH 1,370/1,921（71.32%）；MR1 AI 镜像 1,371/1,576（86.99%）；M1 OU-R1 52/52；共享库 12,276 IDs、canonical 3,828（31.18%）。完整未匹配表与 reason_detail 仍在同一 `formal_scope_coverage.json`。
 - M1 display/formal-runtime 测试 20/20 通过；本次只改展示库及其审计。未触发生产任务、TG 编辑/发送或模型、策略、范围、正式账本改动。
+
+## 2026-10-12 正式范围中文名称续补（十一）
+- 共享 registry 新提交 `abb06d2b45a030c843d91d8512cf1be9e2c04c40` 已推送至 `totalcorner-research-bridge/master`。在保留原有数据的基础上新增 14 个来源核验映射：哈森姆、利雅得体育、达曼协作、吉达联合、波德戈里察未来、瓜达拉哈拉、苏杜瓦、奥达巴斯、多瑙斯特雷达、阿什杜德、斯科普里冶金、查洛摩亚，以及此前同批已并入的华雷斯、马萨特兰。每条带 team_id、原始英文名、别名和来源链接；不改模型身份字段。
+- 以当前 `formal_scope_coverage.json` 实算：正式并集 2,468，canonical 中文 1,824，未匹配 644，覆盖 73.91%；M1 1,383/1,576（87.75%）；MR1 AH 1,381/1,921（71.89%）；MR1 AI 声明镜像 M1 1,383/1,576（87.75%）；M1 OU-R1 52/52；共享库 12,276 IDs、canonical 3,840（31.28%）。未匹配逐项和原因继续以共享覆盖文件为准。
+- M1 formatter (`m1_telegram_display.py`) 和已有消息编辑脚本都读取该唯一 registry；MR1 AH/AI 运行工作流通过私有只读 checkout 拉取相同共享库。隔离验证没有更改 Telegram。历史 TG 编辑尚未执行：本机未配置 M1 bot credentials；不使用其它系统凭据，也不重发历史订单。MR1 runtime 未触发，云端因既有 GitHub 支出限制暂不可验收。
+- 本地 `python3 -m pytest -q test_m1_telegram_display.py test_m1_telegram_display_repair.py test_m1_formal_runtime.py`：20 passed；三个 JSON 文件解析通过，`git diff --check` 通过。根 package 未定义 `npm test`，因此不把该命令错误视为失败，也未声称 MR1 云端验收通过。
+- 下一步按正式 unresolved 清单继续逐项核验；不要对身份不确定的队伍猜译。Telegram 历史编辑须在安全提供对应 M1/M1 OU-R1/MR1 AH/MR1 AI 专用凭据、确认原始消息 ID/原文和对应可编辑通道后逐条执行，仅替换球队/赛事显示名称，不改订单内容或结算。
