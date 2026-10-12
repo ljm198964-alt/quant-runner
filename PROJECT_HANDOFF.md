@@ -427,3 +427,8 @@
 - 共享 registry 新提交 `3984a22790eed66856ea381f4e1377c8b606163a` 已推送。新增 Admira Wacker Mödling（ID 8740）→阿德米拉华卡默德林（百度百科球队资料）；Borac Čačak（9162）→查查克博拉克（百度百科球队资料）；PAEEK（9752）→佩伊克（乐彩网中文球队概述）。
 - 最新 coverage：formal union 2,468，canonical 1,946、unresolved 522（78.85%）；M1 1,504/1,576（95.43%）；M1 OU-R1 52/52；MR1 AH 1,487/1,921（77.41%）；MR1 AI declared mirror 1,504/1,576（95.43%）。共享 registry 12,276 IDs、3,962 canonical。剩余逐项清单及 reason 见 `formal_scope_coverage.json`。
 - 更新限于共享显示名称库与交接文档；生产 Telegram 未发送/编辑，模型、策略、账本和结算未改。
+
+## 2026-10-12 正式范围中文名称续补（五十）
+- 共享库提交 `2860dfd190aefb3594eabc9dfd7f4092653e8f9d` 已推送到 `totalcorner-research-bridge/master`。新增 Hrvace（ID 6452）→贺瓦斯（雷速简中球队资料）、FK Csikszereda Miercurea Ciuc（4886）→米耶尔库雷亚丘克（Sofascore 简中球队页）、Al Jeel（5403）→阿尔吉尔（Sofascore 简中球队页）。三个映射均有可核验中文来源，provider identity/ID、别名、来源与时间写入唯一 `display_names.json`；没有把本批只找到外文来源的候选猜译入库。
+- 最新正式范围：union 2,468，canonical 1,949，unresolved 519（78.97%）；M1 1,506/1,576（95.56%）；M1 OU-R1 52/52（100%）；MR1 AH 1,490/1,921（77.56%）；MR1 AI declared mirror 1,506/1,576（95.56%）。共享库 12,276 IDs、3,965 canonical。完整 unresolved 清单和逐项原因见共享 `data/football_display_names/formal_scope_coverage.json`。
+- 验证：M1 formatter/runtime pytest 20/20 通过；MR1 共用 registry 读取测试 2/2 通过。MR1 测试命令为 `FOOTBALL_DISPLAY_REGISTRY_DIR=/Users/mac/Documents/totalcorner-research-bridge/data/football_display_names node --test test-football-display-names.js`。未调用 Telegram API，因此没有历史消息编辑成功；当前终端环境无 M1/MR1 Telegram 环境变量，生产编辑需通过现有安全凭据运行链执行。未改模型、策略、赛事范围、正式账本或结算。
