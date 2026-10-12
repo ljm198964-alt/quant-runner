@@ -459,3 +459,8 @@
 - 共享库再新增 2 条正式范围中文映射：Melita FC Saint Julian（3342）→梅利塔圣朱利安队（Tips.GG 中文马耳他赛事实录）；Bekescsabai Elore SE（3492）→贝克什巴（Tips.GG 中文匈牙利比赛记录，并以匈牙利俱乐部资料核对 Békéscsaba 1912 Előre 身份）。原 provider 名、ID、aliases、来源均留在唯一 registry。
 - 最新 formal union 2,468：canonical 1,962、unresolved 506（79.50%）；M1 1,519/1,576（96.38%）；M1 OU-R1 52/52；MR1 AH 1,499/1,921（78.03%）；MR1 AI declared mirror 1,519/1,576（96.38%）。完整 unresolved 明细仍以共享 `formal_scope_coverage.json` 为准。
 - M1 pytest 20/20、MR1 shared-registry 测试 2/2 通过。仅更新显示名称映射/交接，无 Telegram API 调用，无模型、策略、账本、结算改动；继续处理剩余 506 项。
+
+## 2026-10-12 正式范围中文名称续补（五十六）
+- 共享 registry 新增 5 条有中文赛事/球队页支持的映射：Ionikos（6120）→伊奥尼科斯；Zakynthos（5780）→扎金索斯；Bijelo Brdo（3662）→白山；Chernomorets Burgas（28530）→黑海堡尔加斯；FK Metalac GM（6365）→梅塔拉茨队。来源均为 Tips.GG 简中球队/比赛页，provider identity、ID、别名和引用保留。
+- 最新正式范围 union 2,468：canonical 1,967、unresolved 501（79.70%）；M1 1,524/1,576（96.70%）；M1 OU-R1 52/52；MR1 AH 1,503/1,921（78.24%）；MR1 AI declared mirror 1,524/1,576（96.70%）。完整逐项未匹配及原因保存在共享 `formal_scope_coverage.json`。
+- M1 formatter/runtime pytest 20/20、MR1 shared registry tests 2/2 通过。仅改显示名数据/交接；未编辑或发送 TG，也未改模型、策略、正式账本或结算；继续处理剩余 501 项。
