@@ -273,3 +273,8 @@
 - 共享 registry 提交 `40065138bdad4574b229e813323cb9e6efd8549f` 已推送至 `totalcorner-research-bridge/master`。本轮新增 2 条经 7M 球队页核对的正式映射：Talaea El Geish（ID 4547）→塔拉雅；Al Khaleej Saihat（ID 4412）→卡赫利塞哈特。前者另将中文百科译名放入 aliases。provider 英文名、ID 与来源链接保留在唯一共享 registry。
 - 最新正式范围 union 2,468：已匹配 1,874，未匹配 594（75.93%）；M1 1,433/1,576（90.93%）；M1 OU-R1 52/52；MR1 AH 1,426/1,921（74.23%）；MR1 AI mirror 1,433/1,576（90.93%）。未匹配明细及原因见共享 `formal_scope_coverage.json`。
 - M1 display/runtime 定向测试 20/20 通过；未触发生产 scan、未发或编辑 TG。策略及实战状态未改。
+
+## 2026-10-12 正式范围中文名称续补（二十）
+- 共享 registry 提交 `c0580d75351d07bcac6fc302d16955bddc24a78b` 已推送至 `totalcorner-research-bridge/master`。在公开中文资料中核实 Hamrun Spartans（ID 7652）→阿姆伦斯巴达，采用球迷屋中文球队档案的简体常用名称，并保留英文/带附加符号名称别名。该 ID 属于 M1+MR1 AH 范围。
+- 最新正式范围 union 2,468：已匹配 1,875，未匹配 593（75.97%）；M1 1,434/1,576（90.99%）；M1 OU-R1 52/52；MR1 AH 1,427/1,921（74.28%）；MR1 AI mirror 1,434/1,576（90.99%）。逐队未匹配及原因留在共享 `formal_scope_coverage.json`。
+- M1 display/runtime 定向测试 20/20 通过；Telegram 未编辑/发送，生产 workflow 未触发。策略与账本未变。
