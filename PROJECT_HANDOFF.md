@@ -264,6 +264,11 @@
 - M1 formatter 隔离渲染四队名称成功；M1 定向 pytest 20/20 通过。MR1 通过 `FOOTBALL_DISPLAY_REGISTRY_DIR` 直接读取当前共享库；MR1 display tests 2/2 通过，两个 fixture 均输出中文。MR1 正式 workflow 在运行时 checkout 共享仓库 `master`，本地验证证明新库可消费；生产 Action 未触发。
 - 本轮未编辑或重发任何历史 Telegram 消息。当前执行环境未配置 M1/MR1 Bot 凭据，且未取得可供本轮确认的账本 message-id ↔ 原文完整快照；历史实发修复仍未完成。不得将 formatter/本地测试说成 TG 实际修复。各模型策略、账本、结算及通知规则未改；Actions 仍受账户支出限制，不重复触发。
 
+## 2026-10-12 正式范围中文名称续补（二十二）
+- 在共享库提交 `701ef84ea281f822179d574a611a8f8337711cb8` 后，继续用7M简体中文球队页核实 Termalica BB Nieciecza（team_id 540）→特马利卡，资料页展示“特马利卡 (Bruk Bet Termalica Nieciecza)”。新增记录连同官方英文变体 alias 写入唯一共享 `display_names.json`，提交 `421208f` 已推送到 master。
+- 最新实算：formal union 2,468，canonical 1,880，unresolved 588（76.18%）；M1 1,439/1,576（91.31%）；M1 OU-R1 52/52；MR1 AH 1,432/1,921（74.55%）；MR1 AI declared mirror 1,439/1,576（91.31%）。共享 registry 12,276 IDs、3,896 canonical；588 条均因 `NO_VERIFIED_CANONICAL_ZH` 暂未匹配，具体清单见共享 `formal_scope_coverage.json`。
+- M1 formatter 隔离渲染“特马利卡”，M1 定向测试 20/20 通过；MR1 对共享注册表的测试/解析保持通过。无模型、策略、账本、结算或 Telegram 行为变化。历史 TG 仍未编辑：环境没有系统专用 Bot 凭据，也没有本轮逐条可编辑原文证据；生产 workflow 未触发。
+
 ## 2026-10-12 正式范围中文名称续补（十七）
 - 共享 registry 提交 `29a8dcd6e953fd04be232fe46310ec3ce31378d3` 已推送至 `totalcorner-research-bridge/master`。在续补（十六）基础上新增 2 条精确身份映射：B93 Copenhagen（ID 3622）→哥本哈根B93，Sofascore 简中球队页；Dukla Banska Bystrica（ID 3460）→班斯卡比斯特里察杜克拉，Sofascore 简中球队页。两条均属于 M1 与 MR1 AH 范围，原英文 provider identity、ID、别名及来源保留在共享 registry。
 - 最新范围：formal union 2,468，canonical 中文 1,871，unresolved 597（75.81%）；M1 1,430/1,576（90.74%）；M1 OU-R1 52/52；MR1 AH 1,423/1,921（74.08%）；MR1 AI mirror 1,430/1,576（90.74%）。未匹配完整清单仍位于共享 `formal_scope_coverage.json`，当前 597 条均为 `NO_VERIFIED_CANONICAL_ZH`。
