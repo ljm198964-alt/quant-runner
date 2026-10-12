@@ -576,3 +576,10 @@
 - 本地定向测试通过：M1 pytest 20/20；MR1 canonical registry、browser-forward 和 Telegram formatter/parser Node 测试 8/8。
 - 本版共享 registry 的三个既有历史消息名称修复 workflow 均成功：M1 `38213931932`（eligible 37 / edited 0 / already matching 37 / missing original text 99 / unmapped 70 / failed 0）；MR1 AH `38213936620`（edited 0 / already processed 125 / unresolved 0 / failed 0）；MR1 AI `38213940539`（201 条中 9 candidates、edited 0、192 unresolved、9 failed，Telegram 原消息均返回 400 `message to edit not found`）。即本轮实际编辑仍为 0，不重发历史单。
 - 未更改比赛信息、盘口、方向、水位、模型、策略、正式 ledger、结算或 Telegram 发送规则；继续逐批按可核验来源处理余下 479 项。
+
+## 2026-10-12 正式范围中文名称续补与 Telegram 实际复核（七十七）
+- 共享 registry 在上述版本后又新增 4 个准确 ID 映射：AZAL PFC Baku（4172）→巴库奥林匹克；FK Indjija（9250）→因吉亚；Okzhetpes Kokshetau（9804）→奥肯咸特普斯；OLS（3960）→奥卢OLS足球俱乐部。来源为对应中文俱乐部资料页：[Newton AZAL 中文档案](https://www.newton.com.tw/wiki/巴庫奧林匹克足球俱樂部/19738010)、[百度百科因吉亚俱乐部页](https://bkso.baidu.com/item/因吉亚足球俱乐部/9613553)、[7M 奥肯咸特普斯页](https://team.7m.com.cn/5020/index_gb.shtml)、[Tips.GG OLS Oulu 中文页](https://tips.gg/cn/team/ols-oulu-football/)。共享最新提交 `9140391293fe401d5ba0e141555ee61b7ccd4aec`。原始 provider 名称、ID、aliases 均保留；未把相似队伍合并。
+- 当前正式范围 union 2,468：canonical 1,993、unresolved 475（80.75%）；M1 1,546/1,576（98.10%）；M1 OU-R1 52/52（100%）；MR1 AH 1,520/1,921（79.13%）；MR1 AI declared mirror 1,546/1,576（98.10%）。共享全库 12,276 team IDs、4,009 canonical 中文名。剩余逐队 ID、英文名、system、league IDs 和 reason 均在共享 `data/football_display_names/formal_scope_coverage.json`，当前 475 条 reason 均为 `NO_VERIFIED_CANONICAL_ZH`，未编造译名。
+- 本版定向测试：M1 pytest 20/20；MR1 shared registry/browser-forward/formatter/parser Node tests 8/8。
+- 对此版本运行既有历史 TG 名称编辑流程并全部成功：M1 `38214736179`（eligible 37、edited 0、already matching 37、缺原文 99、unmapped 70、failed 0）；MR1 AH `38214740925`（edited 0、processed 125、unresolved 0、failed 0）；MR1 AI `38214745642`（201 条中 9 candidates、edited 0、192 unresolved、9 failed，Telegram 均报 400 `message to edit not found`）。因此没有历史消息实际改字成功，也没有重发。运行只检查/编辑既有消息，不派发信号或策略扫描。
+- 继续复用同一 registry 的 M1 AH、M1 OU-R1、MR1 AH、MR1 AI 展示层；未修改模型、策略、盘口条件、交易字段、账本、settlement 或 Telegram 发送规则。余下 475 项仍需按来源逐项补齐。
