@@ -713,3 +713,8 @@
 - 再加入两个经简体中文足球来源确认的 formal IDs：FK Otrant Ulcinj（33964）→奥特兰特（FootyStats 简中页面；俱乐部官网核验 Otrant Olympic 与 Ulcinj 身份），Aegir（12947）→埃吉尔（Sofascore 简中队页）。此外，续补提交内保留前序已加入的 JDFS Alberts（10525）、FK Kaspyi Aktau（13793）和 Nevezis（10852）；统一共享提交 `20019a09fc4fd09ca8b9cc222d245d00abab9718` 已推送 `totalcorner-research-bridge/master`。
 - 最新实算 formal union 2,468：canonical 2,084、unresolved 384（84.44%）；M1 1,453/1,553（93.56%）；M1 OU-R1 52/52（100%）；MR1 AH 1,597/1,921（83.13%）；MR1 AI declared mirror M1 1,453/1,553（93.56%）。唯一共享库 12,276 IDs、4,100 canonical。逐条未匹配 ID 与原因仍以共享 `data/football_display_names/formal_scope_coverage.json` 为准。
 - M1 Telegram display/repair 测试 8/8 通过，`git diff --check` 通过。已对当前 M1 formal ledger 做不发送 dry-run：37 条具备 names-only edit 条件，99 条缺少原始文本，70 条未命中中文映射；dry-run 未调用 Telegram API。M1 OU-R1、MR1 AH、MR1 AI 历史消息尚未逐链执行编辑，不能计作修复。没有新增 workflow；也未改模型、策略、正式订单、结算或 Telegram 规则。
+
+## 2026-10-12 正式范围中文名称续补（一百）
+- 为正式 ID 补入冰岛球队：Grotta Seltjarnarnes（8623）→格罗塔、Njardvik（8935）→尼哈德维克，均由 7M 简中球队档案按英文身份与当地信息核对；原 provider identity、ID 保留。共享提交 `8ebde007a10027881876469bb0cc5da11d0a7f7b` 已推送 master。
+- 最新实算 formal union 2,468：canonical 2,086、unresolved 382（84.52%）；M1 1,452/1,553（93.50%）；M1 OU-R1 52/52；MR1 AH 1,600/1,921（83.29%）；MR1 AI declared mirror M1 1,452/1,553（93.50%）。共享库 12,276 IDs、4,102 canonical。尚未匹配的完整球队 ID/name/reason 见唯一共享库 `data/football_display_names/formal_scope_coverage.json`。
+- M1 display/repair 单测 8/8 通过；无生产 TG 发送或历史消息编辑。历史 TG repair dry-run 的 M1 计数见上一节，其他三链还未完成可验证的编辑盘点；没有更改策略、模型、订单或结算。
