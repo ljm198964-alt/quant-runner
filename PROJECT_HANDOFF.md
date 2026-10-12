@@ -207,3 +207,8 @@
 - 最新文件实算：formal union 2,468，已匹配 1,806，未匹配 662，覆盖 73.18%；M1 1,365/1,576（86.61%）；MR1 AH 1,366/1,921（71.11%）；MR1 AI 声明镜像 1,365/1,576（86.61%）；M1 OU-R1 52/52；共享库 12,276 IDs、canonical 3,822（31.13%）。全量 unresolved 逐条原因以共享文件 `data/football_display_names/formal_scope_coverage.json` 为准。
 - 验收：M1 display/formal-runtime 测试 20/20；MR1 `npm test` 通过。隔离渲染证明新 ID 经 MR1 `football-display-names.js` 及 M1 formatter 输出 canonical 中文，M1 AH/OU-R1 共用 `m1_notification.py` 的 formatter；MR1 runtime 从 M1 仓库 master checkout 同一 shared registry。M1历史编辑 dry-run 37 条具备原文的候选、99 条缺保存原文、70 条名称未匹配；本机没有 M1 TG 凭据，未执行任何编辑。MR1 AH 现有 v5 审计为 123 条跳过/无变化；MR1 AI 最近 9 条编辑失败、192 条未解决，本轮不重试或重发。尚无本轮实际 TG 历史编辑回执。
 - GitHub Actions 云端 smoke 未启动；本轮没有触发生产 runtime 或测试消息。仅名称/显示层变更，没有修改任何模型、策略、范围、投注/结算账本或 TG 派单规则。下一步继续处理剩余 662 个 ID，并在拥有安全 Telegram 运行环境和可编辑原始消息时处理历史展示文本。
+
+## 2026-10-12 正式范围中文名称续补（九）
+- 共享 registry 最新提交 `bff46c865c2c6223e98f2672dc12982b778b7de6` 已推送至 `totalcorner-research-bridge/master`，新增 4 个正式 team ID：墨西哥美洲队、蒂华纳、札幌冈萨多、埃斯比约；名称均附对应球队中文资料和英文 identity source。复用同一 shared registry，不新增库。
+- 最新统计：正式并集 2,468，已匹配 1,810，未匹配 658（73.34%）；M1 1,369/1,576（86.87%）；MR1 AH 1,369/1,921（71.26%）；MR1 AI 声明镜像 1,369/1,576（86.87%）；M1 OU-R1 52/52；全共享库 12,276 IDs、canonical 3,826（31.17%）。逐项未匹配原因由 `formal_scope_coverage.json` 提供。
+- M1 display/formal-runtime 测试 20/20 通过。名称变更仍只限展示层；没有生产运行、TG 派单/编辑或账本/模型/策略修改。剩余 unresolved 继续按联赛分组核证，不作机器猜译。
