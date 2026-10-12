@@ -469,3 +469,8 @@
 - 共享 registry 新增 3 个来源可核验的正式队名：FK Kukesi（13481）→库克西队；Bodrumspor（15286）→博德鲁姆体育；FK Graficar Beograd（29414）→贝尔格莱德制图师队。分别由 Tips.GG 中文阿尔巴尼亚比赛、土耳其球队页和塞尔维亚比赛页明确配对，ID/provider identity/aliases/source 保留。
 - 最新正式范围 union 2,468：canonical 1,970、unresolved 498（79.82%）；M1 1,527/1,576（96.89%）；M1 OU-R1 52/52；MR1 AH 1,505/1,921（78.34%）；MR1 AI declared mirror 1,527/1,576（96.89%）。完整 unresolved 清单与原因仍以共享 `formal_scope_coverage.json` 为准。
 - M1 定向 pytest 20/20、MR1 registry tests 2/2 通过。未调用 Telegram API，未修改模型/策略/正式账本/结算；继续处理剩余 498 项。
+
+## 2026-10-12 正式范围中文名称续补（五十八）
+- 共享 registry 新增 2 条经中文足球资料核验的球队：Hasselt（30173）→哈瑟尔特队（Tips.GG 简中球队页）；FK Backa Topola（30089）→巴奇卡托波拉（7M 中文球队档案）。保留原英文 provider identity、ID、别名及来源。
+- 最新正式范围 union 2,468：canonical 1,972、unresolved 496（79.90%）；M1 1,529/1,576（97.02%）；M1 OU-R1 52/52；MR1 AH 1,506/1,921（78.40%）；MR1 AI declared mirror 1,529/1,576（97.02%）。完整 unresolved 项及 reason 见共享 `formal_scope_coverage.json`。
+- M1 tests 20/20、MR1 shared-registry tests 2/2 通过。只更新名称映射和交接；未触发 Telegram 或生产任务，未改模型、策略、账本、结算；继续处理剩余 496 项。
