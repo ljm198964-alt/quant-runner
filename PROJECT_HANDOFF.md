@@ -598,3 +598,9 @@
 - M1 Telegram display/repair 本地测试 8/8 通过。当前工作树既存 `.gitignore`、`package-lock.json`、`__pycache__`、`results/competitor_zou/` 变更未纳入共享库提交。
 - 只读 MR1 共享库烟测 run `38218108249` 已派发但 GitHub 在 5 秒内以 failure 结束，job steps 为空且 `--log-failed` 无日志；因此云端读取验证未执行。相同测试本机将 `FOOTBALL_DISPLAY_REGISTRY_DIR` 指向共享库运行，2/2 通过。历史 TG repair workflow 本轮未触发：仓库 API 当前工作流清单未列出此前使用的 repair workflow；不宣称有生产运行或历史消息编辑。最近有记录的历史编辑结果仍为 0；未来消息是否已镜像最新共享提交需另行验证实际 runtime 部署。
 - 未改模型/策略、赛事范围、盘口、订单账本、结算或 Telegram 发送规则；缺少可靠来源的名称继续保留 unresolved。
+
+## 2026-10-12 正式范围中文名称续补（八十）
+- 继续从最新 452 个 unresolved 中找到 7M 可核验球队档案，新增 Olympic El Qanal（team_id 7113，league_id 417）→阿尔卡纳；7M 中文队页标题直接标注“阿尔卡纳(Olympic Al Qanah)”。共享库提交 `179a8c7` 已推送 master；英文 provider identity、ID、赛事归属和别名均保留，未触碰已有不同 ID 映射。
+- 当前实算 formal union 2,468：canonical 2,016、unresolved 452（81.69%）；M1 1,573/1,576（99.81%）；M1 OU-R1 52/52；MR1 AH 1,541/1,921（80.22%）；MR1 AI declared mirror 1,573/1,576（99.81%）。共享库 12,276 IDs、4,032 canonical names。
+- M1 display/repair unittest 8/8 通过。7M 来源：[阿尔卡纳（Olympic Al Qanah）球队档案](https://team.7m.com.cn/7510/index_gb.shtml)。MR1 云端只读 registry smoke 上轮 run `38218108249` 在 0 个 job steps 后失败；本轮未重复派发。历史 Telegram repair workflows 仍不在当前 workflow 清单，未编辑或重发任何消息。
+- 未修改生产模型、策略、账本、结算、Telegram 内容/规则；未有可靠来源的球队保留 unresolved。
