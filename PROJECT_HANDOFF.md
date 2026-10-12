@@ -402,3 +402,8 @@
 - 共享 registry 新提交 `4e07b4ecb2c9338df3bbf24d01a08b3430da3741` 已推送。新增 OFK Igalo（ID 2569）→伊高洛（球天下中文球队资料）和 Zurrieq FC（ID 3347）→祖里耶克（雷速中文球队资料）。未将仅有外文身份资料的其他候选猜译入库。
 - 最新实际 coverage：正式范围 2,468，canonical 1,936、unresolved 532（78.44%）；M1 1,494/1,576（94.80%）；M1 OU-R1 52/52；MR1 AH 1,479/1,921（76.99%）；MR1 AI declared mirror 1,494/1,576（94.80%）。共享 registry 12,276 IDs、3,952 canonical。剩余逐项清单及原因见共享 `formal_scope_coverage.json`。
 - 历史 Telegram 未编辑/重发，生产 TG/API 未触发；不能把共享 formatter 测试视为正式消息修复。模型、策略、账本、结算和派单条件保持不变。
+
+## 2026-10-12 正式范围中文名称续补（四十五）
+- 共享 registry 提交 `5f5b13098533a140a00634fdfb9afdfdaab9d6ea` 已推送。新增 FK Indija（ID 3746）→因吉亚，来源为中文球队资料页；英文身份、ID、拼写别名、来源和核验时间已写入共享库。
+- 最新实算：formal union 2,468，canonical 1,937、unresolved 531（78.48%）；M1 1,495/1,576（94.86%）；M1 OU-R1 52/52；MR1 AH 1,480/1,921（77.04%）；MR1 AI declared mirror 1,495/1,576（94.86%）。共享 registry 12,276 IDs、3,953 canonical。逐项 unresolved/reason 在 `formal_scope_coverage.json`。
+- 当前回合仅本地验证与 registry 数据提交；未编辑/发送正式 Telegram，未改模型、策略、正式账本/结算。
