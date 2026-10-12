@@ -292,6 +292,11 @@
 - M1 display/formal-runtime pytest 20/20 通过，`git diff --check` 通过；MR1 针对共享 registry 的读取/展示测试 2/2 通过。本轮仅处理展示名称数据和审计，不改模型、策略、范围、正式账本、结算、通知规则。
 - 没有运行生产 workflow、发送或编辑 Telegram。历史 TG 实际编辑仍为 0；系统专用凭据及逐条可编辑原消息证据不在当前安全执行环境。继续 source-backed 核验剩余 583 个正式范围球队。
 
+## 2026-10-12 正式范围中文名称续补（二十七）
+- 共享 registry 提交 `19ac5f3291551fe19635231b1d095b3ba7c25a4a` 已推送。本轮新增 3 个精确 ID：Iwaki SC（41151）→磐城FC（7M 简中球队页；与已映射的 Iwaki FC 统一）；FK Zalgiris Vilnius（33136）→维尔纽斯扎尔吉里斯（简中俱乐部条目，避免与 Kauno Žalgiris“考纳斯扎尔吉里斯”混淆）；Rigas FS（11336）→里加足球学校（Sofascore 简中球队页）。来源、英文名、aliases 和 team_id 均保存在唯一共享 registry。
+- 最新正式范围实算：2,468 IDs，canonical 1,888，unresolved 580（76.50%）；M1 1,447/1,576（91.81%）；M1 OU-R1 52/52；MR1 AH 1,440/1,921（74.96%）；MR1 AI declared mirror 1,447/1,576（91.81%）。MR1 AI observed confidence≥50 历史 cohort 仍为 181/182；共享库 12,276 IDs、3,904 canonical。完整 unresolved 名单及原因见共享 `formal_scope_coverage.json`。
+- M1 display/formal-runtime 测试 20/20 通过，`git diff --check` 通过。此变更仅为展示名称；生产 workflow 未运行、Telegram 未发送或编辑，模型、策略、赛事范围、账本、结算未改。继续核实余下 580 项，不对含混身份猜译。
+
 ## 2026-10-12 正式范围中文名称续补（十七）
 - 共享 registry 提交 `29a8dcd6e953fd04be232fe46310ec3ce31378d3` 已推送至 `totalcorner-research-bridge/master`。在续补（十六）基础上新增 2 条精确身份映射：B93 Copenhagen（ID 3622）→哥本哈根B93，Sofascore 简中球队页；Dukla Banska Bystrica（ID 3460）→班斯卡比斯特里察杜克拉，Sofascore 简中球队页。两条均属于 M1 与 MR1 AH 范围，原英文 provider identity、ID、别名及来源保留在共享 registry。
 - 最新范围：formal union 2,468，canonical 中文 1,871，unresolved 597（75.81%）；M1 1,430/1,576（90.74%）；M1 OU-R1 52/52；MR1 AH 1,423/1,921（74.08%）；MR1 AI mirror 1,430/1,576（90.74%）。未匹配完整清单仍位于共享 `formal_scope_coverage.json`，当前 597 条均为 `NO_VERIFIED_CANONICAL_ZH`。
