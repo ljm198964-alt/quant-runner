@@ -596,5 +596,5 @@
 - 共享唯一 registry 提交 `22ff011` 已推送至 `totalcorner-research-bridge/master`。新增两条有身份交叉证据的 formal team ID：MOIK Baku（4762，league_id 227）→MOIK巴古，来源 Titan007 中英球队页；PFK Turan Tovuz（4797，league_id 299）→图兰，来源 Tips.GG 中文球队/对阵页。原 provider 名、team ID、联赛归属保留；图兰 B 队没有合并进一线队。来源引用及审计说明写入 `display_names.json`。
 - 最新实算正式范围 union 2,468：canonical 2,015、unresolved 453（81.65%）；M1 1,572/1,576（99.75%）；M1 OU-R1 52/52（100%）；MR1 AH 1,540/1,921（80.17%）；MR1 AI declared mirror 1,572/1,576（99.75%）。共享库 12,276 team IDs、4,031 个 canonical 中文名。完整未匹配逐条清单及原因仍以共享 `formal_scope_coverage.json` 为准。
 - M1 Telegram display/repair 本地测试 8/8 通过。当前工作树既存 `.gitignore`、`package-lock.json`、`__pycache__`、`results/competitor_zou/` 变更未纳入共享库提交。
-- 既有历史 TG 编辑工作流本轮未触发：仓库 API 当前工作流清单未列出此前使用的 repair workflow；不宣称有生产运行或历史消息编辑。最近有记录的历史编辑结果仍为 0；未来消息是否已镜像最新共享提交需另行验证实际 runtime 部署。
+- 只读 MR1 共享库烟测 run `38218108249` 已派发但 GitHub 在 5 秒内以 failure 结束，job steps 为空且 `--log-failed` 无日志；因此云端读取验证未执行。相同测试本机将 `FOOTBALL_DISPLAY_REGISTRY_DIR` 指向共享库运行，2/2 通过。历史 TG repair workflow 本轮未触发：仓库 API 当前工作流清单未列出此前使用的 repair workflow；不宣称有生产运行或历史消息编辑。最近有记录的历史编辑结果仍为 0；未来消息是否已镜像最新共享提交需另行验证实际 runtime 部署。
 - 未改模型/策略、赛事范围、盘口、订单账本、结算或 Telegram 发送规则；缺少可靠来源的名称继续保留 unresolved。
