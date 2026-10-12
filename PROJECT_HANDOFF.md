@@ -297,6 +297,11 @@
 - 最新正式范围实算：2,468 IDs，canonical 1,888，unresolved 580（76.50%）；M1 1,447/1,576（91.81%）；M1 OU-R1 52/52；MR1 AH 1,440/1,921（74.96%）；MR1 AI declared mirror 1,447/1,576（91.81%）。MR1 AI observed confidence≥50 历史 cohort 仍为 181/182；共享库 12,276 IDs、3,904 canonical。完整 unresolved 名单及原因见共享 `formal_scope_coverage.json`。
 - M1 display/formal-runtime 测试 20/20 通过，`git diff --check` 通过。此变更仅为展示名称；生产 workflow 未运行、Telegram 未发送或编辑，模型、策略、赛事范围、账本、结算未改。继续核实余下 580 项，不对含混身份猜译。
 
+## 2026-10-12 正式范围中文名称续补（二十八）
+- 共享库提交 `ebc49567eb9ca3267de4a1125c246a2bf9fd460f` 已推送至 master。本轮新增 Hillerød（ID 15189）→希勒罗（7M 简中/繁中球队档案）及 Etar 1924 Veliko Tarnovo（ID 41501）→伊塔尔（7M 球队资料页）；provider IDs、英文原名、别名和来源均保存在共享 registry。
+- 最新实际范围：2,468 个 formal IDs，canonical 1,890、unresolved 578（76.58%）；M1 1,449/1,576（91.94%）；M1 OU-R1 52/52；MR1 AH 1,442/1,921（75.07%）；MR1 AI declared mirror 1,449/1,576（91.94%）。历史 observed confidence≥50 cohort 181/182；共享库 12,276 IDs、3,906 canonical。具体 unresolved 清单仍以共享 `formal_scope_coverage.json` 为准。
+- M1 display/formal-runtime 测试 20/20，MR1 shared-registry 测试 2/2；MR1 对本轮及前批新 ID 的 formatter 隔离渲染均输出中文。没有生产 workflow/TG 操作；策略、正式账本、结算、派单规则均未修改。继续核证剩余 578 项。
+
 ## 2026-10-12 正式范围中文名称续补（十七）
 - 共享 registry 提交 `29a8dcd6e953fd04be232fe46310ec3ce31378d3` 已推送至 `totalcorner-research-bridge/master`。在续补（十六）基础上新增 2 条精确身份映射：B93 Copenhagen（ID 3622）→哥本哈根B93，Sofascore 简中球队页；Dukla Banska Bystrica（ID 3460）→班斯卡比斯特里察杜克拉，Sofascore 简中球队页。两条均属于 M1 与 MR1 AH 范围，原英文 provider identity、ID、别名及来源保留在共享 registry。
 - 最新范围：formal union 2,468，canonical 中文 1,871，unresolved 597（75.81%）；M1 1,430/1,576（90.74%）；M1 OU-R1 52/52；MR1 AH 1,423/1,921（74.08%）；MR1 AI mirror 1,430/1,576（90.74%）。未匹配完整清单仍位于共享 `formal_scope_coverage.json`，当前 597 条均为 `NO_VERIFIED_CANONICAL_ZH`。
