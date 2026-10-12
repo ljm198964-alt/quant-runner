@@ -609,3 +609,8 @@
 - 新增两条 Khazar Lankaran/Lenkoran 拼写记录，分别保留 TotalCorner team_id 4307（M1，league_id 299，provider `Khazar Lenkoran`）与 5990（M1，league_id 299，provider `Khazar Lankaran`），canonical 均为“哈扎尔连科兰”；没有跨 ID 合并，只按各自原 identity 记录。中文历史赛程由澳客及新浪赛事页将俱乐部名用于阿塞拜疆赛事实录。共享提交 `96712ab` 已推送 master。
 - 最新实算 formal union 2,468：canonical 2,018、unresolved 450（81.77%）；M1 1,575/1,576（99.94%）；M1 OU-R1 52/52；MR1 AH 1,541/1,921（80.22%）；MR1 AI declared mirror 1,575/1,576（99.94%）。共享 registry 12,276 IDs、4,034 canonical names。
 - M1 display/repair unittest 8/8 通过。来源：[澳客阿塞超赛程与哈扎尔连科兰中文记录](https://www.okooo.com/soccer/league/709/schedule/11033/)、[新浪球队对阵历史中的哈扎尔连科兰](https://match.sports.sina.com.cn/football/team_vs.php?id=1887825)。未修改任何生产模型、策略、ledger、settlement 或 Telegram 发送规则。
+
+## 2026-10-12 正式范围中文名称续补（八十二）
+- 复用经验证的既有 Misr Lel Makasa 中文名称，为正式 ID 17050（provider `Misr El Maqasha`，league_id 417，M1/MR1）新增 canonical“艾玛卡沙”；英文写法关系由 Wikidata 与埃及联赛历史记录交叉确认，中文 canonical 来自已有 FootyStats 简中俱乐部页/共享库 team_id 3466。独立保留 ID 17050，不覆盖或合并原记录。共享提交 `c0d1e24` 已推送 master。
+- 当前实算 formal union 2,468：canonical 2,019、unresolved 449（81.81%）；M1 1,576/1,576（100%）；M1 OU-R1 52/52；MR1 AH 1,542/1,921（80.27%）；MR1 AI declared mirror 1,576/1,576（100%）。共享库 12,276 IDs、4,035 canonical names。
+- M1 display/repair unittest 8/8 通过。来源：[现有 FootyStats 中文球队页](https://footystats.org/cn/clubs/misr-lel-makasa-1120)、[Wikidata Misr Lel Makkasa 实体](https://www.wikidata.org/wiki/Q3049707)、[埃及联赛历史表中两种拼写](https://en.wikipedia.org/wiki/2010%E2%80%9311_Egyptian_Premier_League)。没有修改任何策略、账本、结算或通知规则。
