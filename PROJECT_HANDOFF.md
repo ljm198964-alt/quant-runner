@@ -510,3 +510,8 @@
 - 共享库新增 Ethnikos Achna（team_id 14056）→艾治拿斯，来源为 7M 中文球队档案（https://team.7m.com.cn/553/index.shtml），页面列出 Ethnikos Achna FC 与中文队名；provider 原名及常见拼写别名保留在唯一 registry。
 - 最新正式范围 union 2,468：canonical 1,980、unresolved 488（80.23%）；M1 1,537/1,576（97.53%）；M1 OU-R1 52/52（100%）；MR1 AH 1,513/1,921（78.76%）；MR1 AI declared mirror 1,537/1,576（97.53%）。未匹配明细及逐项原因以共享 `formal_scope_coverage.json` 为准。
 - M1 display/runtime pytest 20/20、MR1 shared-registry tests 2/2 通过。只更新共享展示映射/审计与交接；未编辑或发送 Telegram，未改模型、策略、正式账本或结算；继续处理剩余 488 项。
+
+## 2026-10-12 正式范围中文名称续补（六十六）
+- 共享库新增 Sektzia Nes Tziona（team_id 5450）→耐斯茨奥纳，来源为 7M 中文球队档案（https://team.7m.com.cn/10048/index.shtml）；采用该来源中文名的简体字规范形式，保留来源繁体名“耐斯茨奧納”及 provider 英文身份/ID。
+- 最新 formal union 2,468：canonical 1,981、unresolved 487（80.27%）；M1 1,538/1,576（97.59%）；M1 OU-R1 52/52；MR1 AH 1,514/1,921（78.81%）；MR1 AI declared mirror 1,538/1,576（97.59%）。完整 unresolved 列表及原因见共享 `formal_scope_coverage.json`。
+- 验证：M1 定向 pytest 20/20、MR1 shared registry tests 2/2。未触发 Telegram、未修改交易模型/策略/账本/结算；仅更新共享名称、审计与交接，继续处理剩余 487 项。
