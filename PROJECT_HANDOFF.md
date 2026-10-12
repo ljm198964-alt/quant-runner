@@ -698,3 +698,8 @@
 - 新增 4 个以中文足球赛事实录明确配对英文球队身份的 formal IDs：Imisli（135067）→伊米什利；FC Livyi Bereh（86544）→利沃贝雷赫；Epitsentr Kamianets-Podilskyi（133667）→埃皮岑特尔；FK Trayal Krusevac（47593）→特拉亚尔·克鲁塞瓦茨。来源为 Vitibet、Mezha 简中乌克兰足球报道和 Betimate 中文比赛前瞻，均保留原始 team ID/provider name。共享提交 `9ce3d2c` 已推送 master。
 - 最新实算 formal union 2,468：canonical 2,078、unresolved 390（84.20%）；M1 1,445/1,553（93.05%）；M1 OU-R1 52/52（100%）；MR1 AH 1,593/1,921（82.82%）；MR1 AI declared mirror 1,445/1,553（93.05%）。共享库 12,276 IDs、4,094 canonical；剩余完整名单与原因在 `formal_scope_coverage.json`。
 - M1 Telegram display/repair tests 8/8 通过，`git diff --check` 通过。改动仅限唯一显示名称数据和 curation/audit 输出；未改模型、策略、正式账本、结算及 Telegram 规则，也未发送或编辑消息。
+
+## 2026-10-12 正式范围中文名称续补（九十七）
+- 新增 Corum FK（team_id 75036）→乔鲁姆；Futmetrix 简中球队资料页直接将 Corum FK 标为“乔鲁姆”，原始 team ID/name 和联赛身份保留。共享提交 `fcb0cd1` 已推送 master。
+- 最新实算 formal union 2,468：canonical 2,079、unresolved 389（84.24%）；M1 1,445/1,553（93.05%）；M1 OU-R1 52/52；MR1 AH 1,594/1,921（82.87%）；MR1 AI declared mirror M1 1,445/1,553（93.05%）。共享 registry 12,276 IDs、4,095 canonical names。其余清单按 `formal_scope_coverage.json` 为准。
+- M1 display/repair tests 8/8 pass，`git diff --check` pass。只改共享 display registry/curation/coverage，不改任何模型、策略、账本、结算或 Telegram 生产行为。
