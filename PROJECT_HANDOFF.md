@@ -230,3 +230,9 @@
 - 当前文件重新统计：formal union 2,468，mapped 1,834、unresolved 634（74.31%）；M1 1,393/1,576（88.39%）；MR1 AH 1,388/1,921（72.25%）；MR1 AI mirror 1,393/1,576（88.39%）；M1 OU-R1 52/52；共享 registry 12,276 IDs、canonical 3,850（31.36%）。最新未匹配球队和逐项 reason 以 `data/football_display_names/formal_scope_coverage.json` 为准。
 - M1 展示、消息编辑脚本读取同一共享 registry，MR1 Actions runtime 通过只读 checkout 加载；formatter/repair/runtime 定向测试 20/20 通过，JSON 校验及 `git diff --check` 通过。`package.json` 未定义 npm test script。
 - 本轮未运行生产 scan、未发送/编辑 Telegram，也未修改策略/账本。历史消息编辑仍受本机无 M1 Telegram 专用凭据阻挡；不得借用 MR1 凭据或重新发送旧 Pick。GitHub Actions runner 既有支出限制尚未解除，云端 smoke 不宣称通过。
+
+## 2026-10-12 正式范围中文名称续补（十三）
+- 共享库最新提交 `956bc9aefcda146684971d87a9fd268a305fea05` 已推送。继续按公开中文球队档案及区域联赛中英对照表的精确英文身份配对新增 27 项，涵盖查洛里、莫达伦、阿伯里斯特威斯、阿费查尔丁、IR雷克查域克、塞尔福斯、斯洛图尔、富佐尼、苏博蒂察、尼什工人、纳尔瓦特兰斯、伊万尼察枫树、邦加、科马尔诺、穆拉、纳夫塔1903、久加斯、格罗比纳、贝尔格莱德红星、赫尔曼施泰特、捷迪苏、第聂伯罗第一、迪克维斯、阿尔西米、奥博隆、特泰克斯、诺尔比。每项保留正式 team_id、原 provider name、别名及来源；未确认名称继续不映射。
+- 当前 formal union 2,468，mapped 1,861、unresolved 607（75.41%）；M1 1,420/1,576（90.10%）；MR1 AH 1,414/1,921（73.61%）；MR1 AI 镜像 1,420/1,576（90.10%）；M1 OU-R1 52/52；shared registry 12,276 IDs、canonical 3,877（31.58%）。完整未匹配清单及原因以 `formal_scope_coverage.json` 为准。
+- M1 formatter 已用真实共享库隔离渲染新增 team_id，显示为中文队名与方向；MR1 AH formatter 亦读取同一 registry 并渲染中文。M1 display/repair/formal runtime tests 20/20；MR1 `npm test` passed；JSON/diff 检查通过。M1 历史 TG dry-run：37 条有可替换原文、99 条缺原文、70 条仍缺名称映射。dry-run 未发消息；本机没有 M1 专用 Telegram credentials，所以历史 TG 实际 edits=0。没有生产扫描、订单/结算写入或策略更改。
+- Runner 尚受账户级支出限制，云端 smoke 未运行；不要将本机 formatter 测试说成生产 TG live PASS。继续剩余 607 项来源核验，并在安全可用的 M1/MR1 各自凭据及原始 editable message 证据后才执行历史文字编辑。
