@@ -238,7 +238,7 @@
 - Runner 尚受账户级支出限制，云端 smoke 未运行；不要将本机 formatter 测试说成生产 TG live PASS。继续剩余 607 项来源核验，并在安全可用的 M1/MR1 各自凭据及原始 editable message 证据后才执行历史文字编辑。
 
 ## 2026-10-12 正式范围中文名称续补（十四）
-- 共享 registry 提交 `132183e3a7a98f3e195690a0e28506334d553c0c` 已 push 至 totalcorner-research-bridge/master。本轮在唯一 `display_names.json` 新增 3 个已核验 formal IDs：MFK Chrudim（ID 1899）→赫鲁迪姆（Sofascore 简中球队页）；Fylkir Reykjavik（ID 3170）→费基亚（7M 球队页）；Gornik Leczna（ID 524）→莱茨纳（球探/Titan007 球队页）。来源、英文 identity、ID、aliases 同存于 registry；已确认 canonical 未覆盖。
+- 共享 registry 提交 `132183e27c916ed2c276c61807d65a7bbb3a4e9d` 已 push 至 totalcorner-research-bridge/master。本轮在唯一 `display_names.json` 新增 3 个已核验 formal IDs：MFK Chrudim（ID 1899）→赫鲁迪姆（Sofascore 简中球队页）；Fylkir Reykjavik（ID 3170）→费基亚（7M 球队页）；Gornik Leczna（ID 524）→莱茨纳（球探/Titan007 球队页）。来源、英文 identity、ID、aliases 同存于 registry；已确认 canonical 未覆盖。
 - 最新实算 formal union 2,468：mapped 1,864，unresolved 604，覆盖 75.53%；M1 1,423/1,576（90.29%）；M1 OU-R1 52/52（100%）；MR1 AH 1,417/1,921（73.76%）；MR1 AI 声明镜像 M1 为 1,423/1,576（90.29%）。共享库 12,276 IDs、3,880 canonical。完整未匹配项与逐条原因见共享库 `data/football_display_names/formal_scope_coverage.json`。
 - Telegram 显示接入复核：M1 AH 与 M1 OU-R1 通过 `m1_notification.py` 共用 `m1_telegram_display.py`，读取共享 registry；MR1 AH formatter、MR1 AI forward notify 通过 `football-display-names.js` 读取同一 registry。三个新增队名已用两侧 formatter 隔离渲染为中文；MR1 样本联赛 ID 114 尚无 canonical，展示层仍按现有 fallback 输出原名，尚不能宣称赛事名全中文。
 - 测试：M1 定向 pytest 20/20；MR1 `npm test` 全量通过；JSON 解析及 `git diff --check` 通过。没有运行生产 Actions、策略、账本、结算、TG。
