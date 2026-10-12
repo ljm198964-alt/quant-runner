@@ -693,3 +693,8 @@
 - 在共享库 `183dc32` 后新增 3 个有明确简中球队页配对的 formal IDs：Al-Ula（151747）→阿尔乌拉（17500）；Nordic United FC（119002）→北欧联合（7M）；Baglan Dragons（124892）→巴格兰龙（Tips.GG）。ID/英文 provider identity/aliases 原样保留。共享提交 `d790b64` 已推送 `totalcorner-research-bridge/master`。
 - 最新实算 formal union 2,468：canonical 2,074、unresolved 394（84.04%）；M1 1,445/1,553（93.05%）；M1 OU-R1 52/52（100%）；MR1 AH 1,589/1,921（82.72%）；MR1 AI declared mirror 1,445/1,553（93.05%）。共享 registry 12,276 IDs、4,090 canonical names。未匹配完整名单及各条保留原因位于共享 `data/football_display_names/formal_scope_coverage.json`。
 - M1 Telegram display/repair tests 8/8 pass；`git diff --check` pass。仅变更唯一共享显示库及其 curation/coverage 产物；未修改模型、策略、盘口、账本、结算、Telegram 规则，未发送或编辑历史 Telegram。
+
+## 2026-10-12 正式范围中文名称续补（九十六）
+- 新增 4 个以中文足球赛事实录明确配对英文球队身份的 formal IDs：Imisli（135067）→伊米什利；FC Livyi Bereh（86544）→利沃贝雷赫；Epitsentr Kamianets-Podilskyi（133667）→埃皮岑特尔；FK Trayal Krusevac（47593）→特拉亚尔·克鲁塞瓦茨。来源为 Vitibet、Mezha 简中乌克兰足球报道和 Betimate 中文比赛前瞻，均保留原始 team ID/provider name。共享提交 `9ce3d2c` 已推送 master。
+- 最新实算 formal union 2,468：canonical 2,078、unresolved 390（84.20%）；M1 1,445/1,553（93.05%）；M1 OU-R1 52/52（100%）；MR1 AH 1,593/1,921（82.82%）；MR1 AI declared mirror 1,445/1,553（93.05%）。共享库 12,276 IDs、4,094 canonical；剩余完整名单与原因在 `formal_scope_coverage.json`。
+- M1 Telegram display/repair tests 8/8 通过，`git diff --check` 通过。改动仅限唯一显示名称数据和 curation/audit 输出；未改模型、策略、正式账本、结算及 Telegram 规则，也未发送或编辑消息。
