@@ -484,3 +484,8 @@
 - 共享库新增 Olympic El Qanah（team_id 10778）→艾尔夸纳尔奥林匹克，来源为 FootyStats 简中球队页（https://footystats.org/cn/clubs/olympic-el-qanah-17841）。本范围另有 provider 名 Olympic El Qanal 的不同 ID；没有强行合并，待取得可确认其身份等同的证据。
 - 当前 formal union 2,468：canonical 1,974、unresolved 494（79.98%）；M1 1,531/1,576（97.14%）；M1 OU-R1 52/52；MR1 AH 1,507/1,921（78.45%）；MR1 AI declared mirror 1,531/1,576（97.14%）。完整剩余明细与 reason 见共享 `formal_scope_coverage.json`。
 - 验证：M1 display/runtime pytest 20/20；MR1 shared-registry tests 2/2。仅更新共享名称库、审计报告及本交接；没有执行 Telegram API编辑/发送，模型、策略、订单和结算未改；继续处理剩余 494 项。
+
+## 2026-10-12 正式范围中文名称续补（六十一）
+- 共享库新增 SC Poltava（team_id 53034）→SC波尔塔瓦；新球体育（Titan007）中文球队档案明确以“SC波尔塔瓦”配对英文名 SC Poltava（https://info.titan007.com/cn/team/Summary.aspx?TeamID=43904）。
+- 最新 formal union 2,468：canonical 1,975、unresolved 493（80.02%）；M1 1,532/1,576（97.21%）；M1 OU-R1 52/52；MR1 AH 1,508/1,921（78.50%）；MR1 AI declared mirror 1,532/1,576（97.21%）。剩余项详见共享 coverage JSON。
+- M1 display/runtime pytest 20/20、MR1 shared registry tests 2/2 通过。仅更改名称展示基础设施及交接；无 Telegram API 操作，无策略/模型/账本/结算改动，继续补其余 493 个正式范围未匹配项。
