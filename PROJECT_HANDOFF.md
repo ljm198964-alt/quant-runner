@@ -268,3 +268,8 @@
 - 最新 formal union 2,468：canonical 1,872，unresolved 596，覆盖 75.85%；M1 1,431/1,576（90.80%）；M1 OU-R1 52/52；MR1 AH 1,424/1,921（74.13%）；MR1 AI mirror 1,431/1,576（90.80%）。完整未匹配及原因以共享 `formal_scope_coverage.json` 为准。
 - M1 display/runtime 定向测试 20/20 通过；Telegram 未编辑/重发，未触发生产 workflow。策略、账本、阈值、正式通知条件未改。
 - 共享库提交 SHA 待本轮推送后填入。
+
+## 2026-10-12 正式范围中文名称续补（十九）
+- 共享 registry 提交 `40065138bdad4574b229e813323cb9e6efd8549f` 已推送至 `totalcorner-research-bridge/master`。本轮新增 2 条经 7M 球队页核对的正式映射：Talaea El Geish（ID 4547）→塔拉雅；Al Khaleej Saihat（ID 4412）→卡赫利塞哈特。前者另将中文百科译名放入 aliases。provider 英文名、ID 与来源链接保留在唯一共享 registry。
+- 最新正式范围 union 2,468：已匹配 1,874，未匹配 594（75.93%）；M1 1,433/1,576（90.93%）；M1 OU-R1 52/52；MR1 AH 1,426/1,921（74.23%）；MR1 AI mirror 1,433/1,576（90.93%）。未匹配明细及原因见共享 `formal_scope_coverage.json`。
+- M1 display/runtime 定向测试 20/20 通过；未触发生产 scan、未发或编辑 TG。策略及实战状态未改。
