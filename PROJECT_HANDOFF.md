@@ -591,3 +591,10 @@
 - 新版名称库的既有历史消息名称编辑工作流实际结果：M1 run `38216991349` success（eligible 37、edited 0、already matching 37、缺原文 99、未映射 70、failed 0）；MR1 AH `38216995917` success（edited 0、processed/skipped 125、unresolved 0、failed 0）；MR1 AI 第一次 `38217000632` 的名称编辑步骤执行完成，但与 MR1 AH 并发推送回执时发生 branch ref race，随后串行重跑 `38217285572` success 并已持久化。AI 最终仍是 total 201、9 candidates、edited 0、unresolved 192、failed 9；9 条均为 Telegram 400 `message to edit not found`。历史 TG 实际改字 0；没有重发消息。
 - 后续从剩余 455 项继续逐项查可核验中文来源；未确认名称保持英文 provider identity 和 `NO_VERIFIED_CANONICAL_ZH` 状态。
 - 来源审计补正：复核发现 Samgurali（42019）的首次引用是 7M 赛程页而非该队中文名称页；后改为中文维基球队条目（该条目/中文联赛资料使用“萨古拉利”），只更正 source reference/kind/evidence_note 和 verified_at，不变更 canonical/identity。更正提交 `dd2b599`，formal-scope 统计不变。已知来源分布在更正后：中文维基 8、7M 6、雷速 2，另中国足协、球探天下、Wikidata、球迷屋各 1。
+
+## 2026-10-12 正式范围中文名称续补（七十九）
+- 共享唯一 registry 提交 `22ff011` 已推送至 `totalcorner-research-bridge/master`。新增两条有身份交叉证据的 formal team ID：MOIK Baku（4762，league_id 227）→MOIK巴古，来源 Titan007 中英球队页；PFK Turan Tovuz（4797，league_id 299）→图兰，来源 Tips.GG 中文球队/对阵页。原 provider 名、team ID、联赛归属保留；图兰 B 队没有合并进一线队。来源引用及审计说明写入 `display_names.json`。
+- 最新实算正式范围 union 2,468：canonical 2,015、unresolved 453（81.65%）；M1 1,572/1,576（99.75%）；M1 OU-R1 52/52（100%）；MR1 AH 1,540/1,921（80.17%）；MR1 AI declared mirror 1,572/1,576（99.75%）。共享库 12,276 team IDs、4,031 个 canonical 中文名。完整未匹配逐条清单及原因仍以共享 `formal_scope_coverage.json` 为准。
+- M1 Telegram display/repair 本地测试 8/8 通过。当前工作树既存 `.gitignore`、`package-lock.json`、`__pycache__`、`results/competitor_zou/` 变更未纳入共享库提交。
+- 既有历史 TG 编辑工作流本轮未触发：仓库 API 当前工作流清单未列出此前使用的 repair workflow；不宣称有生产运行或历史消息编辑。最近有记录的历史编辑结果仍为 0；未来消息是否已镜像最新共享提交需另行验证实际 runtime 部署。
+- 未改模型/策略、赛事范围、盘口、订单账本、结算或 Telegram 发送规则；缺少可靠来源的名称继续保留 unresolved。
