@@ -417,3 +417,8 @@
 - 共享 registry 提交 `4f779e4910d9a1f616efe7deb3ce83d7a88d303c` 已推送。新增 Kolkheti Poti（ID 7324）→克尔赫提（7M 中文球队页）；Marek Dupnitsa（7810）→马历克（中文俱乐部条目）；Skenderbeu Korce（8420）→科尔察斯克得比鲁（中文球队页）。每条保留来源、英文 provider identity、ID 和 aliases。
 - 最新实算：正式范围 2,468，canonical 1,942、unresolved 526（78.69%）；M1 1,500/1,576（95.18%）；M1 OU-R1 52/52；MR1 AH 1,484/1,921（77.25%）；MR1 AI declared mirror 1,500/1,576（95.18%）。共享 registry 12,276 IDs、3,958 canonical。剩余详细列表及原因见共享 `formal_scope_coverage.json`。
 - 只更新共享展示映射和交接记录；生产 Telegram 未发送或编辑，模型、策略、订单、结算未修改。
+
+## 2026-10-12 正式范围中文名称续补（四十八）
+- 共享 registry 新提交 `92ad545f7564ab34a7a2042b7a5652c2114c90f8` 已推送。新增 Makedonija Gj. P.（ID 4606）→乔尔切彼得罗夫马其顿尼亚，采用中文俱乐部条目所列全名，保留 provider 缩写及英文全名 aliases。
+- 最新覆盖：正式范围 2,468，canonical 1,943、unresolved 525（78.73%）；M1 1,501/1,576（95.24%）；M1 OU-R1 52/52；MR1 AH 1,485/1,921（77.30%）；MR1 AI declared mirror 1,501/1,576（95.24%）。共享 registry 12,276 IDs、3,959 canonical。完整剩余项及原因见共享 `formal_scope_coverage.json`。
+- M1 display/runtime 定向测试 20/20、MR1 shared-registry 测试 2/2 通过。仅更新显示层数据，没有生产 TG 编辑/发送或策略、账本、结算变更。
