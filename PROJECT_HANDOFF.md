@@ -790,3 +790,9 @@
 - 公开 Runner 的官网来源探测仍证实无用户会员 Web session，今日页面403、明日受VIP限制。官方 TotalCorner API 公告仅赛事、赛果、赔率等，未发现可直接替代原会员 AI Picks 的同源API；现有 Gmail 也未收到可直接替代的 AI Picks 推荐通知。因此本机 Chrome 会话仍是正式前瞻数据源。
 - **重要阻塞**：代码已提交且公开CI验收，但用户本机Chrome及桥接服务没有在本次工具环境中被远程重新启动，不能宣布本机Chrome已更新或 MR1 AI 新影子订单已产生。影子订单依旧0、结算0，下一步需在已有授权Mac上确认 Chrome 运行、launchd bridge、扩展加载与远端新心跳；不接触用户私密浏览器cookie。原有 Desktop Commander 工具报告当月调用额度耗尽（明确不重试），不能伪称已操作用户Mac。
 - 同时 M1 本日 UTC 04:05（北京时间12:05）计划定时触发截至北京时间12:23仍缺失；已有独立 `MR1 Public Ticker` 的备用Watchdog预定 UTC 04:25以后检测缺失。**应继续真实验收：Ticker唤醒Watchdog→M1 dispatch→scan→Telegram receipts→ledger persist，不得仅凭Watchdog源代码声明已恢复。**
+
+## 2026-10-13 12:28 北京时间 M1 正式漏扫备援实测
+- UTC 2026-10-13 04:05（北京时间12:05）主 `M1 Free Runtime` GitHub schedule 未生成对应运行，截至12:24仍无本时段正式运行。现有公开 `MR1 Public Ticker` 按原已确认 5min 心跳实际唤醒 M1 Watchdog。
+- **真正自动补发已发生**：公开 [Watchdog run 38346335574](https://github.com/ljm198964-alt/quant-runner/actions/runs/38346335574) 在 UTC 04:25:05 创建且 SUCCESS，日志 UTC 04:25:13.590 明确输出 `{"status":"M1_MISSING_SCAN_DISPATCHED","slot_utc":"2026-10-13T04:05:00+00:00","age_minutes":20.18,"destination":"m1-free-runtime.yml","strategy_rules_changed":false,"tg_direct_send":false}`。新 [M1正式运行38346345917](https://github.com/ljm198964-alt/quant-runner/actions/runs/38346345917) 在 UTC 04:25:13 创建、04:25:17 job启动。**这是生产链路真实漏发后由备援自动发起，不是手动或模拟。**
+- 截至UTC 04:28：M1 已通过secret检查、checkout、policy selftest、seed历史索引和Crown研究测试，处于 `Run M1 scan with retry` 扫描中。**正式TG送达、scan commit、通知回写/结算更新均还未验证，不能把自动启动误报成整条链路成功**。
+- 后续必须检查 [run 38346345917](https://github.com/ljm198964-alt/quant-runner/actions/runs/38346345917) 的最终Job步骤、`results/latest.json` 的扫描完成状态、`results/m1_formal_report.json` 的TG确认数和更新时间、ledger状态；如果失败，定位并修复。主schedule漏触发本身仍存在，当前已验证的是watchdog补发。
