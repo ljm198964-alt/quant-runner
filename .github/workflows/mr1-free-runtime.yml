@@ -86,13 +86,25 @@ jobs:
         timeout-minutes: 2
         run: node src/v6-cross-market-forward.js
 
+      - name: Test MR1 AH shadow isolation from formal Telegram
+        if: always()
+        run: node --test test-v6-ah-shadow.js
+
+      - name: Freeze MR1 V6 AH shadow signals using original formal rules
+        if: always()
+        run: node src/v6-ah-formal-notify.js --shadow
+
+      - name: Settle independent MR1 V6 AH shadow signals
+        if: always()
+        run: node src/v6-ah-shadow-settlement.js
+
       - name: Settle existing MR1 V6 AH formal signals
         if: always()
         continue-on-error: true
         run: node src/v6-ah-formal-settlement.js
 
-      # User-directed pause: MR1 AH is shadow-only; no formal Telegram send.
-      # Retain collection, evaluation, existing formal settlement and state persistence.
+      # User-directed pause: no new MR1 AH Telegram. Preserve separate
+      # shadow locks/results and historical formal settlement, then persist.
       - name: Persist formal V6 state
         if: always()
         env:
