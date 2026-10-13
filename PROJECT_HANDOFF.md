@@ -754,3 +754,10 @@
 - 为避免额外不必要的 Runner 消耗，MR1 完成事件仅在 M1 原定扫描小时及下一小时运行检查，沿用原有每时段20分钟后检查和去重行为；这仅是运维补偿，不改变策略/盘口/正式发单频次与身份，不让 MR1 发 M1 TG。
 - `push` 触发验证工作流 [`38336594903`](https://github.com/ljm198964-alt/quant-runner/actions/runs/38336594903) 已成功（2026-10-13 02:22 UTC）；日志输出 `M1_ALREADY_ATTEMPTED_NO_DUPLICATE`，确认检测到该时段已有 M1 成功运行 `38319250438`（2026-10-12 22:54 UTC），未重复派单。
 - **仍需核对**：新增的 `workflow_run` 由 MR1 完成事件真正触发的记录；下一个原计划扫描时段发生漏触发时能否正确补发 M1；实际 M1 TG 回执/账本状态。GitHub Actions 若整体不可用，此 GitHub 内部补偿同样可能不可用，不得称为完全独立调度。原有私有代码与正式账本依赖仍在。
+
+## 2026-10-13 M1 漏触发补偿最终接线（覆盖此前仅 workflow_run 的临时方案）
+- 为保证 **真正触发**，已在一直运行的公开 `.github/workflows/mr1-public-ticker.yml` 中增加轻量 M1 漏扫描检查的主动派发：仅在原 M1 UTC 04/10/16/22 扫描时段25分钟后及其下一小时，针对同一时段发起一次 `m1-schedule-watchdog.yml` 的 `workflow_dispatch`；唤醒失败会尝试下一次原有 MR1 5分钟 tick。M1 Watchdog 自己先核查同一时段有无 M1 已尝试运行，再决定是否派发 M1 正式工作流；不直接发送 TG、不修改策略或 4 次/天扫描计划。
+- 公开 Ticker 代码提交 [`a328093`](https://github.com/ljm198964-alt/quant-runner/commit/a328093636dd63de402c5ebe378c2804230ed698)。此前 `workflow_run` 事件方案存在由 `GITHUB_TOKEN` 调用的 MR1 workflow_dispatch 链式触发不确定性，因此已从 M1 Watchdog 移除该事件监听，改用 Ticker 主动 dispatch，提交 [`7a83ec1`](https://github.com/ljm198964-alt/quant-runner/commit/7a83ec1c086289ec6cd2b8a43ed23df57b643fbd)。
+- 部署实际验证：公开 Ticker 新版本运行 [`38337120541`](https://github.com/ljm198964-alt/quant-runner/actions/runs/38337120541) 已进入 `in_progress`，并成功发起 MR1 正式研究采集运行 `38337129409`。M1 Watchdog 最新 [`38337154316`](https://github.com/ljm198964-alt/quant-runner/actions/runs/38337154316) 成功，输出 `M1_ALREADY_ATTEMPTED_NO_DUPLICATE`，正确发现 2026-10-12 22:05 UTC 对应 M1 运行 `38319250438` 已成功，未重复派单。**尚未观察到真实 M1 时段漏触发后由新 Ticker 补派的案例，不得宣称这一行为已被实测。**
+- 曾经失败的 `M1` 运行 `38171198684` 根因是扫描提交时 `data/football_display_names/auto_curation.json` 与中文库同步更新产生 rebase conflict；现行 `m1_commit_state.sh` 的 scan stage 已不再包含该旧文件。该历史冲突的直接触发点已移除，但不能据此保证未来不存在其他 Git 冲突。
+- **局限**：此修复利用已经正常运行的公开 MR1 Ticker，避免依赖 M1/Wachdog 两条可能漏触发的定时器；但仍属于 GitHub Actions 内部补偿，如果 GitHub 托管 Runner 整体不可用，仍需要独立执行环境。请不要将其称为已脱离 GitHub Actions。
