@@ -2,6 +2,10 @@ name: MR1 AI Runtime
 
 on:
   workflow_dispatch:
+  # One-time hosted source verification; do not submit TG or market orders.
+  push:
+    paths:
+      - '.github/workflows/mr1-ai-runtime.yml'
 
 permissions:
   contents: read
@@ -63,7 +67,28 @@ jobs:
       - name: Record base
         run: echo "RUNTIME_BASE_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
 
+      - name: Check hosted AI source only (no TG, no Crown API)
+        if: github.event_name == 'push'
+        env:
+          TOTALCORNER_WEB_COOKIE: ${{ secrets.TOTALCORNER_WEB_COOKIE }}
+        run: |
+          node --input-type=module - <<'JS'
+          import {loadAiPages} from './src/ai-picks-page.js';
+          const d=await loadAiPages();
+          console.log('MR1_AI_SOURCE_DIAGNOSTIC '+JSON.stringify({
+            access_status:d.source_access.access_status,
+            parsed_ah_picks:d.source_access.parsed_ah_picks,
+            parsed_picks:d.source_access.parsed_picks,
+            pages:d.source_access.pages.map(p=>({
+              access_status:p.access_status,http_status:p.http_status,
+              request_authentication:p.request_authentication,parsed_picks:p.parsed_picks
+            })),
+            telegram_write:false,crown_requests:0
+          }));
+          JS
+
       - name: MR1 AI external signal runtime
+        if: github.event_name != 'push'
         env:
           TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
           TOTALCORNER_WEB_COOKIE: ${{ secrets.TOTALCORNER_WEB_COOKIE }}
