@@ -6,11 +6,6 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '35 4,10,16,22 * * *'
-  # MR1's existing five-minute production heartbeat is a second way to wake
-  # the SAME M1 recovery checker when GitHub misses its six-hour schedules.
-  workflow_run:
-    workflows: ['MR1 Free Runtime']
-    types: [completed]
   push:
     paths:
       - '.github/workflows/m1-schedule-watchdog.yml'
@@ -25,21 +20,6 @@ concurrency:
 
 jobs:
   check-and-recover:
-    # Existing M1 UTC 04/10/16/22 slots, plus one hour for delayed MR1 jobs.
-    # Skip unnecessary runners, without altering the original missing-slot
-    # detection and Telegram/ledger deduplication logic below.
-    if: >-
-      ${{
-        github.event_name != 'workflow_run' ||
-        contains(github.event.workflow_run.created_at, 'T04:') ||
-        contains(github.event.workflow_run.created_at, 'T05:') ||
-        contains(github.event.workflow_run.created_at, 'T10:') ||
-        contains(github.event.workflow_run.created_at, 'T11:') ||
-        contains(github.event.workflow_run.created_at, 'T16:') ||
-        contains(github.event.workflow_run.created_at, 'T17:') ||
-        contains(github.event.workflow_run.created_at, 'T22:') ||
-        contains(github.event.workflow_run.created_at, 'T23:')
-      }}
     runs-on: ubuntu-latest
     timeout-minutes: 3
     steps:
