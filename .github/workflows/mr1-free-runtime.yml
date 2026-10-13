@@ -67,7 +67,7 @@ jobs:
 
       - name: Nonblocking MR1 Chinese delivery and historical edit regressions
         continue-on-error: true
-        run: node --test test-v6-ah-formal.js test-v6-ah-display-repair-v5.js
+        run: node --test test-v6-ah-formal.js test-v6-ah-display-repair-v5.js test-mr1-ai-chrome-extension.js
 
       - name: MR1 API runtime
         env:
