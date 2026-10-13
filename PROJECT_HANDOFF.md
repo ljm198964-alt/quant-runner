@@ -748,3 +748,9 @@
 - 旧失败运行 `38171198684` 失败于 `Persist scan and locks`；详细错误尚未取得，不能推断是策略问题。
 - 已经通过 GitHub API 真实触发 M1 正式工作流 `38243313565`（UTC 2026-10-12 11:32:32），已从 queued 进入 in_progress，secrets 检查成功，checkout 进行中。链接 https://github.com/ljm198964-alt/quant-runner/actions/runs/38243313565 。
 - **待完成**：检查此运行的真实扫描、正式锁单、TG 发送回执、账本回写；调查 GitHub schedule/watchdog 漏触发原因，并解决持续调度可靠性。用户目标是完全恢复，不是仅触发一次。未改变 M1 策略或盘口来源。
+
+## 2026-10-13 M1 定时漏触发补偿修复
+- 用户明确要求直接修复 M1 自动扫描漏触发，不得只讨论方案。本次在**现有** `.github/workflows/m1-schedule-watchdog.yml` 增加 `workflow_run` 事件，由连续运行的 `MR1 Free Runtime` 完成事件唤醒同一份 M1 漏扫描检查；保留原有 04:05/10:05/16:05/22:05 UTC M1 四个扫描时段与原有 04:35/10:35/16:35/22:35 UTC Watchdog 时段。代码提交 [`ffe077a`](https://github.com/ljm198964-alt/quant-runner/commit/ffe077aff1655d17f47c8118336d483b8b4c438a)。
+- 为避免额外不必要的 Runner 消耗，MR1 完成事件仅在 M1 原定扫描小时及下一小时运行检查，沿用原有每时段20分钟后检查和去重行为；这仅是运维补偿，不改变策略/盘口/正式发单频次与身份，不让 MR1 发 M1 TG。
+- `push` 触发验证工作流 [`38336594903`](https://github.com/ljm198964-alt/quant-runner/actions/runs/38336594903) 已成功（2026-10-13 02:22 UTC）；日志输出 `M1_ALREADY_ATTEMPTED_NO_DUPLICATE`，确认检测到该时段已有 M1 成功运行 `38319250438`（2026-10-12 22:54 UTC），未重复派单。
+- **仍需核对**：新增的 `workflow_run` 由 MR1 完成事件真正触发的记录；下一个原计划扫描时段发生漏触发时能否正确补发 M1；实际 M1 TG 回执/账本状态。GitHub Actions 若整体不可用，此 GitHub 内部补偿同样可能不可用，不得称为完全独立调度。原有私有代码与正式账本依赖仍在。
