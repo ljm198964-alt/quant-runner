@@ -66,10 +66,9 @@ jobs:
       - name: Gate MR1 AI formal sends on Crown-only safety tests
         run: node --test test-mr1-ai-browser-crown-only.js test-mr1-ai-browser-forward-notify.js test-crown-source.js
 
-      - name: Deliver only this fresh MR1 AI capture
+      - name: Record this fresh MR1 AI capture as shadow (no Telegram)
         env:
-          MR1_TG_BOT_TOKEN: ${{ secrets.MR1_TG_BOT_TOKEN }}
-          MR1_TG_CHAT_ID: ${{ secrets.MR1_TG_CHAT_ID }}
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
           CAPTURE_PATH: ${{ inputs.capture_path }}
         run: node src/mr1-ai-browser-forward-notify.js "$CAPTURE_PATH"
 
@@ -106,6 +105,7 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -- data/mr1-ai-browser-forward data/mr1-v7-ai-picks
+          if [ -d data/mr1-ai-shadow ]; then git add -- data/mr1-ai-shadow; fi
           if [ -d data/mr1-ai-ou-forward-v12 ]; then git add -- data/mr1-ai-ou-forward-v12; fi
           if git diff --cached --quiet; then exit 0; fi
           git commit -m 'Persist new MR1 AI local-browser evidence'
