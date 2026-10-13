@@ -28,9 +28,36 @@ jobs:
         shell: bash
         run: |
           set -u
+          # Dispatch is only for the existing MR1 collection runtime.
+          # Reuse this reliable heartbeat to wake the EXISTING M1 watchdog
+          # for M1's already-confirmed 04/10/16/22 UTC scan slots.
+          last_m1_recovery_slot=''
           for tick in $(seq 1 60); do
             echo "MR1_TICK=$tick at $(date -u +%FT%TZ)"
-            gh workflow run mr1-free-runtime.yml               -R ljm198964-alt/quant-runner               --ref main || true
+            gh workflow run mr1-free-runtime.yml -R ljm198964-alt/quant-runner --ref main || true
+            utc_hour=$(date -u +%H)
+            utc_minute=$(date -u +%M)
+            base_hour=''
+            case "$utc_hour" in
+              04|10|16|22)
+                if (( 10#$utc_minute >= 25 )); then base_hour="$utc_hour"; fi
+                ;;
+              05) base_hour='04' ;;
+              11) base_hour='10' ;;
+              17) base_hour='16' ;;
+              23) base_hour='22' ;;
+            esac
+            if [[ -n "$base_hour" ]]; then
+              slot="$(date -u +%F)T${base_hour}:05:00Z"
+              if [[ "$slot" != "$last_m1_recovery_slot" ]]; then
+                if gh workflow run m1-schedule-watchdog.yml -R ljm198964-alt/quant-runner --ref main; then
+                  echo "M1_WATCHDOG_WAKE_ACCEPTED slot=$slot (no direct M1 or Telegram send)"
+                  last_m1_recovery_slot="$slot"
+                else
+                  echo "::warning::M1 watchdog wake failed for slot=$slot; retry next ticker pulse"
+                fi
+              fi
+            fi
             sleep 300
           done
 
