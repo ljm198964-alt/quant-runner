@@ -21,11 +21,9 @@ jobs:
           PRIVATE_REPO_TOKEN: ${{ secrets.PRIVATE_REPO_TOKEN }}
           TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
           TOTALCORNER_WEB_COOKIE: ${{ secrets.TOTALCORNER_WEB_COOKIE }}
-          MR1_TG_BOT_TOKEN: ${{ secrets.MR1_TG_BOT_TOKEN }}
-          MR1_TG_CHAT_ID: ${{ secrets.MR1_TG_CHAT_ID }}
         run: |
           set -euo pipefail
-          for v in PRIVATE_REPO_TOKEN TOTALCORNER_TOKEN MR1_TG_BOT_TOKEN MR1_TG_CHAT_ID; do
+          for v in PRIVATE_REPO_TOKEN TOTALCORNER_TOKEN; do
             if [ -z "${!v:-}" ]; then
               echo "::error::Missing required secret: $v"
               exit 2
@@ -69,8 +67,6 @@ jobs:
         env:
           TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
           TOTALCORNER_WEB_COOKIE: ${{ secrets.TOTALCORNER_WEB_COOKIE }}
-          MR1_TG_BOT_TOKEN: ${{ secrets.MR1_TG_BOT_TOKEN }}
-          MR1_TG_CHAT_ID: ${{ secrets.MR1_TG_CHAT_ID }}
         run: node src/mr1-ai-runtime.js
 
       - name: Persist MR1 AI state
@@ -78,6 +74,4 @@ jobs:
         env:
           TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
           TOTALCORNER_WEB_COOKIE: ${{ secrets.TOTALCORNER_WEB_COOKIE }}
-          MR1_TG_BOT_TOKEN: ${{ secrets.MR1_TG_BOT_TOKEN }}
-          MR1_TG_CHAT_ID: ${{ secrets.MR1_TG_CHAT_ID }}
         run: node src/persist-mr1-ai-state.js
