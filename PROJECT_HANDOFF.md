@@ -1349,6 +1349,11 @@
 - 使用共享 master 最新 registry 对 M1 formatter 和 MR1 `displayFootballFixture`、MR1 AH formatter、MR1 AI `formatAiAhTelegram` 做隔离渲染；示例为 HB Torshavn II vs HB Torshavn 与 Rigas FS II vs Sohag，赛事名、双方队名、方向均输出中文，盘口/水位值原样保留。未调用发送函数、未生成/修改正式订单。
 - MR1 测试代码按 `FOOTBALL_DISPLAY_REGISTRY_DIR` 读取同一 `display_names.json`；M1 测试 8/8 PASS。正式共享 master 最新为 `ff3c2c62`；quant-runner handoff 最新为 `4255480`。无新增策略/模型规则；历史 TG workflow 实际编辑为0，MR1 AI 的旧 message ID 不可编辑原因见第87批。
 
+## 2026-10-15 正式范围剩余名称来源复核
+- 从最新共享 master `ff3c2c6253ee432a77eebf6765f51a94454d73e1` 重算：正式范围 2,468 个 ID，2,288 有 canonical 中文、180 unresolved（92.71%）；M1 1,515/1,553（97.55%）、M1 OU-R1 52/52、MR1 AH 1,774/1,921（92.35%）、MR1 AI 声明镜像 M1 1,515/1,553。逐项未匹配清单及 reason 留在共享 `data/football_display_names/formal_scope_coverage.json#unresolved_records`。
+- 对 180 条执行精确 canonical alias 复用检查，无额外唯一 alias 命中。评估公开 lottery-football `team_name_mappings.csv` 后确认其记录是英文 standard/alias，且该仓库未声明 license；未复制或引用为中文来源。针对埃及、科索沃、阿尔巴尼亚、乌克兰及匈牙利小联赛候选检索到的多数仅为外文身份材料；个别近似同名条目存在国家/联赛冲突（例如 Kosovo `Vllaznia` 与 Albania `Vllaznia Shkodër`），故未强行映射。当前没有可负责任新增的 canonical 中文名；180 条继续标注 `NO_VERIFIED_CANONICAL_ZH`，不是技术解析遗漏。
+- 本地验证 M1 formatter/name-repair tests 8/8 PASS；MR1 shared-registry smoke tests 2/2 PASS（`FOOTBALL_DISPLAY_REGISTRY_DIR` 指向同一共享 master），均未发送/编辑 Telegram。无策略、模型、scope、盘口、账本或结算变更。本轮只记录来源审查结论，不改共享 registry。
+
 ## 2026-10-15 正式范围继续补齐（第八十一批）
 - NowScore 中文球队页将 TotalCorner provider `Nabrouh` 对应为“纳布洛”，并展示该队埃及第二级联赛比赛（https://info.nowscore.com/big/team/Summary/37053.html）；独立 Nabrouh/Nabarouh 身份资料及 TotalCorner 赛程交叉确认联赛身份。仅为 `team_id 45228` 新增 canonical，保留 provider identity 与现有别名，不与其他埃及球队合并。
 - 共享库提交 `416fe3b9cb7eb7af959787d9748c681270a5d152` 已推送 master。本批新增1条；正式范围2,468队：2,282 canonical、186 unresolved（92.46%）；M1 1,513/1,553（97.42%），M1 OU-R1 52/52（100%），MR1 AH 1,768/1,921（92.04%），MR1 AI 声明范围镜像 M1 为1,513/1,553（97.42%）；全共享库12,276 IDs、4,298 canonical。未匹配明细及未能核实原因以该共享提交内 `formal_scope_coverage.json#unresolved_records` 为准。
