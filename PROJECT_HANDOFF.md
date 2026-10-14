@@ -837,3 +837,7 @@
 - MR1 AH run [38559668601](https://github.com/ljm198964-alt/quant-runner/actions/runs/38559668601) SUCCESS：0 edited、125 already processed/skipped、0 unresolved、0 failed；edit receipt 写入 MR1 master commit `665970baab`（随后 MR1 AI receipt 更新远端 master）。
 - MR1 AI run [38559674257](https://github.com/ljm198964-alt/quant-runner/actions/runs/38559674257) SUCCESS：201 条历史记录中，192 unresolved；9 条有 message ID 的候选全部被 Telegram 拒绝，HTTP 400 `message to edit not found`；实际编辑 0。失败回执 commit `dc2914c64043c318df534aa84a8e9806e1bca716` 已推送 MR1 master。不得重发这些历史消息或把 workflow SUCCESS 写成消息编辑成功。
 - 本次历史消息实际编辑合计 4 条，全部来自 M1（含 AH/OU-R1）；MR1 AH 0、MR1 AI 0。未来新消息仍由各自 formatter 读取同一个 canonical registry；本机定向测试 M1 6/6、MR1 4/4 PASS。生产策略、模型、参数、范围、正式 Pick、ledger 与 settlement 均未修改。
+
+## 2026-10-14 再补一条并验证幂等
+- 对剩余 formal names 再查现成公开中文资料，补 team_id 15224 `ASK Bravo Publikum` → 布拉沃佩利根，中文球队资料来源 https://www.qtx.com/dbsoccer/team_138792.html；映射保留 TotalCorner ID、原名和 aliases。共享提交 `d541916cf9776d6a0077d453ebc776e4f15f2510` 已推送 master。formal union 更新为 2,468 IDs、2,129 canonical、339 unresolved（86.26%）；共享 registry 12,276 IDs、4,145 canonical。curator 再跑 `added:0`，`git diff --check` pass。
+- 新映射后再次运行 M1 历史 names-only 工作流 [38560323027](https://github.com/ljm198964-alt/quant-runner/actions/runs/38560323027)：SUCCESS，41 eligible、0 新编辑、41 already matching、99 缺原文、94 unresolved/unmapped、0 failed。说明旧消息当前均已是当下 registry formatter 的名称输出；没有重发。
