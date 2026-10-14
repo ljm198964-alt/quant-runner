@@ -1,5 +1,11 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 正式范围中文名称续补（batch 117）
+- 从最新共享库 `master` `7aadf155ba382c45c22b379d7e6521c99fe844c5` 继续；当前正式范围并集 2,468 个 team ID，原 unresolved 121。本批新增 4 个可核实名称，结果为 canonical 2,351、unresolved 117、覆盖率 95.26%；M1 1,533/1,553（98.71%）、M1 OU-R1 52/52、MR1 AH 1,831/1,921（95.31%）、MR1 AI 声明范围镜像 M1 1,533/1,553（98.71%）。
+- 新增：`45722 KF Kosova Prishtine → KF科索沃布利斯丁`、`45930 KF Ramiz Sadiku → KF拉米兹萨迪库`、`141371 KF Dinamo Ferizaj → 费里扎戴拿模`、`169513 FC Prizreni → 普里兹雷尼`。来源均为 FootballAnt 简体中文队页，并以 TotalCorner 对应 team 页面及科索沃联赛上下文交叉核验。只新增展示名/来源记录，不改 provider identity 或模型数据。
+- 共享库 PR [#21](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/21) 已合并，merge SHA `daa5b066ae00d6c89705d8e0b22a651354fcc907`。可复现 curation 入口：`ops/curate_formal_scope_public_club_tables.py`，二次运行验证幂等（新增 0、余项仍 117）。当前完整余项应始终读取 `data/football_display_names/formal_scope_coverage.json#unresolved_records`，不要沿用旧的 718/740 计数。
+- 本批只核对并增补共享名称数据，没有编辑或重发历史 TG，没有运行生产链。121 项起始余项中其余 117 项继续逐项寻找有来源的中文名；上游无效身份 `team_id=4931` 不猜测。
+
 ## 2026-10-15 中文展示库续补（batch 116）
 - 共享库 PR [#20](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/20) 已合并，master SHA `7aadf155ba382c45c22b379d7e6521c99fe844c5`。唯一库仍为 `data/football_display_names/display_names.json`。
 - 新增 TotalCorner `team_id=114375` Victoria Hotspurs → `维多利亚热刺`；来源为 Sofascore 简体中文关联俱乐部显示，TotalCorner 队页核对其马耳他联赛身份。新增 `league_id=15795` Malta Challenge League → `马耳他挑战联赛`，来源为中文赛事页并以 TotalCorner 队页赛区交叉核对。provider 原名、ID、联赛身份均未改写。审计及可重复的精确 ID curation 脚本保存在共享仓库对应数据目录和 `ops/`。
