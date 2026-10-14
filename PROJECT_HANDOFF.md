@@ -1,5 +1,13 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 中文展示库续补（batch 116）
+- 共享库 PR [#20](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/20) 已合并，master SHA `7aadf155ba382c45c22b379d7e6521c99fe844c5`。唯一库仍为 `data/football_display_names/display_names.json`。
+- 新增 TotalCorner `team_id=114375` Victoria Hotspurs → `维多利亚热刺`；来源为 Sofascore 简体中文关联俱乐部显示，TotalCorner 队页核对其马耳他联赛身份。新增 `league_id=15795` Malta Challenge League → `马耳他挑战联赛`，来源为中文赛事页并以 TotalCorner 队页赛区交叉核对。provider 原名、ID、联赛身份均未改写。审计及可重复的精确 ID curation 脚本保存在共享仓库对应数据目录和 `ops/`。
+- 合并后从 `formal_scope_coverage.json` 实算：正式范围并集 2,468，canonical 2,347，未匹配 121，覆盖 95.10%；M1 1,529/1,553（98.45%）；M1 OU-R1 52/52；MR1 AH 1,827/1,921（95.11%）；MR1 AI 声明镜像 M1 1,529/1,553（98.45%）。剩余项及原因见唯一共享文件 `data/football_display_names/formal_scope_coverage.json#unresolved_records`；不将“Al Magd/Al Majd”混为同队（TotalCorner 分别标注埃及与叙利亚联赛），其余无可靠中文来源者继续 unresolved。
+- 展示验收：M1 Telegram 专项本地测试 6/6 PASS；使用最新共享文件的隔离 M1 formatter 渲染为 `【M1】2026-10-15 20:00 马耳他挑战联赛 维多利亚热刺 vs 泽巴格流浪 全场让球 维多利亚热刺 -0.25@0.95`。MR1 共享 registry reader/formatter 定向测试 2/2 PASS，并验证读取相同共享 JSON。未运行生产策略或发送测试 Telegram。
+- 本轮未执行历史 Telegram 编辑，因此本轮真实编辑成功数为 0；历史编辑仍不得重发。最近既有修复回执仍记录于 batch 115：M1/M1 OU-R1 run `38651673155` 编辑 0（缺正文/映射限制），MR1 AH run `38651677750` 编辑 0（125 already processed）；MR1 AI 历史 9 条 Telegram edit 返回 `400 message to edit not found`。没有新的生产回执，不能宣称历史消息已修复。GitHub Actions 未因本轮名称提交而触发；云端正式链未做新运行验证。
+- 本次仅增加 display mapping/source/coverage/audit 与本 handoff；模型、策略、阈值、赛事范围、盘口、账本、结算和通知规则均未修改。
+
 ## 2026-10-15 中文展示/正式 Telegram 尾项复核（batch 115）
 - 从已合并共享库 `master` `3db198e7e38514efbff692d837a2c4adc1f03e24` 快进复核；覆盖统计仍为正式并集 2,468 IDs、canonical 2,346、unresolved 122（95.06%）；M1 1,528/1,553（98.39%）、M1 OU-R1 52/52、MR1 AH 1,826/1,921（95.05%）、MR1 AI 声明镜像 1,528/1,553（98.39%）。本轮对剩余项作定向来源核验，未发现可安全加入的新 canonical。例：KF Kika 的中文站资料仍显示拉丁字母队名，不据此编造音译。完整 unresolved 名单及逐项原因仍以唯一共享文件 `data/football_display_names/formal_scope_coverage.json#unresolved_records` 为准（121 条无经核实中文名，1 条 team_id 4931 provider identity 为无效字面 `0`）。
 - 四条正式展示链（M1 AH、M1 OU-R1、MR1 AH、MR1 AI）继续读取唯一共享 `display_names.json`；M1 11/11、MR1 registry/AI formatter 4/4 定向测试通过。隔离格式验收通过；没有触发生产策略、发送测试单或改动账本。
