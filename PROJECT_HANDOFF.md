@@ -1415,3 +1415,9 @@
 - 后续继续从 171 条 unresolved 中按有明确中文来源者逐项写入唯一 `display_names.json`；单纯可恢复英文身份不算中文覆盖。不得把该抽查范围误报为 171 条全部逐项完成，也不得将当前 93.07% 报成全覆盖。
 - 本轮继续做了源数据精确命中检查：从已审阅的 QiuXiaoCe `football-team-names-zh` 本地包与 171 个 provider name 逐字/归一匹配，命中 0；`footballant`、FootyStats、Sofascore、7M/500 搜索对若干埃及/科索沃/塞尔维亚队仍只返回英文身份。`Bani Ebaid` 可核对为 Beni Ebeid SC（不是中文名）；`FK FAP` 的官方缩写/身份明确，但没有可靠中文惯用名；均不写成推测译名。相关公开身份页面：<https://en.wikipedia.org/wiki/Beni_Ebeid_SC>、<https://fkfap1955.com/>。
 - 当前 unresolved 按其正式联赛上下文集中于：Egypt Division 2 31 条、Kosovo Division 1 21 条、Kosovo Division 2 16 条、Ukraine Persha Liga 10 条、North Macedonia First League 8 条；未匹配记录跨系统去重总数仍是 171（联赛多归属计数不能相加替代总数）。后续应优先从这些本地联赛的中文完整赛程/赔率页逐轮做英文—队名配对，再处理散布的小联赛队伍。
+
+## 2026-10-15 正式范围继续补齐（第九十四批）
+- 为 TotalCorner `team_id 57747` (`KF Gostivari`) 新增“高斯迪华”，依据中文维基北马其顿甲级联赛历史球队表中“高斯迪華 | KF Gostivari”精确对应，并以英文俱乐部资料区分旧 `FK Gostivar` 身份；`team_id 87857` (`KF Besa Doberdoll`) 新增“贝萨多贝尔多尔足球俱乐部”，依据 Tips.GG 简体中文马其顿杯球队列表；`team_id 88073` (`FC Voska Sport`) 新增“沃斯卡体育”，依据雷速中文球队页，Tips.GG 中文列表交叉核验。三项均保留各自 provider 名、team_id、league_id 45，不合并相似球队。
+- 共享库提交 `2d0aad1fc3c2bd0c1171800e3cb280cbf0ce30c9` 已推送 `totalcorner-research-bridge/master`。最新 formal union 2,468 IDs：2,300 canonical、168 unresolved（93.19%）；M1 1,522/1,553（98.00%），M1 OU R1 52/52（100%），MR1 AH 1,783/1,921（92.82%），MR1 AI 声明镜像 M1 1,522/1,553（98.00%）；observed AI confidence≥50 cohort 181/182（99.45%）。全共享库 12,276 team IDs、4,316 canonical；全部 unresolved ID、英文名、联赛、系统及原因见共享库 `formal_scope_coverage.json#unresolved_records`。
+- M1 formatter/name-repair tests 8/8 PASS；MR1 shared registry/AI formatter tests 4/4 PASS；三条新 ID 的隔离 fixture 渲染赛事、主客队均为中文；`git diff --check` PASS。没有运行策略或正式单，也没有本轮发送/编辑 Telegram 历史消息；历史消息编辑结果仍应以先前 handoff 中 workflow 回执为准。
+- 本批只改共享显示名称、curation 来源和覆盖统计；没有修改 M1/M1 OU R1/MR1 AH/MR1 AI 模型、策略、赛事范围、账本、结算或 Telegram 规则。
