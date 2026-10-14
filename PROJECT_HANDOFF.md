@@ -978,3 +978,8 @@
 - 新增两支格鲁吉亚队的直接简中名称：`FC Gori`（46970）→FC哥里（7M 简中球队页 https://team.7m.com.cn/115920/index_gb.shtml）；`FC Spaeri`（50839）→斯佩里队（Tips.GG 简中球队档案 https://tips.gg/cn/team/spaeri-fc-football/）。保留 team_id、TotalCorner provider name 与 league IDs。共享 master 提交 `0dd59b09b0ecfc41fba4ca816931871822e44b32` 已推送。
 - 最新 formal union 2,468 IDs：2,187 canonical、281 unresolved（88.61%）；共享库 12,276 IDs、4,203 canonical。完整 remaining list 以最新共享 `formal_scope_coverage.json` 为准。
 - M1 formatter 6/6、MR1 shared registry/AI formatter 4/4 PASS。只有 display curation 更新；没有真实 Telegram 编辑/发送、生产运行或策略/账本改动。尚有281项待核实。
+
+## 2026-10-14 正式范围继续补齐（第十六批）
+- 新增两支直接简中来源对应：`Al-Bukayriyah FC`（50581）→布凯里耶（球天下球队页 https://data.qtx.com/qiudui/29W8VM2jvb.html）；`BFA Vilnius`（52319）→BFA 维尔纽斯（Tips.GG 简中球队页 https://tips.gg/cn/team/bfa-vilnius-football/）。保留 TotalCorner ID、provider name 与联赛身份。共享 master 提交 `d4b71367fa682120b1d62ae68f85d74496347be5` 已推送。
+- 最新 formal union 2,468 IDs：2,189 canonical、279 unresolved（88.70%）；共享 registry 12,276 IDs、4,205 canonical。剩余项以共享库最新 `formal_scope_coverage.json` 为准。
+- 最新共享映射验证：M1 formatter 6/6，MR1 shared registry/AI formatter 4/4 PASS。没有真实 Telegram 修改或生产运行；正式策略、账本、结算未改。279 项仍待核实。
