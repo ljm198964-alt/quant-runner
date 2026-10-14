@@ -1276,3 +1276,10 @@
 - 本轮真实 name-only workflow：M1 `38601917849` success，eligible41、edited0、already_matching41、缺原文99、未映射97、failed0；MR1 Formal `38601926220` success，eligible0、edited0、already processed125、unresolved0；MR1 AI `38601934936` success，201总项、9候选、edited0、failed9（均为 Telegram `message to edit not found`）、unresolved192。没有重发历史消息，也没有更改 provider_message_id、盘口、投注方向或账本。
 - M1 OU-R1 专属历史消息未见单独历史修复 ledger/workflow；本批确认其 52/52 名称覆盖与共享读取范围，但不据此声称 OU-R1 历史 Telegram 已被实际回查或编辑。所有生产模型、策略、订单和结算保持不变。
 - MR1 私有仓库的只读共享库 smoke workflow `38602761639` 已尝试，但 job 在 runner 启动前即被 GitHub 账户付款/支出限制拦截（GitHub 原始注释：recent account payments failed or spending limit needs increase）；不是名称测试失败。MR1 Formal/AI 既有 quant-runner workflow 本轮均完成并读取共享 registry；仍不能把云端 smoke 标成 PASS。
+
+## 2026-10-15 正式范围继续补齐（第七十一批）
+- 继续只使用可核验来源，未做大规模历史身份恢复。新增 `team_id 31535 NK Jesenice → 耶塞尼采`；Sofascore 简体中文球员/球队上下文将该队称为“耶塞尼采”，比赛与联赛仍绑定斯洛文尼亚 NK Jesenice 身份：<https://www.sofascore.com/zh/football/player/anej-kujovic/1476302>。
+- 本次累计新补5个 ID：Santa Lucia FC（33958）、AF Elbasani（135321）、Banbridge Town（33403）、Rilski Sportist（43365）、NK Jesenice（31535）。唯一共享库最新提交 `5a43941ecad925a7ff99f543048f44f370af1120` 已推送 `totalcorner-research-bridge/master`。正式范围 2,468 ID：2,271 canonical、197 unresolved（92.02%）；M1 1,509/1,553（97.17%），M1 OU R1 52/52（100%），MR1 AH 1,758/1,921（91.51%），MR1 AI declared mirror 1,509/1,553（97.17%）。准确逐项待补名单和既有原因见共享 `formal_scope_coverage.json` 的 `unresolved_records`。
+- M1 formatter / name-repair 本地单测 8/8 PASS，curator 运行及 `git diff --check` PASS。共享 resolver 仍以 team_id 优先。没有改模型、策略、市场、结算、账本、订单或 Telegram 发送条件。
+- 采用最终共享库后的历史 TG 核查：M1 `38603045617` success，eligible41、edited0、already_matching41、缺原文99、未映射97、failed0；MR1 AI `38603061892` success，total201、候选9、edited0、failed9（均是 Telegram `400 message to edit not found`）、unresolved192；MR1 Formal `38603053523` 的 edit step 成功（eligible0、edited0、skipped125、unresolved0），但 workflow 最终因写回状态时 MR1 runtime 并发推进 master、GitHub 拒绝旧 expected ref（non-fast-forward/ref lock）而失败。没有任何历史消息重发或投注字段修改；也没有历史消息实际编辑成功。
+- MR1 私有仓库只读 registry smoke `38602761639` 被 GitHub 账户付款/支出限制在 runner 启动前拦截；云端独立 smoke 未 PASS。M1 OU-R1 当前名称覆盖仍为52/52，但没有发现它自己的历史 TG repair ledger/workflow，故不声称其历史消息已逐条编辑验收。
