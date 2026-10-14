@@ -1018,3 +1018,8 @@
 - FootyStats 简中球队档案明确以“扎基里斯B队”展示 `VMFD Žalgiris Vilnius II`，并列出立陶宛1 Lyga赛程/球队资料：https://footystats.org/cn/clubs/vmfd-zalgiris-vilnius-ii-1240。本次仅为精确 provider name `Vmfd Zalgiris II`（team_id `10705`）录入 canonical “扎基里斯B队”，保留 provider ID/name、拼写 aliases 和 source；没有把另一个 provider team ID `71679` 自动合并。
 - 共享中文库提交 `d6dd1a4e4ebeca6a284b1bb12d10c379f6877e8a` 已推送。当前 formal union 2,468 IDs，2,205 canonical，263 unresolved（89.34%）；M1 1,490/1,553（95.94%），M1 OU-R1 52/52，MR1 AH 1,704/1,921（88.70%），MR1 AI declared mirror M1 1,490/1,553（95.94%）。完整未匹配列表以共享 `formal_scope_coverage.json` 为准。
 - 名称层隔离回归：M1 Telegram formatter 6/6 PASS，MR1共享 registry test 1/1 PASS。没有真实 Telegram编辑/发送或生产触发；模型、策略、范围、账本、结算和派单条件未改。263条继续查证。
+
+## 2026-10-14 正式范围中文名追加：Hertha Wels
+- 从最新共享 master `d6dd1a4e4ebeca6a284b1bb12d10c379f6877e8a` 继续处理 formal unresolved；仅新增已核实 `team_id 165677`（provider `Hertha Wels`）→ `WSC赫塔威尔斯`。球探中文球队页明确列出“WSC赫塔威尔斯”与英文 `WSC Hertha Wels`（https://info.titan007.com/cn/team/Summary.aspx?TeamID=39076），FootyStats 同时确认俱乐部英文正式名 WSC Hertha Wels、地点 Wels、Austria Regionalliga（https://footystats.org/clubs/wsc-hertha-wels-3335）。原 TotalCorner ID/provider name 和联赛 ID 保留；不与其他 Hertha 球队合并。
+- 最新共享文件实算：formal union 2,468 IDs，canonical 2,206，unresolved 262，覆盖 89.38%；M1 1,487/1,553（95.75%）；M1 OU-R1 52/52（100%）；MR1 AH 1,706/1,921（88.81%）；MR1 AI declared mirror 1,487/1,553（95.75%）。完整逐队未匹配表以共享 `data/football_display_names/formal_scope_coverage.json` 为准。
+- 当前 M1 formatter tests 6/6 PASS，MR1 shared-registry display test 1/1 PASS。仅新增共享展示映射及审计统计，无生产 TG 发送/编辑；此前 TG repair 的真实状态仍见上方历史记录，不把测试当作线上修复。模型、策略、盘口、赛事范围、账本、结算与派单逻辑均未改。候选 `FK TransINVEST`、`FC Altai Semey`、`BSK Banja Luka`、`OFK Vršac`、`Sirens` 等本轮未找到足以绑定到精确 TotalCorner identity 的简体中文权威/成熟足球资料，继续保持 unresolved，不按音译猜填。
