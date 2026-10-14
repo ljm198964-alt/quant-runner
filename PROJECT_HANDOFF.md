@@ -8,6 +8,11 @@
 - 本轮未执行历史 Telegram 编辑，因此本轮真实编辑成功数为 0；历史编辑仍不得重发。最近既有修复回执仍记录于 batch 115：M1/M1 OU-R1 run `38651673155` 编辑 0（缺正文/映射限制），MR1 AH run `38651677750` 编辑 0（125 already processed）；MR1 AI 历史 9 条 Telegram edit 返回 `400 message to edit not found`。没有新的生产回执，不能宣称历史消息已修复。GitHub Actions 未因本轮名称提交而触发；云端正式链未做新运行验证。
 - 本次仅增加 display mapping/source/coverage/audit 与本 handoff；模型、策略、阈值、赛事范围、盘口、账本、结算和通知规则均未修改。
 
+### Batch 116 后续：MR1 AI formatter 接线修复
+- 真实隔离检查发现 MR1 AI formatter 接收共享解析器 `{league, match}`，却只读取 `{league, home, away}`，导致球队字段退回英文。修复已合并到 `mr1-shadow/master`，PR [#1](https://github.com/ljm198964-alt/mr1-shadow/pull/1)，merge SHA `0a8e90025550d103c4b2c431d31b67e131a22eb0`。
+- 修复只在展示层从共享 `match` 字符串提取主客队；新增回归测试。MR1 AI Telegram formatter + shared reader 共 5/5 PASS；使用共享 JSON 的隔离输出为 `【MR1 AI】2026-10-15 20:00 马耳他挑战联赛 维多利亚热刺 vs 泽巴格流浪 全场让球 维多利亚热刺 -0.25@0.95`。没有真实发送 TG；云端下一轮运行与频道回执未被动验收。
+- 本次核对的 M1 formal ledger、MR1 AH formal data 与 MR1 AI sent ledger 中未找到 team_id 114375 的既有发送记录，因此在这些已检查账本中没有可编辑的历史消息；未检查独立 M1 OU-R1 发送账本，也不重发历史单。其他历史修复数仍按 batch 115 已有真实回执记录。
+
 ## 2026-10-15 中文展示/正式 Telegram 尾项复核（batch 115）
 - 从已合并共享库 `master` `3db198e7e38514efbff692d837a2c4adc1f03e24` 快进复核；覆盖统计仍为正式并集 2,468 IDs、canonical 2,346、unresolved 122（95.06%）；M1 1,528/1,553（98.39%）、M1 OU-R1 52/52、MR1 AH 1,826/1,921（95.05%）、MR1 AI 声明镜像 1,528/1,553（98.39%）。本轮对剩余项作定向来源核验，未发现可安全加入的新 canonical。例：KF Kika 的中文站资料仍显示拉丁字母队名，不据此编造音译。完整 unresolved 名单及逐项原因仍以唯一共享文件 `data/football_display_names/formal_scope_coverage.json#unresolved_records` 为准（121 条无经核实中文名，1 条 team_id 4931 provider identity 为无效字面 `0`）。
 - 四条正式展示链（M1 AH、M1 OU-R1、MR1 AH、MR1 AI）继续读取唯一共享 `display_names.json`；M1 11/11、MR1 registry/AI formatter 4/4 定向测试通过。隔离格式验收通过；没有触发生产策略、发送测试单或改动账本。
