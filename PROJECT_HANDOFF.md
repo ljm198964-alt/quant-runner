@@ -1013,3 +1013,8 @@
 - 继续查证后新增 `FK Tekstilac Odzaci`（team_id `133202`）→“特克斯蒂拉茨”。FootyStats 简中球队档案直接标注 FK Tekstilac Odzaci 与该中文队名：https://footystats.org/cn/clubs/fk-tekstilac-odzaci-704721；塞尔维亚官方球队站确认 Tekstilac Odžaci 的球队身份：https://fktekstilac1919.com/。保留 provider identity、ID 与拼写别名，不作合并。
 - 最新唯一共享 registry 提交 `960d1597d6e97d6460831a0ac44aca3c0649e243` 已推送；当前 formal union 2,468 IDs、2,204 canonical、264 unresolved（89.30%）。M1 1,489/1,553（95.88%），OU-R1 52/52，MR1 AH 1,703/1,921（88.65%），MR1 AI declared mirror M1 1,489/1,553（95.88%）。之前第21批两项与本批项均由共享 `formal_scope_coverage.json` 更新，264条剩余明细以该文件为准。
 - M1 formatter 6/6 PASS；MR1共享 display-name test 1/1 PASS。未编辑/发送任何 Telegram 历史消息，本轮生产 TG 修复仍未执行；未修改模型、策略、赛事范围、账本、结算或出单规则。264条继续逐项来源核验。
+
+## 2026-10-14 正式范围继续补齐（第二十三批）
+- FootyStats 简中球队档案明确以“扎基里斯B队”展示 `VMFD Žalgiris Vilnius II`，并列出立陶宛1 Lyga赛程/球队资料：https://footystats.org/cn/clubs/vmfd-zalgiris-vilnius-ii-1240。本次仅为精确 provider name `Vmfd Zalgiris II`（team_id `10705`）录入 canonical “扎基里斯B队”，保留 provider ID/name、拼写 aliases 和 source；没有把另一个 provider team ID `71679` 自动合并。
+- 共享中文库提交 `d6dd1a4e4ebeca6a284b1bb12d10c379f6877e8a` 已推送。当前 formal union 2,468 IDs，2,205 canonical，263 unresolved（89.34%）；M1 1,490/1,553（95.94%），M1 OU-R1 52/52，MR1 AH 1,704/1,921（88.70%），MR1 AI declared mirror M1 1,490/1,553（95.94%）。完整未匹配列表以共享 `formal_scope_coverage.json` 为准。
+- 名称层隔离回归：M1 Telegram formatter 6/6 PASS，MR1共享 registry test 1/1 PASS。没有真实 Telegram编辑/发送或生产触发；模型、策略、范围、账本、结算和派单条件未改。263条继续查证。
