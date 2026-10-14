@@ -983,3 +983,8 @@
 - 新增两支直接简中来源对应：`Al-Bukayriyah FC`（50581）→布凯里耶（球天下球队页 https://data.qtx.com/qiudui/29W8VM2jvb.html）；`BFA Vilnius`（52319）→BFA 维尔纽斯（Tips.GG 简中球队页 https://tips.gg/cn/team/bfa-vilnius-football/）。保留 TotalCorner ID、provider name 与联赛身份。共享 master 提交 `d4b71367fa682120b1d62ae68f85d74496347be5` 已推送。
 - 最新 formal union 2,468 IDs：2,189 canonical、279 unresolved（88.70%）；共享 registry 12,276 IDs、4,205 canonical。剩余项以共享库最新 `formal_scope_coverage.json` 为准。
 - 最新共享映射验证：M1 formatter 6/6，MR1 shared registry/AI formatter 4/4 PASS。没有真实 Telegram 修改或生产运行；正式策略、账本、结算未改。279 项仍待核实。
+
+## 2026-10-14 正式范围继续补齐（第十七批）
+- 复核共享 master 后，正式并集仍为2,468个ID，上一批279项未匹配。本轮依雷速体育中文球队档案新增5条：Kima Aswan（77134）→克玛阿斯罔（https://www.leisu.com/data/zuqiu/team-30909）；El Obour SC（80942）→埃尔奥布尔（https://www.leisu.com/data/zuqiu/team-60233/data）；FK Liria（32246）→FC利里亚（雷速页以FC Liria列名，https://www.leisu.com/data/zuqiu/team-85397/data）；FK Ibar Rozaje（40486）→伊巴罗扎伊（https://www.leisu.com/data/zuqiu/team-20222/data）；Malisheva（54405）→马利舍瓦（https://www.leisu.com/data/zuqiu/team-53247/best）。原始 provider ID/name、aliases、联赛身份均保留，没有合并 team IDs。
+- 共享中文库提交 `0ff2c9441b5ada2f3e46d12c1c475ce1161117ae` 已推送至 `totalcorner-research-bridge/master`。从生成后的 `formal_scope_coverage.json` 实算：formal union 2,468，canonical 2,194，unresolved 274，覆盖88.90%；M1 1,483/1,553（95.49%）；M1 OU-R1 52/52（100%）；MR1 AH 1,696/1,921（88.29%）；MR1 AI declared mirror M1 1,483/1,553（95.49%），observed confidence≥50 cohort 181/182（99.45%）。剩余274项的完整 ID/name/league/system/reason 以共享库 `data/football_display_names/formal_scope_coverage.json` 为准。
+- 使用共享 master registry 定向验证：M1 telegram display tests 6/6 PASS；MR1 shared registry/AI formatter tests 4/4 PASS；curation generator 与 `git diff --check` 通过。未做生产 Telegram 发送或历史编辑，未改任何模型、策略、订单账本、结算或派单规则。历史 Telegram 修复数本轮为0；正式范围名称补齐仍未完成。
