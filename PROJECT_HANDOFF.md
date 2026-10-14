@@ -911,3 +911,9 @@
 - 新增 `30294 Penrhiwceiber Rangers`→彭里赫齐伯流浪者，来源为 Tips.GG 简中威尔士杯球队表（页面直接展示“彭里赫齐伯流浪者”）；映射保留 TotalCorner team ID 与 provider 原名。共享库提交 `08d76d7814334c0388e80255d9707e085149898b` 已推送 master。
 - 当前正式范围实算：2,468 IDs，2,162 canonical / 306 unresolved（87.60%）；M1 1,475/1,553（94.98%）；M1 OU-R1 52/52；MR1 AH 1,666/1,921（86.73%）；MR1 AI declared M1 mirror 1,475/1,553（94.98%）；共享库 12,276 IDs / 4,178 canonical，联赛 334/771。剩余306条完整身份、系统归属和未匹配原因见共享 `formal_scope_coverage.json`。
 - M1定向测试20/20通过；MR1共享映射/AI formatter测试4/4通过；隔离渲染正确显示新增名称。检查 M1 正式账本与 MR1 AH/AI 已发送记录，team IDs 10310、7590、30294 均无历史 TG 订单，因此上方在共享提交 `c9e4bc20` 后完成的历史编辑 workflow 结果仍适用于本批，没有因名称更新重复编辑/发送。此处只更新名称库及交接，无模型、策略、账本或交易规则变化。
+
+## 2026-10-14 正式范围继续补齐（追加）
+- 从当前共享 master `2e1288c20a58a072e3483f4a6d6a250c98739a4d` 的正式 unresolved 清单出发，再补 3 个可核实 ID：Rudar Kakanj（9157）→卡坎吉鲁达尔（Tips.GG 简中比赛页）；NK Jarun（30623）→雅鲁恩队（Tips.GG 简中球队对阵页）；FC Hebar Pazardzhik（42568）→赫巴（中国足球数据球队资料页）。来源 URL、provider 原名、team ID、别名均在共享 `display_names.json` 留档；无公开中文惯用名证据的球队仍保留 unresolved。
+- 最新共享 master 为 `2e1288c20a58a072e3483f4a6d6a250c98739a4d`。按提交时最新 `formal_scope_coverage.json`：2,468 formal IDs，2,165 canonical、303 unresolved，覆盖 87.72%；M1 1,476/1,553（95.04%），M1 OU-R1 52/52（100%），MR1 AH 1,670/1,921（86.93%），MR1 AI declared mirror M1 1,476/1,553（95.04%）。完整未匹配名称、ID、联赛及系统范围以该文件 `unresolved_records` 为准。
+- 定向检查本地 M1 正式 ledger 与可访问的 MR1 AI prospective records，没有发现 team IDs 9157、30623、42568 对应的已发送订单，因此新增名称没有待编辑的历史 TG 文本。最近一次名称修复实际回执仍是前节记录：M1 编辑4条；MR1 AH编辑0条；MR1 AI编辑0条（9条旧消息由 Telegram 返回400 `message to edit not found`，192条 unresolved）。当前未为这3个 ID 再触发 workflow，未重发或修改任何旧消息。
+- M1 formatter/formal-runtime 定向回归此前20/20通过；MR1 registry/AI formatter此前4/4通过。共享工作区保持 clean；本追加只更新交接文档，不涉及生产代码、模型、策略、范围、账本、结算或派单条件。任务仍未完成：303 formal IDs 尚无可靠 canonical 中文名，需继续核证。
