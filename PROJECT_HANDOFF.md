@@ -830,3 +830,10 @@
 - 本地 formatter 验证：M1 display tests 6/6 通过；MR1 shared-registry + MR1 AI formatter Node tests 4/4 通过（环境显式指向最新共享 registry）。这是隔离测试，不代表新生产扫描或 Telegram 收据。M1 AH 与 OU-R1 共用 M1 formatter；MR1 AH/MR1 AI formatter 使用共享 registry，策略和账本仍独立。
 - 本轮未触发历史 Telegram 修复 workflow，也未编辑或重发旧消息。M1 name-only 工具需要 `M1_TELEGRAM_BOT_TOKEN`、`M1_TELEGRAM_CHAT_ID`；本机运行环境两者缺失。MR1 AH/AI 需由既有专用 workflow 写入各自 edit receipts。当前 Actions 账户限制仍是实际执行阻碍，因此本轮历史 Telegram 编辑成功数为 0，不能宣称历史消息已修复；继续按已知原因保留无法编辑/缺原文的旧消息，不重发。
 - 针对剩余球队做了定向中文来源查询，但 Csakvari TK、Balmazujvaros、埃及地区队及部分巴尔干/北爱尔兰低级别球队本轮仍无足以确认 canonical 的中文来源；这些记录保留 provider 英文身份并标 `NO_VERIFIED_CANONICAL_ZH`，不以猜译填充。未改 M1/MR1/MR1 AI 策略、模型、参数、赛事范围、正式订单或结算。
+
+## 2026-10-14 共享库增量后的历史 Telegram 实际复核
+- 在用户授权的 names-only / no-resend 范围内，用 quant-runner 既有工作流读取最新共享 master 并处理旧消息；没有创建 Pick、发送新消息或更动交易内容。
+- M1 含 AH 与 OU-R1 的 run [38559663544](https://github.com/ljm198964-alt/quant-runner/actions/runs/38559663544) SUCCESS：41 eligible，4 EDITED、37 ALREADY_MATCHING，0 failed；另 99 条缺已保存原文、94 条因现有映射不足跳过。报告中 4 次编辑均为名称字段改动。该 workflow 将报告作为 artifact 保存，不改正式 ledger/结算。
+- MR1 AH run [38559668601](https://github.com/ljm198964-alt/quant-runner/actions/runs/38559668601) SUCCESS：0 edited、125 already processed/skipped、0 unresolved、0 failed；edit receipt 写入 MR1 master commit `665970baab`（随后 MR1 AI receipt 更新远端 master）。
+- MR1 AI run [38559674257](https://github.com/ljm198964-alt/quant-runner/actions/runs/38559674257) SUCCESS：201 条历史记录中，192 unresolved；9 条有 message ID 的候选全部被 Telegram 拒绝，HTTP 400 `message to edit not found`；实际编辑 0。失败回执 commit `dc2914c64043c318df534aa84a8e9806e1bca716` 已推送 MR1 master。不得重发这些历史消息或把 workflow SUCCESS 写成消息编辑成功。
+- 本次历史消息实际编辑合计 4 条，全部来自 M1（含 AH/OU-R1）；MR1 AH 0、MR1 AI 0。未来新消息仍由各自 formatter 读取同一个 canonical registry；本机定向测试 M1 6/6、MR1 4/4 PASS。生产策略、模型、参数、范围、正式 Pick、ledger 与 settlement 均未修改。
