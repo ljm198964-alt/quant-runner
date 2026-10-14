@@ -879,3 +879,10 @@
 - 验证：M1 display formatter 6/6 PASS；MR1 shared registry/MR1 AI formatter 4/4 PASS，确认 MR1 使用挂载的同一共享库；`git diff --check` PASS。针对本次 5 个英文 identity 的定向查找未在 M1 正式账本及 MR1 AI 发送/前瞻 ledger 中发现对应策略消息，因此没有可确认的旧 TG message ID 可编辑；未调用 Telegram、未发送/编辑消息。历史消息更广范围编辑仍未完成。
 - 当前变更待提交/推送至共享库仓库；本机 `quant-runner` 交接工作区仍在 `6752840081932906b79c56670b1b0dfe34f42901`，本轮 GitHub HTTPS fetch 曾返回 `SSL_ERROR_SYSCALL`，因此交接更新和两仓库 push 尚未完成。待网络恢复后先核对远端头，再提交共享库数据与本交接记录；不要误报云端部署或历史 Telegram 编辑成功。
 - 本次仅涉及名称展示映射、curation/coverage 审计和 handoff；没有修改模型、策略、盘口、正式范围、订单/结算账本或 Telegram 派单规则。
+
+## 2026-10-14 正式范围中文名称续补：北爱尔兰、匈牙利、威尔士、埃及与乌克兰
+- 在最新共享库 `totalcorner-research-bridge/master` (`c69a0907f5…`) 基础上，只写入公开中文来源可核验且与 TotalCorner team_id/联赛一致的映射：`23695 Portstewart`→波特斯图尔特、`11406 Coagh Utd`→科阿联队、`39562 Dollingstown`→多林斯敦、`31174 AL Fayoum`→法尤姆FC、`8137 SW Bregenz`→布雷根茨、`7338 Renova Dzepciste`→雷诺瓦、`15380 Pontypridd Town`→庞蒂普里德、`69357 FC Nagykanizsa`→纳吉卡尼扎（只限男队 ID，不映射女队）、`43026 FK Lviv`→利沃夫。原 ID、英文名、别名、league IDs 和每条来源证据均在唯一 `display_names.json` 中；没有合并身份。
+- 正式范围从 2,468 IDs / 2,144 canonical / 324 unresolved 更新为 2,468 / 2,153 / 315（87.24%）。M1 为 1,472/1,553（94.78%）；M1 OU-R1 52/52（100%）；MR1 AH 1,660/1,921（86.41%）；MR1 AI declared mirror of M1 1,472/1,553（94.78%）。整个共享 registry 12,276 IDs、4,169 canonical。315 条未匹配记录全部有 `NO_VERIFIED_CANONICAL_ZH` 原因，完整 team_id/name/league/system 清单见共享 `data/football_display_names/formal_scope_coverage.json`。
+- 验证：M1 Telegram formatter tests 6/6 PASS；MR1 shared registry + MR1 AI formatter tests 4/4 PASS（测试显式读取唯一共享库）；`git diff --check` PASS。M1 AH/OU-R1 继续使用 M1 formatter；MR1 AH/AI 使用共享 registry；后台 ledger/dedupe 隔离保持不变。
+- 历史 Telegram：本轮没有执行 API 编辑或重新发送。此前 dry-run 的 M1 history repair 41 eligible、99 缺原消息文本、94 无映射/无安全替换、实际改写 0；本机未配置可用 M1/MR1 Telegram 发送凭据，且没有找到安全的现成编辑 workflow。不能声称任何历史 TG 已修复。新名称写入 registry 并推送不等于生产进程已拉取或历史消息已编辑。
+- 共享库提交 `c69a0907f5…` 已推送 master。此 handoff 更新不改变模型、策略、范围、账本、结算、盘口或 Telegram 派单逻辑。后续继续逐条核验剩余 315 项，不用临时音译填充。
