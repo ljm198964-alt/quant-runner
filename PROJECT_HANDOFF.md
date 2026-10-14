@@ -1198,3 +1198,7 @@
 ## 2026-10-14 正式范围继续补齐（第五十七批）
 - FootyStats 中文档案将 VMFD Žalgiris Vilnius II 标为“扎基里斯B队”，并明确 Lithuania 1 Lyga 及俱乐部官网身份（https://footystats.org/cn/clubs/vmfd-zalgiris-vilnius-ii-1240）；TotalCorner `team_id 71679` 的 provider name FK Zalgiris Vilnius II 与其别名及 league_id 542 匹配。为该独立 provider ID 复用已核验 canonical，不与一线队或另一 team ID 合并。
 - 共享库提交 `5b0cde28ee6bda35a7eeb4fbcdd2139d42f5dc2b` 已推送 master，本批新增1条。formal union 2,468 IDs：2,250 canonical、218 unresolved（91.17%）；M1 1,500/1,553（96.59%）；M1 OU-R1 52/52；MR1 AH 1,743/1,921；MR1 AI declared mirror 1,500/1,553。M1 formatter 6/6、curator 与 `git diff --check` PASS。只更新共享展示名称及审计文件；未触及模型、策略、正式账本、结算或 Telegram。
+
+## 2026-10-14 正式范围继续补齐（第五十八批）
+- 中文维基百科《欧洲顶级足球俱乐部列表》明确以 KF Gjilani 对应中文名“格尼拉内”（https://zh.wikipedia.org/wiki/歐洲頂級足球俱樂部列表）；官方俱乐部实体名 Klubi Futbollistik Gjilani 与 TotalCorner `team_id 71368` provider short name Gjilani 对应，联赛 ID 8293 一致。为该独立 ID 登记 canonical 与全名/异体别名。
+- 共享库提交 `e4f77c67c826301b23a2e8721379444230839283` 已推送 master，本批新增1条。formal union 2,468 IDs：2,251 canonical、217 unresolved（91.21%）；M1 1,500/1,553（96.59%）；M1 OU-R1 52/52；MR1 AH 1,744/1,921；MR1 AI declared mirror 1,500/1,553。M1 formatter 6/6、curator 与 `git diff --check` PASS。未修改生产策略、模型、账本、结算或任何 Telegram 消息。
