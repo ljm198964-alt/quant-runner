@@ -1310,3 +1310,8 @@
 - 球探网球队资料将匈牙利足球俱乐部 BVSC Zuglo 明确显示为“布达佩斯瓦苏塔斯”（https://football.chuqi.com/football/team-match/230816/）。与 TotalCorner `team_id 70974`、provider `BVSC Zuglo` 及匈牙利联赛 league_id 241 核对后新增 canonical，并保留 Budapesti VSC、BVSC-Zugló 等别名。
 - 共享库提交 `65a62803b39687d6e13992fbf4153e26b22c8597` 已推送 master。本批新增1条；正式范围2,468队：2,277 canonical、191 unresolved（92.26%）；M1 1,513/1,553（97.42%），M1 OU-R1 52/52，MR1 AH 1,763/1,921（91.78%），MR1 AI declared mirror 1,513/1,553（97.42%）；全库12,276 IDs、4,293 canonical。逐项 unresolved 以共享 `formal_scope_coverage.json#unresolved_records` 为准。
 - curator 新增1条；M1 formatter/name-repair 测试8/8 PASS，`git diff --check` PASS。仅更新共享展示映射与交接记录，未修改生产策略、模型、赛事范围、账本、结算、Telegram 派单规则，未发送或编辑 TG 消息。
+
+## 2026-10-15 正式范围继续补齐（第七十七批）
+- 雷速简体中文 FK Garliava 球队资料明确显示“加尔利阿瓦”，同时列出英文 identity FK Garliava（https://www.leisu.com/data/zuqiu/team-40518/transfer）。与 TotalCorner `team_id 84086` 和立陶宛 league_id 542 对照后新增 canonical；保持 team ID 不变，不对相似拼写做泛化。
+- 共享库提交 `dce28cac0c1749a09fae0c20f68641411adf7b71` 已推送 master。本批新增1条；正式范围2,468队：2,278 canonical、190 unresolved（92.30%）；M1 1,513/1,553（97.42%），M1 OU-R1 52/52，MR1 AH 1,764/1,921（91.83%），MR1 AI declared mirror 1,513/1,553（97.42%）；全库12,276 IDs、4,294 canonical。完整 unresolved 以共享 `formal_scope_coverage.json#unresolved_records` 为准。
+- curator 新增1条；M1 formatter/name-repair 测试8/8 PASS，`git diff --check` PASS。只改共享展示映射及交接记录，没有发送/编辑 TG，也没有修改模型、策略、赛事范围、账本或结算。
