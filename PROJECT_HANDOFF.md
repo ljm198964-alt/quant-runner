@@ -1194,3 +1194,7 @@
 ## 2026-10-14 正式范围继续补齐（第五十六批）
 - 7M 中文球队档案分别明确标注 FK TransINVEST 为“特兰斯因维斯特”（https://team.7m.com.cn/650201/index.shtml）、FK TransINVEST B 为“特兰斯因维斯特B队”（https://team.7m.com.cn/726884/index_gb.shtml）；按 TotalCorner 独立 team IDs `101061` 和 `145681` 写入，B队不与一线队合并。
 - 共享库提交 `3f9061170850154f451249c9cfb72898f29b7bab` 已推送 master，本批新增2条。formal union 2,468 IDs：2,249 canonical、219 unresolved（91.13%）；M1 1,499/1,553（96.52%）；M1 OU-R1 52/52；MR1 AH 1,742/1,921；MR1 AI declared mirror 1,499/1,553。M1 formatter 6/6、curator 与 `git diff --check` PASS。只更新共享展示库和审计数据；无 Telegram 发送/编辑或模型、策略、账本、结算、派单规则变更。
+
+## 2026-10-14 正式范围继续补齐（第五十七批）
+- FootyStats 中文档案将 VMFD Žalgiris Vilnius II 标为“扎基里斯B队”，并明确 Lithuania 1 Lyga 及俱乐部官网身份（https://footystats.org/cn/clubs/vmfd-zalgiris-vilnius-ii-1240）；TotalCorner `team_id 71679` 的 provider name FK Zalgiris Vilnius II 与其别名及 league_id 542 匹配。为该独立 provider ID 复用已核验 canonical，不与一线队或另一 team ID 合并。
+- 共享库提交 `5b0cde28ee6bda35a7eeb4fbcdd2139d42f5dc2b` 已推送 master，本批新增1条。formal union 2,468 IDs：2,250 canonical、218 unresolved（91.17%）；M1 1,500/1,553（96.59%）；M1 OU-R1 52/52；MR1 AH 1,743/1,921；MR1 AI declared mirror 1,500/1,553。M1 formatter 6/6、curator 与 `git diff --check` PASS。只更新共享展示名称及审计文件；未触及模型、策略、正式账本、结算或 Telegram。
