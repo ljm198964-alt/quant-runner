@@ -1245,6 +1245,12 @@
 - 新共享库后的历史 TG workflows：M1 `38597295291` success（eligible41、edited0、already_matching41、missing original text99、unmapped97、failed0）；MR1 Formal `38597304876` success（edited0、already processed125、unresolved0）；MR1 AI 编辑步骤运行成功但整体 run `38597313033` failure，候选9条均仍为 Telegram `400 message to edit not found`、unresolved192、edited0。最后的“Persist actual edit receipts” push 遇 MR1 runtime 并发更新导致 GitHub 拒绝 non-fast-forward/ref lock（远端 master 当时已前进至 `7c15870e…`，期望旧 ref `13b14d25…`）；因此本轮没有可确认的 MR1 AI repair receipt 持久化。没有新发策略消息。
 - 生产策略、模型、阈值、订单账本、结算均未修改；历史 TG 实际编辑数仍为0。204条未匹配逐条清单及原因以共享 `formal_scope_coverage.json` 为准。
 
+## 2026-10-15 正式范围继续补齐（第六十七批）
+- 7M 简体/繁体中文足球数据页对 TotalCorner `team_id 86494 CSC 1599 Selimbar` 给出名称“瑟利姆壩”，同页列出英文队名和罗马尼亚赛程；为该 ID 新增简体 canonical“瑟利姆坝”，保留繁体别名，不与其他 Selimbar 身份合并。
+- 共享库提交 `d4082d56ba2e50c61b641295513527673ab03864` 已推送 master。正式范围 2,468 IDs：2,265 canonical、203 unresolved（91.77%）；M1 1,508/1,553（97.10%）、OU-R1 52/52、MR1 AH 1,754/1,921（91.31%）、MR1 AI declared mirror M1 1,508/1,553（97.10%）。M1 display repair tests 2/2 PASS，curator / `git diff --check` PASS。
+- 最新 registry 后的 name-only Telegram workflows：M1 `38598104393` success（eligible41、edited0、already_matching41、缺原文99、unmapped97、failed0）；MR1 Formal `38598117419` success（edited0、already processed125、unresolved0）；MR1 AI `38598124608` success，但仍 total201、edited0、unresolved192、failed9，9条均 Telegram `400 message to edit not found`。没有重发历史策略消息。
+- 只更改共享展示名和 coverage/audit，未更改任何模型、策略、阈值、正式账本、结算或发送规则。203 条待核实明细见共享 `formal_scope_coverage.json`。
+
 ## 2026-10-15 正式范围继续补齐（第六十二批）
 - Tips.GG 简体中文 Goytre United 球队页明确显示“戈伊特雷联队”（https://tips.gg/cn/team/goytre-utd-football/）；与 TotalCorner `team_id 54106` / provider `Goytre Utd`、Welsh league_id 11959 一致，新增 canonical 与官方拼写别名。
 - 共享 master 提交 `b209e795039a32eb2dc7c0a9f86a06d63f4a4dd6`；正式范围 2,468 IDs，2,260 canonical / 208 unresolved（91.57%）；M1 1,506/1,553（96.97%）、M1 OU-R1 52/52（100%）、MR1 AH 1,750/1,921（91.10%）、MR1 AI declared mirror 1,506/1,553（96.97%）；confidence≥50 observed cohort 181/182（99.45%）。M1 formatter 6/6 PASS，curator 和 `git diff --check` PASS。
