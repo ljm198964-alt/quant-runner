@@ -1,5 +1,12 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 formal-scope 中文名称续补（batch 113，最新）
+- 从共享库最新 master `278cf1c88be4c55b391e308f7e1b11b3d2257bc0` 接续，精确新增 TotalCorner `team_id=136147`：Flint Mountain FC → 弗林特山。来源为 Tips.GG 简体中文威尔士杯球队列表 `https://tips.gg/cn/tournament/football-faw-welsh-cup-2024-25/`，其中同一球队条目显示英文 Flint Mountain 和中文“弗林特山”；正式记录的 provider identity、ID 与威尔士联赛上下文均吻合。更新复用 `ops/curate_formal_scope_footystats_batch.py`，拒绝覆盖已有 canonical。
+- 最新实算：正式范围并集 2,468 IDs，canonical 2,344，unresolved 124，覆盖率 94.98%；M1 1,551/1,553（99.87%）；M1 OU-R1 52/52；MR1 AH 1,824/1,921（94.95%）；MR1 AI 声明镜像 M1 1,551/1,553。共享库 12,276 IDs、4,360 canonical（35.52%）。完整余项及逐条原因见共享 `data/football_display_names/formal_scope_coverage.json#unresolved_records`；team_id 4931 的 `0` 仍是上游身份无效，不属于可翻译队名。
+- 来源复核：对剩余威尔士和埃及/塞浦路斯候选作定向中文足球资料检索；Llay Miners Welfare、Ynyshir Albions、Treowen Stars、Cardiff Draconians、Caerphilly Athletic、埃及低级别俱乐部及塞浦路斯乙级候选未找到能同时确认中文名与目标 TotalCorner 身份的中文来源，继续保留 unresolved，不编造译名。Tips.GG 中文赛事页可以确认 Flint Mountain；英/法/丹麦等页面或中文站点但仅显示英文队名不作为中文名称证据。
+- 本地验证：M1 formatter/repair 单测 8/8 PASS；MR1 shared-registry 与 AI formatter 4/4 PASS，明确挂载本轮共享 JSON。只验证展示解析；本轮没有生产 TG edit/send。之前的历史消息可编辑性限制仍有效：不得把 dry-run 当成 Telegram 成功回执；此前 MR1 AI 编辑失败记录为 Telegram `400 message to edit not found`。本轮不重发历史订单。
+- 本地映射变更尚待提交共享仓库 PR；quant-runner handoff 更新亦待提交。没有触发 GitHub Actions 或正式扫描，因此不宣称云端已部署/频道实显。只增加展示映射/审计；模型、策略、阈值、赛事范围、赔率、账本、结算与通知规则未改。
+
 ## 2026-10-15 formal-scope 中文名称续补（batch 112，最新）
 - 在 batch 111 基础上继续查剩余项，新增 TotalCorner `team_id=88074`：Karcagi SE→卡尔察吉队。证据为 Tips.GG 简体中文历史对阵页将 Karcagi 标为“卡尔察吉队”，并保留英文队名；TotalCorner ID 88074 球队页独立确认原名 Karcagi SE、联赛 Hungary NB II。来源分别为 `https://tips.gg/cn/archive/karcagi-se-football-vs-monori-se-football/` 与 `https://www.totalcorner.com/team/view/88074`。未按不确定的 Tips.GG 内部球队排名 ID 做连接，只以 TotalCorner ID 和精确英文名核验。
 - 实际统计：正式并集 2,468；canonical 2,343；unresolved 125；覆盖率 94.94%。M1 1,551/1,553（99.87%，不变）；M1 OU-R1 52/52；MR1 AH 1,823/1,921（94.90%）；MR1 AI 声明镜像 M1 1,551/1,553（99.87%）。共享库 12,276 IDs、4,359 canonical。全部125条及原因在共享 `data/football_display_names/formal_scope_coverage.json#unresolved_records`。
