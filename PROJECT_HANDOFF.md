@@ -1174,3 +1174,7 @@
 ## 2026-10-14 正式范围继续补齐（第五十一批）
 - 雷速中文球队页直接显示 `FC Bacau` 为“FC贝卡”（https://m.leisu.com/data/zuqiu/team-76388）；该页的英文身份与 provider 名完全一致，联赛范围为罗马尼亚；为 TotalCorner `team_id 134085` 增加 canonical“FC贝卡”及 FC Bacău 拼写别名，未与其他罗马尼亚球队合并。
 - 共享库提交 `8a4f03b7ad78130f94f7419fe1d03c80e4c80568` 已推送 master（先纳入远端新提交 `31b830f7` 后快进发布）。本批新增1条。formal union 2,468 IDs：2,243 canonical、225 unresolved（90.88%）；M1 1,498/1,553（96.46%）；M1 OU-R1 52/52；MR1 AH 1,731/1,921（90.11%）；MR1 AI declared mirror 1,498/1,553（96.46%）。M1 formatter 6/6 PASS；curator 与 `git diff --check` PASS；MR1 shared registry consumer test 最近复验1/1 PASS。生产策略、账本及既有 Telegram 消息未修改。
+
+## 2026-10-14 正式范围继续补齐（第五十二批）
+- Tips.GG 简体中文球队页将当前的 `Gloria Bistrita` 显示为“比斯特里察荣耀队”，页面赛事/赛程明确为罗马尼亚乙级联赛 2026/27，并列出与 FC Bacau 等本季对手的同一赛程（https://tips.gg/cn/team/fc-gloria-bistrita-football/）；与官方当前 CS Gloria Bistrița 身份资料交叉确认（https://gloria2018.ro/）。为 TotalCorner `team_id 113178` / `CS Gloria 2018 Bistrita-Nasaud` 增加 canonical 和名称别名，保持与历史已解散的 Gloria Bistrița 俱乐部身份区分。
+- 共享库提交 `930e1e7725b5ad2d0e59deb39318196f999ed08a` 已推送 master，本批新增1条。formal union 2,468 IDs：2,244 canonical、224 unresolved（90.92%）；M1 1,498/1,553（96.46%）；M1 OU-R1 52/52；MR1 AH 1,731/1,921（90.11%）；MR1 AI declared mirror 1,498/1,553（96.46%）。M1 formatter 6/6、MR1 shared registry consumer test 1/1 PASS；curator 与 `git diff --check` PASS。仅展示名映射更新，未修改模型、策略、账本或历史 Telegram。
