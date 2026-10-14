@@ -1560,3 +1560,13 @@
 - 最新正式范围：2,468 个 team ID，2,333 mapped、135 unresolved（94.53%）；M1 1,548/1,553（99.68%），M1 OU R1 52/52，MR1 AH 1,814/1,921（94.43%），MR1 AI declared mirror 1,548/1,553（99.68%）。逐条剩余身份及 `NO_VERIFIED_CANONICAL_ZH` 原因在共享 `data/football_display_names/formal_scope_coverage.json#unresolved_records`。
 - PR #8 `5ff59b5f641b985327270d4cc7ffececfebcd5c6` 已合并，master merge commit `88370dce`。M1 display/history repair 测试 8/8 PASS。本轮在本地 totalcorner checkout 的结果/账本文本搜索未找到该 ID 的正式 Telegram 旧消息证据，因此未调用历史编辑工作流；MR1 仓库未逐条复查，且没有 Telegram 编辑或发送。检索其余样本未得到可核验常用中文名称的，继续保留 unresolved。
 - 本轮只更新共享名称库、curation/audit 与交接记录；未修改任何模型、策略、赛事范围、账本、结算或 Telegram 规则。
+
+## 2026-10-15 正式范围余项复核与历史 TG 名称回执
+- 以共享 `master` `88370dce0df268e0896006581b7b3337cf14e6a7` 的实际文件为准：正式并集 2,468 team IDs，canonical 中文 2,333，unresolved 135（94.53%）；M1 1,548/1,553（99.68%，余 5），M1 OU R1 52/52，MR1 AH 1,814/1,921（94.43%，余 107），MR1 AI declared mirror 1,548/1,553（99.68%）。完整 135 项（ID、英文 provider name、联赛、系统和逐项原因）仍在共享库 `data/football_display_names/formal_scope_coverage.json#unresolved_records`。本轮不重复做全历史身份恢复。
+- 对当前剩余清单做定向中文足球资料核验（包括 CS Ștefănești、Pembroke Athleta、KF Hajvalia、Qena/埃及低级别俱乐部、FC Hoyvík、BSK Banja Luka、Stupčanica、FSC/Feniks Mariupol、Mostaqbal Watan 等）。找到的页面多仅有英文/其他语种名称，或不能证明与具体 TotalCorner ID 为同一队；未发现可安全新增的主流简体 canonical，新增数为 0。尤其不把阿尔巴尼亚 Vllaznia 中文名挪给 Kosovo league ID，也不合并 Vllaznia/Vllazina；不把旧 FC Mariupol 的名称直接迁移给 FSC/Feniks 身份。未知名称维持 unresolved，不编造译名。M1/MR1/MR1 AI 格式器继续共用 `display_names.json`，无 reader/策略代码变更；M1 display + history-repair 单测 8/8 PASS。
+- 为最新共享映射实际运行现有 name-only 编辑工作流（均只对账本既存 Telegram message ID 执行 edit，不发送新单）：
+  - M1 / M1 OU-R1 共用 run [38638714213](https://github.com/ljm198964-alt/quant-runner/actions/runs/38638714213) PASS：41 eligible，edited 0，already matching 41，缺原始发送文本 99，仍无映射 97，failed 0。真实 API 回执说明这 41 条此前已是本次期望中文，不是本轮新增编辑。
+  - MR1 AH formal run [38638720307](https://github.com/ljm198964-alt/quant-runner/actions/runs/38638720307) PASS：125 条均 already processed，eligible/edit 0，unresolved 0，failed 0；本轮没有实际编辑。
+  - MR1 AI run [38638725770](https://github.com/ljm198964-alt/quant-runner/actions/runs/38638725770) workflow PASS，但 Telegram edit 结果为 total 201、candidate 9、edited 0、unresolved 192、failed 9；9 条均返回 `400 Bad Request: message to edit not found`，不能再通过当前 bot/chat message ID 修改。失败记录由现有工作流保存；未重发历史策略。
+- 本轮历史消息实际编辑 0 条。新增 mapping 为 0，因此没有所谓新译名即时覆盖到这些历史单；41 条 M1 已匹配仅代表其当前 TG 文本已满足 formatter 目标。M1 的 97 条 unresolved、MR1 AI 的 192 条 unresolved 以及旧消息缺原文等是剩余显示限制。运行器账户当前允许上述 3 个修复 workflow 执行；这不等于之前受付款限制的生产定时扫描已恢复。
+- 本轮仅补充本 handoff 和进行展示/名称证据核验；没有修改共享 registry 数据、模型、策略、比赛范围、Crown、账本、结算或正式通知规则，也没有触发预测/扫描或发送测试 Telegram。
