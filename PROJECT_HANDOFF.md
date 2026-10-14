@@ -1434,3 +1434,9 @@
 - 对未匹配中的科索沃、埃及、马耳他及东欧队名继续查中文球队页和联赛资料，并做全库标准化 alias 交叉检查。确认 `Flamurtari` 与阿尔巴尼亚 `Flamurtari Vlorë` 不是同一队；`Besa` 存在多个国家/俱乐部同名身份；`FK Internacional` 在黑山联赛上下文中不能复用巴西国际 canonical。Tips.GG 将 Malta `Sirens` 自动翻成“警报”，该结果不采纳。英文身份或自动音译不足以建立 canonical，本轮全部继续保留 unresolved。
 - 本次针对 M1 的 `test_m1_telegram_display.py` + `test_m1_telegram_display_repair.py` 8/8 PASS；MR1 共享名称与 AI formatter 测试 4/4 PASS。共享仓库 HEAD 与远端一致、工作树干净；无策略运行、无消息发送/编辑。既有历史 Telegram 修复回执不变：M1 0 条编辑（41 已匹配，99 缺原文，97 未映射）；MR1 Formal 0 条编辑；MR1 AI 9 条因 Telegram 原 message 不可定位失败、192 条 unresolved。
 - 未改变 M1、M1 OU R1、MR1 AH、MR1 AI 的策略、scope、账本、结算、发送格式或规则；本批只记录来源审查与当前验证状态。
+
+## 2026-10-15 正式范围继续补齐（第九十七批）
+- 为 TotalCorner `team_id 8710`、provider `El Merrikh` 新增 canonical“马瑞克”。7M 中文球队页 `https://team.7m.com.cn/15682/index.shtml` 将埃及乙级 A/B 赛程中的该队显示为繁体“馬瑞克”，页面比赛记录与 El Merrikh 在埃及乙级联赛的身份一致。按简体写入，不与苏丹 Al-Merrikh 混并。
+- 共享库提交 `e8401be96733e1c2cba1f99f1ff795000cfc993c` 已推送 master。formal union 2,468 IDs：2,302 canonical、166 unresolved（93.27%）；M1 1,523/1,553（98.07%），M1 OU R1 52/52，MR1 AH 1,784/1,921（92.87%），MR1 AI declared mirror 1,523/1,553（98.07%）。全部 unresolved 逐队明细仍以同提交 `formal_scope_coverage.json` 为准。
+- M1 formatter/name-repair tests 8/8 PASS；MR1 shared registry/AI formatter tests 4/4 PASS；MR1 隔离读取共享新 registry 后将 team_id 8710 渲染为“马瑞克”，联赛“埃及第二级联赛”。M1 正式账本未发现 team_id 8710 的已发送 pick；未编辑/发送 Telegram。本轮没有触发生产 workflow。
+- 只更新共享展示映射、覆盖报告、curation 与本交接；未更改任何模型/策略、赛事范围、账本、结算或 Telegram 规则。
