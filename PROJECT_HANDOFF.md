@@ -1454,3 +1454,9 @@
 - 来源分布明细保存在 `formal_scope_coverage.json#source_distribution_canonical_team_rows`（按来源类别逐项统计），本批两条均为 `tips_gg_simplified_chinese_team_profile`。M1 formatter/name-repair 8/8 PASS；MR1 shared-registry 2/2、AI formatter 2/2 PASS。以当前共享 JSON 隔离渲染两支新球队，得到“杜姆布拉维察CSC队 vs SC 波佩什蒂-列奥尔代尼队”；这只验证展示读取，不触发模型或 Telegram。
 - 历史修复 workflow 真实回执：M1 run [`38623200716`](https://github.com/ljm198964-alt/quant-runner/actions/runs/38623200716) PASS，eligible 41、edited 0、already_matching 41、缺原始消息文本99、未映射97、failed 0；MR1 Formal run `38623207575` PASS，edited 0、eligible 0、already processed 125；MR1 AI run [`38623214139`](https://github.com/ljm198964-alt/quant-runner/actions/runs/38623214139) PASS，但201条中9条候选编辑均被 Telegram 返回 `400 message to edit not found`，另192条 unresolved，实际 edited 0。三次 run 使用的是前一共享提交 `8043ba4b`，早于本批两个罗马尼亚名称；本批未重发任何历史单，也不把 workflow 成功误报为历史消息已修复。M1 OU R1 没有独立正式 TG 历史编辑链，无法提供单独旧消息编辑回执。
 - 本节依据最新共享数据更新；后续如发现新来源再按 ID 逐项追加。仅改展示 registry/交接和来源证据，不改 M1、M1 OU R1、MR1 AH、MR1 AI 的策略、阈值、赛事范围、订单、账本、结算或 Telegram 规则。
+
+## 2026-10-15 正式范围未匹配来源复核（第一百批）
+- 从共享 master `2a5aaeefb8b8c645892de30e575730fd9868bbcf` 的最新 `unresolved_records` 复核，formal union 仍为 2,468 IDs、2,307 canonical、161 unresolved。按联赛上下文筛出 29 条关联 `league_id 417`（Egypt Division 2）的 unresolved，逐名检查 FootyStats 简体中文埃及乙级赛程/球队页与 7M 简体/繁体埃及乙级赛程页面。来源：[FootyStats 2026/27 中文赛程与积分](https://footystats.org/cn/egypt/second-division)、[FootyStats 中文赛程结果页](https://footystats.org/cn/egypt/second-division/fixtures)、[7M 埃及乙级A资料库](https://data.7m.com.cn/matches_data/998/big/index.shtml)。
+- 该来源确实对部分俱乐部提供中文显示，但能从页面英文身份/队名上下文精确确认的中文名称对应已映射实体；涉及仍未匹配 ID 的页面条目继续显示英文，不能由资料中的阿拉伯文、城市名或近似俱乐部名推导中文队名。因此本次无安全新增，不改 `display_names.json` 或覆盖统计。`formal_scope_coverage.json#unresolved_records` 当前161项仍均标 `NO_VERIFIED_CANONICAL_ZH`。
+- 同轮复核部分科索沃、罗马尼亚、乌克兰、格鲁吉亚、北马其顿未匹配队伍的精确中文网页检索，未得到可确认的主流中文球队名；不接受英文音译式临时猜名。此为来源审查结果，不是全量718历史名单完成的声明。后续可继续对各联赛寻找完整中文比分源/中英文赛程交叉表，再按 team ID逐项增补；保留当前161条正式范围口径。
+- 未运行策略、生产扫描、TG发送/编辑或结算。仅此交接更新，不修改共享 registry、模型、策略、正式账本或通知。
