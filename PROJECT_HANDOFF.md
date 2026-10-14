@@ -973,3 +973,8 @@
 - 新增三项来源核实映射：`Lokomotiv Kyiv`（45342）→基辅火车头（球天下简中球队资料 https://football.chuqi.com/football/team-match/244840/）；`Serik Belediyespor`（48935）→塞里克（球天下 https://data.qtx.com/qiudui/0Q7Lrbg6YB.html）；`FK Vora`（48956）→沃拉（中文阿尔巴尼亚联赛参赛队表）。逐条保留 TotalCorner team ID / provider name 和原赛事范围，无实体合并。共享 master 提交 `7e0f40f73a0f97abec5d6d11fe3fddefa1020fa8` 已推送。
 - 最新 formal union 2,468 IDs：2,185 canonical、283 unresolved（88.53%）；共享库 12,276 IDs、4,201 canonical。完整 remaining list 以最新共享 `formal_scope_coverage.json` 为准。
 - 最新共享库回归：M1 formatter 6/6，MR1 shared registry/AI formatter 4/4 PASS。无生产 Telegram 编辑/发送或策略/账本改动。尚有283项未匹配。
+
+## 2026-10-14 正式范围继续补齐（第十五批）
+- 新增两支格鲁吉亚队的直接简中名称：`FC Gori`（46970）→FC哥里（7M 简中球队页 https://team.7m.com.cn/115920/index_gb.shtml）；`FC Spaeri`（50839）→斯佩里队（Tips.GG 简中球队档案 https://tips.gg/cn/team/spaeri-fc-football/）。保留 team_id、TotalCorner provider name 与 league IDs。共享 master 提交 `0dd59b09b0ecfc41fba4ca816931871822e44b32` 已推送。
+- 最新 formal union 2,468 IDs：2,187 canonical、281 unresolved（88.61%）；共享库 12,276 IDs、4,203 canonical。完整 remaining list 以最新共享 `formal_scope_coverage.json` 为准。
+- M1 formatter 6/6、MR1 shared registry/AI formatter 4/4 PASS。只有 display curation 更新；没有真实 Telegram 编辑/发送、生产运行或策略/账本改动。尚有281项待核实。
