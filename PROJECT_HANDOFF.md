@@ -1101,3 +1101,9 @@
 - SportScore 简体中文球队/比赛页面将 Nestos Chrisoupolis 显示为“内斯托斯·奇里苏波利斯”（https://sportscore.com/zh/football/team/aps-zakynthos/dj2ryohk45xq1zp/）；据希腊球队身份及该页面赛果关联核对 TotalCorner `team_id 15812`，写入 ID 专属 canonical 和拼写 aliases。
 - 共享库提交 `e25c5a2388450893b5af229800dfbbade5d915af` 已推送 master。coverage 文件实算：正式范围2,468 IDs，2,225 canonical、243 unresolved（90.15%）；M1 1,493/1,553（96.14%），OU-R1 52/52，MR1 AH 1,721/1,921（89.59%），MR1 AI mirror 1,493/1,553（96.14%）。
 - M1 formatter 6/6、MR1 shared registry display test 1/1、curator 与 `git diff --check` 均通过。只更新共享展示数据/审计产物；未改策略、模型、账本、结算、Telegram 派单规则，未发送或编辑 Telegram。
+
+## 2026-10-14 正式范围继续补齐（第三十七批）
+- 核对 TotalCorner `team_id 54358` / `Digenis Ypsonas`：OddsGPT 的精确比赛页将该队显示为“迪杰尼斯伊普索纳斯”（https://www.oddsgpt.com/yuce/football/1603561/digenis-ypsonas-vs-aris/zh），并与 500.com 的“迪杰尼斯”以及 Tips.gg 的“伊普索纳斯”中文队名相互印证。新增该 ID 专属 canonical 与来源别名。
+- 雷速中文球队档案明确将 `Iraklis Yerolakkou` 显示为“伊拉克利斯耶罗拉”（https://www.leisu.com/data/zuqiu/team-54376/data）；为 TotalCorner `team_id 15888` 增加对应 canonical 和原名别名。
+- 共享库提交 `14d174ae96f4c1d170e414e83fdfa91465cadba8` 已推送 master。本次新增2条。最新实算 formal union 2,468 IDs：2,227 canonical、241 unresolved（90.24%）；M1 1,494/1,553（96.20%）；M1 OU-R1 52/52（100%）；MR1 AH 1,722/1,921（89.64%）；MR1 AI declared mirror 1,494/1,553（96.20%）。完整剩余清单和原因以共享 `formal_scope_coverage.json` 为准。
+- M1 Telegram formatter tests 6/6 PASS，MR1 shared registry test 1/1 PASS，curator 与 `git diff --check` PASS。只更新共享名称数据及审计文件；无历史 Telegram 编辑/重发，也未改生产模型、策略、账本、结算或派单逻辑。
