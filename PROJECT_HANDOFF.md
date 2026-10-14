@@ -1275,3 +1275,4 @@
 - M1 formatter 与历史修复单测 8/8 PASS，`git diff --check` PASS。M1 AH/OU-R1 后续 formatter 仍按同一 registry 解析；MR1/MR1 AI 正式历史修复 workflow 均显式 checkout 此共享库。MR1 AI 的九个既有候选仍因 Telegram 返回 `400 message to edit not found` 而不能编辑；192 条仍缺唯一 canonical。
 - 本轮真实 name-only workflow：M1 `38601917849` success，eligible41、edited0、already_matching41、缺原文99、未映射97、failed0；MR1 Formal `38601926220` success，eligible0、edited0、already processed125、unresolved0；MR1 AI `38601934936` success，201总项、9候选、edited0、failed9（均为 Telegram `message to edit not found`）、unresolved192。没有重发历史消息，也没有更改 provider_message_id、盘口、投注方向或账本。
 - M1 OU-R1 专属历史消息未见单独历史修复 ledger/workflow；本批确认其 52/52 名称覆盖与共享读取范围，但不据此声称 OU-R1 历史 Telegram 已被实际回查或编辑。所有生产模型、策略、订单和结算保持不变。
+- MR1 私有仓库的只读共享库 smoke workflow `38602761639` 已尝试，但 job 在 runner 启动前即被 GitHub 账户付款/支出限制拦截（GitHub 原始注释：recent account payments failed or spending limit needs increase）；不是名称测试失败。MR1 Formal/AI 既有 quant-runner workflow 本轮均完成并读取共享 registry；仍不能把云端 smoke 标成 PASS。
