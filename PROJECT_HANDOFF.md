@@ -1334,3 +1334,8 @@
 ## 2026-10-15 Telegram 显示接入与历史修复核查
 - 当前 M1 formatter 直接读取唯一共享库 `data/football_display_names/display_names.json`；MR1 AH、MR1 AI 的正式通知/AI formatter 通过 `src/football-display-names.js` 读取 `external/football-display-registry/data/football_display_names/`，按 team_id 优先解析，确认四条显示读取路径接入同一共享库。M1 显示回归测试8/8 PASS；本轮没有修改消息格式或发送规则。
 - M1 历史消息修复器只读 dry-run：41条具备已发送原文及映射，可编辑；99条缺少原消息文本，97条当前无可替换的已确认映射。由于本机未配置 M1/MR1 Telegram 凭据，且 GitHub Secrets 不可读回，本轮没有调用 editMessageText；实际历史编辑成功0、失败0（未执行）。不得把候选可编辑数说成已修复数。
+
+## 2026-10-15 正式范围继续补齐（第八十一批）
+- NowScore 中文球队页将 TotalCorner provider `Nabrouh` 对应为“纳布洛”，并展示该队埃及第二级联赛比赛（https://info.nowscore.com/big/team/Summary/37053.html）；独立 Nabrouh/Nabarouh 身份资料及 TotalCorner 赛程交叉确认联赛身份。仅为 `team_id 45228` 新增 canonical，保留 provider identity 与现有别名，不与其他埃及球队合并。
+- 共享库提交 `416fe3b9cb7eb7af959787d9748c681270a5d152` 已推送 master。本批新增1条；正式范围2,468队：2,282 canonical、186 unresolved（92.46%）；M1 1,513/1,553（97.42%），M1 OU-R1 52/52（100%），MR1 AH 1,768/1,921（92.04%），MR1 AI 声明范围镜像 M1 为1,513/1,553（97.42%）；全共享库12,276 IDs、4,298 canonical。未匹配明细及未能核实原因以该共享提交内 `formal_scope_coverage.json#unresolved_records` 为准。
+- curator 本轮新增1条；M1 formatter/name-repair 测试8/8 PASS，`git diff --check` PASS。共享 registry 新名称可供四条已接入的显示读取链使用；本轮未触发生产扫描、未发送或编辑 Telegram 消息。历史编辑仍需本机已授权的正式 Telegram 执行环境，GitHub Secrets 不可读回；模型、策略、赛事范围、正式账本、结算与通知规则均未改。
