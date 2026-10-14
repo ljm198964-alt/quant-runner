@@ -1202,3 +1202,7 @@
 ## 2026-10-14 正式范围继续补齐（第五十八批）
 - 中文维基百科《欧洲顶级足球俱乐部列表》明确以 KF Gjilani 对应中文名“格尼拉内”（https://zh.wikipedia.org/wiki/歐洲頂級足球俱樂部列表）；官方俱乐部实体名 Klubi Futbollistik Gjilani 与 TotalCorner `team_id 71368` provider short name Gjilani 对应，联赛 ID 8293 一致。为该独立 ID 登记 canonical 与全名/异体别名。
 - 共享库提交 `e4f77c67c826301b23a2e8721379444230839283` 已推送 master，本批新增1条。formal union 2,468 IDs：2,251 canonical、217 unresolved（91.21%）；M1 1,500/1,553（96.59%）；M1 OU-R1 52/52；MR1 AH 1,744/1,921；MR1 AI declared mirror 1,500/1,553。M1 formatter 6/6、curator 与 `git diff --check` PASS。未修改生产策略、模型、账本、结算或任何 Telegram 消息。
+
+## 2026-10-14 正式范围继续补齐（第五十九批）
+- Tips.GG 中文历史球队记录提供 FC Nagykanizsa 的 canonical “纳吉卡尼扎”（https://tips.gg/cn/archive/fc-ajka-football-vs-ufc-nagykanizsa-football/）；TotalCorner `team_id 133452` provider 原名明确含 `(W)`，本次新增“纳吉卡尼扎女足”，保留独立女子球队身份，不与男子队混同。
+- 共享库提交 `23980713224d871da030998ccad8bfa92fe75b4a` 已推送 master，本批新增1条。formal union 2,468 IDs：2,252 canonical、216 unresolved（91.25%）；M1 1,500/1,553（96.59%）；M1 OU-R1 52/52；MR1 AH 1,745/1,921；MR1 AI declared mirror 1,500/1,553。M1 formatter 6/6、curator 与 `git diff --check` PASS。只更新共享中文展示数据与审计信息，无 TG 操作及策略/模型/账本/结算改动。
