@@ -1251,6 +1251,12 @@
 - 最新 registry 后的 name-only Telegram workflows：M1 `38598104393` success（eligible41、edited0、already_matching41、缺原文99、unmapped97、failed0）；MR1 Formal `38598117419` success（edited0、already processed125、unresolved0）；MR1 AI `38598124608` success，但仍 total201、edited0、unresolved192、failed9，9条均 Telegram `400 message to edit not found`。没有重发历史策略消息。
 - 只更改共享展示名和 coverage/audit，未更改任何模型、策略、阈值、正式账本、结算或发送规则。203 条待核实明细见共享 `formal_scope_coverage.json`。
 
+## 2026-10-15 正式范围补齐跟进（第六十八批，来源复核）
+- 从最新共享 master `d4082d56ba2e50c61b641295513527673ab03864` 重新核对，正式范围仍为 2,468 个去重 team ID，canonical 2,265，未匹配 203（91.77%）；M1 1,508/1,553（97.10%），M1 OU-R1 52/52，MR1 AH 1,754/1,921（91.31%），MR1 AI declared mirror of M1 1,508/1,553（97.10%）。此前交接里的“718/740”不是当前 master 数字。
+- 继续对照当前 unresolved 清单中罗马尼亚、塞尔维亚、波黑、马耳他、乌克兰、匈牙利等队伍及既有 REEP/Wikidata 中文证据。官方/可核验资料确认了 AFC Metalul Buzău、SC Popești-Leordeni、NK Jedinstvo Bihać、FK Kabel、Ahrobiznes Volochysk、Pembroke Athleta 等英文身份，但本轮检索到的来源未提供可确认的主流简体中文队名；没有新增 canonical，保留 unresolved，避免将自行音译写成权威名。
+- 当前唯一共享库未有数据变更；没有为制造提交而改写 coverage。历史 name-only workflows 最近一次回执仍是 batch 67：M1 0 条成功编辑（41 条已匹配、99 条缺原文、97 条未映射）；MR1 Formal 0 条编辑（125 已处理）；MR1 AI 0 条编辑、9 条 Telegram `message to edit not found`、192 条名称未解析。历史消息未重发。
+- 本轮未修改模型、策略、订单账本、结算或 Telegram 发送条件。后续继续只对找到可靠中文来源的具体 ID 入库；未匹配及逐条原因以共享仓库 `data/football_display_names/formal_scope_coverage.json` 为准。
+
 ## 2026-10-15 正式范围继续补齐（第六十二批）
 - Tips.GG 简体中文 Goytre United 球队页明确显示“戈伊特雷联队”（https://tips.gg/cn/team/goytre-utd-football/）；与 TotalCorner `team_id 54106` / provider `Goytre Utd`、Welsh league_id 11959 一致，新增 canonical 与官方拼写别名。
 - 共享 master 提交 `b209e795039a32eb2dc7c0a9f86a06d63f4a4dd6`；正式范围 2,468 IDs，2,260 canonical / 208 unresolved（91.57%）；M1 1,506/1,553（96.97%）、M1 OU-R1 52/52（100%）、MR1 AH 1,750/1,921（91.10%）、MR1 AI declared mirror 1,506/1,553（96.97%）；confidence≥50 observed cohort 181/182（99.45%）。M1 formatter 6/6 PASS，curator 和 `git diff --check` PASS。
