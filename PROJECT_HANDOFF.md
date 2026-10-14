@@ -1138,3 +1138,8 @@
 - 中文维基条目“哈尔科夫足球俱乐部”对应当前英文 `FC Kharkiv` 身份；Wikimedia Commons 使用页也明确将英文 FC Kharkiv 对应至该中文条目（https://zh.wikipedia.org/wiki/哈爾科夫足球俱樂部）。为 TotalCorner `team_id 184801` 新增 canonical“哈尔科夫足球俱乐部”，并保留 `Metalist 1925 Kharkiv` 作为名称沿革别名；不与 Kharkiv 其他俱乐部 ID 合并。
 - 共享库提交 `fd0e16d04ec52b59953fb5b5a9ef00edba876571` 已推送 master。本批新增1条。formal union 2,468 IDs：2,234 canonical、234 unresolved（90.52%）；M1 1,497/1,553（96.39%）；OU-R1 52/52；MR1 AH 1,728/1,921（89.95%）；MR1 AI declared mirror 1,497/1,553（96.39%）。
 - M1 Telegram formatter 6/6 与 MR1 shared display test 1/1 PASS，curator / `git diff --check` PASS。仅名称映射与 coverage/audit 更新，无 Telegram 发送/编辑，生产策略、模型、账本、结算不变。
+
+## 2026-10-14 正式范围继续补齐（第四十四批）
+- 中文维基百科球队条目“斯塔爾卡緬斯科耶足球會”明确对应英文 Stal Kamianske（https://zh.wikipedia.org/wiki/斯塔爾卡緬斯科耶足球會）；为 TotalCorner `team_id 33616` 新增该身份的简体中文 canonical“斯塔尔卡缅斯科耶足球会”，保留英文及繁体标题别名，不与其他 Stal 球队合并。
+- 共享库提交 `93ccc20765b5e955a74e6a5f691951b824d2096d` 已推送 master。本批新增1条。正式范围2,468 IDs：2,235 canonical、233 unresolved（90.56%）；M1 1,498/1,553；M1 OU-R1 52/52；MR1 AH 1,729/1,921；MR1 AI declared mirror 1,498/1,553。
+- M1 Telegram formatter 6/6 与 MR1 shared display test 1/1 PASS，curator 和 `git diff --check` PASS。仅共享展示名称与审计数据更新；无 Telegram 发送/编辑，也未修改模型、策略、账本、结算或派单规则。
