@@ -1354,3 +1354,8 @@
 - 雷速简体中文球队资料直接将 `Raya Ghazl SC` 对应显示为“拉亚加兹尔”，并保留英文名/埃及赛事背景（https://www.leisu.com/data/zuqiu/team-78883/data）。与 TotalCorner unresolved `team_id 120757`、provider `Raya Ghazl SC`、Egypt Division 2 league_id 417 精确核对后新增 canonical；不映射到其他 Raya 身份。
 - 共享库提交 `e39c9cecab12ceadad8eada2fd20183d10d73867` 已推送 master。本批新增1项；正式范围2,468队：2,285 canonical、183 unresolved（92.59%）；M1 1,513/1,553（97.42%），M1 OU-R1 52/52（100%），MR1 AH 1,771/1,921（92.19%），MR1 AI 声明范围镜像 M1 为1,513/1,553（97.42%）；全共享库12,276 IDs、4,301 canonical。完整 unresolved 与原因见共享 `formal_scope_coverage.json#unresolved_records`。
 - curator 新增1条，M1 display/name-repair tests 8/8 PASS、`git diff --check` PASS。仅修改共享 display registry 和审计/交接，不触发正式扫描、不发送/编辑 Telegram、不改模型或策略。
+
+## 2026-10-15 正式范围继续补齐（第八十五批）
+- 对 TotalCorner `team_id 42239` `HB Torshavn II` 与 `team_id 102419` `Rigas FS II` 使用已有共享库中的母队中文名，并分别以公开母队中文资料及独立二队资料核验明确的 `II` 身份；新增展示名“托尔斯港二队”“里加足球学校二队”。两个 ID 保持独立，没有将二队并入一线队。来源分别为 7M HB Torshavn 中文队页 + National Football Teams HB II 资料，以及 Sofascore 简中 RFS 队页 + Sofascore FK RFS II 队页。
+- 共享 master 本批增加2个 canonical。最新正式范围 2,468 IDs：2,287 canonical、181 unresolved（92.67%）；M1 1,514/1,553（97.49%），M1 OU-R1 52/52（100%），MR1 AH 1,773/1,921（92.30%），MR1 AI 声明镜像 M1 1,514/1,553（97.49%）。当前共享库 12,276 IDs、4,303 canonical。逐项未匹配名单仍以共享 `formal_scope_coverage.json#unresolved_records` 为准。
+- 新 curator 幂等校验：首次增加2条，重复运行因目标 ID 已非 unresolved 而安全拒绝；M1 formatter/name-repair tests 8/8 PASS，`git diff --check` PASS。仅改共享名称库与审计/交接；未改模型、策略、赛事范围、账本、结算、TG 格式/发送逻辑。没有触发生产 TG 编辑或重发。
