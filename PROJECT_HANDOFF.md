@@ -1339,3 +1339,8 @@
 - NowScore 中文球队页将 TotalCorner provider `Nabrouh` 对应为“纳布洛”，并展示该队埃及第二级联赛比赛（https://info.nowscore.com/big/team/Summary/37053.html）；独立 Nabrouh/Nabarouh 身份资料及 TotalCorner 赛程交叉确认联赛身份。仅为 `team_id 45228` 新增 canonical，保留 provider identity 与现有别名，不与其他埃及球队合并。
 - 共享库提交 `416fe3b9cb7eb7af959787d9748c681270a5d152` 已推送 master。本批新增1条；正式范围2,468队：2,282 canonical、186 unresolved（92.46%）；M1 1,513/1,553（97.42%），M1 OU-R1 52/52（100%），MR1 AH 1,768/1,921（92.04%），MR1 AI 声明范围镜像 M1 为1,513/1,553（97.42%）；全共享库12,276 IDs、4,298 canonical。未匹配明细及未能核实原因以该共享提交内 `formal_scope_coverage.json#unresolved_records` 为准。
 - curator 本轮新增1条；M1 formatter/name-repair 测试8/8 PASS，`git diff --check` PASS。共享 registry 新名称可供四条已接入的显示读取链使用；本轮未触发生产扫描、未发送或编辑 Telegram 消息。历史编辑仍需本机已授权的正式 Telegram 执行环境，GitHub Secrets 不可读回；模型、策略、赛事范围、正式账本、结算与通知规则均未改。
+
+## 2026-10-15 正式范围继续补齐（第八十二批）
+- 7M 简体中文球队档案将 Arsenal Ceska Lipa 明确显示为“阿森纳利帕”（https://team.7m.com.cn/10803/index_gb.shtml）；俱乐部官网确认 FK Arsenal Česká Lípa 的身份。仅为 TotalCorner `team_id 40743` 新增 canonical，保留 provider spelling/身份，不与其他 Arsenal 球队合并。
+- 共享库提交 `f9f4750ed1d2833132c3ffb6218d285ee9b52205` 已推送 master。本批在第八十一批基础上新增1条；正式范围2,468队：2,283 canonical、185 unresolved（92.50%）；M1 1,513/1,553（97.42%），M1 OU-R1 52/52（100%），MR1 AH 1,769/1,921（92.09%），MR1 AI 声明范围镜像 M1 为1,513/1,553（97.42%）；全共享库12,276 IDs、4,299 canonical。未匹配及未确认原因见共享 `formal_scope_coverage.json#unresolved_records`。
+- curator 新增1条且定向复跑 8 个 M1 display/name-repair tests 全 PASS，`git diff --check` PASS。只改展示 registry/审计资料；无生产扫描、无 Telegram 发送或历史编辑，策略与账本不变。
