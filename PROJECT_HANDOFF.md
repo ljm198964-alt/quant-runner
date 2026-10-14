@@ -958,3 +958,8 @@
 - 依据 Tips.GG 简中希腊杯赛档案对 Ilioupoli 的直接显示“伊利乌波利”，为正式 team_id `43653` 增加 canonical 映射（https://tips.gg/cn/archive/aek-athens-football-vs-ilioupoli-football/）；保留 TotalCorner ID、原 provider 名和希腊赛事 ID，不作实体合并。共享 master 提交 `e9a822f427c14722b995db08b453fa0ebbd8f4ba` 已推送。
 - 最新 formal union 2,468 IDs，canonical 2,180、unresolved 288，覆盖 88.33%；共享 registry 12,276 IDs、4,196 canonical。请以最新共享 `formal_scope_coverage.json` 的完整未匹配记录为准。
 - 最终共享库定向回归：M1 display formatter 6/6 PASS；MR1 shared display registry + AI formatter 4/4 PASS。只增加展示名称证据；未触发真实 Telegram、订单、模型或生产运行。仍有288个正式范围未匹配，任务未完成。
+
+## 2026-10-14 正式范围继续补齐（第十二批）
+- 新增 formal `Orijent`（team_id `48734`）→奥利简特。雷速中文球队数据页将英文全名 HNK Orijent 1919 对应为“奥利简特”，并列出粤语别名“奥利真特”：https://www.leisu.com/data/zuqiu/team-13272/data。保留 TotalCorner ID 与原名，不与 HNK Rijeka 混同。共享 master 提交 `b96b0e785443298b38fe4d8cb4f9ec7c87aa0f71` 已推送。
+- 最新 formal union 2,468 IDs，canonical 2,181、unresolved 287（88.37%）；共享 registry 12,276 IDs、4,197 canonical。全部未匹配队伍以最新共享 coverage 文件为准。
+- 最新共享映射隔离回归：M1 formatter 6/6、MR1 shared registry/AI formatter 4/4 PASS。没有生产 Telegram 修改或推送；只改 display data/evidence，正式规则与 ledger 未动。287条仍未完成。
