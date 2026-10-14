@@ -1344,3 +1344,8 @@
 - 7M 简体中文球队档案将 Arsenal Ceska Lipa 明确显示为“阿森纳利帕”（https://team.7m.com.cn/10803/index_gb.shtml）；俱乐部官网确认 FK Arsenal Česká Lípa 的身份。仅为 TotalCorner `team_id 40743` 新增 canonical，保留 provider spelling/身份，不与其他 Arsenal 球队合并。
 - 共享库提交 `f9f4750ed1d2833132c3ffb6218d285ee9b52205` 已推送 master。本批在第八十一批基础上新增1条；正式范围2,468队：2,283 canonical、185 unresolved（92.50%）；M1 1,513/1,553（97.42%），M1 OU-R1 52/52（100%），MR1 AH 1,769/1,921（92.09%），MR1 AI 声明范围镜像 M1 为1,513/1,553（97.42%）；全共享库12,276 IDs、4,299 canonical。未匹配及未确认原因见共享 `formal_scope_coverage.json#unresolved_records`。
 - curator 新增1条且定向复跑 8 个 M1 display/name-repair tests 全 PASS，`git diff --check` PASS。只改展示 registry/审计资料；无生产扫描、无 Telegram 发送或历史编辑，策略与账本不变。
+
+## 2026-10-15 正式范围继续补齐（第八十三批）
+- 7M 中文球队页将 Velez Nevesinje 显示为繁体“維勒茲內韋西涅”，并列出波黑联赛比赛（https://team.7m.com.cn/633746/index.shtml）；波黑足协资料确认 FK Velež 的 Nevesinje 身份。新增 TotalCorner `team_id 73240`，规范为简体“维勒兹内韦西涅”；与 Mostar 的 Velež 区分，不合并身份。
+- 共享库提交 `d898bea0c98945a31631fb2d0d92f4c72b2344d2` 已推送 master。本批新增1项；正式范围2,468队：2,284 canonical、184 unresolved（92.54%）；M1 1,513/1,553（97.42%），M1 OU-R1 52/52（100%），MR1 AH 1,770/1,921（92.14%），MR1 AI 声明范围镜像 M1 为1,513/1,553（97.42%）；全共享库12,276 IDs、4,300 canonical。逐项 unresolved 与原因见共享 `formal_scope_coverage.json#unresolved_records`。
+- curator 新增1条，M1 formatter/name-repair tests 8/8 PASS，`git diff --check` PASS。未触发生产扫描、未发送或编辑 Telegram；仅更新共享显示名称和审计/交接数据。
