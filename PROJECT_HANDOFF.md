@@ -923,3 +923,8 @@
 - 查询本机 M1 正式 ledger 和现存 MR1 AH/AI 正式记录时，未发现新增 ID 9157、30623、42568、11023 对应的已发送 Pick，故无需为它们回补或编辑历史 TG 文本。既有历史修复回执不变：M1 4条编辑成功；MR1 AH 0条；MR1 AI 0条，9条旧消息由 Telegram 拒绝（400 `message to edit not found`）、192条 unresolved。无重发。
 - 本轮直接使用最新共享目录隔离验证：M1 `test_m1_telegram_display.py` 6/6通过；MR1 shared registry 与 AI formatter Node tests 4/4通过。M1 合并执行 display+formal-runtime tests 为9通过、5失败，失败仍为既有 fixture 的 candidate key/notification count 预期不匹配（与名称 formatter 无关）；没有改 runtime 来绕过。共享 JSON 解析和 `git diff --check`通过。未触发云端生产 runtime或 Telegram。
 - 最新 `formal_scope_coverage.json` 为本轮统计的唯一依据，302个未匹配明细全部留在其 `unresolved_records`。名称代码和正式策略数据未动；本轮仍属于局部补充，未完成全覆盖。
+
+## 2026-10-14 正式范围继续补齐（第五批）
+- 新增 team_id 43931 `FC Podillya Khmelnytskyi` → 波迪利亚赫梅利尼茨基。Tips.GG 简中球队档案和对阵页直接使用该译名，分别见 https://tips.gg/cn/team/podillya-khmelnytskyi-football/ 和 https://tips.gg/cn/archive/bratslav-vinnytsia-football-vs-podillya-khmelnytskyi-football/；正式 provider name、team ID 与乌克兰赛事上下文保持原样。最新共享 master 提交 `638c95f34ba2081f00321cda06aab6d67e5b4b99`，formal union 2,468、canonical 2,167、unresolved 301（87.80%）；M1 1,476/1,553（95.04%）、OU-R1 52/52、MR1 AH 1,672/1,921（87.04%）。
+- M1 ledger 对本轮已核实的 9157、30623、42568、11023、43931 均无对应已发送 Pick；没有历史消息需重发或编辑。MR1 AH/AI 的正式回执工作流历史结果仍见 2026-10-14 既有记录，本轮未重复触发或修改 Telegram。
+- 使用此最新共享 registry 的隔离 formatter 检查：M1 Telegram display 6/6通过，MR1 shared-registry + AI formatter 4/4通过。M1 formal-runtime 集成夹具的5个已知失败仍单独记录，未修改运行逻辑。完整剩余301项及原因见共享 `formal_scope_coverage.json`；尚未达到全覆盖。
