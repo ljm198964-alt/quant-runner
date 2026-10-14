@@ -1206,3 +1206,8 @@
 ## 2026-10-14 正式范围继续补齐（第五十九批）
 - Tips.GG 中文历史球队记录提供 FC Nagykanizsa 的 canonical “纳吉卡尼扎”（https://tips.gg/cn/archive/fc-ajka-football-vs-ufc-nagykanizsa-football/）；TotalCorner `team_id 133452` provider 原名明确含 `(W)`，本次新增“纳吉卡尼扎女足”，保留独立女子球队身份，不与男子队混同。
 - 共享库提交 `23980713224d871da030998ccad8bfa92fe75b4a` 已推送 master，本批新增1条。formal union 2,468 IDs：2,252 canonical、216 unresolved（91.25%）；M1 1,500/1,553（96.59%）；M1 OU-R1 52/52；MR1 AH 1,745/1,921；MR1 AI declared mirror 1,500/1,553。M1 formatter 6/6、curator 与 `git diff --check` PASS。只更新共享中文展示数据与审计信息，无 TG 操作及策略/模型/账本/结算改动。
+
+## 2026-10-14 正式范围继续补齐（第六十批）
+- Sofascore 简体中文 Flint Town United 队页显示“富林特联”（https://www.sofascore.com/zh/football/team/flint-town-united/37090）；TotalCorner 的 Flint Town Utd 赛历和 team_id 40413 的 Wales Premier League league_id 177 相互印证。映射为“富林特联”；明确不与 Flint Mountain 合并。
+- SportScore 中文 MEAP Nisou 球队页显示“MEAP尼苏”（https://sportscore.com/zh/football/team/meap-nisou/vjxm8gh4w9nr6od/）；为 TotalCorner `team_id 26815` 保存该 canonical，原始 ID/name 保持。
+- 共享库提交 `f0f0fdf1` 已推送 master，本批新增2条。formal union 2,468 IDs：2,254 canonical、214 unresolved（91.33%）；M1 1,500/1,553；M1 OU-R1 52/52；MR1 AH 与 MR1 AI mirror 按最新共享 `formal_scope_coverage.json` 生成。M1 formatter 测试6/6、curator、`git diff --check` PASS。未发送或编辑任何 Telegram 消息；未更改生产模型/策略、账本或结算。
