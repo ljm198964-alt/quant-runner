@@ -1486,3 +1486,9 @@
 - M1 formatter 与历史显示测试 8/8 PASS；MR1 shared-registry、formal display repair、AI Telegram formatter 测试 4/4 PASS。隔离渲染确认同一 registry 可让 M1 AH、M1 OU R1、MR1 AH、MR1 AI 的展示解析使用 canonical；新映射输出“比塔尔/里加水手”，对应拉脱维亚联赛名也为中文。M1 scan 与 MR1 runtime 均从共享 registry 路径读取；MR1 runtime checkout `master`。本轮没有正式扫描或发信。
 - 历史 TG 只读账本审计：本地 M1 ledger 有 237 条 Telegram `SENT` 且 237 条均有原 provider message ID；中文替换候选可由同一 Pick 的冻结 team/league ID 生成。但本机未配置可用 M1 TG 环境凭据，且不能从 GitHub Secret 读取明文；因此本轮实际编辑 0、237 条均未执行（阻碍：缺少受控执行凭据及适用的安全编辑执行入口），没有重发、没有改账本。MR1 V7 已有针对 AI Telegram 的历史编辑脚本，但本机也无 MR1 TG token；MR1 formal 的实际编辑尚不能宣称完成。GitHub Actions 只读 smoke 的既有 run `38625797996` 在 runner 分配前失败（`runner_name` 为空、`steps=[]`）；本轮未重新触发。历史 TG 实际修复数仍为 0，不能把 formatter 测试算成线上编辑成功。
 - 除共享展示库、其来源/覆盖报告和本交接外，没有改模型、策略、范围、价格、选单规则、正式订单、结算、Telegram 格式或消息状态。另：公开搜索来源显示 7M/其他中文比分索引中大量剩余低级别队伍仍只给英文/身份不足；不根据地名或自动翻译猜中文名。
+
+## 2026-10-15 正式范围中文名称续补（第一百零四批）
+- 从共享库提交 `b89955e08b09a4cdd94cd302073f82352e4ddf52` 继续，未重跑历史身份恢复。新增 7 个 ID 定向中文名称并提交至共享库 `a78f341f`：42821 AFC梅塔卢尔布泽乌、168037 马尔丁1969、147657 弗拉特里亚队、153877 AP布雷拉斯特鲁米察、151027 巴库体育、151005 贾布雷伊尔、42741 弗拉穆塔里。每条保留原英文身份、别名及来源 URL；未覆盖既有 canonical。来源为 Tips.GG 简体中文球队页/比赛页，按球队身份及国家/赛事上下文交叉核对。
+- 最新 formal union：2,468 IDs，2,316 canonical、152 unresolved（93.84%）；M1 1,531/1,553（98.58%），M1 OU R1 52/52（100%），MR1 AH 1,797/1,921（93.55%），MR1 AI declared mirror of M1 1,531/1,553（98.58%）。完整未匹配 ID、身份、联赛上下文和 `NO_VERIFIED_CANONICAL_ZH` 原因在共享 `data/football_display_names/formal_scope_coverage.json#unresolved_records`；不为覆盖率猜名。
+- 验证：M1 formatter/repair `8/8 PASS`；MR1 shared display + AI Telegram formatter `4/4 PASS`；V6 historical edit repair test 单独运行 `1/1 PASS`。隔离 resolver 读取最新共享文件，MR1 将 team ID 147657/相同路径解析到 canonical；M1 formatter 对新增正式 ID 生成中文球队方向。测试不等于线上 Telegram 文本编辑。
+- 历史 Telegram 本轮未编辑、未重发；没有触发生产扫描、通知或账本写入。此前记录的阻碍仍是缺少安全可用的生产 TG 编辑凭据/受控 edit job，且 Telegram 已删除或不可编辑的消息需按真实 API 回执判定。未修改模型、策略、赛事范围、盘口、Pick、结算或发送规则。
