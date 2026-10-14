@@ -867,3 +867,8 @@
 - 新增两条直接简中来源：`18546 IMT Novi Belgrade` → IMT新贝尔格莱德（17500 简中赛程页，QTX 简中比赛记录交叉核对；Beograd/Belgrade 为同一城市拼写）；`30301 Viimsi JK` → 维姆西（Sofascore 简中一线队页面）。特别核验 7M 搜索结果所示的是 `Viimsi JK Women's` 且有不同 provider ID，因此没有将女队映射到男队 ID 30301。
 - 共享库 master 已推送 `c4baac493b1218e6ff99313e18c0067c9d5e78ea`。formal union 2,468 IDs：2,137 canonical、331 unresolved（86.59%）；M1 1,464/1,553（94.27%）；M1 OU-R1 52/52；MR1 AH 1,649/1,921（85.84%）；MR1 AI mirror 1,464/1,553（94.27%）；shared registry 12,276 IDs、4,153 canonical（33.83%）。完整未匹配项继续查共享库 coverage 文件。
 - M1 Telegram formatter tests 6/6、MR1 shared registry/AI formatter tests 4/4 pass，`git diff --check` pass。M1 formal ledger、MR1 AH sent/AI sent-prospective ledgers 未找到这两队对应订单；未发送或编辑 Telegram。仅更新展示 registry/来源审计与 curator，不改模型/策略/账本/结算。继续处理剩余 331 个 ID。
+
+## 2026-10-14 正式范围名称增量：Jedinstvo UB 与 Academica Clinceni
+- 新增 `33419 Jedinstvo UB` → 乌布耶丁斯特沃（中文球队资料页明确对应 FK JEDINSTVO UB；league IDs 303/337 保留）；`33772 FC Academica Clinceni` → 克林辛尼学院（中文欧洲俱乐部名录 crosswalk）。后者限定为历史 Academica Clinceni identity，不因关联实体后续重组为 LPS HD/Inter Ilfov 而改写历史 ID/名称。
+- 共享 registry `display_names.json` 已推送 `adac353f3dbe84df151c2a23c1ebd1ce3630f589`。最新 formal union 2,468：2,139 canonical、329 unresolved（86.67%）；M1 1,467/1,553（94.46%）；M1 OU-R1 52/52；MR1 AH 1,650/1,921（85.89%）；MR1 AI mirror 1,467/1,553（94.46%）；shared registry 12,276 IDs、4,155 canonical（33.85%）。
+- M1 formatter 6/6、MR1 shared registry/AI formatter 4/4 PASS，diff check PASS。M1 formal ledger 与 MR1 AH/AI send/prospective evidence 中未检出这两队的订单，本批无安全可改历史 TG；未发送/编辑 Telegram。仅映射、来源和审计变化，生产模型、策略、账本与结算保持原样；尚有 329 个 formal IDs 待核验。
