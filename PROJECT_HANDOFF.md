@@ -1349,3 +1349,8 @@
 - 7M 中文球队页将 Velez Nevesinje 显示为繁体“維勒茲內韋西涅”，并列出波黑联赛比赛（https://team.7m.com.cn/633746/index.shtml）；波黑足协资料确认 FK Velež 的 Nevesinje 身份。新增 TotalCorner `team_id 73240`，规范为简体“维勒兹内韦西涅”；与 Mostar 的 Velež 区分，不合并身份。
 - 共享库提交 `d898bea0c98945a31631fb2d0d92f4c72b2344d2` 已推送 master。本批新增1项；正式范围2,468队：2,284 canonical、184 unresolved（92.54%）；M1 1,513/1,553（97.42%），M1 OU-R1 52/52（100%），MR1 AH 1,770/1,921（92.14%），MR1 AI 声明范围镜像 M1 为1,513/1,553（97.42%）；全共享库12,276 IDs、4,300 canonical。逐项 unresolved 与原因见共享 `formal_scope_coverage.json#unresolved_records`。
 - curator 新增1条，M1 formatter/name-repair tests 8/8 PASS，`git diff --check` PASS。未触发生产扫描、未发送或编辑 Telegram；仅更新共享显示名称和审计/交接数据。
+
+## 2026-10-15 正式范围继续补齐（第八十四批）
+- 雷速简体中文球队资料直接将 `Raya Ghazl SC` 对应显示为“拉亚加兹尔”，并保留英文名/埃及赛事背景（https://www.leisu.com/data/zuqiu/team-78883/data）。与 TotalCorner unresolved `team_id 120757`、provider `Raya Ghazl SC`、Egypt Division 2 league_id 417 精确核对后新增 canonical；不映射到其他 Raya 身份。
+- 共享库提交 `e39c9cecab12ceadad8eada2fd20183d10d73867` 已推送 master。本批新增1项；正式范围2,468队：2,285 canonical、183 unresolved（92.59%）；M1 1,513/1,553（97.42%），M1 OU-R1 52/52（100%），MR1 AH 1,771/1,921（92.19%），MR1 AI 声明范围镜像 M1 为1,513/1,553（97.42%）；全共享库12,276 IDs、4,301 canonical。完整 unresolved 与原因见共享 `formal_scope_coverage.json#unresolved_records`。
+- curator 新增1条，M1 display/name-repair tests 8/8 PASS、`git diff --check` PASS。仅修改共享 display registry 和审计/交接，不触发正式扫描、不发送/编辑 Telegram、不改模型或策略。
