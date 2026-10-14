@@ -862,3 +862,8 @@
 - 在当前正式 unresolved 清单中确认 `12512 FK Vlasenica` 有雷速中文球队页直接标注“FK弗拉塞尼察”，并与 TotalCorner 的 Bosnia and Herzegovina 1st League (`league_id=911`) 身份对应；将该 canonical 及 Vlasenica/Fudbalski klub aliases 写入唯一共享 registry。
 - 共享 master 提交 `7aa62690d1e89a8e89ed42ac696f91842c8d8bf1` 已推送。正式并集现为 2,468：2,135 canonical、333 unresolved（86.51%）；M1 1,464/1,553（94.27%）；M1 OU-R1 52/52；MR1 AH 1,647/1,921（85.74%）；MR1 AI mirror 1,464/1,553（94.27%）；共享 registry 12,276 IDs、4,151 canonical（33.81%）。
 - M1 formatter tests 6/6、MR1 shared registry/AI formatter tests 4/4 通过；定向展示使用单一 shared registry。此次只增补名称/来源/coverage，无模型或策略变更，未发或编辑 Telegram。该映射对应 MR1 formal scope；没有据此推断存在已发送历史订单。其余 333 条继续逐项核实，不猜译。
+
+## 2026-10-14 正式名称增量：Viimsi 与 IMT
+- 新增两条直接简中来源：`18546 IMT Novi Belgrade` → IMT新贝尔格莱德（17500 简中赛程页，QTX 简中比赛记录交叉核对；Beograd/Belgrade 为同一城市拼写）；`30301 Viimsi JK` → 维姆西（Sofascore 简中一线队页面）。特别核验 7M 搜索结果所示的是 `Viimsi JK Women's` 且有不同 provider ID，因此没有将女队映射到男队 ID 30301。
+- 共享库 master 已推送 `c4baac493b1218e6ff99313e18c0067c9d5e78ea`。formal union 2,468 IDs：2,137 canonical、331 unresolved（86.59%）；M1 1,464/1,553（94.27%）；M1 OU-R1 52/52；MR1 AH 1,649/1,921（85.84%）；MR1 AI mirror 1,464/1,553（94.27%）；shared registry 12,276 IDs、4,153 canonical（33.83%）。完整未匹配项继续查共享库 coverage 文件。
+- M1 Telegram formatter tests 6/6、MR1 shared registry/AI formatter tests 4/4 pass，`git diff --check` pass。M1 formal ledger、MR1 AH sent/AI sent-prospective ledgers 未找到这两队对应订单；未发送或编辑 Telegram。仅更新展示 registry/来源审计与 curator，不改模型/策略/账本/结算。继续处理剩余 331 个 ID。
