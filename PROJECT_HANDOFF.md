@@ -1127,3 +1127,9 @@
 - 中文足球赛事页面将 `FC Viktoriya Sumy` 显示为“维多利亚苏梅”，球队页同时标出英文名 VictoriaSumy（https://zuqiuba-iqiyi.com/qiudui/BcPWy/）；并由中文赛事列表中的“维多利亚苏梅足球俱乐部”赛程用例核对该队身份。为 TotalCorner `team_id 135826` 加入 canonical 与别名，不与其他 Viktoriya/Victoria 球队合并。
 - 共享库提交 `767f1f19294b88a69ac969713fd2ec73c07a5a76` 已推送 master。本批新增1条。正式范围2,468 IDs：2,231 canonical、237 unresolved（90.40%）；M1 1,495/1,553（96.27%）；OU-R1 52/52；MR1 AH 1,725/1,921（89.80%）；MR1 AI declared mirror 1,495/1,553（96.27%）。
 - M1 formatter 6/6、MR1 shared registry display test 1/1 PASS，curator 和 `git diff --check` PASS。只更新展示名库和审计文件；无 TG 操作，无模型、策略、账本、结算或派单规则变更。
+
+## 2026-10-14 正式范围继续补齐（第四十二批）
+- 中国足球赛事数据页将黑山乙 `FK Podgorica` 显示为“FK波德戈里察”（https://data.chuqi.com/football/comp-integral/11070/）；7M/雷速赛程中也以此名称标示该队，并与另一个 `Internacional Podgorica` 区分。为 TotalCorner `team_id 53919` 新增此 ID 专属 canonical。
+- Tips.GG 简中球队页将 `Halkanoras Idaliou` 标为“伊达利欧哈卡诺拉斯队”（https://tips.gg/cn/team/halkanoras-idaliou-football/）。为 TotalCorner `team_id 18247` 记录去“队”后缀的 canonical“伊达利欧哈卡诺拉斯”及 Chalkanoras/Halkanoras 别名。
+- 共享库提交 `e1b6c75eb64439a6270c342ea5593436065a156e` 已推送 master，本批新增2条。正式范围2,468 IDs：2,233 canonical、235 unresolved（90.48%）；M1 1,496/1,553（96.33%）；OU-R1 52/52；MR1 AH 1,727/1,921（89.90%）；MR1 AI declared mirror 1,496/1,553（96.33%）。
+- M1 formatter tests 6/6 与 MR1 shared-registry test 1/1 PASS，curator 和 `git diff --check` PASS。只更新公共中文名称数据/审计；无 Telegram 发送/编辑，策略、模型、账本、结算及信号规则未改。
