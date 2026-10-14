@@ -1224,6 +1224,8 @@
 - 最新共享库提交 `e01fc0dea6a74ee22d6d47a16bda7d2c847fc9c0` 已推送 master。本批之后正式范围最新口径为 2,468 IDs：2,262 canonical、206 unresolved（91.65%）；M1 1,506/1,553（96.97%）、M1 OU-R1 52/52（100%）、MR1 AH 1,752/1,921（91.20%）、MR1 AI 声明范围镜像 M1 为 1,506/1,553（96.97%），MR1 AI confidence≥50 observed cohort 181/182（99.45%）。准确明细以该共享库 `formal_scope_coverage.json` 为准。
 - 上一批 TG 历史 name-only 检查：M1 run `38595095719` success，eligible=41、edited=0、already_matching=41、缺失原文=99、未映射=97、failed=0；MR1 Formal `38595103478` success，125 already processed、edited=0、unresolved=0；MR1 AI `38595110762` success，total=201、edited=0、failed=9、unresolved=192，9 条均 Telegram API 400 `message to edit not found`。
 - 针对 `e01fc0de` 最新映射的同一组现有历史修复工作流已再次运行：M1 `38595595398`、MR1 Formal `38595603040`、MR1 AI `38595610655`。MR1 Formal 已 success；M1 与 MR1 AI 在本次交接更新时仍运行中，结束状态/实际编辑数须补记后再宣称完成。未触发新消息发送。
+- 三个上述运行现已全部 success：M1 `38595595398` 再次 eligible=41、edited=0、already_matching=41、缺原文99、unmapped97、failed0；MR1 Formal `38595603040` eligible0、edited0、already processed125、unresolved0、failed0；MR1 AI `38595610655` total201、edited0、failed9、unresolved192，失败均为 Telegram `400 message to edit not found`。所以本批没有一条历史 TG 成功改字，也没有任何重发。
+- 本地 `test_m1_telegram_display_repair.py` 2/2 PASS；M1 formatter 6/6 与 MR1 shared display test 1/1 的既有验证仍通过。MR1 运行仓库代码通过 `src/football-display-names.js` 读取唯一外部 `display_names.json`；MR1 AI unresolved 只写诊断计数，不阻塞通知。所有覆盖率及 206 条逐队名称/原因见共享 `formal_scope_coverage.json`。
 - 当前 unresolved 206 条保留于共享库 `formal_scope_coverage.json`，按无唯一、可核验中文来源而未赋名；没有用猜测音译补覆盖率。M1 formatter、MR1 display 接入及历史名称修复不改变任何模型、策略、正式账本、结算或订单条件。
 
 ## 2026-10-15 正式范围继续补齐（第六十二批）
