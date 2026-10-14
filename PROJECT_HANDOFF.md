@@ -1492,3 +1492,8 @@
 - 最新 formal union：2,468 IDs，2,316 canonical、152 unresolved（93.84%）；M1 1,531/1,553（98.58%），M1 OU R1 52/52（100%），MR1 AH 1,797/1,921（93.55%），MR1 AI declared mirror of M1 1,531/1,553（98.58%）。完整未匹配 ID、身份、联赛上下文和 `NO_VERIFIED_CANONICAL_ZH` 原因在共享 `data/football_display_names/formal_scope_coverage.json#unresolved_records`；不为覆盖率猜名。
 - 验证：M1 formatter/repair `8/8 PASS`；MR1 shared display + AI Telegram formatter `4/4 PASS`；V6 historical edit repair test 单独运行 `1/1 PASS`。隔离 resolver 读取最新共享文件，MR1 将 team ID 147657/相同路径解析到 canonical；M1 formatter 对新增正式 ID 生成中文球队方向。测试不等于线上 Telegram 文本编辑。
 - 历史 Telegram 本轮未编辑、未重发；没有触发生产扫描、通知或账本写入。此前记录的阻碍仍是缺少安全可用的生产 TG 编辑凭据/受控 edit job，且 Telegram 已删除或不可编辑的消息需按真实 API 回执判定。未修改模型、策略、赛事范围、盘口、Pick、结算或发送规则。
+
+## 2026-10-15 正式范围名称续补（第一百零五批）
+- 从共享库 `a78f341f3922a85f85e4b97ea86108976e93fba0` 继续，仅检索现存 unresolved 清单。新增 TotalCorner team ID `168001` `Safa Baku` →“萨法巴库队”，来源为 Tips.GG 简体中文球队页，页面给出中文名、英文队名和阿塞拜疆身份；映射已提交到共享库 `3643c58f805e718753bad6d1403ed63883e3c73b`。没有按相似英文名称合并其他 team ID。
+- 正式范围更新为 2,468 IDs、2,317 canonical、151 unresolved（93.88%）；M1 1,532/1,553，M1 OU R1 52/52，MR1 AH 1,798/1,921，MR1 AI 镜像 M1 1,532/1,553。权威分项及完整未匹配清单见该共享提交的 `formal_scope_coverage.json`。
+- 本轮 M1 formatter/repair 测试 8/8 通过；未触发正式扫描、TG 发送或历史编辑。其他抽查未找到可靠中文名的名称保留 unresolved；策略、赛事范围、盘口、账本、结算和发送逻辑未修改。
