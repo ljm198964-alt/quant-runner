@@ -1029,3 +1029,7 @@
 - 继续从当前 unresolved 清单核实 `team_id 46706`、provider `Changnyeong (W)`：球探简中档案标题使用“昌宁女足”，英文名为 `Changnyeong (W)`（https://info.nowscore.com/cn/team/Summary.aspx?TeamID=37682）；Sofascore 简中球队页另称“昌宁郡女子足球俱乐部”（https://www.sofascore.com/zh/football/team/changnyeong-wfc/284610）。选取符合简体盘口语境的 canonical `昌宁女足`，保留女队英文别名和 team ID，不与任何男子队合并。
 - 本批复算 formal union：2,468 IDs，2,207 canonical、261 unresolved，覆盖率 89.42%；M1 1,487/1,553（95.75%）；M1 OU-R1 52/52（100%）；MR1 AH 1,707/1,921（88.86%）；MR1 AI declared mirror 1,487/1,553（95.75%）。M1 formatter 6/6、MR1 registry display test 1/1 通过。只更新展示名库与审计文件；本批没有触发 Telegram 发送或编辑、没有改策略或账本。
 - 随后再次运行 MR1 历史名称编辑工作流核验新映射：run [38576577641](https://github.com/ljm198964-alt/quant-runner/actions/runs/38576577641) SUCCESS，回执 `edited=0, eligible=0, skipped=125, unresolved=0, failed=0`。Telegram 未产生修改；这项回查只证明现有正式消息集没有待改文本，不代表尚未发送的新消息。
+
+## 2026-10-14 正式范围新增：FC Chernigiv
+- `team_id 46376` / provider `FC Chernigiv` 新增 canonical `切尔尼戈夫`。Tips.GG 简中球队档案以“切尔尼戈夫队”显示该乌克兰俱乐部（https://tips.gg/cn/team/fc-chernigiv-football/）；registry 保留队名来源别名及原 TotalCorner ID，不把它与其他 Chernihiv 队混并。
+- 当前 formal union 2,468 IDs：2,208 canonical、260 unresolved（89.47%）；M1 1,487/1,553（95.75%），M1 OU-R1 52/52，MR1 AH 1,708/1,921（88.91%），MR1 AI declared mirror 1,487/1,553（95.75%）。M1 display tests 6/6、MR1 shared display test 1/1 通过。仅更新名称数据/审计；本条之后尚未重新运行历史 Telegram 编辑器，也没有生产发送。
