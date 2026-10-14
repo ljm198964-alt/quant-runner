@@ -1283,3 +1283,8 @@
 - M1 formatter / name-repair 本地单测 8/8 PASS，curator 运行及 `git diff --check` PASS。共享 resolver 仍以 team_id 优先。没有改模型、策略、市场、结算、账本、订单或 Telegram 发送条件。
 - 采用最终共享库后的历史 TG 核查：M1 `38603045617` success，eligible41、edited0、already_matching41、缺原文99、未映射97、failed0；MR1 AI `38603061892` success，total201、候选9、edited0、failed9（均是 Telegram `400 message to edit not found`）、unresolved192；MR1 Formal `38603053523` 的 edit step 成功（eligible0、edited0、skipped125、unresolved0），但 workflow 最终因写回状态时 MR1 runtime 并发推进 master、GitHub 拒绝旧 expected ref（non-fast-forward/ref lock）而失败。没有任何历史消息重发或投注字段修改；也没有历史消息实际编辑成功。
 - MR1 私有仓库只读 registry smoke `38602761639` 被 GitHub 账户付款/支出限制在 runner 启动前拦截；云端独立 smoke 未 PASS。M1 OU-R1 当前名称覆盖仍为52/52，但没有发现它自己的历史 TG repair ledger/workflow，故不声称其历史消息已逐条编辑验收。
+
+## 2026-10-15 正式范围继续补齐（第七十二批）
+- 从剩余正式范围待补项中，以 FootyStats 简体中文斯洛文尼亚 2. SNL 对阵记录核实 `Ankaran Hrvatini → 安卡兰`，并按 TotalCorner 原身份/联赛上下文写入 `team_id 7256`；英文别名 `Ankaran` 入库，不与地点或其他球队合并。来源：<https://footystats.org/cn/clubs/nk-bela-krajina-crnomelj-2002>。
+- 唯一共享库提交 `839eecd6`（完整 SHA 见 totalcorner-research-bridge/master）已推送。正式范围仍为2,468 IDs：2,272 canonical、196 unresolved（92.06%）；M1 1,510/1,553（97.23%），M1 OU-R1 52/52（100%），MR1 AH 1,759/1,921（91.57%），MR1 AI declared mirror 1,510/1,553（97.23%）。全库12,276 IDs、4,288 canonical；完整未匹配队伍及原因继续以共享 `data/football_display_names/formal_scope_coverage.json` 的 `unresolved_records` 为准。
+- curator 二次运行幂等（added=0）；M1 Telegram formatter / name-repair 本地单测8/8 PASS，`git diff --check` PASS。M1 formatter 已确认读取唯一共享 registry。此批没有在 MR1 / MR1 AI 生产运行环境执行 formatter，也未执行历史 Telegram 编辑工作流；不得据此声称四条生产链已实时验收或旧消息已编辑。未改模型、策略、赛事范围、账本、结算或 TG 派单规则。
