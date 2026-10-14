@@ -1003,3 +1003,8 @@
 - 最新共享 master `63648b442651d820ba9c7f78bbf3670b5eab24dd` 的 formal unresolved 清单中，team_id `4689` 的 provider name 为 `Jadran LP`，正式范围含 M1/MR1。Tips.GG 简中页面将同名克罗地亚球队显示为“雅德兰”，并标示国家为克罗地亚：https://tips.gg/cn/archive/jadran-lp-football-vs-nk-lucko-football/；克罗地亚足协页面确认 NK Jadran-LP Ploče 的正式身份：https://semafor.hns.family/en/clubs/1976/nk-jadran-lp/?cid=78204094。本批补入 canonical “雅德兰”，保留 `NK Jadran-LP` 等别名及来源证据，不合并其他球队 ID。
 - 共享库提交 `fe5b97e4f26ad6ffd693bee2bec44d6d111ff4a5` 已推送。最新 formal union 2,468 IDs：2,201 canonical、267 unresolved，覆盖89.18%；M1 1,486/1,553（95.69%）；M1 OU-R1 52/52；MR1 AH 1,701/1,921（88.55%）；MR1 AI declared mirror M1 1,486/1,553（95.69%）。完整 unresolved 名单在唯一共享 `formal_scope_coverage.json`。
 - 使用当前共享库：M1 Telegram display 测试6/6通过，MR1 `test-football-display-names.js` 1/1通过。扩大执行的 M1 runtime 测试另有5个既有 fixture/candidate-key 失败；MR1 AI 广泛 send-chain 测试因当前本地工作区 fixtures/ledger 不齐而6项失败，不能视为名称层回归或生产发送验证。未进行真实 Telegram 编辑/发送；本轮没有历史修复回执。没有模型、策略、ledger、结算或派单改动。余下267项继续按来源核验，未将不可靠直译填入共享库。
+
+## 2026-10-14 正式范围继续补齐（第二十一批）
+- 从7M中文球队资料核实两条正式范围映射：`FC Tallinn`（team_id `67634`）→“塔林FC”（7M页面标示爱沙尼亚并列出球队赛程：https://team.7m.com.cn/452435/index_gb.shtml）；`Unia Skierniewice`（`33235`）→“尤尼亚斯凯尔涅维采”（7M页面标示波兰并列出球队赛程：https://team.7m.com.cn/453386/index_gb.shtml）。ID、provider 原名、aliases 和来源均保留，没有改正式 identity。
+- 共享 registry 提交 `0e27ab163016248de713a1fbd1fbc75b6e2b9d55` 已推送。formal union 实算 2,468 IDs、2,203 canonical、265 unresolved（89.26%）；M1 1,488/1,553（95.81%），M1 OU-R1 52/52，MR1 AH 1,702/1,921（88.60%），MR1 AI declared mirror M1 1,488/1,553（95.81%）。全量 unresolved 记录在共享 `data/football_display_names/formal_scope_coverage.json`。
+- 共享库名称层验证：M1 formatter 6/6 PASS，MR1 `test-football-display-names.js` 1/1 PASS。没有真实 Telegram 编辑或发送，本轮历史消息修复数为0；不宣称已修改已发送订单。未改模型、策略、范围、ledger、结算或派单逻辑。265项仍在继续核证。
