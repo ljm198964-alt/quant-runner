@@ -1170,3 +1170,7 @@
 - Tips.GG 中文保加利亚乙级联赛球队表将 Belasitsa Petrich 显示为“贝拉西察佩特里奇”（https://tips.gg/cn/tournament/football-bulgaria-second-professional-league-2023-24/）；为 TotalCorner `team_id 14865` / provider `Belasitza Petrich` 新增 canonical 与规范拼写别名，球队 ID 保持独立。
 - 共享库提交 `efb499642d1c45c543bfa531c09f55c9709da342` 已推送 master，本批新增1条。formal union 2,468 IDs：2,242 canonical、226 unresolved（90.84%）；M1 1,498/1,553（96.46%）；M1 OU-R1 52/52；MR1 AH 1,731/1,921（90.11%）；MR1 AI declared mirror 1,498/1,553（96.46%）。M1 formatter 6/6 PASS；curator 与 `git diff --check` PASS。仅展示库更新，生产策略及 TG 历史消息未改。
 - M1 formatter 6/6、MR1 shared display test 1/1 PASS，curator 和 `git diff --check` PASS。只更新共享显示名称及审计文件；无 Telegram 发送/编辑或生产策略、模型、账本、结算变更。
+
+## 2026-10-14 正式范围继续补齐（第五十一批）
+- 雷速中文球队页直接显示 `FC Bacau` 为“FC贝卡”（https://m.leisu.com/data/zuqiu/team-76388）；该页的英文身份与 provider 名完全一致，联赛范围为罗马尼亚；为 TotalCorner `team_id 134085` 增加 canonical“FC贝卡”及 FC Bacău 拼写别名，未与其他罗马尼亚球队合并。
+- 共享库提交 `8a4f03b7ad78130f94f7419fe1d03c80e4c80568` 已推送 master（先纳入远端新提交 `31b830f7` 后快进发布）。本批新增1条。formal union 2,468 IDs：2,243 canonical、225 unresolved（90.88%）；M1 1,498/1,553（96.46%）；M1 OU-R1 52/52；MR1 AH 1,731/1,921（90.11%）；MR1 AI declared mirror 1,498/1,553（96.46%）。M1 formatter 6/6 PASS；curator 与 `git diff --check` PASS；MR1 shared registry consumer test 最近复验1/1 PASS。生产策略、账本及既有 Telegram 消息未修改。
