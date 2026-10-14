@@ -15,8 +15,9 @@
 - 从共享库最新 master `4d67fd5531d7d55384b60226951329abd327043a` 接续，没有覆盖已有 canonical。当前待合并批次为 3 个有成熟中文资料对应的正式 team ID：Leevon PPK（144651）→ 沙尔杜斯利维诺（7M 简体中文球队页，拉脱维亚足协身份交叉核对）；Aragvi Dusheti（46813）→ 阿拉吉夫杜塞提（7M 简体中文球队页）；FC Besa Peja（150935）→ 贝萨佩贾（FootballAnt 简体/英文同一 profile ID 对照）。同一映射写入唯一共享文件 `data/football_display_names/display_names.json`，脚本/批次来源审计随变更提交。
 - 更新后文件实算：formal union 2,468，canonical 2,327，未匹配 141（94.29%）；M1 1,542/1,553（99.29%）；M1 OU-R1 52/52（100%）；MR1 AH 1,808/1,921（94.12%）；MR1 AI 声明镜像 1,542/1,553（99.29%）；MR1 AI observed confidence≥50 为 181/182（99.45%）。共享库 12,276 team IDs，4,343 canonical；完整 141 条及各项原因见共享 `formal_scope_coverage.json` 的 `unresolved_records`。
 - 搜索 7M、Sofascore、FootballAnt 等资料后，对剩余低级别俱乐部仅在中文名可与同一球队身份对应时入库；搜索结果仅有英文、仅有其他语种或存在同名身份冲突的仍保留 unresolved，不用临时音译补数。当前 141 项多属埃及低级别、科索沃/东欧/威尔士/波罗的海地区俱乐部；`CS Stefanesti`、`El Hammam`、`Vllaznia/Vllazina` 等存在身份歧义的不得互相借名。
-- 验证：共享 curator 幂等重跑 `added=0`；`git diff --check` 通过；M1 Telegram display + history-repair 测试 8/8；MR1 完整 `npm test` 通过。正式格式器已使用同一共享 registry；本批新增前尚未部署/编辑历史消息。Telegram 历史文字修复必须用既有 name-only edit workflow，保持 message ID 与投注内容，不重发；实际 API 编辑回执待新 registry 合并后再核查。
-- 本轮未修改 M1、M1 OU-R1、MR1 AH、MR1 AI 的模型、策略、盘口、范围、阈值、账本、结算或发送条件。共享 registry 的提交/PR、合并后 TG 历史修复运行及回执需在下一更新中填写，不得提前宣称已完成。
+- 验证：共享 curator 幂等重跑 `added=0`；`git diff --check` 通过；M1 Telegram display + history-repair 测试 8/8；MR1 完整 `npm test` 通过。使用新增真实 team ID 做 M1 formatter 隔离渲染及 MR1 AI formatter 实际渲染，显示方向、主客队中文正确；`Georgia First League` 的 league_id 702 本身仍无可靠中文资料，未硬译，故该示例赛事名仍回退英文。
+- 共享变更已由 PR #6 合并，master merge commit `7599cb21cabf28fb72d912f977f31044c96413f2`。合并后运行现有历史名称修复工作流：M1 run `38634559249` 成功，eligible 41、edited 0、already matching 41、跳过缺原始文本 99、跳过未映射 97、failed 0；MR1 AH run `38634568096` 成功，already processed 125、edited 0、unresolved 0、failed 0；MR1 AI run `38634575356` 成功结束，但 candidates 9、edited 0、failed 9（Telegram `400 Bad Request: message to edit not found`），unresolved 192。三条工作流都不重发消息；没有历史消息被编辑成功，本轮实际编辑数为 0。AI 失败项所指 Telegram 消息已无法通过当前 bot/chat 的 message ID 定位，不能宣称修复。
+- Runner 交接更新提交 `bffb047` 已推送至 `quant-runner/main`。本轮未修改 M1、M1 OU-R1、MR1 AH、MR1 AI 的模型、策略、盘口、范围、阈值、账本、结算或正式发送条件；未运行生产预测/派单。
 
 ## 仓库与关键路径
 - 公开 Runner：`ljm198964-alt/quant-runner`，`.github/workflows/m1-free-runtime.yml`。
