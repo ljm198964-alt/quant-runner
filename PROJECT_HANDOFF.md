@@ -938,3 +938,8 @@
 - 根据 Tips.GG 简中阿尔巴尼亚杯页面，本轮新增 `KS Kastrioti Kruje`（48501）→卡斯特里奥蒂克鲁耶、`KS Besa Kevaje`（43150）→贝萨卡瓦耶、`KS Korabi Peshkopi`（43752）→科拉比佩什科皮。页面以中文显示对应球队/比赛，保留 TotalCorner team_id 和英文原名；Besa 的 Kavaje/Kevaje 是拼写 alias，不扩成实体合并。来源页：https://tips.gg/cn/tournament/football-albanian-cup-2024-25/。
 - 共享 registry 最新 master 提交 `bafc42ce06a0dcd38257e0588f1e4ae6df74a277`。最新实算：formal 2,468，canonical 2,171、unresolved 297（87.97%）；M1 1,477/1,553（95.11%）；M1 OU-R1 52/52；MR1 AH 1,675/1,921（87.19%）；MR1 AI mirror M1 1,477/1,553（95.11%）。297项逐项详情以唯一共享 `formal_scope_coverage.json` 为准。
 - formatter 回归使用最新共享库：M1 Telegram display tests 6/6通过；MR1 registry/AI formatter tests 4/4通过。无生产扫描、Telegram 发送/编辑；策略、模型、范围、ledger、settlement 均未修改。完成度仍非全量。
+
+## 2026-10-14 正式范围继续补齐（第八批）
+- 为正式范围 `FK Zhenys`（team_id `99519`，league_id `345`）核实中文名“珍尼斯”。Tips.GG 简中哈萨克斯坦球队对阵页直接以“珍尼斯”标注 Zhenis：https://tips.gg/cn/archive/fc-kairat-almaty-football-vs-zhenis-football/；保留 TotalCorner provider identity、team ID 与既有联赛，不合并其他球队。唯一共享 registry master 提交 `3636fd8aa972e441e7a9eefe07ee3708d8d4a979` 已推送。
+- 从提交后的 `formal_scope_coverage.json` 实算：正式范围 2,468 IDs，canonical 2,173、unresolved 295，覆盖率 88.05%；共享库 12,276 team IDs、4,189 canonical。完整未匹配清单和原因仍以该文件 `unresolved_records` 为准。
+- 使用该最新共享映射隔离验证：M1 Telegram formatter 6/6 PASS；MR1 shared-registry/AI formatter 4/4 PASS。没有触发生产扫描、历史 Telegram 编辑或发送；未修改策略、模型、赛事范围、订单账本或结算。正式范围全量补齐和历史 TG 逐条修复仍未完成。
