@@ -953,3 +953,8 @@
 - 从当前 unresolved 名单新增4个可核验 provider ID：`NK Bilje`（44026）→比尔耶、`FK Babrungas`（47453）→巴布龙加斯（Tips.GG 简中球队/对阵页面）；`Tsarskoye Selo`（32425）和 `Tsarsko Selo 2015`（42101）→特萨斯科塞洛（球天下中文资料 https://www.qtx.com/dbsoccer/team_26228.html）。两个 Tsarsko Selo 的 TotalCorner IDs 分开保留，未作 ID 合并。共享 master 提交 `fbcc389a3b6b8581126bcbfc80bf5f04d1128cde` 已推送。
 - 最新正式范围实算 2,468 IDs，canonical 2,179、unresolved 289，覆盖 88.29%；共享库 12,276 IDs、4,195 canonical。完整未匹配球队、联赛和原因以共享 `formal_scope_coverage.json` 当前版本为准。
 - 使用共享库当前版本运行 formatter 回归：M1 6/6、MR1 shared registry/AI 4/4 PASS。仅有名称数据/审计变化；未触发 Telegram 编辑、发送或生产扫描，也未更改模型、策略、正式订单或结算。此目标仍未完成。
+
+## 2026-10-14 正式范围继续补齐（第十一批）
+- 依据 Tips.GG 简中希腊杯赛档案对 Ilioupoli 的直接显示“伊利乌波利”，为正式 team_id `43653` 增加 canonical 映射（https://tips.gg/cn/archive/aek-athens-football-vs-ilioupoli-football/）；保留 TotalCorner ID、原 provider 名和希腊赛事 ID，不作实体合并。共享 master 提交 `e9a822f427c14722b995db08b453fa0ebbd8f4ba` 已推送。
+- 最新 formal union 2,468 IDs，canonical 2,180、unresolved 288，覆盖 88.33%；共享 registry 12,276 IDs、4,196 canonical。请以最新共享 `formal_scope_coverage.json` 的完整未匹配记录为准。
+- 最终共享库定向回归：M1 display formatter 6/6 PASS；MR1 shared display registry + AI formatter 4/4 PASS。只增加展示名称证据；未触发真实 Telegram、订单、模型或生产运行。仍有288个正式范围未匹配，任务未完成。
