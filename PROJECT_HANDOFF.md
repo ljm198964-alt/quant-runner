@@ -933,3 +933,8 @@
 - 新增 team_id 8761 `FK Backa Palanka` → 巴奇卡帕兰卡。Sofascore 简中队页使用该名称，中文球队资料将 FK Bačka Bačka Palanka 与该俱乐部对应；按名称沿革，不与 FK Bačka 1901 或其他同名球队合并。共享 master 最新提交 `b51cdd1bc7c17255e4302ca06db4ba7bf8fafd52`。formal union 2,468：2,168 canonical、300 unresolved（87.84%）；M1 1,476/1,553（95.04%），OU-R1 52/52，MR1 AH 1,673/1,921（87.09%），MR1 AI mirror M1 1,476/1,553（95.04%）。
 - M1 Telegram display tests 6/6通过；MR1 shared-registry + AI formatter tests 4/4通过。M1 正式 ledger 未发现 team_id 8761 对应的既有 Pick；未触发历史消息编辑、重发或生产 workflow。
 - 剩余300条的完整 ID/名称/联赛/系统归属及原因仍以共享库 `data/football_display_names/formal_scope_coverage.json` 为准。未修改模型策略、范围、订单、结算或派单规则。
+
+## 2026-10-14 正式范围继续补齐（第七批）
+- 根据 Tips.GG 简中阿尔巴尼亚杯页面，本轮新增 `KS Kastrioti Kruje`（48501）→卡斯特里奥蒂克鲁耶、`KS Besa Kevaje`（43150）→贝萨卡瓦耶、`KS Korabi Peshkopi`（43752）→科拉比佩什科皮。页面以中文显示对应球队/比赛，保留 TotalCorner team_id 和英文原名；Besa 的 Kavaje/Kevaje 是拼写 alias，不扩成实体合并。来源页：https://tips.gg/cn/tournament/football-albanian-cup-2024-25/。
+- 共享 registry 最新 master 提交 `bafc42ce06a0dcd38257e0588f1e4ae6df74a277`。最新实算：formal 2,468，canonical 2,171、unresolved 297（87.97%）；M1 1,477/1,553（95.11%）；M1 OU-R1 52/52；MR1 AH 1,675/1,921（87.19%）；MR1 AI mirror M1 1,477/1,553（95.11%）。297项逐项详情以唯一共享 `formal_scope_coverage.json` 为准。
+- formatter 回归使用最新共享库：M1 Telegram display tests 6/6通过；MR1 registry/AI formatter tests 4/4通过。无生产扫描、Telegram 发送/编辑；策略、模型、范围、ledger、settlement 均未修改。完成度仍非全量。
