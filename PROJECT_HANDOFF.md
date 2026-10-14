@@ -1,5 +1,10 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 unresolved 来源交叉核验补充
+- 对共享 formal unresolved 中有 Wikidata entity bridge 的 43 个英文球队身份，使用 Reep 公共 `teams.csv` 精确规范化匹配；批量取回对应 43 个 Wikidata 实体，逐项检查 `zh`/`zh-cn`/`zh-hans`/`zh-hant` labels 及 `zhwiki` sitelink。结果：精确身份 bridge 43，中文标签 0，中文维基条目 0，因此本轮不能从该来源新增 canonical。候选身份 bridge 只能辅助后续找中文体育来源，不能被当成中文名称证据。
+- 对 7M live search `liveq.aspx` 针对 Karcagi SE、FK FAP、FC Yerevan、KF Hajvalia、Pembroke Athleta 查询均返回空结果；这只是赛事实时搜索索引未覆盖的证据，不代表球队不存在。FootballAnt 的 Qena SC profile 页面仍显示英文名，简体中文 profile 请求返回 502，未据此建映射。
+- 公开体彩队名映射 CSV 全表 24,888 条（11,197 条含中文队名）再次对剩余正式名称作 exact normalized join，0 命中。此前覆盖清单中 133 条仍为 `NO_VERIFIED_CANONICAL_ZH`；team_id 4931 已在共享 master `be1ac9e` 正确标记 `PROVIDER_IDENTITY_INVALID`。formal 2,334/2,468（94.57%）不变，未猜译、未修改策略。
+
 ## 2026-10-15 未匹配项数据质量分类更正
 - 共享库已合并 PR #10，master commit `be1ac9e29e0db197bd97fc13684060c597ea7c14`。没有新增球队中文名称，正式覆盖率保持 2,334/2,468（94.57%）。
 - 将 team_id `4931` 的 unresolved 原因从普通中文译名待确认改为 `PROVIDER_IDENTITY_INVALID`：存储的 provider_name 是字面值 `0`，需先修正上游球队身份；未猜名。formal coverage 与 curated batch report 均同步，134 项合计为 133 个 `NO_VERIFIED_CANONICAL_ZH`、1 个 `PROVIDER_IDENTITY_INVALID`。
