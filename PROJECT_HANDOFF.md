@@ -1345,6 +1345,10 @@
 - 新共享 registry 后运行历史修复：M1 TG workflow `38611061935` SUCCESS，41 eligible、0 edited、41 already matching、99 缺失原文、97 未映射、0 failed；MR1 Formal `38611070222` SUCCESS，0 eligible、0 edited、125 skipped/already processed、0 unresolved；MR1 AI `38611077975` SUCCESS，201 总项、9 候选、0 edited、192 unresolved、9 failed，失败均为 Telegram `400 message to edit not found`。没有重发任何消息。M1 formatter/name-repair tests 8/8 PASS，`git diff --check` PASS。
 - 本轮只改共享展示名、赛事名、相关统计/证据和本交接；不改模型、策略、赛事范围、盘口、正式账本、结算或通知规则。Telegram 历史实际编辑数为0，MR1 AI 旧消息失败原因明确；后续新消息由已接入共享库的通知 formatter 读取 canonical 映射。
 
+## 2026-10-15 四链中文 formatter 隔离验收
+- 使用共享 master 最新 registry 对 M1 formatter 和 MR1 `displayFootballFixture`、MR1 AH formatter、MR1 AI `formatAiAhTelegram` 做隔离渲染；示例为 HB Torshavn II vs HB Torshavn 与 Rigas FS II vs Sohag，赛事名、双方队名、方向均输出中文，盘口/水位值原样保留。未调用发送函数、未生成/修改正式订单。
+- MR1 测试代码按 `FOOTBALL_DISPLAY_REGISTRY_DIR` 读取同一 `display_names.json`；M1 测试 8/8 PASS。正式共享 master 最新为 `ff3c2c62`；quant-runner handoff 最新为 `4255480`。无新增策略/模型规则；历史 TG workflow 实际编辑为0，MR1 AI 的旧 message ID 不可编辑原因见第87批。
+
 ## 2026-10-15 正式范围继续补齐（第八十一批）
 - NowScore 中文球队页将 TotalCorner provider `Nabrouh` 对应为“纳布洛”，并展示该队埃及第二级联赛比赛（https://info.nowscore.com/big/team/Summary/37053.html）；独立 Nabrouh/Nabarouh 身份资料及 TotalCorner 赛程交叉确认联赛身份。仅为 `team_id 45228` 新增 canonical，保留 provider identity 与现有别名，不与其他埃及球队合并。
 - 共享库提交 `416fe3b9cb7eb7af959787d9748c681270a5d152` 已推送 master。本批新增1条；正式范围2,468队：2,282 canonical、186 unresolved（92.46%）；M1 1,513/1,553（97.42%），M1 OU-R1 52/52（100%），MR1 AH 1,768/1,921（92.04%），MR1 AI 声明范围镜像 M1 为1,513/1,553（97.42%）；全共享库12,276 IDs、4,298 canonical。未匹配明细及未能核实原因以该共享提交内 `formal_scope_coverage.json#unresolved_records` 为准。
