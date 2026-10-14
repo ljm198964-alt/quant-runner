@@ -1190,3 +1190,7 @@
 ## 2026-10-14 正式范围继续补齐（第五十五批）
 - 中文维基百科安道尔球队列表逐行列出 Penya Encarnada d'Andorra 与中文名“佩尼亚恩卡纳达”（https://zh.wikipedia.org/wiki/佩尼亞恩卡納達安道爾）；TotalCorner `team_id 50972` 对应安道尔赛事范围，加入 canonical 和繁体/英文别名，保持球队身份独立。
 - 共享库提交 `f12f67914aee3b7cc83453195e9d80da6f3d4561` 已推送 master。本批新增1条。formal union 2,468 IDs：2,247 canonical、221 unresolved（91.05%）；M1 1,499/1,553（96.52%）；M1 OU-R1 52/52；MR1 AH 1,740/1,921；MR1 AI declared mirror 1,499/1,553。M1 formatter 6/6、curator 与 `git diff --check` PASS。其余本轮检索对象无可靠中文球队名出处，保留 unresolved；不涉及任何 Telegram 发送/编辑及生产策略、模型、账本、结算修改。
+
+## 2026-10-14 正式范围继续补齐（第五十六批）
+- 7M 中文球队档案分别明确标注 FK TransINVEST 为“特兰斯因维斯特”（https://team.7m.com.cn/650201/index.shtml）、FK TransINVEST B 为“特兰斯因维斯特B队”（https://team.7m.com.cn/726884/index_gb.shtml）；按 TotalCorner 独立 team IDs `101061` 和 `145681` 写入，B队不与一线队合并。
+- 共享库提交 `3f9061170850154f451249c9cfb72898f29b7bab` 已推送 master，本批新增2条。formal union 2,468 IDs：2,249 canonical、219 unresolved（91.13%）；M1 1,499/1,553（96.52%）；M1 OU-R1 52/52；MR1 AH 1,742/1,921；MR1 AI declared mirror 1,499/1,553。M1 formatter 6/6、curator 与 `git diff --check` PASS。只更新共享展示库和审计数据；无 Telegram 发送/编辑或模型、策略、账本、结算、派单规则变更。
