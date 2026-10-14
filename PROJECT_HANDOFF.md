@@ -1633,3 +1633,9 @@
 - 将 Reep 开放实体表按正式未匹配 provider 英文名作精确归一化连接，找到42条与 Reep 实体一致的 formal identity，其中包含 Wikidata QID；批量查验这些 QID 的中文 labels、aliases 和 zhwiki sitelink，中文证据为0。Reep 的英文 ID crosswalk 有助实体身份复核，但本身不提供这些队伍的 canonical 中文名。
 - 再核查 Sofascore 简中/多语页面与搜索索引，包括 Sirens FC、Qena SC、Dikernis SC、Karcagi SE、ASIL Lysis、KF Rahoveci、FC Yerevan。可核验页面展示仍以英文俱乐部名为主；未发现可用简体中文 canonical。对 ASIL Lysis 的希腊/阿拉伯等语种转写不自行转换为中文，不用机器翻译补名。Pembroke Athleta 是上一批已根据其中文页成功新增的唯一名称。
 - 因无新增可靠中文证据，本批新增0；未改模型、scope、ledger、Telegram 或 settlement。现有 M1/MR1 resolver/formatter 检验仍分别为 M1 11/11、MR1 mounted shared registry 2/2、MR1 AI forward 3/3 PASS（均为本地）；没有 TG 发送或编辑。完整132项依然由共享 `formal_scope_coverage.json#unresolved_records` 跟踪。
+
+## 2026-10-15 正式范围中文名核验（第110批）
+- 以合并后的共享 master `ff1aeba465d40af963fa58eebb17e42642fa633a` 为基线重新核对；正式范围仍为 2,468 个 ID、2,336 canonical、132 unresolved（94.65%）。分项：M1 1,551/1,553（99.87%），M1 OU-R1 52/52（100%），MR1 AH 1,816/1,921（94.53%），MR1 AI declared mirror 1,551/1,553（99.87%）。未匹配完整明细由 `data/football_display_names/formal_scope_coverage.json#unresolved_records` 提供。
+- 本轮对 7M、500彩票网、雷速、Tips.GG、Sofascore 中文页及埃及中文比分记录做了针对性公开检索。唯一看似有中文的 Malta Sirens 页面把 `Sirens` 自动译成普通词“警报”，不符合球队惯用名标准；JQ007 的埃及对阵页反而将 `El Raja Marsa` 原样保留为英文，未作为中文名证据。其余命中没有形成精确 team ID + 英文身份 + 可核验简体队名的可靠交叉记录。因此新增 canonical 为 0，未改共享库，也没有虚构译名。
+- 展示回归：M1 `test_m1_telegram_display.py` 与 `test_m1_telegram_display_repair.py` 共 11/11 PASS。MR1 通过 `FOOTBALL_DISPLAY_REGISTRY_DIR` 挂载该共享 master 的 `test-football-display-names.js` 为 2/2 PASS，确认 MR1 可读同一 canonical registry 且不触碰策略字段。另将非纯展示的 `test-v6-ah-display-repair-v5.js` 一并执行时出现 1 项既有 fixture 断言不符（期望 0、实际 1）；单独共享 resolver/显示测试通过，本轮未改 MR1 文件。
+- 本轮没有正式 TG 发送或历史消息编辑，历史编辑成功数保持 0。已经存在的修复回执不可据本地 formatter 测试推断为 Telegram 编辑成功；需逐条使用原账本 provider message ID 并获得 Telegram API 成功回执。当前 blocker 仍是缺少 132 个球队的可信简体中文标准名来源（其中 team ID 4931 的 provider identity 是无效字面值 `0`），以及历史消息编辑需由既有授权运行链执行。策略、赛事范围、盘口、订单、账本、结算和通知规则均未修改。
