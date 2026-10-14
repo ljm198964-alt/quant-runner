@@ -1502,3 +1502,8 @@
 - 对当前 unresolved 批量抽查了 FK FAP、Qena/Asyut 低级别队、Shkëndija Haraçinë、Kosovo Prishtinë 等候选；没有把缺少可靠中文惯用名的球队强行映射。本轮 formal 数仍为 2,468 总 ID、2,317 canonical、151 unresolved（93.88%）。
 - 更新共享覆盖报告 `formal_scope_coverage.json` 并推送 `1c209ca4b1140b40c7f42f39364f35bd0d1fbb66`：对 ID 42262 `Vllaznia` 记录其 Kosovo Superliga 上下文不能套用阿尔巴尼亚维拉兹尼亚中文名；对 ID 43486 `Vllazina` 记录不可仅凭近似拼写与前者合并；对 ID 45722 `KF Kosova Prishtine` 记录其 Kosovo Division 2 身份不同于 FC Prishtina，不复用普莱斯堤纳映射。证据 URL 直接保存在各 unresolved 记录的 `reason_detail`。
 - 本轮没有新增 canonical 行，没有运行模型/生产流程，也未发送或编辑 Telegram。名称库测试仍以最近批次 M1 8/8、MR1 display/AI formatter 4/4、V6 repair 1/1 为准；未因纯证据注释更改测试代码。
+
+## 2026-10-15 正式范围名称续补：OFK Vrsac
+- 新增共享 team ID `107746`：`OFK Vrsac` → `OFK弗尔沙茨`，别名保留 `OFK Vršac`。中文比赛数据页 [JQ007 OFK弗尔沙茨 vs Dubocica](https://www.jq007.com/h2h/fk-dubocica-vs-ofk-vrsac) 给出该中文显示名；俱乐部官网 `ofkvrsac.com` 核对 OFK Vršac 的塞尔维亚身份，正式 league ID 337 也对应塞尔维亚甲级联赛。映射通过可重复 ID 定向 curator 写入，未改动其他同名/近名球队。
+- 共享库提交 `8e3d6a03e6513de70b04aa8895bf8cd134051c35`。正式 union 2,468 IDs：2,318 canonical、150 unresolved（93.92%）；M1 1,533/1,553（98.71%），M1 OU R1 52/52（100%），MR1 AH 1,799/1,921（93.65%），MR1 AI declared mirror of M1 1,533/1,553（98.71%）。完整清单以该提交 `formal_scope_coverage.json#unresolved_records` 为准。
+- 验证：M1 formatter/repair 8/8 PASS；挂载本次共享库目录的 MR1 display/AI formatter 4/4 PASS；V6 display repair 1/1 PASS。只做隔离 resolver/formatter 测试，无正式扫描、TG 发送或历史消息编辑；生产策略、订单与结算均未修改。
