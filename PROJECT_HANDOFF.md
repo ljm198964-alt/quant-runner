@@ -1519,3 +1519,9 @@
 - 共享库提交 `5367ebd557806076830112c11bc85162658dc9b7` 已推送 `totalcorner-research-bridge/master`。formal union 2,468 IDs：2,320 canonical、148 unresolved（94.00%）；M1 1,535/1,553（98.84%），M1 OU R1 52/52（100%），MR1 AH 1,801/1,921（93.75%），MR1 AI declared mirror of M1 1,535/1,553（98.84%）。以该提交的 `formal_scope_coverage.json#unresolved_records` 为剩余清单。
 - M1 display/repair 测试 8/8 PASS；MR1 resolver/AI Telegram formatter 4/4 PASS；MR1 V6 display-repair 测试 1/1 PASS（隔离环境串行执行）。本批未发送/编辑 Telegram，也未触发正式策略运行或结算。
 - 新映射仅增加正式范围覆盖；其他尚无可靠中文名称的条目继续保留 unresolved。本轮不涉及策略、Crown、赛事范围、正式账本和结算逻辑。
+
+## 2026-10-15 展示链路抽样与剩余项复核
+- 共享库当前 master `5367ebd557806076830112c11bc85162658dc9b7`；正式 union 2,468 IDs、2,320 canonical、148 unresolved（94.00%）。本轮另复查 Sirens、Pembroke Athleta、FC Hoyvik、FS La Massana、GFK Ohrid Lichnidos、Shturmi、Spartakos Kitiou 及埃及低级别球队。所查页面多只保留英文；一个雷速结果实际是 `Shturmi II`，与正式 unresolved `Shturmi` 不同，故排除，未误配。
+- 隔离实渲染确认新增 ID 可读：M1 formatter 对 Riga Mariners 输出中文联赛/球队；MR1 shared resolver 同样按 team ID 输出 `里加水手`、`KF奥里库`。抽样的未映射 Marupes SC 仍显示 provider 英文名，说明 148 个缺口仍会造成部分未来消息英文 fallback；没有以虚构译名遮盖。
+- 本轮历史 Telegram 实际编辑数为 0；没有具备本任务可用的既有一次性编辑 workflow，因此未新增 workflow、未触发真实策略扫描，也未发送/编辑消息。格式器测试只能证明本地渲染，不是 TG API 回执或已编辑历史消息的证据。后续如启用已有受控编辑执行链，应按每条账本中的原 provider message ID 核验成功/不可编辑回执。
+- 其余 148 个逐条记录、英文身份、赛事上下文和未匹配原因可从共享 `formal_scope_coverage.json#unresolved_records` 读取；不得把目前 94.00% 说成全量完成。策略、派单、账本与结算未修改。
