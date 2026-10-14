@@ -1178,3 +1178,7 @@
 ## 2026-10-14 正式范围继续补齐（第五十二批）
 - Tips.GG 简体中文球队页将当前的 `Gloria Bistrita` 显示为“比斯特里察荣耀队”，页面赛事/赛程明确为罗马尼亚乙级联赛 2026/27，并列出与 FC Bacau 等本季对手的同一赛程（https://tips.gg/cn/team/fc-gloria-bistrita-football/）；与官方当前 CS Gloria Bistrița 身份资料交叉确认（https://gloria2018.ro/）。为 TotalCorner `team_id 113178` / `CS Gloria 2018 Bistrita-Nasaud` 增加 canonical 和名称别名，保持与历史已解散的 Gloria Bistrița 俱乐部身份区分。
 - 共享库提交 `930e1e7725b5ad2d0e59deb39318196f999ed08a` 已推送 master，本批新增1条。formal union 2,468 IDs：2,244 canonical、224 unresolved（90.92%）；M1 1,498/1,553（96.46%）；M1 OU-R1 52/52；MR1 AH 1,731/1,921（90.11%）；MR1 AI declared mirror 1,498/1,553（96.46%）。M1 formatter 6/6、MR1 shared registry consumer test 1/1 PASS；curator 与 `git diff --check` PASS。仅展示名映射更新，未修改模型、策略、账本或历史 Telegram。
+
+## 2026-10-14 正式范围继续补齐（第五十三批）
+- 中文足球比赛记录将希腊 Diagoras 标为“迪亚戈拉斯”（https://www.okooo.com/soccer/match/1156257/form/）；FootyStats 中文赛事页亦以“迪亚戈拉斯”指称 Diagoras GS Rodos（https://footystats.org/cn/greece/ao-chania-kissamikos-fc-vs-diagoras-gs-rodos-h2h-stats）。TotalCorner `team_id 43745` 的希腊联赛上下文与该队相符，登记为独立 canonical，不合并其他同名 Diagoras。
+- 共享库提交 `c806bae5b5e5de40be0b148792f075198bb3acdd` 已推送 master。本批新增1条。formal union 2,468 IDs：2,245 canonical、223 unresolved（90.96%）；M1 1,499/1,553（96.52%）；M1 OU-R1 52/52；MR1 AH 1,738/1,921（90.47%）；MR1 AI declared mirror 1,499/1,553（96.52%）。M1 Telegram formatter 6/6 PASS；curator 与共享库 `git diff --check` PASS。MR1 最新 master 源码已确认按 team ID 读取同一 registry；本机消费者 checkout 存有未提交文件，未覆盖或改动。未发送或编辑历史 Telegram；未验证实际生产消息内容或历史 TG 编辑权限。策略、模型、账本、结算、派单规则未改。
