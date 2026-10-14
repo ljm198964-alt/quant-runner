@@ -857,3 +857,8 @@
 - 共享库 master 已推送提交 `9a949b0bd7a205bd9ffcbaa165fa59fc6e60259a`。本次最终文件实算：formal union 2,468，canonical 2,134、unresolved 334，覆盖率 86.47%；M1 1,463/1,553（94.20%）；M1 OU-R1 52/52（100%）；MR1 AH 1,645/1,921（85.63%）；MR1 AI declared mirror 1,463/1,553（94.20%）；全共享 registry 12,276 IDs、4,150 canonical（33.81%）。剩余逐条清单/原因以共享 master 的 `formal_scope_coverage.json` 为准。
 - M1 Telegram display tests 6/6 通过；MR1 shared registry + MR1 AI formatter tests 4/4 通过（显式指向同一共享库）；`git diff --check` 通过。M1 AH 与 OU-R1 沿用同一 formatter，MR1 AH/AI 读取同一 canonical registry，后台账本与去重仍各自独立。M1 正式账本中未发现这三队的 Telegram 正式订单；`Dobrudzha` 仅出现在扫描/市场研究记录，不能据此编辑 Telegram。没有因此触发或发送消息；历史消息此前实绩仍为 M1 4 条编辑、MR1 AH/AI 0 条编辑（旧消息 Telegram 返回 message-not-found，详见前节）。本批没有新增可安全编辑的历史消息。
 - 只更新展示名称 curation、共享映射与审计；没有改任何策略、模型、盘口、正式订单/账本/结算或派单规则，也没有触发生产扫描/Telegram。继续逐条处理剩余 334 个正式 unresolved，不虚构中文名。
+
+## 2026-10-14 正式范围继续补齐：Vlasenica
+- 在当前正式 unresolved 清单中确认 `12512 FK Vlasenica` 有雷速中文球队页直接标注“FK弗拉塞尼察”，并与 TotalCorner 的 Bosnia and Herzegovina 1st League (`league_id=911`) 身份对应；将该 canonical 及 Vlasenica/Fudbalski klub aliases 写入唯一共享 registry。
+- 共享 master 提交 `7aa62690d1e89a8e89ed42ac696f91842c8d8bf1` 已推送。正式并集现为 2,468：2,135 canonical、333 unresolved（86.51%）；M1 1,464/1,553（94.27%）；M1 OU-R1 52/52；MR1 AH 1,647/1,921（85.74%）；MR1 AI mirror 1,464/1,553（94.27%）；共享 registry 12,276 IDs、4,151 canonical（33.81%）。
+- M1 formatter tests 6/6、MR1 shared registry/AI formatter tests 4/4 通过；定向展示使用单一 shared registry。此次只增补名称/来源/coverage，无模型或策略变更，未发或编辑 Telegram。该映射对应 MR1 formal scope；没有据此推断存在已发送历史订单。其余 333 条继续逐项核实，不猜译。
