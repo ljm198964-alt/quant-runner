@@ -1300,3 +1300,8 @@
 - 两项经中文足球资料与 TotalCorner ID/赛事上下文交叉核实的新增：`team_id 97868 Al Jandal → 阿尔詹达尔`（Tips.GG 沙特比赛档案直接使用该译名，https://tips.gg/cn/archive/al-adalah-football-vs-al-jndal-football/）；`team_id 89494 Iraklis 1908 FC → 伊拿克里斯`（360百科球队资料明确列名“伊拿克里斯足球会”及英文身份，https://baike.so.com/doc/1708334-1806137.html）。保留原始 provider_name、Team ID 和别名，不合并其他同名球队。
 - 共享库提交 `bff3f3502771bfbe6bb7c94da6f2489d1c495bd6` 已推送 master。正式范围2,468队：2,275 canonical、193 unresolved（92.18%）；M1 1,512/1,553（97.36%），M1 OU-R1 52/52，MR1 AH 1,761/1,921（91.67%），MR1 AI declared mirror 1,512/1,553（97.36%）；全库12,276 IDs、4,291 canonical。完整 unresolved 及原因见共享 `formal_scope_coverage.json#unresolved_records`。
 - curator 本轮新增2条、再次执行幂等；M1 formatter/name-repair 测试8/8 PASS，`git diff --check` PASS。名称数据和来源已入唯一共享库；本批尚未以该新 registry 运行历史 TG 编辑工作流，也没有可作为新消息的生产实测样本。未修改策略、模型、市场、账本、结算或 TG 派单逻辑。
+
+## 2026-10-15 正式范围继续补齐（第七十五批）
+- Sofascore 简体中文 KF Drenica 球队页将该队显示为“德雷尼察地区斯尔比察”，并列出 Skënderaj 城市信息（https://www.sofascore.com/zh/football/team/kf-drenica/229754）。与 TotalCorner `team_id 40318`、provider `KF Drenica Skenderaj` 交叉核对后，新增该 canonical；只写入此稳定 ID，不套用于其他 Drenica 名称。
+- 共享库提交 `6c5ad6956c7bf7476b911e472ddf464a5fb69ccc` 已推送 master。本批新增1条；正式范围2,468队：2,276 canonical、192 unresolved（92.22%）；M1 1,513/1,553（97.42%），M1 OU-R1 52/52，MR1 AH 1,762/1,921（91.72%），MR1 AI declared mirror 1,513/1,553（97.42%）；全库12,276 IDs、4,292 canonical。未匹配队伍及原因以共享 `formal_scope_coverage.json#unresolved_records` 为准。
+- curator 本轮新增1条；M1 formatter/name-repair 测试8/8 PASS，`git diff --check` PASS。只更新共享展示映射与审计/交接信息，未修改策略、模型、赛事范围、账本、结算或 Telegram 派单逻辑；本轮没有发送或编辑 Telegram 消息。
