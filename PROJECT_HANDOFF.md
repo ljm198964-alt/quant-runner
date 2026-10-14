@@ -1627,3 +1627,9 @@
 - PR [#14](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/14) 已合并；merge commit `ff1aeba465d40af963fa58eebb17e42642fa633a`，源分支 commit `dacdf43eacca38247140459a03c5a4362ef30402`。最新 formal scope：2,468 IDs、2,336 canonical、132 unresolved（94.65%）；M1 1,551/1,553（99.87%），M1 OU-R1 52/52（100%），MR1 AH 1,816/1,921（94.53%），MR1 AI declared mirror 1,551/1,553（99.87%）。逐条剩余项仍以共享库 `formal_scope_coverage.json#unresolved_records` 为准。
 - 新增可重复 curation 路径并补 M1 formatter regression。验证：共享 repo M1 Telegram display/repair `11/11 PASS`；MR1 使用刚合并的共享 registry 挂载测试 `2/2 PASS`，其中 `3343` 真实 resolver render 为“彭布罗克”；M1 formatter 隔离渲染输出中文球队/方向，未改 price/line/selection 原始字段。M1 formal ledger 按冻结 team ID 检查没有 team ID 3343 的历史 Pick，因此无需针对该名编辑旧消息；本轮没有实际发送或编辑任何 TG，也没有触发生产策略。
 - 仅共享 display data/curator/test 和本 handoff 变化；模型、阈值、scope、Crown、交易账本、settlement、Telegram 内容/发送规则和 scheduler 均未修改。名称新增1；历史 Telegram 编辑数0（该 team ID 无对应历史单）。
+
+## 2026-10-15 unresolved 公开中文页面续查（第109批）
+- 共享库最新仍为 `ff1aeba465d40af963fa58eebb17e42642fa633a`：正式 2,468 IDs、2,336 canonical、132 unresolved（94.65%）。本轮没有 registry 更改。
+- 将 Reep 开放实体表按正式未匹配 provider 英文名作精确归一化连接，找到42条与 Reep 实体一致的 formal identity，其中包含 Wikidata QID；批量查验这些 QID 的中文 labels、aliases 和 zhwiki sitelink，中文证据为0。Reep 的英文 ID crosswalk 有助实体身份复核，但本身不提供这些队伍的 canonical 中文名。
+- 再核查 Sofascore 简中/多语页面与搜索索引，包括 Sirens FC、Qena SC、Dikernis SC、Karcagi SE、ASIL Lysis、KF Rahoveci、FC Yerevan。可核验页面展示仍以英文俱乐部名为主；未发现可用简体中文 canonical。对 ASIL Lysis 的希腊/阿拉伯等语种转写不自行转换为中文，不用机器翻译补名。Pembroke Athleta 是上一批已根据其中文页成功新增的唯一名称。
+- 因无新增可靠中文证据，本批新增0；未改模型、scope、ledger、Telegram 或 settlement。现有 M1/MR1 resolver/formatter 检验仍分别为 M1 11/11、MR1 mounted shared registry 2/2、MR1 AI forward 3/3 PASS（均为本地）；没有 TG 发送或编辑。完整132项依然由共享 `formal_scope_coverage.json#unresolved_records` 跟踪。
