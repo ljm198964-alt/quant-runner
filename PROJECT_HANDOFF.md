@@ -1117,3 +1117,8 @@
 - 中文维基“诺亚足球会”条目说明该俱乐部最初名为“阿尔察赫足球会（FC Artsakh）”（https://zh.wikipedia.org/wiki/诺亚足球会）。为 TotalCorner `team_id 43401` / provider `Artsakh`、Armenia league_id `55` 记录该历史名称“阿尔察赫”及来源别名，ID 独立保留，不与其他 Artsakh 命名球队合并。
 - 共享库提交 `78ff52837971826f0ff1d47fb08cdeaece2850d2` 已推送 master。本批新增1条。formal union 2,468 IDs：2,229 canonical、239 unresolved（90.32%）；M1 1,495/1,553；M1 OU-R1 52/52；MR1 AH 1,723/1,921；MR1 AI declared mirror 1,495/1,553。M1 formatter 6/6、MR1 shared registry test 1/1 PASS，curator 与 `git diff --check` PASS。
 - 仅更新共享名称库及审计产物；无 Telegram 发送/编辑，无模型、策略、账本、结算或派单规则变更。
+
+## 2026-10-14 正式范围继续补齐（第四十批）
+- Wikimedia Commons 中文分类页将 TB Tvøroyri 列为“TB特沃罗伊里”，并给出“特沃罗伊里足球俱乐部”中文条目（https://commons.wikimedia.org/wiki/Category:TB_Tv%C3%B8royri?uselang=zh）。为 TotalCorner `team_id 52432` / provider `TB Tvoroyri`（法罗群岛 league IDs `1439/10635`）新增 canonical“TB特沃罗伊里”和中文/原文别名，保持该 reserve/club identity 的现有 ID。
+- 共享库提交 `60191cb33e1f888fe6278bc440ed65d77da08cf1` 已推送 master。本批新增1条。formal union 2,468 IDs：2,230 canonical、238 unresolved（90.36%）；M1 1,495/1,553（96.27%）；M1 OU-R1 52/52；MR1 AH 1,724/1,921（89.74%）；MR1 AI declared mirror 1,495/1,553（96.27%）。
+- M1 formatter 6/6 与 MR1 shared registry test 1/1 PASS，curator 和 `git diff --check` PASS。仅共享展示名/审计数据变化，无 Telegram 发送/编辑，也未修改生产模型、策略、账本、结算和派单条件。
