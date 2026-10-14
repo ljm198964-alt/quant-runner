@@ -963,3 +963,8 @@
 - 新增 formal `Orijent`（team_id `48734`）→奥利简特。雷速中文球队数据页将英文全名 HNK Orijent 1919 对应为“奥利简特”，并列出粤语别名“奥利真特”：https://www.leisu.com/data/zuqiu/team-13272/data。保留 TotalCorner ID 与原名，不与 HNK Rijeka 混同。共享 master 提交 `b96b0e785443298b38fe4d8cb4f9ec7c87aa0f71` 已推送。
 - 最新 formal union 2,468 IDs，canonical 2,181、unresolved 287（88.37%）；共享 registry 12,276 IDs、4,197 canonical。全部未匹配队伍以最新共享 coverage 文件为准。
 - 最新共享映射隔离回归：M1 formatter 6/6、MR1 shared registry/AI formatter 4/4 PASS。没有生产 Telegram 修改或推送；只改 display data/evidence，正式规则与 ledger 未动。287条仍未完成。
+
+## 2026-10-14 正式范围继续补齐（第十三批）
+- 为正式 `Al-Arabi Al-Saudi`（team_id `49740`，Saudi league_id `246`）补 canonical `阿尔阿拉比（沙特）`。FootyStats 简中 Saudi First Division 球队档案使用“阿尔阿拉比”，并与其对阵 Al Bukayriyah 的球队身份对应：https://footystats.org/cn/clubs/al-arabi-club-5120。括注保留为区分其他国家同名 Al-Arabi，TotalCorner ID 和 provider identity 未变。共享 master 提交 `a0074264bb9e13102df99ad1bff6cd8efbfbc488` 已推送。
+- 最新正式范围 2,468 IDs：2,182 canonical、286 unresolved（88.41%）；共享 registry 12,276 IDs、4,198 canonical。完整 unresolved 清单以最新共享 coverage 文件为准。
+- M1 Telegram display formatter 6/6、MR1 shared registry/AI formatter 4/4 PASS。无真实 Telegram 编辑/发送、无策略/模型/账本/结算变更；剩余286个 formal IDs 继续逐项核实。
