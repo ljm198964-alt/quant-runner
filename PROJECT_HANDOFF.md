@@ -1,5 +1,11 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 未匹配项数据质量分类更正
+- 共享库已合并 PR #10，master commit `be1ac9e29e0db197bd97fc13684060c597ea7c14`。没有新增球队中文名称，正式覆盖率保持 2,334/2,468（94.57%）。
+- 将 team_id `4931` 的 unresolved 原因从普通中文译名待确认改为 `PROVIDER_IDENTITY_INVALID`：存储的 provider_name 是字面值 `0`，需先修正上游球队身份；未猜名。formal coverage 与 curated batch report 均同步，134 项合计为 133 个 `NO_VERIFIED_CANONICAL_ZH`、1 个 `PROVIDER_IDENTITY_INVALID`。
+- 用公开 体彩英文—中文队名映射表（24,888 行）再对全部 formal unresolved 做精确规范化匹配，命中 0；此前本轮 `lottery-football` 历史比分数据中英字段也命中 0。此类搜索结果不是“所有资料已穷尽”的证明；仍按证据边界保留 unresolved。
+- 上轮三条 name-only Telegram 工作流已对最新名称映射运行：M1 run `38641413548` PASS（编辑0；41已匹配、99缺原文、97无映射）；MR1 AH `38641420542` PASS（125已处理、编辑0）；MR1 AI `38641427355` 工作流 PASS 但9条编辑均因 Telegram 找不到原 message ID 失败，192 unresolved。新 PR 只修正 coverage 原因，不改变 `display_names.json` 的 canonical 名称，因此不重复触发 Telegram 编辑。
+
 ## 2026-10-15 中文名称余项与正式 Telegram 复核（本轮）
 - 从共享库最新 master `0284d3727ecb2cd140e0ecef83b9bbd0fd43b6e3` 接续。正式范围实际快照仍为 2,468 IDs、2,334 canonical、134 unresolved（94.57%）；M1 1,549/1,553（99.74%，4 未匹配），M1 OU-R1 52/52（100%），MR1 AH 1,815/1,921（94.48%，106 未匹配），MR1 AI 声明镜像 M1 1,549/1,553（99.74%，4 未匹配）；全共享库 12,276 team IDs、4,350 canonical。完整 134 项含 ID、provider name、league/system 上下文及原因，以唯一共享文件 `data/football_display_names/formal_scope_coverage.json#unresolved_records` 为准。
 - 本轮没有重做历史身份恢复。将 unresolved 英文名与公开 `lottery-football` 历史赛果数据的英文/中文球队列作精确连接，0 个正式 ID 命中；对余项作定向中文来源搜索，没有获得可同时确认中文名称与具体球队身份的新增来源。Wikidata API 对请求返回 HTTP 429，故不据此声称已穷尽该来源。新增 canonical 数量为 0；没有用机器音译或模糊同名填库。`team_id 4931` 的 provider identity 字符串为 `0`，应优先修复上游身份标签，不应猜译。
