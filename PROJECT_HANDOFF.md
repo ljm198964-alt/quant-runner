@@ -1033,3 +1033,4 @@
 ## 2026-10-14 正式范围新增：FC Chernigiv
 - `team_id 46376` / provider `FC Chernigiv` 新增 canonical `切尔尼戈夫`。Tips.GG 简中球队档案以“切尔尼戈夫队”显示该乌克兰俱乐部（https://tips.gg/cn/team/fc-chernigiv-football/）；registry 保留队名来源别名及原 TotalCorner ID，不把它与其他 Chernihiv 队混并。
 - 当前 formal union 2,468 IDs：2,208 canonical、260 unresolved（89.47%）；M1 1,487/1,553（95.75%），M1 OU-R1 52/52，MR1 AH 1,708/1,921（88.91%），MR1 AI declared mirror 1,487/1,553（95.75%）。M1 display tests 6/6、MR1 shared display test 1/1 通过。仅更新名称数据/审计；本条之后尚未重新运行历史 Telegram 编辑器，也没有生产发送。
+- 映射推送后执行最新 MR1 历史名称编辑核验：run [38577009608](https://github.com/ljm198964-alt/quant-runner/actions/runs/38577009608) SUCCESS，结果 `edited=0, eligible=0, skipped=125, unresolved=0, failed=0`；125 条均已处理，没有因 FC Chernigiv 产生可编辑历史消息。本次仍未重发 Telegram。
