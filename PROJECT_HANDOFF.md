@@ -1,5 +1,13 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 正式范围中文名称续补（batch 118）
+- 从共享库 `totalcorner-research-bridge/master` 的 PR #21 merge `daa5b066ae00d6c89705d8e0b22a651354fcc907` 继续。本批唯一可靠新增为 TotalCorner `team_id=113064`，`Ittihad Nabarouh → 纳巴鲁伊蒂哈德`；来源是 Sofascore 简体中文球队档案（https://www.sofascore.com/zh/football/team/ittihad-nabarouh/275010），同页英文队名和埃及 Second Division B 背景核对一致。原 provider identity、ID 和策略数据未改。
+- 共享库 PR [#22](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/22) 已合并，master commit `533c2765`（本批分支提交 `de2fd662f989477863804b47cd812d219439ccc2`）。本批使用既有精确 ID curation 脚本，二次运行幂等（新增 0）。
+- 合并后文件实算：formal union 2,468 个 team ID，2,352 有 canonical 中文名，116 unresolved，覆盖 95.30%；M1 1,534/1,553（98.78%）；M1 OU-R1 52/52（100%）；MR1 AH 1,832/1,921（95.37%）；MR1 AI 声明镜像 M1 1,534/1,553（98.78%）。完整余项和逐项原因以唯一共享文件 `data/football_display_names/formal_scope_coverage.json#unresolved_records` 为准。其余 115 项缺少经核验的中文名，1 项 `team_id=4931` 的 provider identity 仍是无效字面 `0`；未用临时音译填充。
+- 展示验证：M1 formatter 与历史名称修复测试 11/11 PASS；MR1 AI 共享 registry/Telegram formatter 测试 4/4 PASS。之前批次已验证 M1 OU-R1 和 MR1 AH 使用唯一共享库；本批新增名称在四模型共用文件可读。测试是隔离代码验证，不代表云端真实发送。
+- 历史 TG：本批未重发或编辑消息。M1 repair 脚本本地 dry-run 有 41 个可改候选，但当前账本中 99 条没有原始发送正文、97 条无法由现有映射替换；运行环境没有可安全使用的 Telegram 执行凭据通道，因此没有进行真实编辑。MR1 AH/MR1 AI 最近既有编辑回执分别见 batch 117/116；不得把无新回执写成修复成功。无测试消息发送。
+- GitHub Actions 未因本次共享库 PR 触发；最近生产运行仍受账户运行限制影响。没有更改 M1 AH、M1 OU-R1、MR1 AH 或 MR1 AI 策略、范围、阈值、订单、账本、结算或通知规则。
+
 ## 2026-10-15 正式范围中文名称续补（batch 117）
 - 从最新共享库 `master` `7aadf155ba382c45c22b379d7e6521c99fe844c5` 继续；当前正式范围并集 2,468 个 team ID，原 unresolved 121。本批新增 4 个可核实名称，结果为 canonical 2,351、unresolved 117、覆盖率 95.26%；M1 1,533/1,553（98.71%）、M1 OU-R1 52/52、MR1 AH 1,831/1,921（95.31%）、MR1 AI 声明范围镜像 M1 1,533/1,553（98.71%）。
 - 新增：`45722 KF Kosova Prishtine → KF科索沃布利斯丁`、`45930 KF Ramiz Sadiku → KF拉米兹萨迪库`、`141371 KF Dinamo Ferizaj → 费里扎戴拿模`、`169513 FC Prizreni → 普里兹雷尼`。来源均为 FootballAnt 简体中文队页，并以 TotalCorner 对应 team 页面及科索沃联赛上下文交叉核验。只新增展示名/来源记录，不改 provider identity 或模型数据。
