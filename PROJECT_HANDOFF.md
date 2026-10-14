@@ -1413,3 +1413,5 @@
 - 按 unresolved ID/原名/赛事上下文抽查了现成 FootyStats 中文资料、Tips.GG 中文球队页、7M/500 搜索及可找到的公开球队身份页。确认这些页面多数只能证明英文身份，不能提供可靠中文惯用队名；Tips.GG 对 Malta `Sirens` 的自动中文结果为“警报”，属于明显不适用译法，明确排除。其余样例包括 Pembroke Athleta FC、Mladost Carev Dvor、FK FAP、KF Hajvalia、埃及低级别队；未找到足以支持写入 canonical_zh 的主流中文名称证据。未根据发音临时造译名，也未合并疑似近名身份。
 - 已检查本地旧身份档案、球队 alias crosswalk 和中文映射 wheel；未发现这些剩余记录的可复用可靠中文映射。由于没有合格的新映射，本轮没有提交空变更，也没有触发模型 runtime、Telegram 编辑/发送或 GitHub Actions。
 - 后续继续从 171 条 unresolved 中按有明确中文来源者逐项写入唯一 `display_names.json`；单纯可恢复英文身份不算中文覆盖。不得把该抽查范围误报为 171 条全部逐项完成，也不得将当前 93.07% 报成全覆盖。
+- 本轮继续做了源数据精确命中检查：从已审阅的 QiuXiaoCe `football-team-names-zh` 本地包与 171 个 provider name 逐字/归一匹配，命中 0；`footballant`、FootyStats、Sofascore、7M/500 搜索对若干埃及/科索沃/塞尔维亚队仍只返回英文身份。`Bani Ebaid` 可核对为 Beni Ebeid SC（不是中文名）；`FK FAP` 的官方缩写/身份明确，但没有可靠中文惯用名；均不写成推测译名。相关公开身份页面：<https://en.wikipedia.org/wiki/Beni_Ebeid_SC>、<https://fkfap1955.com/>。
+- 当前 unresolved 按其正式联赛上下文集中于：Egypt Division 2 31 条、Kosovo Division 1 21 条、Kosovo Division 2 16 条、Ukraine Persha Liga 10 条、North Macedonia First League 8 条；未匹配记录跨系统去重总数仍是 171（联赛多归属计数不能相加替代总数）。后续应优先从这些本地联赛的中文完整赛程/赔率页逐轮做英文—队名配对，再处理散布的小联赛队伍。
