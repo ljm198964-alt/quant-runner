@@ -1096,3 +1096,8 @@
 - 球天下体育中文赛果/球队索引将 `Zabbar Saint Patrick` 显示为“扎巴尔圣帕特里克”（https://live.qtx.com/fenxi/pjroKQ1868.html）；以其马耳他联赛身份和公开俱乐部资料核对 TotalCorner `team_id 19664` / `Saint Patrick FC Zabbar`，新增该 ID 专属 canonical 与 aliases，不与爱尔兰 Saint Patrick's Athletic 混同。
 - 共享库提交 `82060357c1d0d152b6474c5b151e52a137518391` 已推送 master。coverage 文件实算：正式范围2,468 IDs，2,224 canonical、244 unresolved（90.11%）；M1 1,493/1,553（96.14%），OU-R1 52/52，MR1 AH 1,720/1,921（89.54%），MR1 AI mirror 1,493/1,553（96.14%）。
 - M1 formatter 6/6、MR1 shared registry display test 1/1、curator 与 `git diff --check` 均通过。仅共享中文展示数据/审计产物有变更；生产策略、模型、账本、结算及 Telegram 派单逻辑未改，未发送或编辑 Telegram。
+
+## 2026-10-14 正式范围继续补齐（第三十六批）
+- SportScore 简体中文球队/比赛页面将 Nestos Chrisoupolis 显示为“内斯托斯·奇里苏波利斯”（https://sportscore.com/zh/football/team/aps-zakynthos/dj2ryohk45xq1zp/）；据希腊球队身份及该页面赛果关联核对 TotalCorner `team_id 15812`，写入 ID 专属 canonical 和拼写 aliases。
+- 共享库提交 `e25c5a2388450893b5af229800dfbbade5d915af` 已推送 master。coverage 文件实算：正式范围2,468 IDs，2,225 canonical、243 unresolved（90.15%）；M1 1,493/1,553（96.14%），OU-R1 52/52，MR1 AH 1,721/1,921（89.59%），MR1 AI mirror 1,493/1,553（96.14%）。
+- M1 formatter 6/6、MR1 shared registry display test 1/1、curator 与 `git diff --check` 均通过。只更新共享展示数据/审计产物；未改策略、模型、账本、结算、Telegram 派单规则，未发送或编辑 Telegram。
