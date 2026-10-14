@@ -1,5 +1,12 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 formal-scope 中文名称续补（batch 112，最新）
+- 在 batch 111 基础上继续查剩余项，新增 TotalCorner `team_id=88074`：Karcagi SE→卡尔察吉队。证据为 Tips.GG 简体中文历史对阵页将 Karcagi 标为“卡尔察吉队”，并保留英文队名；TotalCorner ID 88074 球队页独立确认原名 Karcagi SE、联赛 Hungary NB II。来源分别为 `https://tips.gg/cn/archive/karcagi-se-football-vs-monori-se-football/` 与 `https://www.totalcorner.com/team/view/88074`。未按不确定的 Tips.GG 内部球队排名 ID 做连接，只以 TotalCorner ID 和精确英文名核验。
+- 实际统计：正式并集 2,468；canonical 2,343；unresolved 125；覆盖率 94.94%。M1 1,551/1,553（99.87%，不变）；M1 OU-R1 52/52；MR1 AH 1,823/1,921（94.90%）；MR1 AI 声明镜像 M1 1,551/1,553（99.87%）。共享库 12,276 IDs、4,359 canonical。全部125条及原因在共享 `data/football_display_names/formal_scope_coverage.json#unresolved_records`。
+- 验证：M1 display/history repair 测试 11/11 PASS；MR1 shared registry 2/2、MR1 AI Telegram formatter 2/2 PASS；脚本编译、JSON 校验及 `git diff --check` PASS。无生产扫描或 Telegram 发送/编辑；历史实际 TG 编辑数保持0，本批只影响合并后读取共享库的后续格式化。
+- 共享名称更新 PR #16 已合并至 `totalcorner-research-bridge/master`，merge SHA `278cf1c88be4c55b391e308f7e1b11b3d2257bc0`。MR1 既有 workflow 每次运行会 checkout 该仓库 master；本轮未触发 Actions，因此未声称云端/频道已即时复核。
+- 仅修改共享 display data/curation audit 和范围报告；没有改策略、模型、阈值、scope、账本、结算或发送规则。
+
 ## 2026-10-15 formal-scope 中文名称续补（batch 111，最新）
 - 从共享 registry 最新 `master`（起始 SHA `ff1aeba465d40af963fa58eebb17e42642fa633a`）继续；仅新增 6 个有简体中文比赛页明确对照英文队名、且可与 TotalCorner `team_id` / Kosovo Division 2 联赛上下文精确核对的名称：45225 KF Rahoveci→KF拉霍维奇；170478 KF Podujeva→KF波度瓦；167867 KF Dardania→达尔达尼亚；154157 KF Rilindja 1995→KF里林杰1995；49845 KF Arberia→阿伯利亚；170997 TOP Football→TOP足球。联赛 `39226 Kosovo Division 2`→科索沃乙级联赛。来源链接、英文身份、原 ID 和来源说明保存在唯一共享 `display_names.json` 与 curation reports；没有使用模糊 ID 匹配或改写既有 canonical。
 - 执行后实算：正式并集 2,468；canonical 2,342；unresolved 126；覆盖率 94.89%。M1 1,551/1,553（99.87%，未变）；M1 OU-R1 52/52；MR1 AH 1,822/1,921（94.85%）；MR1 AI 声明镜像 M1 1,551/1,553（99.87%）。共享库 12,276 IDs、4,358 canonical。完整 126 条清单和原因位于共享 `data/football_display_names/formal_scope_coverage.json#unresolved_records`。历史 scope 的 `systems` 是观察标签、并非精确的各模型 scope 成员清单；本批六个 ID 仅计入 MR1 AH，M1/MR1 AI 镜像沿用其正式快照，不以标签重复加总。
