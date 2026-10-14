@@ -1428,3 +1428,9 @@
 - 共享库提交 `7ac0619521f32e67049ebdba9ecfc4de7c3c7485` 已推送 master。已重算 formal union 2,468 IDs：2,301 canonical、167 unresolved（93.23%）；M1 1,523/1,553（98.07%），M1 OU R1 52/52（100%），MR1 AH 1,784/1,921（92.87%），MR1 AI 声明镜像 M1 为1,523/1,553（98.07%），AI observed confidence≥50 cohort 181/182（99.45%）。全共享库12,276 team IDs、4,317 canonical；完整 unresolved ID/名称/联赛/系统/原因在 `formal_scope_coverage.json#unresolved_records`。
 - M1 formatter/name-repair tests 8/8 PASS；MR1 shared-registry/AI formatter tests 4/4 PASS；以新 registry 隔离渲染 `Osogovo Kocani vs FC Voska Sport` 得到“奥索戈沃 vs 沃斯卡体育”，联赛为“北马其顿足球甲级联赛”；`git diff --check` PASS。没有生成订单、发送 Telegram 或执行历史消息编辑。
 - 本批只改唯一共享 display registry、curation 来源和统计；没有修改任何模型、策略、赛事范围、正式账本、结算或 Telegram 规则。历史 TG 结果仍以第九十四批已记录的真实 workflow 回执为准。
+
+## 2026-10-15 正式范围来源复核（第九十六批）
+- 从最新共享 `master` 快进确认 HEAD/origin 均为 `7ac0619521f32e67049ebdba9ecfc4de7c3c7485`，共享库工作树干净。正式范围 2,468 个 team IDs，2,301 个有 canonical、167 个 unresolved（93.23%）；各模型范围口径及逐队 unresolved 名单以该提交 `data/football_display_names/formal_scope_coverage.json` 为准。本轮没有合格新增映射，因此未制造空数据提交，也未改共享 JSON。
+- 对未匹配中的科索沃、埃及、马耳他及东欧队名继续查中文球队页和联赛资料，并做全库标准化 alias 交叉检查。确认 `Flamurtari` 与阿尔巴尼亚 `Flamurtari Vlorë` 不是同一队；`Besa` 存在多个国家/俱乐部同名身份；`FK Internacional` 在黑山联赛上下文中不能复用巴西国际 canonical。Tips.GG 将 Malta `Sirens` 自动翻成“警报”，该结果不采纳。英文身份或自动音译不足以建立 canonical，本轮全部继续保留 unresolved。
+- 本次针对 M1 的 `test_m1_telegram_display.py` + `test_m1_telegram_display_repair.py` 8/8 PASS；MR1 共享名称与 AI formatter 测试 4/4 PASS。共享仓库 HEAD 与远端一致、工作树干净；无策略运行、无消息发送/编辑。既有历史 Telegram 修复回执不变：M1 0 条编辑（41 已匹配，99 缺原文，97 未映射）；MR1 Formal 0 条编辑；MR1 AI 9 条因 Telegram 原 message 不可定位失败、192 条 unresolved。
+- 未改变 M1、M1 OU R1、MR1 AH、MR1 AI 的策略、scope、账本、结算、发送格式或规则；本批只记录来源审查与当前验证状态。
