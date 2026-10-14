@@ -1320,3 +1320,8 @@
 - 为 TotalCorner `team_id 89762`、provider `Kema Aswan` 新增 canonical“克玛阿斯罔”。雷速简体中文球队页将 Kima Aswan 显示为“克玛阿斯罔”（https://www.leisu.com/data/zuqiu/team-30909），FootballAnt 中文比赛页也使用该译名（https://www.footballant.com/zh-CN/matches/2548461/live）；埃及乙级联赛历史对阵资料在不同赛季对同一阿斯旺俱乐部使用 Kema/Kima 两种拼写。独立保留 89762 和既有 77134，不合并或改写任一 ID。
 - 共享库提交 `8638a5f14ef6b7f0c91001dfe330608740d58cd3` 已推送 `totalcorner-research-bridge` master。本批新增1个正式范围映射；最新权威统计：正式范围2,468 IDs，2,279 canonical、189 unresolved（92.34%）；M1 1,513/1,553（97.42%），M1 OU-R1 52/52（100%），MR1 AH 1,765/1,921（91.88%），MR1 AI 声明范围镜像 M1 为1,513/1,553（97.42%）；全共享库12,276 IDs、4,295 canonical。逐项 unresolved 清单及原因以共享库 `formal_scope_coverage.json#unresolved_records` 为准。
 - M1 formatter/name-repair 测试8/8 PASS，curator 运行后再运行新增数为0（幂等），`git diff --check` PASS。仅更新共享展示映射、curation 证据及统计；未改模型、策略、赛事范围、账本、结算或 Telegram 规则。本批没有触发或编辑任何 Telegram 历史消息。
+
+## 2026-10-15 正式范围继续补齐（第七十九批）
+- 博体中文球队资料将 Odishi 1919 显示为“奥迪希1919”（https://data.boti.net/league/index-1.aspx?path=%2Fteam%2Fsummary.aspx%3Fteamid%3D22312&type=a）；格鲁吉亚足协 Erovnuli Liga 官网列出全名 Odishi 1919 Zugdidi（https://www.erovnuliliga.ge/en/club/odishi-1919）。为 TotalCorner `team_id 31172` 添加该 canonical，保留 provider 全名、别名及 team ID，不合并其他 Odishi/Zugdidi 身份。
+- 共享库提交 `9ae4a62230b829f4165ee7aef2d53844506bea0d` 已推送 master。本批新增1项；正式范围2,468 IDs：2,280 canonical、188 unresolved（92.38%）；M1 1,513/1,553（97.42%），M1 OU-R1 52/52，MR1 AH 1,766/1,921（91.93%），MR1 AI 声明范围镜像 M1 为1,513/1,553（97.42%）；全库12,276 IDs、4,296 canonical。权威逐项清单见共享库 `formal_scope_coverage.json#unresolved_records`。
+- M1 formatter/name-repair 测试8/8 PASS，curator `git diff --check` PASS。本轮仅更新共享展示映射和审计统计，无生产链/策略/账本/结算/Telegram 修改；未发送或编辑 Telegram 消息。
