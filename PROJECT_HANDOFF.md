@@ -1325,3 +1325,8 @@
 - 博体中文球队资料将 Odishi 1919 显示为“奥迪希1919”（https://data.boti.net/league/index-1.aspx?path=%2Fteam%2Fsummary.aspx%3Fteamid%3D22312&type=a）；格鲁吉亚足协 Erovnuli Liga 官网列出全名 Odishi 1919 Zugdidi（https://www.erovnuliliga.ge/en/club/odishi-1919）。为 TotalCorner `team_id 31172` 添加该 canonical，保留 provider 全名、别名及 team ID，不合并其他 Odishi/Zugdidi 身份。
 - 共享库提交 `9ae4a62230b829f4165ee7aef2d53844506bea0d` 已推送 master。本批新增1项；正式范围2,468 IDs：2,280 canonical、188 unresolved（92.38%）；M1 1,513/1,553（97.42%），M1 OU-R1 52/52，MR1 AH 1,766/1,921（91.93%），MR1 AI 声明范围镜像 M1 为1,513/1,553（97.42%）；全库12,276 IDs、4,296 canonical。权威逐项清单见共享库 `formal_scope_coverage.json#unresolved_records`。
 - M1 formatter/name-repair 测试8/8 PASS，curator `git diff --check` PASS。本轮仅更新共享展示映射和审计统计，无生产链/策略/账本/结算/Telegram 修改；未发送或编辑 Telegram 消息。
+
+## 2026-10-15 正式范围继续补齐（第八十批）
+- Tips.GG 中文历史赛程页将威尔士 Newport City 明确显示为“新港城”（https://tips.gg/cn/archive/carmarthen-football-vs-newport-city-football/），并列出 Newport City 身份；其 Cymru South/Welsh football 语境与 TotalCorner `team_id 147659` 的联赛范围吻合。新增该 ID 的 canonical“新港城”，保留原 provider identity；不与 Newport County 混同。
+- 共享库提交 `b1d762de`（完整 SHA 待 push 回执后补录）已推送 master。本批新增1条；正式范围2,468队：2,281 canonical、187 unresolved（92.42%）；M1 1,513/1,553（97.42%），M1 OU-R1 52/52，MR1 AH 1,767/1,921（91.98%），MR1 AI declared mirror 1,513/1,553（97.42%）；全库12,276 IDs、4,297 canonical。权威 unresolved 明细见共享库 `formal_scope_coverage.json#unresolved_records`。
+- M1 formatter/name-repair 测试8/8 PASS，`git diff --check` PASS。仅更新共享展示映射、curation evidence 与统计，没有修改模型、策略、赛事范围、账本、结算或 Telegram 规则；未发送/编辑 Telegram 历史消息。
