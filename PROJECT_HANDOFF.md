@@ -1615,3 +1615,9 @@
 - 发现 SC Sports 的球队接口文档声明具有中/英/繁体球队名字段，但请求要求 token，站点说明访问权限可能需购买；本轮未调用需鉴权接口、未注册/购买服务、未写任何密钥。若用户要对这132个真实队名缺口做进一步数据库级补齐，需取得现有合法 API 权限/令牌；`team_id 4931` 的存储身份是字面值 `0`，原因仍为 `PROVIDER_IDENTITY_INVALID`，不能先定中文名。
 - 本轮安全新增 canonical 数为0。四系统共享显示设计并未变更：MR1 resolver 指向 `external/football-display-registry/data/football_display_names/display_names.json`；M1 formatter 从共享 registry 数据路径解析；M1/MR1/MR1 AI/M1 OU-R1 仍依赖 team/league ID canonical，未知项按既有 fallback。只读隔离检查没有触发模型、策略或生产链。历史 Telegram 本轮实际编辑0；既有最近回执仍是 M1 0 edits、MR1 AH 0 edits、MR1 AI 0 edits（9条 Telegram 返回 message-to-edit-not-found、192条未解析），不得宣称历史消息已中文化。没有可用的本轮安全 edit 执行凭据/通道，故未触发 workflow。
 - 最新共享库提交未变化：`c3319afa`；名称新增0，因此没有共享库提交。quant-runner handoff 在本条记录后更新并提交。模型/阈值、赛事范围、盘口源、订单、结算、发送规则均未修改；Actions 运行限制不是本轮数据工作的阻碍，实际数据阻碍是无免费公开中文映射命中以及剩余来源需要授权。
+
+## 2026-10-15 正式范围中文名继续取证（第107批）
+- 再次从远端 `master` 的当前 133 个 unresolved 开始；共享中文库无变更。查询 7M、雷速、Sofascore 中文站和开放足球映射来源，Sofascore 中文比赛/球队页对 Pembroke Athleta 等仍展示英文实体名；7M 对多项未匹配英文名的定向精确搜索无结果。公开搜索对 Qena SC、KF Hajvalia、FC Hoyvík 等命中的是英文身份或不同实体资料，不能将这些作为中文 canonical 证据。
+- 只读验证 Sofascore 公共搜索接口 `https://www.sofascore.com/api/v1/search/all?q=Qena%20SC` 在当前环境返回 HTTP 403 Forbidden；没有尝试伪装客户端、绕过限制或改用受限端点。该路径目前不能用来对133项批量补名。SC Sports、球小策与部分机构数据仍需 token/权限；没有擅自注册、购买或读取不相关凭据。
+- 本批新增中文 canonical 仍为0；没有变更 `display_names.json`，正式范围仍为2,468 / 2,335 canonical / 133 unresolved（94.61%）。M1 display 单测6/6 PASS；MR1 shared display 1/1、MR1 AI browser-forward 3/3 PASS，均为本地隔离验证，不是线上 Telegram 编辑证明。TG 本批没有发信或编辑；历史编辑成功仍未增加。完整未匹配项继续以共享库 `formal_scope_coverage.json#unresolved_records` 为准。
+- 本批仅更新本交接；无模型、策略、scope、账本、settlement、正式通知或共享 registry 变更。继续推进需要可合法使用且覆盖低级别国际俱乐部的简体中文源（或相应已授权 API）；不得用音译/机器翻译把 133 项凑成全覆盖。
