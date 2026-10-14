@@ -1239,6 +1239,12 @@
 - 依该 registry 的历史 Telegram 校验：M1 `38596342571` success（eligible41、edited0、already_matching41、缺原文99、unmapped97、failed0）；MR1 Formal `38596348767` success（edited0、already_processed125、unresolved0、failed0）；MR1 AI `38596356968` success（total201、edited0、unresolved192、failed9，9条均 `400 message to edit not found`）。未重发消息。
 - 本轮 `test_m1_telegram_display_repair.py` 2/2 PASS，`git diff --check` PASS。实际历史编辑为0；没有修改生产模型/策略/账本/结算/信号条件。剩余完整名单与逐条原因见共享 `formal_scope_coverage.json`。
 
+## 2026-10-15 正式范围继续补齐（第六十六批）
+- Football Kit Archive 简体中文 Lori FC 页面以“洛里主场球衣”称呼 Lori FC（https://www.footballkitarchive.com/zh/lori-fc-2020-21-zhu-chang-qiu-yi-15489/）。核对 TotalCorner `team_id 43638` 属于 Armenian league_id 55，且 registry 中无同名 canonical 冲突，为其新增 canonical“洛里”。
+- 共享库提交 `79c3bc6e80e634b2cb244256f9cdb65b303de6bf` 已推送 master。正式范围 2,468 IDs：2,264 canonical、204 unresolved（91.73%）；M1 1,508/1,553（97.10%）、M1 OU-R1 52/52、MR1 AH 1,753/1,921（91.25%）、MR1 AI declared mirror of M1 1,508/1,553（97.10%）。`test_m1_telegram_display_repair.py` 2/2 PASS，curator 和 `git diff --check` PASS。
+- 新共享库后的历史 TG workflows：M1 `38597295291` success（eligible41、edited0、already_matching41、missing original text99、unmapped97、failed0）；MR1 Formal `38597304876` success（edited0、already processed125、unresolved0）；MR1 AI 编辑步骤运行成功但整体 run `38597313033` failure，候选9条均仍为 Telegram `400 message to edit not found`、unresolved192、edited0。最后的“Persist actual edit receipts” push 遇 MR1 runtime 并发更新导致 GitHub 拒绝 non-fast-forward/ref lock（远端 master 当时已前进至 `7c15870e…`，期望旧 ref `13b14d25…`）；因此本轮没有可确认的 MR1 AI repair receipt 持久化。没有新发策略消息。
+- 生产策略、模型、阈值、订单账本、结算均未修改；历史 TG 实际编辑数仍为0。204条未匹配逐条清单及原因以共享 `formal_scope_coverage.json` 为准。
+
 ## 2026-10-15 正式范围继续补齐（第六十二批）
 - Tips.GG 简体中文 Goytre United 球队页明确显示“戈伊特雷联队”（https://tips.gg/cn/team/goytre-utd-football/）；与 TotalCorner `team_id 54106` / provider `Goytre Utd`、Welsh league_id 11959 一致，新增 canonical 与官方拼写别名。
 - 共享 master 提交 `b209e795039a32eb2dc7c0a9f86a06d63f4a4dd6`；正式范围 2,468 IDs，2,260 canonical / 208 unresolved（91.57%）；M1 1,506/1,553（96.97%）、M1 OU-R1 52/52（100%）、MR1 AH 1,750/1,921（91.10%）、MR1 AI declared mirror 1,506/1,553（96.97%）；confidence≥50 observed cohort 181/182（99.45%）。M1 formatter 6/6 PASS，curator 和 `git diff --check` PASS。
