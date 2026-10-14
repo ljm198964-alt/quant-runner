@@ -1161,4 +1161,8 @@
 ## 2026-10-14 正式范围继续补齐（第四十八批）
 - Tips.GG 中文乌克兰杯球队表将 Khust City 标为“胡斯特城”（https://tips.gg/cn/tournament/football-ukrainian-cup-2024-25/），与 TotalCorner `team_id 114055` / `FC Khust` 身份匹配；Tips.GG 中文历史页将 FC Suhareka 显示为“苏哈雷卡”（https://tips.gg/cn/archive/fc-suhareka-football-vs-kf-tefik-canga-football/），并由俱乐部官方资料确认 FC Suhareka 身份（https://www.fcsuhareka.com/）。新增这2个独立 ID 的 canonical，不与近名球队合并。
 - 共享库提交 `9ce5197635cc85202287b48aa9e9392c08546977` 已推送 master，本批新增2条。正式范围2,468 IDs：2,240 canonical、228 unresolved（90.76%）；M1 1,498/1,553（96.46%）；M1 OU-R1 52/52；MR1 AH 1,731/1,921（90.11%）；MR1 AI declared mirror 1,498/1,553（96.46%）。M1 Telegram formatter 6/6、MR1 shared registry test 1/1 PASS；curator 与 `git diff --check` PASS。仅修改共享展示名称数据及策展记录，未触及生产策略/模型/账本或发送、编辑任何 Telegram 消息。
+
+## 2026-10-14 正式范围继续补齐（第四十九批）
+- Tips.GG 简体中文历史赛程和球队页将 `Al Qous` 显示为“库斯”（https://tips.gg/cn/archive/al-liwaa-football-vs-al-qous-club-football/）；为 TotalCorner `team_id 118984` 新增 canonical“库斯”及 Al-Qous 全称别名，保留沙特球队独立身份。
+- 共享库提交 `a03008526f822a20471e8336105df3b07ef67dce` 已推送 master，本批新增1条。formal union 2,468 IDs：2,241 canonical、227 unresolved（90.80%）；M1 1,498/1,553（96.46%）；M1 OU-R1 52/52；MR1 AH 1,731/1,921（90.11%）；MR1 AI declared mirror 1,498/1,553（96.46%）。M1 formatter 6/6 PASS；共享库 consumer test 1/1 PASS（上一批复验）；curator 与 `git diff --check` PASS。仅修改展示名称数据，无生产策略或 TG 历史消息修改。
 - M1 formatter 6/6、MR1 shared display test 1/1 PASS，curator 和 `git diff --check` PASS。只更新共享显示名称及审计文件；无 Telegram 发送/编辑或生产策略、模型、账本、结算变更。
