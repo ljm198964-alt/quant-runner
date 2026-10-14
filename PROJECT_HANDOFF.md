@@ -917,3 +917,9 @@
 - 最新共享 master 为 `2e1288c20a58a072e3483f4a6d6a250c98739a4d`。按提交时最新 `formal_scope_coverage.json`：2,468 formal IDs，2,165 canonical、303 unresolved，覆盖 87.72%；M1 1,476/1,553（95.04%），M1 OU-R1 52/52（100%），MR1 AH 1,670/1,921（86.93%），MR1 AI declared mirror M1 1,476/1,553（95.04%）。完整未匹配名称、ID、联赛及系统范围以该文件 `unresolved_records` 为准。
 - 定向检查本地 M1 正式 ledger 与可访问的 MR1 AI prospective records，没有发现 team IDs 9157、30623、42568 对应的已发送订单，因此新增名称没有待编辑的历史 TG 文本。最近一次名称修复实际回执仍是前节记录：M1 编辑4条；MR1 AH编辑0条；MR1 AI编辑0条（9条旧消息由 Telegram 返回400 `message to edit not found`，192条 unresolved）。当前未为这3个 ID 再触发 workflow，未重发或修改任何旧消息。
 - M1 formatter/formal-runtime 定向回归此前20/20通过；MR1 registry/AI formatter此前4/4通过。共享工作区保持 clean；本追加只更新交接文档，不涉及生产代码、模型、策略、范围、账本、结算或派单条件。任务仍未完成：303 formal IDs 尚无可靠 canonical 中文名，需继续核证。
+
+## 2026-10-14 正式范围继续补齐（第四批）
+- 在保留既有 canonical 的前提下，新增正式 team_id 11023 `Queens University` → 贝尔法斯特女王大学。简中名称依据[贝尔法斯特女王大学中文资料](https://zh.wikipedia.org/wiki/贝尔法斯特女王大学)，球队身份由[Queen's University Belfast AFC 官方历史](https://www.qubafc.com/history)及 Northern Ireland Championship league_id 765 交叉确认。共享 registry 最新 master 提交 `1ac2efcaa24d86d12bd675b4a6e918998af93c74`；本轮新增1队，现正式范围 2,468 IDs、2,166 canonical、302 unresolved（87.76%）。M1 1,476/1,553（95.04%）、M1 OU-R1 52/52、MR1 AH 1,671/1,921（86.99%）、MR1 AI mirror M1 1,476/1,553（95.04%）。
+- 查询本机 M1 正式 ledger 和现存 MR1 AH/AI 正式记录时，未发现新增 ID 9157、30623、42568、11023 对应的已发送 Pick，故无需为它们回补或编辑历史 TG 文本。既有历史修复回执不变：M1 4条编辑成功；MR1 AH 0条；MR1 AI 0条，9条旧消息由 Telegram 拒绝（400 `message to edit not found`）、192条 unresolved。无重发。
+- 本轮直接使用最新共享目录隔离验证：M1 `test_m1_telegram_display.py` 6/6通过；MR1 shared registry 与 AI formatter Node tests 4/4通过。M1 合并执行 display+formal-runtime tests 为9通过、5失败，失败仍为既有 fixture 的 candidate key/notification count 预期不匹配（与名称 formatter 无关）；没有改 runtime 来绕过。共享 JSON 解析和 `git diff --check`通过。未触发云端生产 runtime或 Telegram。
+- 最新 `formal_scope_coverage.json` 为本轮统计的唯一依据，302个未匹配明细全部留在其 `unresolved_records`。名称代码和正式策略数据未动；本轮仍属于局部补充，未完成全覆盖。
