@@ -1143,3 +1143,8 @@
 - 中文维基百科球队条目“斯塔爾卡緬斯科耶足球會”明确对应英文 Stal Kamianske（https://zh.wikipedia.org/wiki/斯塔爾卡緬斯科耶足球會）；为 TotalCorner `team_id 33616` 新增该身份的简体中文 canonical“斯塔尔卡缅斯科耶足球会”，保留英文及繁体标题别名，不与其他 Stal 球队合并。
 - 共享库提交 `93ccc20765b5e955a74e6a5f691951b824d2096d` 已推送 master。本批新增1条。正式范围2,468 IDs：2,235 canonical、233 unresolved（90.56%）；M1 1,498/1,553；M1 OU-R1 52/52；MR1 AH 1,729/1,921；MR1 AI declared mirror 1,498/1,553。
 - M1 Telegram formatter 6/6 与 MR1 shared display test 1/1 PASS，curator 和 `git diff --check` PASS。仅共享展示名称与审计数据更新；无 Telegram 发送/编辑，也未修改模型、策略、账本、结算或派单规则。
+
+## 2026-10-14 正式范围继续补齐（第四十五批）
+- 中文维基百科“索哈杰”条目提供埃及 Sohag 的稳定简体中文地名（https://zh.wikipedia.org/wiki/索哈傑）；与已存 provider identity `Suhag` 对应的埃及足球队用于 canonical“索哈杰”。仅处理 TotalCorner `team_id 12078`，未将另一条拼写近似的 `Sohag`（team_id 31006）合并或擅自赋名。
+- 共享库提交 `e01cecbf5fdd5b488ec2836d1da6529373ef24bd` 已推送 master。本批新增1条。正式范围2,468 IDs：2,236 canonical、232 unresolved（90.60%）；M1 1,498/1,553（96.46%）；M1 OU-R1 52/52；MR1 AH 1,729/1,921（90.01%）；MR1 AI declared mirror 1,498/1,553（96.46%）。
+- M1 formatter 6/6、MR1 shared display test 1/1 PASS，curator 和共享库 `git diff --check` PASS。仅更新公共展示名称与审计数据；无 Telegram 发送/编辑、无模型/策略/正式账本/结算/派单规则修改。
