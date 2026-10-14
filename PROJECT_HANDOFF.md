@@ -1526,6 +1526,13 @@
 - 本轮历史 Telegram 实际编辑数为 0；没有具备本任务可用的既有一次性编辑 workflow，因此未新增 workflow、未触发真实策略扫描，也未发送/编辑消息。格式器测试只能证明本地渲染，不是 TG API 回执或已编辑历史消息的证据。后续如启用已有受控编辑执行链，应按每条账本中的原 provider message ID 核验成功/不可编辑回执。
 - 其余 148 个逐条记录、英文身份、赛事上下文和未匹配原因可从共享 `formal_scope_coverage.json#unresolved_records` 读取；不得把目前 94.00% 说成全量完成。策略、派单、账本与结算未修改。
 
+## 2026-10-15 正式范围中文名称续补：乌克兰甲级球队
+- 从共享 master `b30668ac9091dbb95a79e71d0d5c7d5ea3ca9679` 继续。经7M简体球队档案及独立中文赛事页面核对，新增 `team_id 150733 FC Probiy Horodenka → 普罗比霍洛登卡`；经 Vitisport 中文赛程中英队名与 TotalCorner 乌克兰甲级历史身份交叉核对，新增 `team_id 43272 Agrobiznes Volochisk → 沃洛奇斯克农业企业`。来源、交叉核验说明、英文别名均写入唯一共享 `display_names.json`。没有根据 ID 猜名，也未覆盖既有映射。
+- 共享 registry PR #5 已合入 master，提交 `4d67fd55`（merge commit；curation commit `3c2b44bcf36567df35c7c84fbdc91ea407265c97`）。本次正式范围从2,468队、2,320 canonical/148 unresolved（94.00%）更新至2,468队、2,324 canonical/144 unresolved（94.17%）。分项：M1 1,539/1,553（99.10%）；M1 OU-R1 52/52（100%）；MR1 AH 1,805/1,921（93.96%）；MR1 AI 声明镜像 M1 1,539/1,553（99.10%）；MR1 AI observed confidence≥50 cohort 181/182（99.45%）。全部未匹配 ID/英文名/联赛/系统及原因详见共享 `data/football_display_names/formal_scope_coverage.json#unresolved_records`。
+- 本机验证：M1 formatter/name-repair 8/8；MR1 shared registry + AI Telegram formatter 4/4；MR1 V6 historical display repair test 1/1。隔离渲染 `league_id 63` 及两个 team ID 为“乌克兰足球甲级联赛 沃洛奇斯克农业企业 vs 普罗比霍洛登卡”，反向主客也正确。以上均为展示层测试，不触及模型字段。
+- 已各运行一次现存 name-only historical edit workflow（仅编辑旧 message ID，不重发）：M1 run `38632933246` PASS，41 eligible、edited 0、already matching 41、缺原消息文本99、未映射97、failed 0；MR1 Formal `38632933636` PASS，125 already processed、0 edit、0 fail；MR1 AI `38632932673` PASS，201 total、9 edit candidates、edited 0、9 failed（Telegram 400 `message to edit not found`）、192 unresolved。没有任何历史订单重发，也没有测试/新 Telegram 消息；本轮实际编辑数为0。
+- 只更新共享中文展示数据、curator/coverage 与此 handoff；M1、M1 OU-R1、MR1 AH、MR1 AI 的模型、策略、范围、盘口、订单、账本、结算与发送条件均未修改。
+
 ## 2026-10-15 最新 master 核对及历史 TG 修复回执
 - 从共享仓库最新 `master` `5b0ac813c6b209f05fa9df89a05f7544c38cb69d` 快进核对，没有覆盖远端的 M1 运行数据。当前正式范围仍是 2,468 IDs、2,320 canonical、148 unresolved（94.00%）；M1 1,535/1,553（98.84%）、M1 OU R1 52/52、MR1 AH 1,801/1,921（93.75%）、MR1 AI declared mirror 1,535/1,553（98.84%），观察到的 MR1 AI confidence≥50 cohort 181/182（99.45%）。共享库统计为12,276个team ID、4,336个 canonical。未找到足以核验中文队名的新来源，本轮不新增或猜译；逐条剩余名单仍以共享库 `formal_scope_coverage.json#unresolved_records` 为准。
 - 复核英文身份/中文资料的具体例子：`Dinaz Vyshgorod`、`Hirnyk-Sport Horishni Plavni`、`Marupes SC`、`FC Yerevan`、`KF Podujeva` 的本轮搜索结果不能证明主流简体中文队名；`Marupes` 的韩文站本地化结果、俄/乌语及机器翻译均不作为中文 canonical。没有把地点音译或相似队名塞入 ID 映射。
