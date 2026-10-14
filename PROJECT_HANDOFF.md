@@ -1211,3 +1211,9 @@
 - Sofascore 简体中文 Flint Town United 队页显示“富林特联”（https://www.sofascore.com/zh/football/team/flint-town-united/37090）；TotalCorner 的 Flint Town Utd 赛历和 team_id 40413 的 Wales Premier League league_id 177 相互印证。映射为“富林特联”；明确不与 Flint Mountain 合并。
 - SportScore 中文 MEAP Nisou 球队页显示“MEAP尼苏”（https://sportscore.com/zh/football/team/meap-nisou/vjxm8gh4w9nr6od/）；为 TotalCorner `team_id 26815` 保存该 canonical，原始 ID/name 保持。
 - 共享库提交 `f0f0fdf1` 已推送 master，本批新增2条。formal union 2,468 IDs：2,254 canonical、214 unresolved（91.33%）；M1 1,500/1,553；M1 OU-R1 52/52；MR1 AH 与 MR1 AI mirror 按最新共享 `formal_scope_coverage.json` 生成。M1 formatter 测试6/6、curator、`git diff --check` PASS。未发送或编辑任何 Telegram 消息；未更改生产模型/策略、账本或结算。
+
+## 2026-10-14 正式范围继续补齐（第六十一批）
+- QTX 中文比赛报道将来自科索沃贾科维察的 KF Vëllaznimi 显示为“维尔拉兹尼米”（https://live.qtx.com/fenxi/J6YdX3BljM.html）。为 TotalCorner provider IDs `41854`、`45431`、`92798` 分别补 canonical/alias，但保留三个 provider ID 独立、不合并近名 Vllaznia 球队。
+- 共享 registry 已推送 `6acf8105f557a1284cf959cd76675dd67b494bec`。curator 实际结果：正式范围 2,468 IDs，2,259 canonical / 209 unresolved（91.53%）；M1 1,506/1,553（96.97%）；M1 OU-R1 52/52（100%）；MR1 AH 1,749/1,921（91.05%）；MR1 AI declared mirror 1,506/1,553（96.97%）。整个 registry 12,276 team IDs / 4,275 canonical（34.82%），联赛 334/771；209 条未匹配清单及逐条原因见共享 `formal_scope_coverage.json`。
+- M1 display tests 6/6 PASS，curator 和 `git diff --check` PASS。新 registry 发布后重跑既有历史“仅编辑消息” workflows：M1 run `38593680540` success，报告 eligible=41、edited=0、already_matching=41、missing original text=99、unmapped=97、failed=0；MR1 Formal run `38593688095` success（收据 eligible=0、edited=0、skipped=125、unresolved=0、failed=0）；MR1 AI run `38593695129` success（报告 total=201、edited=0、failed=9、unresolved=192；9 条均为 Telegram 400 `message to edit not found`，其余名称仍缺可靠映射）。三个流程本轮实际历史编辑均为0，不能描述为历史 TG 已修复。
+- M1 OU-R1 名称覆盖为 52/52，但当前 M1 仓库没有独立 formal Telegram ledger / 历史名称编辑器，无法核验或编辑其历史消息。未新增工作流。生产模型、策略、范围、订单账本、结算及派单规则未改。
