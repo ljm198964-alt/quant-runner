@@ -872,3 +872,10 @@
 - 新增 `33419 Jedinstvo UB` → 乌布耶丁斯特沃（中文球队资料页明确对应 FK JEDINSTVO UB；league IDs 303/337 保留）；`33772 FC Academica Clinceni` → 克林辛尼学院（中文欧洲俱乐部名录 crosswalk）。后者限定为历史 Academica Clinceni identity，不因关联实体后续重组为 LPS HD/Inter Ilfov 而改写历史 ID/名称。
 - 共享 registry `display_names.json` 已推送 `adac353f3dbe84df151c2a23c1ebd1ce3630f589`。最新 formal union 2,468：2,139 canonical、329 unresolved（86.67%）；M1 1,467/1,553（94.46%）；M1 OU-R1 52/52；MR1 AH 1,650/1,921（85.89%）；MR1 AI mirror 1,467/1,553（94.46%）；shared registry 12,276 IDs、4,155 canonical（33.85%）。
 - M1 formatter 6/6、MR1 shared registry/AI formatter 4/4 PASS，diff check PASS。M1 formal ledger 与 MR1 AH/AI send/prospective evidence 中未检出这两队的订单，本批无安全可改历史 TG；未发送/编辑 Telegram。仅映射、来源和审计变化，生产模型、策略、账本与结算保持原样；尚有 329 个 formal IDs 待核验。
+
+## 2026-10-14 正式范围继续增量：希腊、科索沃、马其顿与埃及
+- 在远端最新共享 registry `adac353f3dbe84df151c2a23c1ebd1ce3630f589` 基础上继续处理，无覆盖旧映射。本次新增 5 个精确正式 ID：`39946 KF Ferizaj`→费里扎伊（Tips.GG 简中比赛档案）；`42581 Egaleo`→埃加莱奥、`42792 Makedonikos`→马其顿尼科斯（Tips.GG 简中球队/比赛页）；`4609 FK Kozuv Gevgelija`→科祖夫（Tips.GG 简中比赛档案）；`10612 Sed Elmahla`→赛德艾尔玛拉（雷速球队页明确给出英文/简中名称）。来源及交叉身份说明已随唯一 `display_names.json` 保存；不合并相似球队。
+- 最新本地正式范围实算（coverage `generated_at=2026-10-14T12:27:37Z`）：正式 union 2,468，canonical 2,144、unresolved 324，覆盖 86.87%；M1 1,469/1,553（94.59%）；M1 OU-R1 52/52；MR1 AH 1,654/1,921（86.10%）；MR1 AI declared mirror 1,469/1,553（94.59%）；共享库 12,276 IDs、4,160 canonical。余下 324 的 team_id、provider 英文名、league IDs、系统归属和 `NO_VERIFIED_CANONICAL_ZH` 原因完整保留在唯一共享库 `data/football_display_names/formal_scope_coverage.json` 的 `unresolved_records`。
+- 验证：M1 display formatter 6/6 PASS；MR1 shared registry/MR1 AI formatter 4/4 PASS，确认 MR1 使用挂载的同一共享库；`git diff --check` PASS。针对本次 5 个英文 identity 的定向查找未在 M1 正式账本及 MR1 AI 发送/前瞻 ledger 中发现对应策略消息，因此没有可确认的旧 TG message ID 可编辑；未调用 Telegram、未发送/编辑消息。历史消息更广范围编辑仍未完成。
+- 当前变更待提交/推送至共享库仓库；本机 `quant-runner` 交接工作区仍在 `6752840081932906b79c56670b1b0dfe34f42901`，本轮 GitHub HTTPS fetch 曾返回 `SSL_ERROR_SYSCALL`，因此交接更新和两仓库 push 尚未完成。待网络恢复后先核对远端头，再提交共享库数据与本交接记录；不要误报云端部署或历史 Telegram 编辑成功。
+- 本次仅涉及名称展示映射、curation/coverage 审计和 handoff；没有修改模型、策略、盘口、正式范围、订单/结算账本或 Telegram 派单规则。
