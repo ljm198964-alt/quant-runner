@@ -1182,3 +1182,7 @@
 ## 2026-10-14 正式范围继续补齐（第五十三批）
 - 中文足球比赛记录将希腊 Diagoras 标为“迪亚戈拉斯”（https://www.okooo.com/soccer/match/1156257/form/）；FootyStats 中文赛事页亦以“迪亚戈拉斯”指称 Diagoras GS Rodos（https://footystats.org/cn/greece/ao-chania-kissamikos-fc-vs-diagoras-gs-rodos-h2h-stats）。TotalCorner `team_id 43745` 的希腊联赛上下文与该队相符，登记为独立 canonical，不合并其他同名 Diagoras。
 - 共享库提交 `c806bae5b5e5de40be0b148792f075198bb3acdd` 已推送 master。本批新增1条。formal union 2,468 IDs：2,245 canonical、223 unresolved（90.96%）；M1 1,499/1,553（96.52%）；M1 OU-R1 52/52；MR1 AH 1,738/1,921（90.47%）；MR1 AI declared mirror 1,499/1,553（96.52%）。M1 Telegram formatter 6/6 PASS；curator 与共享库 `git diff --check` PASS。MR1 最新 master 源码已确认按 team ID 读取同一 registry；本机消费者 checkout 存有未提交文件，未覆盖或改动。未发送或编辑历史 Telegram；未验证实际生产消息内容或历史 TG 编辑权限。策略、模型、账本、结算、派单规则未改。
+
+## 2026-10-14 正式范围继续补齐（第五十四批）
+- 球探体育中文球队档案明确列出 `FK Neptunas Klaipeda`（页面显示 FK海王星克萊佩達，英文名一致：https://zq.titan007.com/big/team/Summary/48661.html）；将 TotalCorner `team_id 67240` canonical 定为简体“海王星克莱佩达”，并保留“克莱佩达海王星”等中文别名，未与其他立陶宛球队合并。
+- 共享库提交 `ae532bf2b271b4df8076e4a72f9cf328ffd9232f` 已推送 master，本批新增1条。formal union 2,468 IDs：2,246 canonical、222 unresolved（91.00%）；M1 1,499/1,553（96.52%）；M1 OU-R1 52/52；MR1 AH 1,739/1,921；MR1 AI declared mirror 1,499/1,553。M1 formatter 6/6、curator 与 `git diff --check` PASS。未进行 Telegram 发送/编辑，也未更改模型、策略、账本、结算或派单规则。
