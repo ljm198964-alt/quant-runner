@@ -1,6 +1,13 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
-更新日期：2026-10-11（北京时间）
+## 2026-10-15 中文名称余项与正式 Telegram 复核（本轮）
+- 从共享库最新 master `0284d3727ecb2cd140e0ecef83b9bbd0fd43b6e3` 接续。正式范围实际快照仍为 2,468 IDs、2,334 canonical、134 unresolved（94.57%）；M1 1,549/1,553（99.74%，4 未匹配），M1 OU-R1 52/52（100%），MR1 AH 1,815/1,921（94.48%，106 未匹配），MR1 AI 声明镜像 M1 1,549/1,553（99.74%，4 未匹配）；全共享库 12,276 team IDs、4,350 canonical。完整 134 项含 ID、provider name、league/system 上下文及原因，以唯一共享文件 `data/football_display_names/formal_scope_coverage.json#unresolved_records` 为准。
+- 本轮没有重做历史身份恢复。将 unresolved 英文名与公开 `lottery-football` 历史赛果数据的英文/中文球队列作精确连接，0 个正式 ID 命中；对余项作定向中文来源搜索，没有获得可同时确认中文名称与具体球队身份的新增来源。Wikidata API 对请求返回 HTTP 429，故不据此声称已穷尽该来源。新增 canonical 数量为 0；没有用机器音译或模糊同名填库。`team_id 4931` 的 provider identity 字符串为 `0`，应优先修复上游身份标签，不应猜译。
+- 四条正式通知链继续共用 `display_names.json`：M1 AH 与 M1 OU-R1 使用 M1 Python formatter；MR1 AH、MR1 AI formatter 通过 `external/football-display-registry` 读取该文件。M1 两项测试 9/9 PASS，MR1 shared-registry 与 V6 name-only repair 两项测试均 PASS；测试不代表尚未命中的 134 个名称已中文化。没有改模型/策略或 Telegram 格式。
+- 本轮在 `quant-runner` 实际运行现有历史 name-only repair（不新发订单）：M1/M1 OU-R1 run [38641413548](https://github.com/ljm198964-alt/quant-runner/actions/runs/38641413548) PASS，报告 eligible 41、edited 0、already matching 41、缺发送原文 99、无映射 97、failed 0；MR1 AH run [38641420542](https://github.com/ljm198964-alt/quant-runner/actions/runs/38641420542) PASS，125 条均已处理/跳过，edited 0、unresolved 0、failed 0；MR1 AI run [38641427355](https://github.com/ljm198964-alt/quant-runner/actions/runs/38641427355) workflow PASS，但业务修复报告 total 201、candidate 9、edited 0、unresolved 192、failed 9；9 次编辑均收到 Telegram `400 Bad Request: message to edit not found`。历史消息实际编辑仍为 0；没有重发 TG，也没有改账本。
+- 共享映射无需新提交：最新 BSK 映射已在 PR #9 merge `0284d372`。Runner handoff 本次增加该状态记录，尚待提交推送。未改 M1 AH、M1 OU-R1、MR1 AH、MR1 AI 模型/策略、赛事范围、阈值、盘口源、账本或结算。
+
+更新日期：2026-10-15（北京时间）
 性质：项目事实与工作进度快照。**不是新增策略规则或验收 Gate。** 每次引用成绩必须核对账本的 generated_at，不得把本文件历史快照冒充实时值。
 
 ## 用户已经明确的要求
