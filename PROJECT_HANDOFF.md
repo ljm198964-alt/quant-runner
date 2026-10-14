@@ -1148,3 +1148,8 @@
 - 中文维基百科“索哈杰”条目提供埃及 Sohag 的稳定简体中文地名（https://zh.wikipedia.org/wiki/索哈傑）；与已存 provider identity `Suhag` 对应的埃及足球队用于 canonical“索哈杰”。仅处理 TotalCorner `team_id 12078`，未将另一条拼写近似的 `Sohag`（team_id 31006）合并或擅自赋名。
 - 共享库提交 `e01cecbf5fdd5b488ec2836d1da6529373ef24bd` 已推送 master。本批新增1条。正式范围2,468 IDs：2,236 canonical、232 unresolved（90.60%）；M1 1,498/1,553（96.46%）；M1 OU-R1 52/52；MR1 AH 1,729/1,921（90.01%）；MR1 AI declared mirror 1,498/1,553（96.46%）。
 - M1 formatter 6/6、MR1 shared display test 1/1 PASS，curator 和共享库 `git diff --check` PASS。仅更新公共展示名称与审计数据；无 Telegram 发送/编辑、无模型/策略/正式账本/结算/派单规则修改。
+
+## 2026-10-14 正式范围继续补齐（第四十六批）
+- Sofascore 简体中文 CSM Slatina 球队页将球队展示为“斯拉蒂纳CSM”（https://www.sofascore.com/zh/football/team/csm-slatina/298063）。为 TotalCorner `team_id 48550` 加入对应 canonical 和全称别名，保持其罗马尼亚俱乐部身份。
+- 共享库提交 `905d2b66d91bc29093294deba8e8458c5bd8f110` 已推送 master。本批新增1条。正式范围2,468 IDs：2,237 canonical、231 unresolved（90.64%）；M1 1,498/1,553（96.46%）；M1 OU-R1 52/52；MR1 AH 1,730/1,921（90.06%）；MR1 AI declared mirror 1,498/1,553（96.46%）。
+- M1 formatter 6/6、MR1 shared display test 1/1 PASS，curator 与 `git diff --check` PASS。仅展示名称及审计产物更新，无 Telegram 操作，生产模型、策略、账本、结算和派单规则未动。
