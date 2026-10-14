@@ -1305,3 +1305,8 @@
 - Sofascore 简体中文 KF Drenica 球队页将该队显示为“德雷尼察地区斯尔比察”，并列出 Skënderaj 城市信息（https://www.sofascore.com/zh/football/team/kf-drenica/229754）。与 TotalCorner `team_id 40318`、provider `KF Drenica Skenderaj` 交叉核对后，新增该 canonical；只写入此稳定 ID，不套用于其他 Drenica 名称。
 - 共享库提交 `6c5ad6956c7bf7476b911e472ddf464a5fb69ccc` 已推送 master。本批新增1条；正式范围2,468队：2,276 canonical、192 unresolved（92.22%）；M1 1,513/1,553（97.42%），M1 OU-R1 52/52，MR1 AH 1,762/1,921（91.72%），MR1 AI declared mirror 1,513/1,553（97.42%）；全库12,276 IDs、4,292 canonical。未匹配队伍及原因以共享 `formal_scope_coverage.json#unresolved_records` 为准。
 - curator 本轮新增1条；M1 formatter/name-repair 测试8/8 PASS，`git diff --check` PASS。只更新共享展示映射与审计/交接信息，未修改策略、模型、赛事范围、账本、结算或 Telegram 派单逻辑；本轮没有发送或编辑 Telegram 消息。
+
+## 2026-10-15 正式范围继续补齐（第七十六批）
+- 球探网球队资料将匈牙利足球俱乐部 BVSC Zuglo 明确显示为“布达佩斯瓦苏塔斯”（https://football.chuqi.com/football/team-match/230816/）。与 TotalCorner `team_id 70974`、provider `BVSC Zuglo` 及匈牙利联赛 league_id 241 核对后新增 canonical，并保留 Budapesti VSC、BVSC-Zugló 等别名。
+- 共享库提交 `65a62803b39687d6e13992fbf4153e26b22c8597` 已推送 master。本批新增1条；正式范围2,468队：2,277 canonical、191 unresolved（92.26%）；M1 1,513/1,553（97.42%），M1 OU-R1 52/52，MR1 AH 1,763/1,921（91.78%），MR1 AI declared mirror 1,513/1,553（97.42%）；全库12,276 IDs、4,293 canonical。逐项 unresolved 以共享 `formal_scope_coverage.json#unresolved_records` 为准。
+- curator 新增1条；M1 formatter/name-repair 测试8/8 PASS，`git diff --check` PASS。仅更新共享展示映射与交接记录，未修改生产策略、模型、赛事范围、账本、结算、Telegram 派单规则，未发送或编辑 TG 消息。
