@@ -1525,3 +1525,10 @@
 - 隔离实渲染确认新增 ID 可读：M1 formatter 对 Riga Mariners 输出中文联赛/球队；MR1 shared resolver 同样按 team ID 输出 `里加水手`、`KF奥里库`。抽样的未映射 Marupes SC 仍显示 provider 英文名，说明 148 个缺口仍会造成部分未来消息英文 fallback；没有以虚构译名遮盖。
 - 本轮历史 Telegram 实际编辑数为 0；没有具备本任务可用的既有一次性编辑 workflow，因此未新增 workflow、未触发真实策略扫描，也未发送/编辑消息。格式器测试只能证明本地渲染，不是 TG API 回执或已编辑历史消息的证据。后续如启用已有受控编辑执行链，应按每条账本中的原 provider message ID 核验成功/不可编辑回执。
 - 其余 148 个逐条记录、英文身份、赛事上下文和未匹配原因可从共享 `formal_scope_coverage.json#unresolved_records` 读取；不得把目前 94.00% 说成全量完成。策略、派单、账本与结算未修改。
+
+## 2026-10-15 最新 master 核对及历史 TG 修复回执
+- 从共享仓库最新 `master` `5b0ac813c6b209f05fa9df89a05f7544c38cb69d` 快进核对，没有覆盖远端的 M1 运行数据。当前正式范围仍是 2,468 IDs、2,320 canonical、148 unresolved（94.00%）；M1 1,535/1,553（98.84%）、M1 OU R1 52/52、MR1 AH 1,801/1,921（93.75%）、MR1 AI declared mirror 1,535/1,553（98.84%），观察到的 MR1 AI confidence≥50 cohort 181/182（99.45%）。共享库统计为12,276个team ID、4,336个 canonical。未找到足以核验中文队名的新来源，本轮不新增或猜译；逐条剩余名单仍以共享库 `formal_scope_coverage.json#unresolved_records` 为准。
+- 复核英文身份/中文资料的具体例子：`Dinaz Vyshgorod`、`Hirnyk-Sport Horishni Plavni`、`Marupes SC`、`FC Yerevan`、`KF Podujeva` 的本轮搜索结果不能证明主流简体中文队名；`Marupes` 的韩文站本地化结果、俄/乌语及机器翻译均不作为中文 canonical。没有把地点音译或相似队名塞入 ID 映射。
+- 从 quant-runner Actions 读取到 M1 历史修复旧回执：run `38132221201` 为158条已发送记录、13条可改且13条编辑成功、0失败，99条无原消息回执、46条无映射。最新 run `38623200716` PASS：41条待校验记录均已与目标中文文字一致（`already_matching=41`），0新编辑、0失败；99条无原始文本、97条无可用映射。此处“已匹配”不计作本轮编辑。
+- MR1 AH 正式消息的历史修复旧回执：run `38132942734` 实际编辑2条、0失败；最新 run `38623207575` PASS，125条已处理、0待编辑、0失败，远端 repair status 有98个已完成 fingerprint。MR1 AI 最新 run `38623214139` PASS 仅指 workflow 执行成功：201条中192条未解析、9条尝试编辑均因 Telegram `400 message to edit not found` 失败，实际编辑0条。不得把 workflow PASS 表述为全部历史消息已修复。
+- 四条链的未来消息 formatter/registry 接入沿用同一共享 JSON；M1 formatter、MR1 resolver及AI formatter测试保持前述 PASS。M1 OU R1共用M1正式消息修复链，不另造映射或账本。由于本轮无新增 canonical，未重复派发历史 TG 编辑工作流，也未运行模型/扫描/结算；策略、盘口、范围、派单规则、账本均未变。
