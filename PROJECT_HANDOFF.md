@@ -1086,3 +1086,8 @@
 - Sofascore 简中 Serbian team profile 将 Leskovac 的 GFK Dubočica 显示为“杜博奇察”（https://www.sofascore.com/zh/football/team/gfk-dubocica-leskovac/301263）。结合 TotalCorner 原名 `FK Dubocica`、team_id `49647` 和 Serbian league_id `337`，新增该 ID 专属 canonical；保留 `GFK Dubočica` 等英文别名，不与别的 Dubočica ID 合并。
 - 共享库提交 `caeeba6c` 已推送 master。正式范围2,468 IDs：2,222 canonical、246 unresolved，覆盖90.03%；M1 1,496/1,553（96.33%），M1 OU-R1 52/52，MR1 AH 1,719/1,921（89.49%），MR1 AI declared mirror 1,496/1,553（96.33%）。
 - curator、`git diff --check`、M1 formatter 6/6 与 MR1 registry test 1/1 均通过。仅共享中文展示名及审计文件有改动；生产策略、模型、交易账本、结算和 TG 派单规则不变。未发送 Telegram；剩余项逐条记录于共享 `formal_scope_coverage.json`。
+
+## 2026-10-14 正式范围继续补齐（第三十四批）
+- 新增 TotalCorner `team_id 49647` / `FK Dubocica` 的简体 canonical “杜博奇察”。Sofascore 简中球队档案以“杜博奇察”显示塞尔维亚 Leskovac 俱乐部，并注明英文身份 GFK Dubočica Leskovac（https://www.sofascore.com/zh/football/team/gfk-dubocica-leskovac/301263）；匹配本队 Serbian league_id 337，保留既有 ID 和别名、不与其他队合并。
+- 共享 registry 提交 `caeeba6c` 已推送 master。正式范围2,468 IDs：2,223 canonical、245 unresolved，覆盖90.08%；M1 1,497/1,553（96.39%），OU-R1 52/52，MR1 AH 1,720/1,921（89.54%），MR1 AI mirror 1,497/1,553（96.39%）。
+- M1 formatter 6/6、MR1 shared registry display test 1/1、curator 与 `git diff --check` 均通过。仅展示映射/审计文件变更；生产策略、模型、账本、结算及 Telegram 派单逻辑未改。
