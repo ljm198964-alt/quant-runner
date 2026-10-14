@@ -1497,3 +1497,8 @@
 - 从共享库 `a78f341f3922a85f85e4b97ea86108976e93fba0` 继续，仅检索现存 unresolved 清单。新增 TotalCorner team ID `168001` `Safa Baku` →“萨法巴库队”，来源为 Tips.GG 简体中文球队页，页面给出中文名、英文队名和阿塞拜疆身份；映射已提交到共享库 `3643c58f805e718753bad6d1403ed63883e3c73b`。没有按相似英文名称合并其他 team ID。
 - 正式范围更新为 2,468 IDs、2,317 canonical、151 unresolved（93.88%）；M1 1,532/1,553，M1 OU R1 52/52，MR1 AH 1,798/1,921，MR1 AI 镜像 M1 1,532/1,553。权威分项及完整未匹配清单见该共享提交的 `formal_scope_coverage.json`。
 - 本轮 M1 formatter/repair 测试 8/8 通过；未触发正式扫描、TG 发送或历史编辑。其他抽查未找到可靠中文名的名称保留 unresolved；策略、赛事范围、盘口、账本、结算和发送逻辑未修改。
+
+## 2026-10-15 unresolved 身份防误并复核
+- 对当前 unresolved 批量抽查了 FK FAP、Qena/Asyut 低级别队、Shkëndija Haraçinë、Kosovo Prishtinë 等候选；没有把缺少可靠中文惯用名的球队强行映射。本轮 formal 数仍为 2,468 总 ID、2,317 canonical、151 unresolved（93.88%）。
+- 更新共享覆盖报告 `formal_scope_coverage.json` 并推送 `1c209ca4b1140b40c7f42f39364f35bd0d1fbb66`：对 ID 42262 `Vllaznia` 记录其 Kosovo Superliga 上下文不能套用阿尔巴尼亚维拉兹尼亚中文名；对 ID 43486 `Vllazina` 记录不可仅凭近似拼写与前者合并；对 ID 45722 `KF Kosova Prishtine` 记录其 Kosovo Division 2 身份不同于 FC Prishtina，不复用普莱斯堤纳映射。证据 URL 直接保存在各 unresolved 记录的 `reason_detail`。
+- 本轮没有新增 canonical 行，没有运行模型/生产流程，也未发送或编辑 Telegram。名称库测试仍以最近批次 M1 8/8、MR1 display/AI formatter 4/4、V6 repair 1/1 为准；未因纯证据注释更改测试代码。
