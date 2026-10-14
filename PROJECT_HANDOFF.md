@@ -1107,3 +1107,8 @@
 - 雷速中文球队档案明确将 `Iraklis Yerolakkou` 显示为“伊拉克利斯耶罗拉”（https://www.leisu.com/data/zuqiu/team-54376/data）；为 TotalCorner `team_id 15888` 增加对应 canonical 和原名别名。
 - 共享库提交 `14d174ae96f4c1d170e414e83fdfa91465cadba8` 已推送 master。本次新增2条。最新实算 formal union 2,468 IDs：2,227 canonical、241 unresolved（90.24%）；M1 1,494/1,553（96.20%）；M1 OU-R1 52/52（100%）；MR1 AH 1,722/1,921（89.64%）；MR1 AI declared mirror 1,494/1,553（96.20%）。完整剩余清单和原因以共享 `formal_scope_coverage.json` 为准。
 - M1 Telegram formatter tests 6/6 PASS，MR1 shared registry test 1/1 PASS，curator 与 `git diff --check` PASS。只更新共享名称数据及审计文件；无历史 Telegram 编辑/重发，也未改生产模型、策略、账本、结算或派单逻辑。
+
+## 2026-10-14 正式范围继续补齐（第三十八批）
+- 7M 球队页将 `Buducnost Banovici` 与“巴諾維奇”直接并列（https://team.7m.com.cn/4424/index.shtml）。为 TotalCorner `team_id 12109` 保存简体 canonical“巴诺维奇”，繁体译名作为 alias；没有合并其他同名/近名 ID。
+- 共享库提交 `64f9b53d6ab7e87f87e661ada45043d8327cede2` 已推送 master，本批新增1条。当前 formal union 2,468 IDs：2,228 canonical、240 unresolved（90.28%）；M1 1,494/1,553（96.20%）；M1 OU-R1 52/52；MR1 AH 1,723/1,921（89.69%）；MR1 AI declared mirror 1,494/1,553（96.20%）。
+- M1 formatter 6/6、MR1 shared registry test 1/1、curator 与 `git diff --check` 均通过。变更仅为中文展示 registry/coverage/audit；未触及模型、策略、账本、结算、Telegram 正式发送，也未编辑历史消息。其余未匹配球队保持逐队核验，不以猜译填充。
