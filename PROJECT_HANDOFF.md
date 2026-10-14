@@ -1186,3 +1186,7 @@
 ## 2026-10-14 正式范围继续补齐（第五十四批）
 - 球探体育中文球队档案明确列出 `FK Neptunas Klaipeda`（页面显示 FK海王星克萊佩達，英文名一致：https://zq.titan007.com/big/team/Summary/48661.html）；将 TotalCorner `team_id 67240` canonical 定为简体“海王星克莱佩达”，并保留“克莱佩达海王星”等中文别名，未与其他立陶宛球队合并。
 - 共享库提交 `ae532bf2b271b4df8076e4a72f9cf328ffd9232f` 已推送 master，本批新增1条。formal union 2,468 IDs：2,246 canonical、222 unresolved（91.00%）；M1 1,499/1,553（96.52%）；M1 OU-R1 52/52；MR1 AH 1,739/1,921；MR1 AI declared mirror 1,499/1,553。M1 formatter 6/6、curator 与 `git diff --check` PASS。未进行 Telegram 发送/编辑，也未更改模型、策略、账本、结算或派单规则。
+
+## 2026-10-14 正式范围继续补齐（第五十五批）
+- 中文维基百科安道尔球队列表逐行列出 Penya Encarnada d'Andorra 与中文名“佩尼亚恩卡纳达”（https://zh.wikipedia.org/wiki/佩尼亞恩卡納達安道爾）；TotalCorner `team_id 50972` 对应安道尔赛事范围，加入 canonical 和繁体/英文别名，保持球队身份独立。
+- 共享库提交 `f12f67914aee3b7cc83453195e9d80da6f3d4561` 已推送 master。本批新增1条。formal union 2,468 IDs：2,247 canonical、221 unresolved（91.05%）；M1 1,499/1,553（96.52%）；M1 OU-R1 52/52；MR1 AH 1,740/1,921；MR1 AI declared mirror 1,499/1,553。M1 formatter 6/6、curator 与 `git diff --check` PASS。其余本轮检索对象无可靠中文球队名出处，保留 unresolved；不涉及任何 Telegram 发送/编辑及生产策略、模型、账本、结算修改。
