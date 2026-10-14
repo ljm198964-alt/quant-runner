@@ -880,6 +880,12 @@
 - 当前变更待提交/推送至共享库仓库；本机 `quant-runner` 交接工作区仍在 `6752840081932906b79c56670b1b0dfe34f42901`，本轮 GitHub HTTPS fetch 曾返回 `SSL_ERROR_SYSCALL`，因此交接更新和两仓库 push 尚未完成。待网络恢复后先核对远端头，再提交共享库数据与本交接记录；不要误报云端部署或历史 Telegram 编辑成功。
 - 本次仅涉及名称展示映射、curation/coverage 审计和 handoff；没有修改模型、策略、盘口、正式范围、订单/结算账本或 Telegram 派单规则。
 
+## 2026-10-14 正式范围继续核名：Vitosha 与 FK Čelik
+- 在共享 master `c69a09079042fb32e9d534048a06330309265550` 基础上继续处理 unresolved。新增 `40493 FK Celik` → `尼克希奇钢铁`，依据简体中文尼克希奇钢铁俱乐部条目（https://zh.wikipedia.org/wiki/尼克希奇钢铁足球俱乐部），TotalCorner `league_id=47`、原 team ID 与 FK Čelik Nikšić identity 保持绑定；`40821 FK Vitosha` → `比斯特里察维托沙`，依据 Sofascore 简中队页（https://www.sofascore.com/zh/football/team/fc-vitosha-bistritsa/113703），并保留“维托沙”别名。两项均不覆盖既有 canonical，也不合并不同球队。
+- 共享库最新实算：formal union 2,468 IDs，2,155 canonical、313 unresolved，覆盖率 87.32%；M1 1,474/1,553（94.91%）；M1 OU-R1 52/52（100%）；MR1 AH 1,660/1,921（86.41%）；MR1 AI declared mirror 1,474/1,553（94.91%），retained confidence≥50 cohort 181/182（99.45%）。全 registry 12,276 IDs、4,171 canonical；313 个剩余正式未匹配项及 `NO_VERIFIED_CANONICAL_ZH` 原因见共享库 `data/football_display_names/formal_scope_coverage.json`。
+- M1 display tests 6/6 PASS；MR1 shared-registry / AI formatter tests 4/4 PASS，测试使用本轮共享 registry；`git diff --check` PASS。未触发生产扫描、未发送或编辑 Telegram。本轮历史 TG 编辑 0；旧消息修复状态仍按上节记录，不把 formatter 测试当成线上消息编辑证据。
+- 共享库变更与本交接更新随后分别提交推送；仅名称、来源、coverage/curation 报告及 handoff 变化。未修改 M1、MR1 AH、MR1 AI 的策略、模型、阈值、范围、正式 ledger、结算或发单规则。
+
 ## 2026-10-14 正式范围中文名称续补：北爱尔兰、匈牙利、威尔士、埃及与乌克兰
 - 在最新共享库 `totalcorner-research-bridge/master` (`c69a0907f5…`) 基础上，只写入公开中文来源可核验且与 TotalCorner team_id/联赛一致的映射：`23695 Portstewart`→波特斯图尔特、`11406 Coagh Utd`→科阿联队、`39562 Dollingstown`→多林斯敦、`31174 AL Fayoum`→法尤姆FC、`8137 SW Bregenz`→布雷根茨、`7338 Renova Dzepciste`→雷诺瓦、`15380 Pontypridd Town`→庞蒂普里德、`69357 FC Nagykanizsa`→纳吉卡尼扎（只限男队 ID，不映射女队）、`43026 FK Lviv`→利沃夫。原 ID、英文名、别名、league IDs 和每条来源证据均在唯一 `display_names.json` 中；没有合并身份。
 - 正式范围从 2,468 IDs / 2,144 canonical / 324 unresolved 更新为 2,468 / 2,153 / 315（87.24%）。M1 为 1,472/1,553（94.78%）；M1 OU-R1 52/52（100%）；MR1 AH 1,660/1,921（86.41%）；MR1 AI declared mirror of M1 1,472/1,553（94.78%）。整个共享 registry 12,276 IDs、4,169 canonical。315 条未匹配记录全部有 `NO_VERIFIED_CANONICAL_ZH` 原因，完整 team_id/name/league/system 清单见共享 `data/football_display_names/formal_scope_coverage.json`。
