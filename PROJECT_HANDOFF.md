@@ -1008,3 +1008,8 @@
 - 从7M中文球队资料核实两条正式范围映射：`FC Tallinn`（team_id `67634`）→“塔林FC”（7M页面标示爱沙尼亚并列出球队赛程：https://team.7m.com.cn/452435/index_gb.shtml）；`Unia Skierniewice`（`33235`）→“尤尼亚斯凯尔涅维采”（7M页面标示波兰并列出球队赛程：https://team.7m.com.cn/453386/index_gb.shtml）。ID、provider 原名、aliases 和来源均保留，没有改正式 identity。
 - 共享 registry 提交 `0e27ab163016248de713a1fbd1fbc75b6e2b9d55` 已推送。formal union 实算 2,468 IDs、2,203 canonical、265 unresolved（89.26%）；M1 1,488/1,553（95.81%），M1 OU-R1 52/52，MR1 AH 1,702/1,921（88.60%），MR1 AI declared mirror M1 1,488/1,553（95.81%）。全量 unresolved 记录在共享 `data/football_display_names/formal_scope_coverage.json`。
 - 共享库名称层验证：M1 formatter 6/6 PASS，MR1 `test-football-display-names.js` 1/1 PASS。没有真实 Telegram 编辑或发送，本轮历史消息修复数为0；不宣称已修改已发送订单。未改模型、策略、范围、ledger、结算或派单逻辑。265项仍在继续核证。
+
+## 2026-10-14 正式范围继续补齐（第二十二批）
+- 继续查证后新增 `FK Tekstilac Odzaci`（team_id `133202`）→“特克斯蒂拉茨”。FootyStats 简中球队档案直接标注 FK Tekstilac Odzaci 与该中文队名：https://footystats.org/cn/clubs/fk-tekstilac-odzaci-704721；塞尔维亚官方球队站确认 Tekstilac Odžaci 的球队身份：https://fktekstilac1919.com/。保留 provider identity、ID 与拼写别名，不作合并。
+- 最新唯一共享 registry 提交 `960d1597d6e97d6460831a0ac44aca3c0649e243` 已推送；当前 formal union 2,468 IDs、2,204 canonical、264 unresolved（89.30%）。M1 1,489/1,553（95.88%），OU-R1 52/52，MR1 AH 1,703/1,921（88.65%），MR1 AI declared mirror M1 1,489/1,553（95.88%）。之前第21批两项与本批项均由共享 `formal_scope_coverage.json` 更新，264条剩余明细以该文件为准。
+- M1 formatter 6/6 PASS；MR1共享 display-name test 1/1 PASS。未编辑/发送任何 Telegram 历史消息，本轮生产 TG 修复仍未执行；未修改模型、策略、赛事范围、账本、结算或出单规则。264条继续逐项来源核验。
