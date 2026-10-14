@@ -1407,3 +1407,9 @@
 - Tips.GG 简体中文 Slavia TU Kosice 球队档案以“斯拉維亞科希策”标注球队并确认斯洛伐克身份（https://tips.gg/cn/team/slavia-tu-kosice-football/）。新增 TotalCorner `team_id 41729 → 斯拉维亚科希策`，按简体字形规范展示，保留 provider 名、带变音符别名及 league IDs 133/355，不与其他 Slavia/Kosice 球队合并。
 - 共享库 `38381601` 已推送 master。本批新增1队；formal union 2,468 IDs：2,297 canonical、171 unresolved（93.07%）。M1 1,519/1,553（97.81%），M1 OU-R1 52/52（100%），MR1 AH 1,780/1,921（92.66%），MR1 AI declared mirror 1,519/1,553（97.81%），AI observed confidence≥50 181/182（99.45%）。全库12,276 team IDs、4,313 canonical；771 league IDs 中338 canonical、433 unresolved。全部 unresolved ID/名称/联赛/系统/原因见同提交的 `formal_scope_coverage.json#unresolved_records`。
 - M1 display/name-repair tests 8/8 PASS；MR1 shared display formatter tests 3/3 PASS。MR1 用实时加载的共享 registry 对 `team_id 41729` 与已有中文队名做 fixture 隔离渲染，结果为“斯拉维亚科希策 vs 巴尔马祖伊瓦罗什”；无生产单或 Telegram 发送/编辑。未改模型、策略、赛事范围、正式账本或结算。
+
+## 2026-10-15 正式范围未匹配名称来源复核（第九十三批审查）
+- 快进核对 `totalcorner-research-bridge/master` 为 `3838160121ad85f66db0ed00bb3d216d21461203`，工作树干净；`formal_scope_coverage.json` 当前仍列正式范围 2,468 IDs、2,297 canonical、171 unresolved（93.07%）：M1 1,519/1,553、OU-R1 52/52、MR1 AH 1,780/1,921、MR1 AI 声明镜像 M1 1,519/1,553。此轮未更改 registry，因此正式数值保持原样。
+- 按 unresolved ID/原名/赛事上下文抽查了现成 FootyStats 中文资料、Tips.GG 中文球队页、7M/500 搜索及可找到的公开球队身份页。确认这些页面多数只能证明英文身份，不能提供可靠中文惯用队名；Tips.GG 对 Malta `Sirens` 的自动中文结果为“警报”，属于明显不适用译法，明确排除。其余样例包括 Pembroke Athleta FC、Mladost Carev Dvor、FK FAP、KF Hajvalia、埃及低级别队；未找到足以支持写入 canonical_zh 的主流中文名称证据。未根据发音临时造译名，也未合并疑似近名身份。
+- 已检查本地旧身份档案、球队 alias crosswalk 和中文映射 wheel；未发现这些剩余记录的可复用可靠中文映射。由于没有合格的新映射，本轮没有提交空变更，也没有触发模型 runtime、Telegram 编辑/发送或 GitHub Actions。
+- 后续继续从 171 条 unresolved 中按有明确中文来源者逐项写入唯一 `display_names.json`；单纯可恢复英文身份不算中文覆盖。不得把该抽查范围误报为 171 条全部逐项完成，也不得将当前 93.07% 报成全覆盖。
