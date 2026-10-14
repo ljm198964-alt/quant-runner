@@ -11,6 +11,13 @@
 - 新工作优先公开仓库；用户此前要求停止使用私有运行链路并最终移除不再需要的私有仓库。当前运行链路仍依赖私有仓库，属于尚未解决的工程遗留问题，不得误报已经迁移。
 - 不得擅自新增数量门槛、Gate、策略参数、测试/发布阻塞条件。未确认的建议不得当作已冻结规则。
 
+## 2026-10-15 正式范围中文库续补（十一）
+- 从共享库最新 master `4d67fd5531d7d55384b60226951329abd327043a` 接续，没有覆盖已有 canonical。当前待合并批次为 3 个有成熟中文资料对应的正式 team ID：Leevon PPK（144651）→ 沙尔杜斯利维诺（7M 简体中文球队页，拉脱维亚足协身份交叉核对）；Aragvi Dusheti（46813）→ 阿拉吉夫杜塞提（7M 简体中文球队页）；FC Besa Peja（150935）→ 贝萨佩贾（FootballAnt 简体/英文同一 profile ID 对照）。同一映射写入唯一共享文件 `data/football_display_names/display_names.json`，脚本/批次来源审计随变更提交。
+- 更新后文件实算：formal union 2,468，canonical 2,327，未匹配 141（94.29%）；M1 1,542/1,553（99.29%）；M1 OU-R1 52/52（100%）；MR1 AH 1,808/1,921（94.12%）；MR1 AI 声明镜像 1,542/1,553（99.29%）；MR1 AI observed confidence≥50 为 181/182（99.45%）。共享库 12,276 team IDs，4,343 canonical；完整 141 条及各项原因见共享 `formal_scope_coverage.json` 的 `unresolved_records`。
+- 搜索 7M、Sofascore、FootballAnt 等资料后，对剩余低级别俱乐部仅在中文名可与同一球队身份对应时入库；搜索结果仅有英文、仅有其他语种或存在同名身份冲突的仍保留 unresolved，不用临时音译补数。当前 141 项多属埃及低级别、科索沃/东欧/威尔士/波罗的海地区俱乐部；`CS Stefanesti`、`El Hammam`、`Vllaznia/Vllazina` 等存在身份歧义的不得互相借名。
+- 验证：共享 curator 幂等重跑 `added=0`；`git diff --check` 通过；M1 Telegram display + history-repair 测试 8/8；MR1 完整 `npm test` 通过。正式格式器已使用同一共享 registry；本批新增前尚未部署/编辑历史消息。Telegram 历史文字修复必须用既有 name-only edit workflow，保持 message ID 与投注内容，不重发；实际 API 编辑回执待新 registry 合并后再核查。
+- 本轮未修改 M1、M1 OU-R1、MR1 AH、MR1 AI 的模型、策略、盘口、范围、阈值、账本、结算或发送条件。共享 registry 的提交/PR、合并后 TG 历史修复运行及回执需在下一更新中填写，不得提前宣称已完成。
+
 ## 仓库与关键路径
 - 公开 Runner：`ljm198964-alt/quant-runner`，`.github/workflows/m1-free-runtime.yml`。
 - M1 当前代码和数据仍在 `ljm198964-alt/totalcorner-research-bridge`：`m1_formal_runtime.py`、`m1_notification.py`、`results/m1_formal_ledger.json`（约3 MB）、`results/m1_formal_report.json`。
