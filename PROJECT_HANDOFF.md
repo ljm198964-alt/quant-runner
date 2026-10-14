@@ -1,5 +1,11 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 中文展示/正式 Telegram 尾项复核（batch 115）
+- 从已合并共享库 `master` `3db198e7e38514efbff692d837a2c4adc1f03e24` 快进复核；覆盖统计仍为正式并集 2,468 IDs、canonical 2,346、unresolved 122（95.06%）；M1 1,528/1,553（98.39%）、M1 OU-R1 52/52、MR1 AH 1,826/1,921（95.05%）、MR1 AI 声明镜像 1,528/1,553（98.39%）。本轮对剩余项作定向来源核验，未发现可安全加入的新 canonical。例：KF Kika 的中文站资料仍显示拉丁字母队名，不据此编造音译。完整 unresolved 名单及逐项原因仍以唯一共享文件 `data/football_display_names/formal_scope_coverage.json#unresolved_records` 为准（121 条无经核实中文名，1 条 team_id 4931 provider identity 为无效字面 `0`）。
+- 四条正式展示链（M1 AH、M1 OU-R1、MR1 AH、MR1 AI）继续读取唯一共享 `display_names.json`；M1 11/11、MR1 registry/AI formatter 4/4 定向测试通过。隔离格式验收通过；没有触发生产策略、发送测试单或改动账本。
+- 已完成的历史 TG 名称修复回执仍是：M1/M1 OU-R1 run `38651673155` edited 0（41 已匹配、99 缺原消息正文、97 无映射、0 failed）；MR1 AH run `38651677750` edited 0（125 already processed）；MR1 AI 没有本轮新增可编辑目标，既有 9 条失败原因为 Telegram `400 message to edit not found`。不重发任何旧订单；不能宣称历史消息已修复。
+- 无新增可靠映射，故共享 registry 无新提交；本条仅记录最终尾项核验。M1/M1 OU-R1/MR1 AH/MR1 AI 的模型、策略、阈值、范围、盘口来源、通知条件、账本及结算保持不变。
+
 ## 2026-10-15 formal-scope 中文名称续补（batch 114，最新）
 - 从共享库 `totalcorner-research-bridge/master` 最新 `f9b33f3c3cfb4187979facee37db8849b1cb6d55` 继续，新增两条经中文足球资料核验的正式 ID：`109052 FK Famos Vojkovici → 法莫斯·沃季科维基`（SportScore 中文球队页）及 `43182 KF Iliria Fushe-Kruje → 伊利里亚富谢-Kruje`（Tips.GG 中文对阵页）。第二条另用中文地名资料核实 Fushë-Krujë=富舍克鲁亚，将最终显示规范为全中文 `伊利里亚富舍克鲁亚`；旧混合写法保留 alias。英文 provider identity、team_id、league_id 不变。另有窄范围、可重复的 canonical refinement guard，只有当前值精确等于旧标签时才可迁移。
 - 共享数据 PR [#18](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/18) merge SHA `4560981172ffaac20711c7fcb45f9be46b45ef5c`；后续全中文名称精炼 PR [#19](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/19) merge SHA `3db198e7e38514efbff692d837a2c4adc1f03e24`。唯一库仍是 `data/football_display_names/display_names.json`，未新增第二份名称库。
