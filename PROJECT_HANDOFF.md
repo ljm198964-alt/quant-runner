@@ -1507,3 +1507,9 @@
 - 新增共享 team ID `107746`：`OFK Vrsac` → `OFK弗尔沙茨`，别名保留 `OFK Vršac`。中文比赛数据页 [JQ007 OFK弗尔沙茨 vs Dubocica](https://www.jq007.com/h2h/fk-dubocica-vs-ofk-vrsac) 给出该中文显示名；俱乐部官网 `ofkvrsac.com` 核对 OFK Vršac 的塞尔维亚身份，正式 league ID 337 也对应塞尔维亚甲级联赛。映射通过可重复 ID 定向 curator 写入，未改动其他同名/近名球队。
 - 共享库提交 `8e3d6a03e6513de70b04aa8895bf8cd134051c35`。正式 union 2,468 IDs：2,318 canonical、150 unresolved（93.92%）；M1 1,533/1,553（98.71%），M1 OU R1 52/52（100%），MR1 AH 1,799/1,921（93.65%），MR1 AI declared mirror of M1 1,533/1,553（98.71%）。完整清单以该提交 `formal_scope_coverage.json#unresolved_records` 为准。
 - 验证：M1 formatter/repair 8/8 PASS；挂载本次共享库目录的 MR1 display/AI formatter 4/4 PASS；V6 display repair 1/1 PASS。只做隔离 resolver/formatter 测试，无正式扫描、TG 发送或历史消息编辑；生产策略、订单与结算均未修改。
+
+## 2026-10-15 正式范围名称续补：Riga Mariners
+- 从最新 `master`（父提交 `8e3d6a03e6513de70b04aa8895bf8cd134051c35`）继续，未重跑历史身份恢复。为 TotalCorner `team_id 164677` (`Riga Mariners`) 添加 canonical `里加水手`，以中文足球赛事列表的“里加水手队”标签为名称证据，并用拉脱维亚足协俱乐部页及官方俱乐部站交叉核验英文身份。该名称只写入 ID 164677；未与相似旧 ID 合并。
+- 共享库提交 `8fb30cda977683bbdb3a2f19e54cdc5c3e39bfd7` 已推送 `totalcorner-research-bridge/master`。formal union 2,468 IDs：2,319 canonical、149 unresolved（93.96%）；M1 1,534/1,553（98.78%），M1 OU R1 52/52（100%），MR1 AH 1,800/1,921（93.70%），MR1 AI declared mirror of M1 1,534/1,553（98.78%）。完整剩余清单和逐条原因见同一提交的 `data/football_display_names/formal_scope_coverage.json#unresolved_records`。
+- 验证：M1 Telegram display/repair 8/8 PASS；MR1 shared registry/AI formatter 4/4 PASS（实际挂载最新共享 JSON）；MR1 V6 display-repair 1/1 PASS。没有运行正式模型或订单，也没有发送或编辑历史 Telegram。
+- 本次只新增 1 个已核实名称；149 个仍缺可靠 canonical 的球队继续保留未匹配状态。历史 TG 的批量改字未在本次执行，不能宣称已实际修复；需依据各自正式账本、可用的安全编辑执行环境和 Telegram API 回执单独核验。未修改策略、盘口、赛事范围、账本或结算。
