@@ -1460,3 +1460,9 @@
 - 该来源确实对部分俱乐部提供中文显示，但能从页面英文身份/队名上下文精确确认的中文名称对应已映射实体；涉及仍未匹配 ID 的页面条目继续显示英文，不能由资料中的阿拉伯文、城市名或近似俱乐部名推导中文队名。因此本次无安全新增，不改 `display_names.json` 或覆盖统计。`formal_scope_coverage.json#unresolved_records` 当前161项仍均标 `NO_VERIFIED_CANONICAL_ZH`。
 - 同轮复核部分科索沃、罗马尼亚、乌克兰、格鲁吉亚、北马其顿未匹配队伍的精确中文网页检索，未得到可确认的主流中文球队名；不接受英文音译式临时猜名。此为来源审查结果，不是全量718历史名单完成的声明。后续可继续对各联赛寻找完整中文比分源/中英文赛程交叉表，再按 team ID逐项增补；保留当前161条正式范围口径。
 - 未运行策略、生产扫描、TG发送/编辑或结算。仅此交接更新，不修改共享 registry、模型、策略、正式账本或通知。
+
+## 2026-10-15 正式范围未匹配来源复核（第一百零一批）
+- 继续以共享 `master` 最新 formal unresolved 清单为准（161条；正式范围2,468 IDs、2,307 canonical、93.48%），没有重跑历史身份恢复。围绕科索沃、马耳他、乌克兰、亚美尼亚、阿塞拜疆、法罗群岛、土耳其低级别队名，对7M/中文比分索引、365Scores中文页、Wikidata及俱乐部/足协官方资料做精确检索。
+- 本轮未发现可安全新增的 canonical：`KF Vllaznia Pozheran` 的 Wikidata 实体无中文标签；中文资料中的 `Vllaznia` 指阿尔巴尼亚斯库台队，不能套到科索沃同名队。`Flamurtari` 的中文标签命中阿尔巴尼亚 Vlorë 队，不是储存赛事上下文中的 Kosovo/Pristina 队。`Besa` 亦有不同国家同名身份。`AFC Metalul Buzau`、`Agrobiznes Volochisk`、`FC Yerevan`、`FSC Mariupol`、`Marupes SC`、`Pembroke Athleta`、`Victoria Hotspurs` 等公开页面在本轮查到的来源中仍用英文；没有以地点音译替代主流中文队名。可复核页面包括 [365Scores 的 Metalul Buzau 中文地区赛程页](https://www.365scores.com/zh-tw/football/match/undefined-5513/liga-2-12581-53498-5513)、[Wikidata 的 KF Vllaznia Pozheran 实体](https://www.wikidata.org/wiki/Q30643286)、[Kosovo Cup 中文页](https://zh.wikipedia.org/wiki/%E7%A7%91%E7%B4%A2%E6%B2%83%E7%9B%83)及 [Victoria Hotspurs 官方站](https://www.victoriahotspursfc.com/)。搜索中出现的中文近名都经过国家/联赛上下文核对；身份不符者继续 unresolved。
+- 因没有来源达标的新队名，本轮未修改共享 `display_names.json`/coverage 统计，也未制造空提交。当前精确计数仍以共享 master 的 `formal_scope_coverage.json` 为准：2,468 IDs、2,307 canonical、161 unresolved（93.48%）；M1 1,523/1,553（98.07%）、M1 OU R1 52/52、MR1 AH 1,789/1,921（93.13%）、MR1 AI 声明范围镜像 M1 为1,523/1,553。161条逐队 ID、英文名、league IDs、系统及 `NO_VERIFIED_CANONICAL_ZH` 原因均保留在 `unresolved_records`。
+- 仅更新研究交接；没有触发生产策略、扫描、Telegram发送/编辑或结算，未修改任何模型、策略、范围、订单或账本。后续按联赛分组继续查找真实中文赛程表/团队档案交叉表；不因覆盖率目标接受错队映射、自动翻译或猜测音译。
