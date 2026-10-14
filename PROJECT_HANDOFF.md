@@ -1558,5 +1558,5 @@
 ## 2026-10-15 正式范围中文库续补：FK Internacional
 - 从 `88370dce`（PR #8 merge）接续唯一共享 registry，新增 TotalCorner `team_id 133668`、`FK Internacional` → `波德戈里察国际`。来源为 7M 中文球队档案 `https://team.7m.com.cn/652136/index_gb.shtml`，其队名/黑山身份与黑山足协 FK Internacional（Podgorica）记录及 formal `Montenegro Druga Liga` 上下文交叉核验。新增源证据及可重复 curator 记录一并提交；未覆盖既有 canonical。
 - 最新正式范围：2,468 个 team ID，2,333 mapped、135 unresolved（94.53%）；M1 1,548/1,553（99.68%），M1 OU R1 52/52，MR1 AH 1,814/1,921（94.43%），MR1 AI declared mirror 1,548/1,553（99.68%）。逐条剩余身份及 `NO_VERIFIED_CANONICAL_ZH` 原因在共享 `data/football_display_names/formal_scope_coverage.json#unresolved_records`。
-- PR #8 `5ff59b5f641b985327270d4cc7ffececfebcd5c6` 已合并，master merge commit `88370dce`。M1 display/history repair 测试 8/8 PASS。未找到本地该 ID 的正式 Telegram 旧消息证据，因此未调用历史编辑工作流；没有 Telegram 编辑或发送。检索其余样本未得到可核验常用中文名称的，继续保留 unresolved。
+- PR #8 `5ff59b5f641b985327270d4cc7ffececfebcd5c6` 已合并，master merge commit `88370dce`。M1 display/history repair 测试 8/8 PASS。本轮在本地 totalcorner checkout 的结果/账本文本搜索未找到该 ID 的正式 Telegram 旧消息证据，因此未调用历史编辑工作流；MR1 仓库未逐条复查，且没有 Telegram 编辑或发送。检索其余样本未得到可核验常用中文名称的，继续保留 unresolved。
 - 本轮只更新共享名称库、curation/audit 与交接记录；未修改任何模型、策略、赛事范围、账本、结算或 Telegram 规则。
