@@ -1422,3 +1422,9 @@
 - M1 formatter/name-repair tests 8/8 PASS；MR1 shared registry/AI formatter tests 4/4 PASS；三条新 ID 的隔离 fixture 渲染赛事、主客队均为中文；`git diff --check` PASS。没有运行策略或正式单，也没有本轮发送/编辑 Telegram 历史消息；历史消息编辑结果仍应以先前 handoff 中 workflow 回执为准。
 - 随后对最新共享库执行既有历史 name-only repair：M1 workflow `38620266687` 成功，41 eligible、0 edited、41 already matching、0 failed；MR1 Formal `38620267182` 成功，0 eligible、125 already processed、0 unresolved/failed；MR1 AI `38620306951` 成功，201 total、9 eligible、0 edited、192 unresolved、9 failed，9项均为 Telegram `400 message to edit not found`。没有重发消息；workflow 成功不等于有历史消息实际被改写。
 - 本批只改共享显示名称、curation 来源和覆盖统计；没有修改 M1/M1 OU R1/MR1 AH/MR1 AI 模型、策略、赛事范围、账本、结算或 Telegram 规则。
+
+## 2026-10-15 正式范围继续补齐（第九十五批）
+- 为 TotalCorner `team_id 43108`、provider `Osogovo Kocani` 新增 canonical“奥索戈沃”。FootyStats 简体中文北马其顿对阵页明确将 FK Osogovo Kočani 称为“奥索戈沃”（https://footystats.org/cn/fyr-macedonia/fk-rabotnicki-skopje-vs-fk-osogovo-kocani-h2h-stats），Tips.GG 中文比赛页独立使用“奥索戈沃队”；保留 TotalCorner team_id 43108、league_id 45，不向其他 Osogovo 球队扩散映射。
+- 共享库提交 `7ac0619521f32e67049ebdba9ecfc4de7c3c7485` 已推送 master。已重算 formal union 2,468 IDs：2,301 canonical、167 unresolved（93.23%）；M1 1,523/1,553（98.07%），M1 OU R1 52/52（100%），MR1 AH 1,784/1,921（92.87%），MR1 AI 声明镜像 M1 为1,523/1,553（98.07%），AI observed confidence≥50 cohort 181/182（99.45%）。全共享库12,276 team IDs、4,317 canonical；完整 unresolved ID/名称/联赛/系统/原因在 `formal_scope_coverage.json#unresolved_records`。
+- M1 formatter/name-repair tests 8/8 PASS；MR1 shared-registry/AI formatter tests 4/4 PASS；以新 registry 隔离渲染 `Osogovo Kocani vs FC Voska Sport` 得到“奥索戈沃 vs 沃斯卡体育”，联赛为“北马其顿足球甲级联赛”；`git diff --check` PASS。没有生成订单、发送 Telegram 或执行历史消息编辑。
+- 本批只改唯一共享 display registry、curation 来源和统计；没有修改任何模型、策略、赛事范围、正式账本、结算或 Telegram 规则。历史 TG 结果仍以第九十四批已记录的真实 workflow 回执为准。
