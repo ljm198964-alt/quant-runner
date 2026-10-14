@@ -1218,6 +1218,14 @@
 - M1 display tests 6/6 PASS，curator 和 `git diff --check` PASS。新 registry 发布后重跑既有历史“仅编辑消息” workflows：M1 run `38593680540` success，报告 eligible=41、edited=0、already_matching=41、missing original text=99、unmapped=97、failed=0；MR1 Formal run `38593688095` success（收据 eligible=0、edited=0、skipped=125、unresolved=0、failed=0）；MR1 AI run `38593695129` success（报告 total=201、edited=0、failed=9、unresolved=192；9 条均为 Telegram 400 `message to edit not found`，其余名称仍缺可靠映射）。三个流程本轮实际历史编辑均为0，不能描述为历史 TG 已修复。
 - M1 OU-R1 名称覆盖为 52/52，但当前 M1 仓库没有独立 formal Telegram ledger / 历史名称编辑器，无法核验或编辑其历史消息。未新增工作流。生产模型、策略、范围、订单账本、结算及派单规则未改。
 
+## 2026-10-15 正式范围继续补齐（第六十三批）
+- Sofascore 简体中文 Porto Suez 球队页显示“苏伊士波尔图”，并标识埃及球队（https://www.sofascore.com/zh/football/team/porto-suez/298274）；为 TotalCorner `team_id 48944` 增加该 canonical。移除容易与独立 `team_id 80563 Porto EL Sokhna SC` 混淆的 Porto El-Sokhna 别名，不跨 ID 合并。
+- 中文维基俱乐部条目提供 Hegelmann 的稳定名称“赫格尔曼”（https://zh.wikipedia.org/wiki/赫格尔曼足球俱乐部）；为 TotalCorner `team_id 82640 Hegelmann Litauen II` 记为“赫格尔曼B队”，保留 II 预备队身份且不与一线队 `31954` 合并。
+- 最新共享库提交 `e01fc0dea6a74ee22d6d47a16bda7d2c847fc9c0` 已推送 master。本批之后正式范围最新口径为 2,468 IDs：2,262 canonical、206 unresolved（91.65%）；M1 1,506/1,553（96.97%）、M1 OU-R1 52/52（100%）、MR1 AH 1,752/1,921（91.20%）、MR1 AI 声明范围镜像 M1 为 1,506/1,553（96.97%），MR1 AI confidence≥50 observed cohort 181/182（99.45%）。准确明细以该共享库 `formal_scope_coverage.json` 为准。
+- 上一批 TG 历史 name-only 检查：M1 run `38595095719` success，eligible=41、edited=0、already_matching=41、缺失原文=99、未映射=97、failed=0；MR1 Formal `38595103478` success，125 already processed、edited=0、unresolved=0；MR1 AI `38595110762` success，total=201、edited=0、failed=9、unresolved=192，9 条均 Telegram API 400 `message to edit not found`。
+- 针对 `e01fc0de` 最新映射的同一组现有历史修复工作流已再次运行：M1 `38595595398`、MR1 Formal `38595603040`、MR1 AI `38595610655`。MR1 Formal 已 success；M1 与 MR1 AI 在本次交接更新时仍运行中，结束状态/实际编辑数须补记后再宣称完成。未触发新消息发送。
+- 当前 unresolved 206 条保留于共享库 `formal_scope_coverage.json`，按无唯一、可核验中文来源而未赋名；没有用猜测音译补覆盖率。M1 formatter、MR1 display 接入及历史名称修复不改变任何模型、策略、正式账本、结算或订单条件。
+
 ## 2026-10-15 正式范围继续补齐（第六十二批）
 - Tips.GG 简体中文 Goytre United 球队页明确显示“戈伊特雷联队”（https://tips.gg/cn/team/goytre-utd-football/）；与 TotalCorner `team_id 54106` / provider `Goytre Utd`、Welsh league_id 11959 一致，新增 canonical 与官方拼写别名。
 - 共享 master 提交 `b209e795039a32eb2dc7c0a9f86a06d63f4a4dd6`；正式范围 2,468 IDs，2,260 canonical / 208 unresolved（91.57%）；M1 1,506/1,553（96.97%）、M1 OU-R1 52/52（100%）、MR1 AH 1,750/1,921（91.10%）、MR1 AI declared mirror 1,506/1,553（96.97%）；confidence≥50 observed cohort 181/182（99.45%）。M1 formatter 6/6 PASS，curator 和 `git diff --check` PASS。
