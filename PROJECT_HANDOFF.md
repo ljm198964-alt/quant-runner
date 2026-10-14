@@ -1340,6 +1340,11 @@
 - 共享 master commit `50271ade` 已推送；叠加第八十五批，正式范围2,468 IDs：2,288 canonical、180 unresolved（92.71%）；M1 1,515/1,553（97.55%），M1 OU-R1 52/52（100%），MR1 AH 1,774/1,921（92.35%），MR1 AI 声明镜像 M1 为1,515/1,553（97.55%）。全共享库12,276 IDs、4,304 canonical。未匹配清单以共享 `formal_scope_coverage.json#unresolved_records` 为准。
 - M1 formatter/name-repair tests 8/8 PASS，`git diff --check` PASS。只有展示别名复用与证据/覆盖报告变化；未修改模型、策略、赛事范围、盘口、账本、结算或 Telegram 派单逻辑，也未发送/编辑历史消息。
 
+## 2026-10-15 正式范围赛事名与历史 Telegram 复核（第八十七批）
+- 在唯一共享库补齐 `league_id 242` Latvia 1. Liga →“拉脱维亚甲级联赛”（7M、17500 中文赛事页）和 `league_id 10635` Faroe Islands Div 1 →“法罗群岛足球甲级联赛”（Wikidata 简体中文标签及中文赛事资料）。验证 M1 formatter 隔离输出中的赛事、双方球队和 AH 方向均为中文。共享库提交 `ff3c2c62` 已推送 master。当前球队正式范围仍为2,288/2,468（92.71%），180 unresolved；M1 1,515/1,553（97.55%），M1 OU-R1 52/52，MR1 AH 1,774/1,921（92.35%），MR1 AI 声明范围镜像 M1 为1,515/1,553（97.55%）。全共享库12,276 team IDs、4,304 canonical team names；771 league IDs 中336 canonical、435 unresolved。
+- 新共享 registry 后运行历史修复：M1 TG workflow `38611061935` SUCCESS，41 eligible、0 edited、41 already matching、99 缺失原文、97 未映射、0 failed；MR1 Formal `38611070222` SUCCESS，0 eligible、0 edited、125 skipped/already processed、0 unresolved；MR1 AI `38611077975` SUCCESS，201 总项、9 候选、0 edited、192 unresolved、9 failed，失败均为 Telegram `400 message to edit not found`。没有重发任何消息。M1 formatter/name-repair tests 8/8 PASS，`git diff --check` PASS。
+- 本轮只改共享展示名、赛事名、相关统计/证据和本交接；不改模型、策略、赛事范围、盘口、正式账本、结算或通知规则。Telegram 历史实际编辑数为0，MR1 AI 旧消息失败原因明确；后续新消息由已接入共享库的通知 formatter 读取 canonical 映射。
+
 ## 2026-10-15 正式范围继续补齐（第八十一批）
 - NowScore 中文球队页将 TotalCorner provider `Nabrouh` 对应为“纳布洛”，并展示该队埃及第二级联赛比赛（https://info.nowscore.com/big/team/Summary/37053.html）；独立 Nabrouh/Nabarouh 身份资料及 TotalCorner 赛程交叉确认联赛身份。仅为 `team_id 45228` 新增 canonical，保留 provider identity 与现有别名，不与其他埃及球队合并。
 - 共享库提交 `416fe3b9cb7eb7af959787d9748c681270a5d152` 已推送 master。本批新增1条；正式范围2,468队：2,282 canonical、186 unresolved（92.46%）；M1 1,513/1,553（97.42%），M1 OU-R1 52/52（100%），MR1 AH 1,768/1,921（92.04%），MR1 AI 声明范围镜像 M1 为1,513/1,553（97.42%）；全共享库12,276 IDs、4,298 canonical。未匹配明细及未能核实原因以该共享提交内 `formal_scope_coverage.json#unresolved_records` 为准。
