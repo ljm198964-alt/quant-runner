@@ -1513,3 +1513,9 @@
 - 共享库提交 `8fb30cda977683bbdb3a2f19e54cdc5c3e39bfd7` 已推送 `totalcorner-research-bridge/master`。formal union 2,468 IDs：2,319 canonical、149 unresolved（93.96%）；M1 1,534/1,553（98.78%），M1 OU R1 52/52（100%），MR1 AH 1,800/1,921（93.70%），MR1 AI declared mirror of M1 1,534/1,553（98.78%）。完整剩余清单和逐条原因见同一提交的 `data/football_display_names/formal_scope_coverage.json#unresolved_records`。
 - 验证：M1 Telegram display/repair 8/8 PASS；MR1 shared registry/AI formatter 4/4 PASS（实际挂载最新共享 JSON）；MR1 V6 display-repair 1/1 PASS。没有运行正式模型或订单，也没有发送或编辑历史 Telegram。
 - 本次只新增 1 个已核实名称；149 个仍缺可靠 canonical 的球队继续保留未匹配状态。历史 TG 的批量改字未在本次执行，不能宣称已实际修复；需依据各自正式账本、可用的安全编辑执行环境和 Telegram API 回执单独核验。未修改策略、盘口、赛事范围、账本或结算。
+
+## 2026-10-15 正式范围名称续补：KF Oriku
+- 从刚更新的共享 `master` 继续，仅处理正式 unresolved。为 TotalCorner `team_id 50971` (`KF Oriku`) 新增 canonical `KF奥里库`，依据雷速中文球队页对该队的中文名及英文身份标注；按 team ID 单独写入，不推断/合并其他 Oriku 或近名俱乐部。
+- 共享库提交 `5367ebd557806076830112c11bc85162658dc9b7` 已推送 `totalcorner-research-bridge/master`。formal union 2,468 IDs：2,320 canonical、148 unresolved（94.00%）；M1 1,535/1,553（98.84%），M1 OU R1 52/52（100%），MR1 AH 1,801/1,921（93.75%），MR1 AI declared mirror of M1 1,535/1,553（98.84%）。以该提交的 `formal_scope_coverage.json#unresolved_records` 为剩余清单。
+- M1 display/repair 测试 8/8 PASS；MR1 resolver/AI Telegram formatter 4/4 PASS；MR1 V6 display-repair 测试 1/1 PASS（隔离环境串行执行）。本批未发送/编辑 Telegram，也未触发正式策略运行或结算。
+- 新映射仅增加正式范围覆盖；其他尚无可靠中文名称的条目继续保留 unresolved。本轮不涉及策略、Crown、赛事范围、正式账本和结算逻辑。
