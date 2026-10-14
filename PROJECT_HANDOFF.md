@@ -928,3 +928,8 @@
 - 新增 team_id 43931 `FC Podillya Khmelnytskyi` → 波迪利亚赫梅利尼茨基。Tips.GG 简中球队档案和对阵页直接使用该译名，分别见 https://tips.gg/cn/team/podillya-khmelnytskyi-football/ 和 https://tips.gg/cn/archive/bratslav-vinnytsia-football-vs-podillya-khmelnytskyi-football/；正式 provider name、team ID 与乌克兰赛事上下文保持原样。最新共享 master 提交 `638c95f34ba2081f00321cda06aab6d67e5b4b99`，formal union 2,468、canonical 2,167、unresolved 301（87.80%）；M1 1,476/1,553（95.04%）、OU-R1 52/52、MR1 AH 1,672/1,921（87.04%）。
 - M1 ledger 对本轮已核实的 9157、30623、42568、11023、43931 均无对应已发送 Pick；没有历史消息需重发或编辑。MR1 AH/AI 的正式回执工作流历史结果仍见 2026-10-14 既有记录，本轮未重复触发或修改 Telegram。
 - 使用此最新共享 registry 的隔离 formatter 检查：M1 Telegram display 6/6通过，MR1 shared-registry + AI formatter 4/4通过。M1 formal-runtime 集成夹具的5个已知失败仍单独记录，未修改运行逻辑。完整剩余301项及原因见共享 `formal_scope_coverage.json`；尚未达到全覆盖。
+
+## 2026-10-14 正式范围继续补齐（第六批）
+- 新增 team_id 8761 `FK Backa Palanka` → 巴奇卡帕兰卡。Sofascore 简中队页使用该名称，中文球队资料将 FK Bačka Bačka Palanka 与该俱乐部对应；按名称沿革，不与 FK Bačka 1901 或其他同名球队合并。共享 master 最新提交 `b51cdd1bc7c17255e4302ca06db4ba7bf8fafd52`。formal union 2,468：2,168 canonical、300 unresolved（87.84%）；M1 1,476/1,553（95.04%），OU-R1 52/52，MR1 AH 1,673/1,921（87.09%），MR1 AI mirror M1 1,476/1,553（95.04%）。
+- M1 Telegram display tests 6/6通过；MR1 shared-registry + AI formatter tests 4/4通过。M1 正式 ledger 未发现 team_id 8761 对应的既有 Pick；未触发历史消息编辑、重发或生产 workflow。
+- 剩余300条的完整 ID/名称/联赛/系统归属及原因仍以共享库 `data/football_display_names/formal_scope_coverage.json` 为准。未修改模型策略、范围、订单、结算或派单规则。
