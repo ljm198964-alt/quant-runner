@@ -1133,3 +1133,8 @@
 - Tips.GG 简中球队页将 `Halkanoras Idaliou` 标为“伊达利欧哈卡诺拉斯队”（https://tips.gg/cn/team/halkanoras-idaliou-football/）。为 TotalCorner `team_id 18247` 记录去“队”后缀的 canonical“伊达利欧哈卡诺拉斯”及 Chalkanoras/Halkanoras 别名。
 - 共享库提交 `e1b6c75eb64439a6270c342ea5593436065a156e` 已推送 master，本批新增2条。正式范围2,468 IDs：2,233 canonical、235 unresolved（90.48%）；M1 1,496/1,553（96.33%）；OU-R1 52/52；MR1 AH 1,727/1,921（89.90%）；MR1 AI declared mirror 1,496/1,553（96.33%）。
 - M1 formatter tests 6/6 与 MR1 shared-registry test 1/1 PASS，curator 和 `git diff --check` PASS。只更新公共中文名称数据/审计；无 Telegram 发送/编辑，策略、模型、账本、结算及信号规则未改。
+
+## 2026-10-14 正式范围继续补齐（第四十三批）
+- 中文维基条目“哈尔科夫足球俱乐部”对应当前英文 `FC Kharkiv` 身份；Wikimedia Commons 使用页也明确将英文 FC Kharkiv 对应至该中文条目（https://zh.wikipedia.org/wiki/哈爾科夫足球俱樂部）。为 TotalCorner `team_id 184801` 新增 canonical“哈尔科夫足球俱乐部”，并保留 `Metalist 1925 Kharkiv` 作为名称沿革别名；不与 Kharkiv 其他俱乐部 ID 合并。
+- 共享库提交 `fd0e16d04ec52b59953fb5b5a9ef00edba876571` 已推送 master。本批新增1条。formal union 2,468 IDs：2,234 canonical、234 unresolved（90.52%）；M1 1,497/1,553（96.39%）；OU-R1 52/52；MR1 AH 1,728/1,921（89.95%）；MR1 AI declared mirror 1,497/1,553（96.39%）。
+- M1 Telegram formatter 6/6 与 MR1 shared display test 1/1 PASS，curator / `git diff --check` PASS。仅名称映射与 coverage/audit 更新，无 Telegram 发送/编辑，生产策略、模型、账本、结算不变。
