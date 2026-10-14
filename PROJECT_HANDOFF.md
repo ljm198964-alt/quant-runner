@@ -1234,6 +1234,11 @@
 - 本批之后既有 name-only Telegram 修复工作流均 success：M1 `38596342571` eligible41、edited0、already_matching41、缺原文99、unmapped97、failed0；MR1 Formal `38596348767` edited0、already_processed125、unresolved0、failed0；MR1 AI `38596356968` total201、edited0、unresolved192、failed9，9 条均 Telegram 400 `message to edit not found`。本批实际 TG 历史改字仍为0，没有重发。
 - `test_m1_telegram_display_repair.py` 2/2 PASS；M1 formatter 6/6、MR1 shared-registry display test 1/1 既有验证通过。只有展示名数据更新，未更改任何生产模型、策略、账本、结算或信号条件。
 
+## 2026-10-15 正式范围继续补齐（第六十五批）
+- 核验已推送的 Llanelli `team_id 147575` 映射被唯一共享库记录，当前 registry SHA 为 `0a71864c13c50d426d74bbb159c94db6d1ad1e20`；coverage 已重算为正式范围 2,468 IDs：2,263 canonical、205 unresolved（91.69%）；M1 1,507/1,553（97.04%）、OU-R1 52/52（100%）、MR1 AH 1,753/1,921（91.25%）、MR1 AI declared mirror 1,507/1,553（97.04%）。
+- 依该 registry 的历史 Telegram 校验：M1 `38596342571` success（eligible41、edited0、already_matching41、缺原文99、unmapped97、failed0）；MR1 Formal `38596348767` success（edited0、already_processed125、unresolved0、failed0）；MR1 AI `38596356968` success（total201、edited0、unresolved192、failed9，9条均 `400 message to edit not found`）。未重发消息。
+- 本轮 `test_m1_telegram_display_repair.py` 2/2 PASS，`git diff --check` PASS。实际历史编辑为0；没有修改生产模型/策略/账本/结算/信号条件。剩余完整名单与逐条原因见共享 `formal_scope_coverage.json`。
+
 ## 2026-10-15 正式范围继续补齐（第六十二批）
 - Tips.GG 简体中文 Goytre United 球队页明确显示“戈伊特雷联队”（https://tips.gg/cn/team/goytre-utd-football/）；与 TotalCorner `team_id 54106` / provider `Goytre Utd`、Welsh league_id 11959 一致，新增 canonical 与官方拼写别名。
 - 共享 master 提交 `b209e795039a32eb2dc7c0a9f86a06d63f4a4dd6`；正式范围 2,468 IDs，2,260 canonical / 208 unresolved（91.57%）；M1 1,506/1,553（96.97%）、M1 OU-R1 52/52（100%）、MR1 AH 1,750/1,921（91.10%）、MR1 AI declared mirror 1,506/1,553（96.97%）；confidence≥50 observed cohort 181/182（99.45%）。M1 formatter 6/6 PASS，curator 和 `git diff --check` PASS。
