@@ -1440,3 +1440,10 @@
 - 共享库提交 `e8401be96733e1c2cba1f99f1ff795000cfc993c` 已推送 master。formal union 2,468 IDs：2,302 canonical、166 unresolved（93.27%）；M1 1,523/1,553（98.07%），M1 OU R1 52/52，MR1 AH 1,784/1,921（92.87%），MR1 AI declared mirror 1,523/1,553（98.07%）。全部 unresolved 逐队明细仍以同提交 `formal_scope_coverage.json` 为准。
 - M1 formatter/name-repair tests 8/8 PASS；MR1 shared registry/AI formatter tests 4/4 PASS；MR1 隔离读取共享新 registry 后将 team_id 8710 渲染为“马瑞克”，联赛“埃及第二级联赛”。M1 正式账本未发现 team_id 8710 的已发送 pick；未编辑/发送 Telegram。本轮没有触发生产 workflow。
 - 只更新共享展示映射、覆盖报告、curation 与本交接；未更改任何模型/策略、赛事范围、账本、结算或 Telegram 规则。
+
+## 2026-10-15 正式范围继续补齐（第九十八批）
+- 继续读取最新共享库，不重跑历史身份恢复。为 TotalCorner team_id 138096 Alexandria Petroleum 新增“亚历山大石油”，来源为 Betimate 中文赛事页明确显示“亚历山大石油队”并标注埃及乙级B组；为 team_id 43017 Ahrobiznes Volochysk 新增“阿赫罗比兹内斯·沃洛奇克”（Tips.GG 中文球队档案）；为 team_id 48509 Ethnikos Neou Keramidiou 新增“埃斯尼科斯内乌克拉米迪乌队”（Tips.GG 中文球队档案）。未合并近似名/不同 team_id。同步补 league_id 63 Ukraine Persha Liga →“乌克兰足球甲级联赛”（FootyStats 中文赛事页）。
+- 共享 master 最新提交 8043ba4b 已推送。正式 union 2,468 IDs：2,305 canonical、163 unresolved（93.40%）；M1 1,523/1,553（98.07%），M1 OU R1 52/52（100%），MR1 AH 1,787/1,921（93.02%），MR1 AI declared mirror 1,523/1,553（98.07%）；AI confidence≥50 observed cohort 181/182。全库 12,276 team IDs、4,321 canonical；覆盖及全部 unresolved 明细在共享 data/football_display_names/formal_scope_coverage.json。
+- M1 Telegram formatter 单测 6/6 PASS；MR1 shared registry test 1/1、MR1 AI formatter tests 2/2 PASS。隔离加载刚推送的共享 JSON 后，三支新增球队及乌克兰甲级联赛均解析为中文，AH 主队方向同步中文。无策略运行或新 Pick。
+- 最新 M1 ledger 中未发现这三个新增 team_id 的历史 Pick；因此本批名称没有可修复的 M1 已发送消息。历史 TG 编辑 workflow 仅在确认有待修复记录时使用；不得把 formatter 验证当成 Telegram 编辑回执。暂未编辑或重发 Telegram。
+- 只更新共享中文展示名、来源/覆盖报告及本交接；模型、策略、阈值、scope、正式账本、settlement 和 TG 派单逻辑均未改。
