@@ -1081,3 +1081,8 @@
 - 雷速中文球队档案明确显示 `Sutjeska Foca` 的标准中文名为“苏捷斯卡”，且描述其为波黑地区联赛球队（https://www.leisu.com/data/zuqiu/team-18688/best）。为 TotalCorner team_id `11405` 添加 canonical、英文拼写别名及来源证据，保留 Foča 联赛身份并明确不与 Sutjeska Nikšić 等同名队混并。
 - 共享库提交 `40107b98` 已推送 master。正式范围2,468 IDs：2,221 canonical、247 unresolved，覆盖89.99%；M1 1,495/1,553（96.27%），M1 OU-R1 52/52，MR1 AH 1,718/1,921（89.43%），MR1 AI declared mirror 1,495/1,553（96.27%）。
 - M1 formatter 6/6、MR1 registry test 1/1 PASS；curator 与 `git diff --check` PASS。仅共享中文展示数据与审计统计更新，不改策略、模型、账本、结算、信号条件或正式范围；未发送 Telegram。
+
+## 2026-10-14 正式范围继续补齐（第三十三批）
+- Sofascore 简中 Serbian team profile 将 Leskovac 的 GFK Dubočica 显示为“杜博奇察”（https://www.sofascore.com/zh/football/team/gfk-dubocica-leskovac/301263）。结合 TotalCorner 原名 `FK Dubocica`、team_id `49647` 和 Serbian league_id `337`，新增该 ID 专属 canonical；保留 `GFK Dubočica` 等英文别名，不与别的 Dubočica ID 合并。
+- 共享库提交 `caeeba6c` 已推送 master。正式范围2,468 IDs：2,222 canonical、246 unresolved，覆盖90.03%；M1 1,496/1,553（96.33%），M1 OU-R1 52/52，MR1 AH 1,719/1,921（89.49%），MR1 AI declared mirror 1,496/1,553（96.33%）。
+- curator、`git diff --check`、M1 formatter 6/6 与 MR1 registry test 1/1 均通过。仅共享中文展示名及审计文件有改动；生产策略、模型、交易账本、结算和 TG 派单规则不变。未发送 Telegram；剩余项逐条记录于共享 `formal_scope_coverage.json`。
