@@ -1122,3 +1122,8 @@
 - Wikimedia Commons 中文分类页将 TB Tvøroyri 列为“TB特沃罗伊里”，并给出“特沃罗伊里足球俱乐部”中文条目（https://commons.wikimedia.org/wiki/Category:TB_Tv%C3%B8royri?uselang=zh）。为 TotalCorner `team_id 52432` / provider `TB Tvoroyri`（法罗群岛 league IDs `1439/10635`）新增 canonical“TB特沃罗伊里”和中文/原文别名，保持该 reserve/club identity 的现有 ID。
 - 共享库提交 `60191cb33e1f888fe6278bc440ed65d77da08cf1` 已推送 master。本批新增1条。formal union 2,468 IDs：2,230 canonical、238 unresolved（90.36%）；M1 1,495/1,553（96.27%）；M1 OU-R1 52/52；MR1 AH 1,724/1,921（89.74%）；MR1 AI declared mirror 1,495/1,553（96.27%）。
 - M1 formatter 6/6 与 MR1 shared registry test 1/1 PASS，curator 和 `git diff --check` PASS。仅共享展示名/审计数据变化，无 Telegram 发送/编辑，也未修改生产模型、策略、账本、结算和派单条件。
+
+## 2026-10-14 正式范围继续补齐（第四十一批）
+- 中文足球赛事页面将 `FC Viktoriya Sumy` 显示为“维多利亚苏梅”，球队页同时标出英文名 VictoriaSumy（https://zuqiuba-iqiyi.com/qiudui/BcPWy/）；并由中文赛事列表中的“维多利亚苏梅足球俱乐部”赛程用例核对该队身份。为 TotalCorner `team_id 135826` 加入 canonical 与别名，不与其他 Viktoriya/Victoria 球队合并。
+- 共享库提交 `767f1f19294b88a69ac969713fd2ec73c07a5a76` 已推送 master。本批新增1条。正式范围2,468 IDs：2,231 canonical、237 unresolved（90.40%）；M1 1,495/1,553（96.27%）；OU-R1 52/52；MR1 AH 1,725/1,921（89.80%）；MR1 AI declared mirror 1,495/1,553（96.27%）。
+- M1 formatter 6/6、MR1 shared registry display test 1/1 PASS，curator 和 `git diff --check` PASS。只更新展示名库和审计文件；无 TG 操作，无模型、策略、账本、结算或派单规则变更。
