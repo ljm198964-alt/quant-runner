@@ -2345,3 +2345,9 @@
 - 显示验证：M1 Telegram formatter + history-repair 测试 36/36 PASS；MR1 共享名称解析、browser-forward、正式 AH formatter、AI formatter 相关隔离测试 9/9 PASS。仅做本地测试，没有发送 Telegram 或运行正式生产 workflow。
 - 历史正式 Telegram 的最新实际回执仍为上一节所记：M1 0 条编辑，因原始文本/映射缺失而大量不可编辑；MR1 AH 0 条编辑；MR1 AI 9 个编辑调用均被 Telegram 返回 `message to edit not found`。未重新发送历史订单，也没有声称完成历史中文化。共享名称库已合并到 master；自然消费该库的后续运行可使用已确认名称。剩余英文显示只涉及无可靠 canonical 的未匹配项，以及 Telegram 端不可编辑/原文缺失的历史消息。
 - 本轮未更改唯一共享 JSON、生产 formatter、模型、策略、赛事范围、正式账本、结算或通知规则；未修改 MR1/M1 生产运行状态。
+
+## 2026-10-15 正式范围名称补充（Vllazina / TotalCorner ID 43486）
+- 共享中文库 PR [#100](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/100) 已合并，merge SHA `2b7e6e9873e149329859f15a098dd7db027ab689`。TotalCorner ID `43486` / `Vllazina` 新增 canonical `维拉斯尼亚波兹兰`。证据为 TotalCorner 页面记录的 Kosovo Superliga 2018-04-22 `Vllazina 0-1 Prishtina` 与 Sofascore 对同日、对手、比分及俱乐部全名 `KF Vllaznia Pozheran` 的记录精确一致；与已映射 ID `42262` 对照。两个 provider ID 保持独立，不做身份合并。审计与幂等 curator：共享库 `curated_batch_report_20261015_vllazina_43486.json`、`ops/curate_formal_scope_vllazina_43486_20261015.py`。
+- 合并后 formal union 为 2,468 IDs / 2,404 canonical / 64 unresolved（97.41%）；M1 1,492/1,553（96.07%），M1 OU-R1 52/52（100%），MR1 AH 1,864/1,921（97.03%），MR1 AI declared mirror 1,492/1,553（96.07%）。共享库 12,276 IDs / 4,420 canonical。ID 43486 属于 M1 scope；MR1 AH 覆盖数字因此不变。其余未匹配及原因以共享 `formal_scope_coverage.json` 为准。
+- 新增 M1 精确 ID 格式回归；M1 formatter + history-repair 37/37 PASS。MR1 用刚合并共享库路径执行 shared resolver、browser-forward 与 AI formatter 隔离测试 8/8 PASS；ID 43486 和 42262 显示同一俱乐部中文名，ID 119602（KF Vllaznia）、52837（KF Dardana）、94863（Al Magd）未错误借用相似 ID 的映射。
+- 仅更新共享展示名称、覆盖/来源记录、curator 与隔离测试。未编辑或重发历史 TG；未触发 M1/MR1 生产 workflow；真实生产 TG 显示仍需后续自然消息验证。未修改任何模型、策略、赛事范围、盘口、账本、结算或通知规则。
