@@ -1771,3 +1771,9 @@
 - 继续核查 NK Jedinstvo Bihać（ID 46488）、GFK Ohrid Lichnidos（56852）、Detonit Plačkovica（113061）、FK Proleter 023（185424）。中文 Livescore 页面“塞尔维亚 Proleter 023”虽确认该正式参赛队，但仍以拉丁字母显示原队名；协会和联赛资料确认其身份、城市或赛季改名，未提供简体中文惯用队名。其余精确中文搜索未找到匹配队名。
 - 可核验证据：Livescore 简中 Proleter 023 队页 `https://www.livescore.com/zh/zuqiu/team/name/409593/tables/25593/`；塞尔维亚 Prva Liga 官方 Proleter 023 身份/赛季改名资料 `https://www.prvaliga.rs/en/tim/proleter-023/`；波黑联邦足协 Jedinstvo Bihać 俱乐部页 `https://www.nsfbih.ba/klubovi/wwin-prva-liga-fbih/390`。证据仅确认身份，没有可写入的中文 canonical。
 - 本批新增0，正式覆盖维持2,468 IDs / 2,360 canonical / 108 unresolved（95.62%）；无共享库、策略、账本或 TG 修改。
+
+## 2026-10-15 正式范围名称补齐（第118批）
+- 待合并 PR #30（branch commit `b362bf66`）为共享 registry 候选新增 team_id `54711`：`FK Lernayin Artsakh Goris` → `勒那因`。主来源为 FootballAnt 简中球队档案（`https://www.footballant.com/zh-CN/football-data/team/44873`），档案队名、英文 slug、亚美尼亚甲组积分/赛程及球员资料相互吻合；中文 Okooo 比赛记录也使用“勒那因”（`https://www.okooo.com/soccer/match/1195218/form/`）。身份由 TotalCorner team 页 `https://www.totalcorner.com/team/view/54711` 核对其完整英文名；Transfermarkt/赛事记录交叉确认 Armenian First League 的 Lernayin Artsakh Goris 身份。别名保留英文名称和另见译名“勒那因阿尔查赫”，canonical 采用多条中文足球记录反复使用的短名“勒那因”。
+- PR 分支 curator 计算的合并后正式范围预期：2,468 IDs、2,361 canonical、107 unresolved（95.66%）；M1 1,542/1,553（99.29%）；M1 OU-R1 52/52（100%）；MR1 AH 1,840/1,921（95.78%）；MR1 AI declared mirror 1,542/1,553（99.29%）。本次该队只属于 M1 scope，不改变 MR1 AH 分母或模型；PR 尚未合并，master 当前计数仍以远端文件为准。
+- 验证：M1 display + repair 单测 16/16 PASS；MR1 shared registry + AI Telegram formatter 5/5 PASS。用 MR1 production formatter 隔离渲染 team_id 54711，输出 `勒那因 vs Andranik`；球员身份与来源页相符。只更新共享名称数据、批次/coverage 报告及 curator，无策略/模型/账本/通知代码变化。
+- 对 M1 formal ledger、MR1 V6 formal ledger、MR1 AI prospective/sent 历史按精确 team ID 54711 检索，未发现该队已发送正式 Pick，故无需历史 TG 编辑，不发送/重发消息。该映射只影响后续共享展示解析。
