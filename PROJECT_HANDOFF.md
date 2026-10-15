@@ -2115,3 +2115,10 @@
 - 复核对象包括 FK Atmosfera、Marupes SC、Spartakos Kitiou、AEP Polemidion、Al Masry Salloum、Mostaqbal Watan Club、Belbeis FC、UCSA、FK Kulykiv-Bilka、Fortetsya Kamianets-Podilskyi、Ganjabasar FK、Khankendi FK、FK Potkozarje、KF Kamjani、CSM Olimpia Satu Mare、St. James Swifts。中文界面未提供可绑定精确 ID 的成熟简中 canonical，或跨源身份仍有冲突；未采用机器音译。
 - 本批 mapping changes=0；正式范围仍为2,468 IDs / 2,383 canonical / 85 unresolved（96.56%）。M1 1,553/1,553；M1 OU-R1 52/52；MR1 AH 1,859/1,921；MR1 AI declared mirror 1,553/1,553。逐队证据与原因见共享 coverage 的 `unresolved_records` 及 source-review 文件。
 - 仅添加只读来源审查记录。没有触发生产扫描、发送/编辑 Telegram，未更改任何模型、策略、阈值、赛事范围、账本或结算。
+
+## 2026-10-15 中文覆盖与正式 Telegram 历史显示验收
+- 从共享库最新 master `14cd98a0e98d8416a3d2695e65db1d33a8371abe` 重新计算：正式范围 2,468 个 team ID，2,383 个有 canonical 简中名，85 个 unresolved，覆盖率 96.56%。按系统：M1 1,553/1,553（100%）；M1 OU R1 52/52（100%）；MR1 AH 1,859/1,921（96.77%）；MR1 AI 声明镜像范围 1,553/1,553（100%）。共享库本身 12,276 个 ID、4,399 个 canonical。85/85 formal unresolved 均已有逐项来源审查记录；本轮查验没有发现可安全新增的常用简中名称，故共享映射不变。完整 ID 和原因见共享库 `formal_scope_coverage.json#unresolved_records`。
+- 按用户授权，使用共享库更新前尚未运行的现有名称-only repair workflows，不重发消息：M1 run [38689808684](https://github.com/ljm198964-alt/quant-runner/actions/runs/38689808684) 成功。M1 ledger 中 AH 18、OU 23 条原消息文本均由 Telegram 返回 `message is not modified`，合计 newly edited=0、already matching=41、failed=0；另有99条缺少原始发送文本、104条没有足够映射而跳过。该 repairer 只替换联赛/队名，不改盘口、方向、水位或时间；它覆盖 M1 AH 与 M1 OU R1 的既有消息。
+- MR1 AH run [38689813133](https://github.com/ljm198964-alt/quant-runner/actions/runs/38689813133) 成功；报告 125 条已处理、unresolved=0、failed=0、newly edited=0。此回合没有新增 edit receipt，故不把 workflow PASS 当成新消息编辑成功。
+- MR1 AI run [38689817402](https://github.com/ljm198964-alt/quant-runner/actions/runs/38689817402) 成功并将回执持久化到 MR1 自己的 `telegram-edit-repair.json`：201 条中192条因无可核实 canonical 名称 unresolved；9条可尝试编辑、edited=0、failed=9，Telegram 均返回 `message to edit not found`。失败原因按 API 回执记录；不能据此断定消息被删除还是由其他发送主体发出，也没有重发。
+- 本轮没有新增共享 canonical 名称，也没有新建生产逻辑。M1、M1 OU R1、MR1 AH、MR1 AI 的策略、模型、scope、阈值、盘口源、账本、结算均未改；历史 TG 只运行上述名称-only原地编辑器，未发任何新消息。剩余阻碍是85个暂无可靠中文名、M1部分旧账本缺原文或映射、MR1 AI 部分旧消息不可由现有 bot 编辑。
