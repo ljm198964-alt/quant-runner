@@ -2045,3 +2045,8 @@
 - M1 Telegram formatter/repair 本地单测22/22 PASS；MR1 shared registry 与 MR1 AI formatter 测试5/5 PASS。用共同 registry 隔离渲染 team_id 168038 得到 `科索沃乙级联赛 / 莱彭奇 vs 乌比安拿`。M1 AH、M1 OU-R1沿用共享 M1 formatter；MR1 AH 与 MR1 AI读取同一只读共享 resolver/registry。名称层仅展示，不进入模型计算或通知门槛。
 - M1历史修复最近审计：run `38679318371` edited 0（41已匹配，99缺原消息文本、100无映射）；MR1 AH run `38679322906` edited 0（125已处理）。共享库合并后为核对是否有新可编辑 AI 历史单，再运行既有名称-only workflow [38683043467](https://github.com/ljm198964-alt/quant-runner/actions/runs/38683043467)，workflow PASS，但回执仍为 edited 0、201条中192条 unresolved、9条失败，Telegram 均返回 `message to edit not found`。历史 TG 实际编辑数仍为0；workflow PASS 不代表消息已修改。
 - 已合并的共享 registry 会由四条系统后续既有运行读取；本批未改 M1、M1 OU-R1、MR1 AH、MR1 AI模型/策略、阈值、scope、盘口来源、账本、结算、通知格式或新单规则。M1/MR1生产扫描与 TG 发送未因名称补齐而人工触发。
+
+## 2026-10-15 未匹配名称补充来源审查（第136批）
+- 共享 master 当前为 `da6ad326b71cdec1c1eba75c90cde60e35ba725d`；对 FC Yerevan（48357）、Al Masry Salloum（93070）、Mallawi SC（90141）、AEP Polemidion（114610）、UCSA（146029）、Pioneers Club（90728）追加检查中文足球数据页。相应中文界面仍保留英文名，或没有精确绑定该 TotalCorner ID 的惯用简中译名；FC Yerevan 页面还将“埃里温凤凰”作为另一队列出，故不得把它移植到 FC Yerevan。
+- PR [#58](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/58) 已合并，新增审查记录 `data/football_display_names/source_review_20261015_batch148.json`；没有更改 canonical 或 coverage 数字。当前正式并集仍2,468 IDs、2,379 canonical、89 unresolved（96.39%）。本次审查证据支持继续保留这些球队为 unresolved，而不是音译填数。
+- 本轮没有触发比赛扫描或 Telegram 操作；其余生产规则和后台状态不变。
