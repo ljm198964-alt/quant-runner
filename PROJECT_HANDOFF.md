@@ -2242,3 +2242,9 @@
 - 共享库 master 新提交 `be2dc9fd`（`Document unresolved formal team name source checks batch 167`），新增 `data/football_display_names/source_review_20261015_batch167.json`。对 KF Vllaznia (119602)、CSM Olimpia Satu Mare (161196)、FK Majevica Lopare (170757)、Romanija Pale (133411)、KF Dardana (52837)、FK Sveikata (53177)、KF FC Mitrovica (150467) 完成精确 ID / 官方或本地足球来源核对；没有来源可证明成熟简体中文 canonical 唯一对应这些 ID，本批 canonical 新增为0。
 - 重点避免跨实体误映射：不把 Albania KF Vllaznia 的名称套到 Kosovo Vllaznia Pozheran (42262)；不把 Satu Mare 历史 Olimpia 或球迷俱乐部名称套给当前 CSM；不把已合并/继承关系未证实的 Dardana 10 当作原 KF Dardana；Romanija 地理区名称不直接译作球队名。
 - 正式范围快照仍为 2,468 IDs / 2,395 canonical / 73 unresolved（97.04%）；M1 1,553/1,553，M1 OU R1 52/52，MR1 AH 1,868/1,921，MR1 AI declared mirror 1,553/1,553。只增来源审查，不改展示映射、覆盖统计、模型/策略或 Telegram；没有历史消息编辑或测试发送。
+
+## 2026-10-15 正式范围未匹配名称来源复核（第168批）
+- 共享库 master 新提交 `5094e791`（`Document unresolved formal team name source checks batch 168`），新增 `data/football_display_names/source_review_20261015_batch168.json`。复核 A&N (56825)、KF Dukagjini Gjakove (154158)、KF Drini i Bardhe (167823)、KF Kamjani (187187)、Al Hilal El Dabaa (113675)、Mladost Carev Dvor (4607)、Sluch Starokonstyantyniv (43363)；未找到可绑定精确 ID 的成熟简体中文 canonical，新增映射0。
+- 重点防止实体混淆：A&N 已解散并与 FC Suhareka 合并，女队 KFF A&N 是另一实体；Mladost Carev Dvor 已解散；Drini i Bardhë 不按字面翻译；Shkëndija Haraçinë 与 Tetovo 的 Shkëndija 区分。
+- 覆盖快照仍为 formal union 2,468 / 2,395 / 73 unresolved（97.04%）；M1 1,553/1,553、M1 OU R1 52/52、MR1 AH 1,868/1,921、MR1 AI declared mirror 1,553/1,553。现有源审查索引覆盖 formal unresolved 73/73；经审查不等于所有名称都已译定。
+- 本批只增加来源审查证据；没有改 canonical、coverage、生产显示代码、模型/策略/范围/账本/结算/Telegram，也未发送或编辑历史消息。
