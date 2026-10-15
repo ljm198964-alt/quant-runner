@@ -1793,3 +1793,6 @@
 ## 2026-10-15 正式范围同名球队冲突复核（第121批）
 - 共享库 master 与正式范围计数未变化。进一步复核 Vllaznia 候选：中文资料“维拉兹尼亚”对应阿尔巴尼亚 Shkodër 球队；但 unresolved `team_id 42262` 关联 `league_id 8293` Kosovo Superliga，TotalCorner 队页赛程也显示科索沃对手，故不可把阿尔巴尼亚球队译名移植过去。另一个 `team_id 119602`（KF Vllaznia）同时关联 Albania/Kosovo 多个联赛 ID，仍缺乏唯一身份映射依据。
 - 参考：中文球队资料 [Tips.GG 维拉兹尼亚页](https://tips.gg/cn/team/vllaznia-shkoder-football/)，TotalCorner [ID 42262](https://www.totalcorner.com/team/view/42262)、[ID 119602](https://www.totalcorner.com/team/view/119602)。本批新增 canonical 0，未改共享映射、代码、模型、账本或 Telegram；106 项仍按 `UNRESOLVED_DISPLAY_NAME` 保留。
+## 2026-10-15 正式范围中文标签批量交叉核验（第122批）
+- 对当前105个有效英文 unresolved 名称（剔除 provider identity 字面值 `0`）逐一查询 Wikidata 英文实体搜索及中文标签，筛选带中文标签且实体描述明确为足球队的候选；本次没有得到可直接绑定到正式 TotalCorner team ID 的可靠结果。精确标签查询中的 `Dunaivtsi` 中文实体是城市/消歧页而非球队，不能把城市中文名当球队名。
+- 结论仍为共享 master `4a59d0ac18a589686c229c1950d4fb919636592e`、正式覆盖2,468/2,362/106（95.71%）。本批只扩展来源核验，不改共享 registry、formatter、任何生产模型/策略/账本或 Telegram。
