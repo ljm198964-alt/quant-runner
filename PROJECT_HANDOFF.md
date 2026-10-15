@@ -1,5 +1,12 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 正式范围剩余项来源复核 batch 143
+- 继续基于共享 master `0e9d3c15b63a6aca142b13519bebcaadfaca4a63`，未重扫历史身份。最新 formal scope 快照：2,468 个 team ID，2,378 个有 canonical 中文名、90 个未匹配（96.35%）；M1 1,553/1,553，M1 OU-R1 52/52，MR1 AH 1,856/1,921（96.62%），MR1 AI declared mirror 1,553/1,553。旧的 740/718 数字已过期。
+- 定点复核 team_id 4931、48357（FC Yerevan）、47722（St. James Swifts）、4607（Mladost Carev Dvor）、93070（Al Masry Salloum）、42740（Besa）。本批未找到可证明精确 provider ID 与成熟简体中文队名对应的来源，canonical 新增 0。4931 的 TotalCorner 页 provider 名仍是字面值 `0`，属于身份无效，必须等待上游身份修复；不能凭联赛或对手猜队名。审查证据在共享库 `data/football_display_names/source_review_20261015_batch143.json`；PR [#53](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/53) 已合并，merge SHA `cc1295ae24d449979dec33ff711eeda639ac5da2`。
+- 显示代码验证：M1 格式化器/修复回归 22/22 PASS；隔离运行 M1 formatter、MR1 shadow formatter 与 MR1 AI AH formatter/resolver，均从同一 registry 将 Egypt Division 2 / El Raja Marsa / Sporting Alexandria 映射为“埃及第二级联赛 / 阿尔加 / 亚历山大竞技”。MR1 AI AH 消息方向也使用“阿尔加”。MR1 AI 教师解析测试 5/5 PASS。MR1 正式 AH 模块源码也导入共享 resolver；本批未触发其生产发送工作流。隔离验证未触发 Telegram。
+- 历史 TG 消息本批实际编辑 0；没有新映射可形成编辑目标，也未重发。既有历史修复受 ledger 缺少原消息文本、未映射名称、Telegram `message to edit not found` 约束；最新可确认 M1 runtime/scan 证据及其失败状态仍见 batch 142，未把本地测试当成云端部署成功。
+- 本批只增加共享库来源审查和本交接记录；没有修改 canonical registry、模型/策略/阈值、比赛范围、盘口、账本、结算或正式发送规则。下一步只对新增可靠中文来源复核的 ID 做共享库变更；不得将英文页/机器音译当作 canonical。
+
 ## 2026-10-15 正式范围中文源再核验 batch 142
 - 从共享 master `0ccfde963f692769b17ec510000f9594f29edf53` 的当前 unresolved 继续；新增精确来源核查 KF Shkendija Haracine（163879）、Detonit Plackovica（113061）、FK Kulykiv-Bilka（149818）、Khankendi FK（170762）。来源能确认俱乐部身份，但没有证实这些精确实体有成熟简体中文队名；尤其 Shkendija Haracine 与 Shkëndija Tetovo 必须区分。没有拿地名、机器音译或相似俱乐部译名填库。
 - 审查文件 `data/football_display_names/source_review_20261015_batch142.json` 已经 PR [#52](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/52) 合并，master SHA `0e9d3c15b63a6aca142b13519bebcaadfaca4a63`。没有新增 canonical。
