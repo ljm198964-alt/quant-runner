@@ -2444,3 +2444,8 @@
 - MR1 AH 既有 `MR1 Formal Telegram Historical Name Repair` run [38735926659](https://github.com/ljm198964-alt/quant-runner/actions/runs/38735926659) SUCCESS：125 条已处理、eligible 0、edited 0、unresolved 0；没有历史消息需要本轮编辑。
 - MR1 AI 既有 `MR1 AI Telegram Display Repair` run [38736075141](https://github.com/ljm198964-alt/quant-runner/actions/runs/38736075141) SUCCESS，修复记录推送至 MR1 master commit `c7846c9cb6`。201 条历史记录中 candidates 9、edited 0、already_matching 0、unresolved 192；9 条 Telegram API 均返回 `400 Bad Request: message to edit not found`，失败状态已持久化，未重发。没有发现 team ID 185424 的历史 MR1-AI 已发消息。
 - 因此，本轮历史消息成功编辑数为 0；没有对历史盘口、时间、方向、水位或结算做任何修改。未来消息展示使用已合并 canonical；现存的历史 Telegram 英文消息仅在拥有可编辑原消息且映射可确认时才能原位改写。
+
+## 2026-10-15 正式范围未匹配队名来源续审（批次187–188）
+- 共享库 PR [#117](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/117) 与 [#118](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/118) 已合并；最新共享 master 为 `dce1b5c9`。批次187审查 Belbeis FC、Al Masry Salloum、Al Magd、Al Raya SC；批次188审查 Oldenburg Legends、Aresimi 1973、APEA Akrotiriou、AEP Polemidion。两批均未发现能绑定准确 team ID 的成熟简体中文标准名，新增 canonical 0。
+- 结论：formal union 仍为2,468 IDs / 2,407 canonical / 61 unresolved（97.53%）；M1 1,495/1,553（58 unresolved，96.27%）；M1 OU R1 52/52；MR1 AH 1,867/1,921（54 unresolved，97.19%）；MR1 AI 声明镜像 M1 为1,495/1,553。共享库仍为12,276 IDs / 4,423 canonical。Oldenburg Legends（ID 116419）的 TotalCorner 页面将其关联至 Greece Super League 1 且出现 Portugal Legends 对阵，记录为 provider identity/competition anomaly；待来源澄清，不猜译。
+- 逐项来源及原因见共享仓库 `data/football_display_names/source_review_20261015_batch187.json`、`batch188.json` 与 `formal_scope_coverage.json#unresolved_records`。本批只追加来源审查证据，不更改共享 canonical、代码、模型、策略、赛事范围、订单、结算或 Telegram；也未触发生产流程或发送/编辑消息。经查仍无 verified name 的记录继续显示 unresolved，审查量不能计作覆盖新增。
