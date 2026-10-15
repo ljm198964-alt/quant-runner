@@ -1,5 +1,10 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 埃及低级别正式范围球队核名（source review PR #103）
+- 继续按当前 formal unresolved 清单审查11支埃及队：El Mahalla El Kobra、MS Naser Malawy、Al Hamman、Mostaqbal Watan Club、Belbeis FC、Al Masry Salloum、Al Magd、Al Hilal El Dabaa、Al Raya SC、Goldi SC、MS Tala。对照 TotalCorner 队伍页、赛程和公开足球资料检索简体中文名称，没有找到能以常用中文队名可靠绑定到相应 ID 的证据，因此新增 canonical 0。逐条来源及决定在共享 `data/football_display_names/source_review_20261015_batch177.json`，PR [#103](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/103) 已合并，merge SHA `5f0c3d4bfc3ecf37b28469a3d493affb3f089815`。
+- 重点记录三组不可跨队借名的冲突：TotalCorner 10782 El Mahalla El Kobra 与 Sed Elmahla 是对阵方，聚合站别名又出现 Said El Mahalla，不能因此映射成 Ghazl/Baladeyet 或 Said El Mahalla；94863 Al Magd 不得从 7705 Al Majd 移植名称；135353 Al Raya 不得与 Al-Rayyan 合并。共享库及 coverage 未变；formal union 仍 2,468 IDs / 2,404 canonical / 64 unresolved（97.41%）。
+- 本轮没有运行生产扫描或 Telegram 操作；M1/MR1策略、模型、阈值、订单、结算均未修改。继续从最新 `formal_scope_coverage.json#unresolved_records` 选择尚未审查的精确队伍，不重复跑全历史身份恢复。
+
 ## 2026-10-15 formal unresolved 续核（source review PR #102）
 - 从共享 master `b420f5f3` 后继续复核 KF Bashkimi Koretin（49842）、KF Vjosa（117487）、KF Drenasi（49843）、Ganjabasar FK（188530）、KF Kamjani（187187）。中文本地化的 FootyStats 页面仍把 KF Vjosa 显示为拉丁原名；其他可核验页面也主要确认外文身份/球队历史，没有把简体中文标准队名与该 TotalCorner ID 对上。Drenasi 的合并记录不作为替代名称，Kamjani 的马其顿文/西里尔字形也不当作简中 canonical。审查文件 `data/football_display_names/source_review_20261015_batch176.json` 已通过共享 PR [#102](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/102) 合并，merge SHA `64c1791c9b5f44255467709aef3fb4c5159ec585`。
 - PR #102 只增加 source-review，不更改唯一共享 registry 或 coverage。最新 formal coverage 仍是 2,468 个 IDs / 2,404 canonical / 64 unresolved（97.41%）；64 条权威明细仍在共享 `formal_scope_coverage.json#unresolved_records`。本轮新增 canonical 0。
