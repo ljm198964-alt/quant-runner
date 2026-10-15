@@ -1,5 +1,12 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 统一中文库正式范围续补（batch 129）
+- 基于共享仓库 master `226b57da5c2160558a3444a3723f3f6b15acf3c9` 完成整理；本批 PR [#32](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/32) 已合并，当前 master merge SHA `dededd6c`。未重跑历史身份恢复。唯一共享表仍为 `totalcorner-research-bridge/data/football_display_names/display_names.json`。
+- 新增两个有来源核验的 canonical：TotalCorner `team_id=76198` `Asmant Asyut → 阿斯芒特`；`team_id=56906` `Qena SC → 艾尔奎纳赫`。二者的 FootyStats 简体中文球队页明确列出该英文队名、中文标题和埃及乙级身份，另以 TotalCorner 对应 ID/联赛交叉核验；source 与审核脚本、单批报告均留在共享库。保留原 provider 名、ID、别名；展示专用。
+- 共享库仍有 12,276 个 team ID；4,381 个已登记 canonical。正式 union 2,468 个，2,365 已匹配、103 未匹配，覆盖率 95.83%。M1 1,546/1,553（99.55%）；M1 OU R1 52/52（100%）；MR1 AH 1,844/1,921（95.99%）；MR1 AI 声明镜像 M1 1,546/1,553（99.55%）。最终逐项清单和原因以共享库 `formal_scope_coverage.json#unresolved_records` 为准；无可核验中文来源的名称继续 unresolved，不按拼音/机器音译补齐。
+- 校验：两份 curation Python 脚本 `py_compile` 通过；核对 registry 的 canonical 总数和 formal unresolved 统计一致；本批两条来源、ID及显示名通过断言。历史 Telegram 未编辑，未发送任何 TG；本批也没有进行云端工作流触发或宣称生产部署。消费者仍通过既有统一展示解析逻辑读取共享 registry；生产消息自然验证待后续正式信号发生。
+- 两条新增记录已合并到共享 master（PR #32）。quant-runner handoff 本条待提交/推送。未修改任何模型、策略、盘口来源、赛事范围、锁单/发送规则、正式账本或结算。
+
 ## 2026-10-15 正式范围球队中文续补（batch 123）
 - 从共享库 master `0883dd065eb53307f41f8b31508f410e19d1df28` 继续，对剩余正式未匹配项做定向身份核查；没有重跑历史身份恢复。新增 TotalCorner `team_id=2442`：provider 原名仍为 `CS Stefanesti`，canonical 简中名 `斯特凡内什蒂林达布队`，别名保留 `Lindab Stefanesti`。Tips.GG 简中球队页以 `斯特凡内什蒂林达布队` 标注 Lindab Stefanesti；罗马尼亚县足协及俱乐部历史资料证明 `CS/FC Stefanesti` 与 `Lindab Stefanesti` 为同一俱乐部名称沿革；TotalCorner 比赛历史核对罗马尼亚赛事身份。证据链接及说明写入唯一共享 registry 的 source 字段。
 - 共享库 PR [#26](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/26) 已合并，merge SHA `58f338d89e69be7ce0f3facbd11fa0fcc144bfed`。formal union 当前 2,468 IDs / 2,357 canonical / 111 unresolved（95.50%）；M1 1,539/1,553（99.10%），M1 OU-R1 52/52（100%），MR1 AH 1,837/1,921（95.63%），MR1 AI 声明镜像 M1 1,539/1,553（99.10%）。剩余身份和原因以共享库 `formal_scope_coverage.json#unresolved_records` 为准；无可靠来源项继续 unresolved，不做猜译。
