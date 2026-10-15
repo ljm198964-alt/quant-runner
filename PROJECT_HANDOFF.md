@@ -1,5 +1,11 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 统一中文库续补：Detonit Plackovica team 113061
+- 共享仓库继续从 merge `9115246c` 快进至 master merge SHA `06cf85ec7a58ddd8c5b3e09a595e69f74a644c39`（PR #64）。唯一共享表仍为 `data/football_display_names/display_names.json`。
+- 为正式未匹配项 TotalCorner `team_id=113061` / provider `Detonit Plackovica` / `league_id=15517` 增补 canonical 简中名“德托尼特普拉柯维卡”。依据是同 ID TotalCorner 繁中球队页稳定显示“德托尼特普拉柯維卡”，匹配赛页与独立足球资料交叉核验；canonical 只做繁体字形转简体，不另造音译。来源、边界及复跑脚本见 `data/football_display_names/curated_batch_report_20261015_detonit_113061.json`、`ops/curate_formal_scope_detonit_113061_20261015.py`。
+- 最新正式并集 2,468 IDs / 2,382 canonical / 86 unresolved（96.52%）；M1 1,553/1,553、M1 OU-R1 52/52、MR1 AH 1,858/1,921（63 unresolved）、MR1 AI declared M1 mirror 1,553/1,553。该 team ID 原属 MR1 AH，未改变策略或信号字段。
+- 本地测试：M1 display + repair 25/25 PASS；MR1 shared-registry + V7 formatter 4/4 PASS。隔离渲染确认 M1 与 MR1 AI 均以中文显示该选择方向；对手 `GFK Ohrid Lichnidos` 仍无 canonical，故整场并未宣称全中文。本轮未触发生产扫描，未发送或编辑 Telegram，也未改任何模型、策略、盘口、正式账本或结算字段。余项见共享 `formal_scope_coverage.json#unresolved_records`。
+
 ## 2026-10-15 统一中文库续补：Kosovo Besa team 42740
 - 共享仓库已从旧 handoff 基线快进到 master merge SHA `9115246c628eb57c000340a9cb914d9c725603fb`（PR #63）。唯一共享表仍为 `data/football_display_names/display_names.json`；没有另建名称库或重跑全历史身份恢复。
 - 对正式 unresolved 的 TotalCorner `team_id=42740`（provider `Besa`, league_id 8293）完成精确身份交叉核查后，canonical 简中名设为“贝萨佩贾”。FootballAnt 简中球队档案给出“贝萨佩贾”；TotalCorner 42740 的 Kosovo Superliga 身份与 Kosovo 2016–17 Superliga 资料中的 Besa KF (Pejë) 相符。既有 TotalCorner `team_id=150935` / FC Besa Peja 的同名 canonical 保持原样，两个 provider ID 没有合并。来源、边界说明及可重复 curator 见共享仓库 `data/football_display_names/curated_batch_report_20261015_besa_42740.json` 和 `ops/curate_formal_scope_besa_42740_20261015.py`。
