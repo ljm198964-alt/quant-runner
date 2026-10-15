@@ -1,5 +1,10 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 正式范围剩余项来源复核 batch 144
+- 以 batch 143 合并后的共享 master 继续，对 team_id 15615（Asil Lysis）、114288（APEA Akrotiriou）、114610（AEP Polemidion）、143652（Shturmi）、143674（Spartakos Kitiou）做精确中文来源核查。可确认部分俱乐部身份，但未找到能绑定精确 provider ID 的成熟简体中文 canonical；Tips.GG 简中 AEP 页面仍保留英文名，塞浦路斯足协页面只给希腊文/拉丁身份，故不造音译。映射新增0。
+- 审查证据：共享 `data/football_display_names/source_review_20261015_batch144.json`；PR [#54](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/54) 已合并，merge SHA `266c484257ac3e6385dfcff9bf65a7f8a7e15f9b`。唯一 canonical registry 与正式范围计数不变，仍按 master `formal_scope_coverage.json` 读取。
+- 没有触发比赛扫描、生产派单或 Telegram 编辑；此前已验证的显示/测试结论见 batch143。此批只增加来源审查记录，不修改 M1/MR1/MR1 AI 模型、策略、账本、结算或发送规则。
+
 ## 2026-10-15 正式范围剩余项来源复核 batch 143
 - 继续基于共享 master `0e9d3c15b63a6aca142b13519bebcaadfaca4a63`，未重扫历史身份。最新 formal scope 快照：2,468 个 team ID，2,378 个有 canonical 中文名、90 个未匹配（96.35%）；M1 1,553/1,553，M1 OU-R1 52/52，MR1 AH 1,856/1,921（96.62%），MR1 AI declared mirror 1,553/1,553。旧的 740/718 数字已过期。
 - 定点复核 team_id 4931、48357（FC Yerevan）、47722（St. James Swifts）、4607（Mladost Carev Dvor）、93070（Al Masry Salloum）、42740（Besa）。本批未找到可证明精确 provider ID 与成熟简体中文队名对应的来源，canonical 新增 0。4931 的 TotalCorner 页 provider 名仍是字面值 `0`，属于身份无效，必须等待上游身份修复；不能凭联赛或对手猜队名。审查证据在共享库 `data/football_display_names/source_review_20261015_batch143.json`；PR [#53](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/53) 已合并，merge SHA `cc1295ae24d449979dec33ff711eeda639ac5da2`。
