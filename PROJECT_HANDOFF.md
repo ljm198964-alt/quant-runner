@@ -1,5 +1,12 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 正式中文库续补与 Telegram 验收（PR #68）
+- 继续以共享库当前正式范围清单为准，旧任务中的“740 缺名”已过期。共享仓库 PR [#68](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/68) 已合并；curation commit `dffa3940a695b98793fc70483a9a49fc29d934da`，master merge commit `6bd8068e46f6641f1428d760aa8830335cb3e91a`。唯一共享 registry 新增 3 个有来源名称：48357 FC Yerevan → 埃里温；149818 FK Kulykiv-Bilka → 库利基夫-比尔卡；89766 Al Badari SC → 艾尔巴达里。完整来源与可重复脚本在共享仓库对应 `curated_batch_report_20261015_{fc_yerevan,kulykiv_bilka,al_badari}.json` 和 `ops/curate_formal_scope_*`。
+- 合并后 master coverage：正式并集 2,468 IDs / 2,386 canonical / 82 unresolved（96.68%）；M1 1,553/1,553、M1 OU-R1 52/52、MR1 AH 1,861/1,921（60 unresolved）、MR1 AI 声明范围 1,553/1,553。相对本轮起点的共享 master 共新增 3 个 canonical；82 条逐项身份、联赛和原因见 master `data/football_display_names/formal_scope_coverage.json#unresolved_records`；其中一条为无效 provider identity（字面名 `0`），其余因没有可唯一核验的简体中文 canonical 而保留，不编造译名。
+- 本地验证：ID-first M1 formatter 与 registry 检查通过；`python3 -m unittest test_m1_telegram_display.py` 23/23 PASS，JSON/脚本语法与 `git diff --check` 通过。上述是代码/隔离验证，不等于云端正式派单或 Telegram 端到端发送。
+- 历史 TG 编辑：本轮未重发或编辑任何消息，真实编辑数 0。沿用已核验的既有结果：M1 历史修复最近回执 edited 0，41 条已是目标文本、99 条缺少可编辑原发送正文、另有 unmapped；MR1 AH 最近 125 条均已处理/跳过；MR1 AI 9 次 edit 均被 Telegram 拒绝 `400 message to edit not found`。旧订单的真实 message ID 不足以恢复原消息文本；没有凭据或有效消息时不宣称已修复。未来 formatter 继续读取共享 registry。
+- 本轮未改 M1/M1 OU-R1/MR1 AH/MR1 AI 模型、策略、盘口源、赛事范围、订单、结算或通知规则；未触发生产扫描、未发送测试/正式 TG。下一步从共享 `formal_scope_coverage.json#unresolved_records` 继续有证据的定向补名；历史 TG 仅可对有原发送文本、有效 message ID 且拥有对应 bot 凭据的消息执行 Telegram 原地编辑。
+
 ## 2026-10-15 正式中文库续核与 TG 状态（batch 152）
 - 已读取本交接并快进核对：本轮起点共享 master 为 `06cf85ec7a58ddd8c5b3e09a595e69f74a644c39`，Runner main 为 `b29cb64a0cd93d1efb39b82e4c53c95e9bebd178`。定点负面来源审查保存至 `data/football_display_names/source_review_20261015_batch152.json`，共享 PR #65 已合并，最新共享 master `b21eaa76e16685c67055053cbe3b962a6d57d067`。唯一名称表仍是 `data/football_display_names/display_names.json`；本次未重扫历史身份，也未更改任何 canonical。
 - 最新正式范围快照为 2,468 个 team ID / 2,382 个 canonical / 86 个 unresolved（96.52%）。分系统：M1 1,553/1,553；M1 OU-R1 52/52；MR1 AH 1,858/1,921（63 unresolved）；MR1 AI declared M1 mirror 1,553/1,553。旧“740缺名”不是当前 master 状态。候选源复核没有取得可安全绑定到新 ID 的主流简体中文名称：特别是 TC 10782 `El Mahalla El Kobra` 与 Leisu 所列 `Sed Elmahla` 不是可直接互换的标签（TC 页面将二者列为对赛双方）；TC 136896 `MS Tala`、114610 `AEP Polemidion` 亦未找到精确 ID 对应的成熟简体 canonical。故保留 unresolved，不猜译、不跨队迁移。
