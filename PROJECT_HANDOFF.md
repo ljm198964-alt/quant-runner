@@ -2216,3 +2216,10 @@
 - 以合并后的 `formal_scope_coverage.json` 实数：正式并集 2,468 IDs / 2,391 canonical / 77 unresolved（96.88%）；M1 1,553/1,553，M1 OU R1 52/52，MR1 AH 1,865/1,921（56 unresolved），MR1 AI 声明镜像 M1 1,553/1,553。共享库 12,276 IDs / 4,407 canonical。完整未匹配名单与原因以共享 coverage 的 `unresolved_records` 为准；旧“718/740”是历史快照，不代表当前剩余数。
 - 验证：M1 Telegram formatter 26/26 PASS；历史显示修复器测试 2/2 PASS；JSON 解析及 `git diff --check` PASS。隔离渲染按 team_id 46574 显示“杜纳伊夫齐”，AH 方向和水位不变。没有触发正式 runtime、没有发送/编辑 Telegram 历史消息、没有修改账本。
 - 本批只更改共享展示映射、来源证据、覆盖快照及隔离测试；不涉及模型、策略、赛事范围、盘口来源、锁单、结算或通知条件。剩余 77 项继续按精确 team ID 查证；没有可靠中文来源的仍保留 unresolved，不猜译。
+
+## 2026-10-15 正式范围中文名续补（Delphi SC / TotalCorner team_id 136903）
+- 共享库 PR [#87](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/87) 已合并到 master，merge commit `7f58a58d2441b21c6d5c33693045a8ff2a4f0e9b`。唯一共享库为 team_id `136903`（Delphi SC）增加 canonical `德尔菲队`，原英文名和 ID 保留；来源是 Tips.GG 简中页展示的 Delphi SC 中文队名，并通过同一场 Al Magd–Delphi SC 历史比赛及 TotalCorner 精确 team 页面交叉核对。证据和 curator 留在共享库 `curated_batch_report_20261015_delphi_136903.json` 与 `ops/curate_formal_scope_delphi_136903_20261015.py`。
+- 合并后正式范围 2,468 IDs / 2,394 canonical / 74 unresolved（97.00%）；MR1 AH 1,868/1,921（53 unresolved）；M1 1,553/1,553，M1 OU-R1 52/52，MR1 AI declared mirror 1,553/1,553。共享库 12,276 IDs / 4,410 canonical / 7,866 unresolved。其他细分统计以最新共享 `formal_scope_coverage.json` 为准。
+- 验证：M1 Telegram formatter 与 repair 测试 30/30 PASS；MR1 shared resolver、MR1 AI Telegram formatter tests 5/5 PASS；MR1 AI parser/forward tests 3/3 PASS。隔离 resolver 可由精确 team_id 渲染 `德尔菲队`，AH 方向映射生效。没有发送测试消息或触发正式 runtime。
+- 同源页还显示 Al Majd 的简中名，但共享库已有另一个 team_id `7705` 使用 `阿尔马吉德`，无法仅凭英文近似名将它赋给不同的 `Al Magd` ID `94863`；该队保留 unresolved，避免冲突误并。历史 TG 本轮未编辑：没有直接可用的 Telegram 编辑授权/凭据执行入口，也未触发既有名称修复 workflow，因此不声称已修改旧消息；正式生产显示效果需待自然运行消费最新共享 master 或既有工作流回执验证。
+- 没有修改 M1 / M1 OU-R1 / MR1 AH / MR1 AI 的模型、策略、阈值、赛事范围、盘口源、订单账本、结算或正式消息格式。
