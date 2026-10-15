@@ -2416,3 +2416,9 @@
 - 本轮没有对历史 Telegram 消息编辑或重发。检查 M1 正式 ledger 未发现 team ID 185424 的已发送订单；其余历史编辑只能依据各自 repair ledger，不能跨模型合并统计。后续 M1/MR1 工作流会从共享 master 读取本次名称。
 - 仅修改展示名称/来源/覆盖审计和回归测试；M1、M1 OU R1、MR1 AH/AI 策略、盘口源、范围、锁单、结算与消息格式未改。
 - 来源：[FootballAnt 简中球队档案](https://www.footballant.com/zh-CN/football-data/team/67566)、[TotalCorner team 185424](https://www.totalcorner.com/team/view/185424)、[Prva Liga 官方球队页](https://www.prvaliga.rs/en/tim/proleter-023/)。
+
+## 2026-10-15 名称变更后的历史 Telegram 原位编辑验收
+- M1 既有 `M1 TG Historical Chinese Name Repair` run [38735525989](https://github.com/ljm198964-alt/quant-runner/actions/runs/38735525989) SUCCESS。正式 M1 ledger（含登记在同一账本的 M1 OU R1 policy 行）实际报告：eligible 41、edited 0、already_matching 41、缺原始消息文本 99、无映射 114、failed 0。没有发送新消息。M1 账本无 team ID 185424 的已发记录。
+- MR1 AH 既有 `MR1 Formal Telegram Historical Name Repair` run [38735926659](https://github.com/ljm198964-alt/quant-runner/actions/runs/38735926659) SUCCESS：125 条已处理、eligible 0、edited 0、unresolved 0；没有历史消息需要本轮编辑。
+- MR1 AI 既有 `MR1 AI Telegram Display Repair` run [38736075141](https://github.com/ljm198964-alt/quant-runner/actions/runs/38736075141) SUCCESS，修复记录推送至 MR1 master commit `c7846c9cb6`。201 条历史记录中 candidates 9、edited 0、already_matching 0、unresolved 192；9 条 Telegram API 均返回 `400 Bad Request: message to edit not found`，失败状态已持久化，未重发。没有发现 team ID 185424 的历史 MR1-AI 已发消息。
+- 因此，本轮历史消息成功编辑数为 0；没有对历史盘口、时间、方向、水位或结算做任何修改。未来消息展示使用已合并 canonical；现存的历史 Telegram 英文消息仅在拥有可编辑原消息且映射可确认时才能原位改写。
