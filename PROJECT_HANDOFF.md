@@ -1,5 +1,10 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 Al-Saqer 映射与已发送消息中文核对补记
+- 共享映射 PR #46 merge SHA `fe86a5fbc8acf1d4263f7b9af8593777b623deb8`；仅为 MR1 AH team 93485 增加 `阿尔萨克尔`（alias `萨克尔`）。formal union 2,468/2,375/93 unresolved（96.23%）；M1 1,553/1,553、M1 OU-R1 52/52、MR1 AH 1,853/1,921、MR1 AI declared mirror 1,553/1,553。M1 formatter 21/21 与 MR1 shared registry 2/2 均通过。
+- 已在共享库更新后实际 dispatch 三条名称-only 修复：M1 `38675377300` PASS，artifacts 报告 eligible 41、edited 0、already_matching 41、missing original text 99、unmapped 100、failed 0；因此没有历史消息实际需要修改成功。MR1 AH `38675380729` PASS，edited 0、eligible 0、already_processed 125、unresolved 0、failed 0。MR1 AI `38675384525` 的 Telegram edit 步骤执行完毕但原 workflow 因并发 push 在回执持久化阶段失败；实际结果 total 201、candidates 9、edited 0、already matching 0、unresolved 192、failed 9，9 条 API 错误均为 `message to edit not found`。该次完整报告已按真实 workflow 输出补写并推送至 MR1 master，commit `35d6d8cdbccb12c8c009c6ad5d008e045a5fdadb`。没有重发任何订单。
+- 当前**历史消息实编辑成功数为 0**。M1 其余 199 条受缺失原文/中文映射限制；MR1 AI 192 条仍没有可确认中文名。名称补齐只影响后续通知，不能宣称历史消息已全部中文化。所有操作仅涉及显示映射、历史消息文字修复状态；没有改模型、策略、赔率、订单或结算。
+
 ## 2026-10-15 正式范围中文库续补（Al-Saqer）
 - 以共享库最新 master `949d00ffffb999895c3185d4dbe664d83c43c1e6` 为基线，为 TotalCorner `team_id=93485`（`Al-Saqer FC`，Saudi Arabia Division 1/2）新增 canonical `阿尔萨克尔`，别名保留 `萨克尔`。名称取自 Tips.GG 简体中文比赛档案；TotalCorner 球队页以及 17500 / 中文直播赛程的 2026-09-13 对阵安瓦尔记录按联赛、日期、对手交叉核验。未改 provider 英文身份或 team ID。
 - PR [#46](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/46) 已合并，shared master SHA `fe86a5fbc8acf1d4263f7b9af8593777b623deb8`。最新 formal union：2,468 个 ID，2,375 个 canonical，93 个 unresolved，覆盖率 96.23%；M1 1,553/1,553，M1 OU-R1 52/52，MR1 AH 1,853/1,921（96.46%），MR1 AI 声明镜像 1,553/1,553。共享库 12,276 IDs、4,391 canonical。逐项未匹配原因见共享库 `data/football_display_names/formal_scope_coverage.json#unresolved_records`。
