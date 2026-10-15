@@ -1,5 +1,17 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 正式范围中文源再核验 batch 142
+- 从共享 master `0ccfde963f692769b17ec510000f9594f29edf53` 的当前 unresolved 继续；新增精确来源核查 KF Shkendija Haracine（163879）、Detonit Plackovica（113061）、FK Kulykiv-Bilka（149818）、Khankendi FK（170762）。来源能确认俱乐部身份，但没有证实这些精确实体有成熟简体中文队名；尤其 Shkendija Haracine 与 Shkëndija Tetovo 必须区分。没有拿地名、机器音译或相似俱乐部译名填库。
+- 审查文件 `data/football_display_names/source_review_20261015_batch142.json` 已经 PR [#52](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/52) 合并，master SHA `0e9d3c15b63a6aca142b13519bebcaadfaca4a63`。没有新增 canonical。
+- 覆盖仍为 formal 2,468 IDs / 2,378 canonical / 90 unresolved（96.35%），M1 1,553/1,553、M1 OU-R1 52/52、MR1 AH 1,856/1,921、MR1 AI declared mirror 1,553/1,553。全量未匹配身份、分系统及原因见 `formal_scope_coverage.json#unresolved_records`。
+- 当前 M1/MR1 formatter 未改，本地 formatter + historical repair 回归22/22 PASS；未发送或编辑TG。云端最新显示层实际运行证据仍是 MR1 Free Runtime [`38679532171`](https://github.com/ljm198964-alt/quant-runner/actions/runs/38679532171) PASS；M1 最新 live scan [`38679590567`](https://github.com/ljm198964-alt/totalcorner-research-bridge/actions/runs/38679590567) 启动后即失败，不能声称已验证 M1 本轮运行。
+
+## 2026-10-15 正式范围中文源再核验 batch 141
+- 以共享 master `c6a888a9f9ecd399d8ebd0bbfa2ba794ae2246b5` 的正式未匹配清单继续，额外核查 St. James Swifts（47722）、KF Vjosa（117487）、Asil Lysis（15615）、MS Tala（136896）和 Shaban M Qana（117362）。中文 FootyStats 页面仍以英文显示前两支队；ASIL 结果为阿文转写；MS Tala、Shaban M Qana 可确认英文/阿文身份，但没有建立成熟简体中文队名的来源。未造音译或直译。
+- 5 条审查记录已并入 `data/football_display_names/source_review_20261015_batch141.json`，PR [#51](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/51) 已合并，master SHA `0ccfde963f692769b17ec510000f9594f29edf53`。只增加来源审查，不更改 display mapping。
+- 当前 formal coverage仍为2,468 IDs：2,378 canonical、90 unresolved（96.35%）；M1 1,553/1,553；M1 OU-R1 52/52；MR1 AH 1,856/1,921（96.62%）；MR1 AI声明镜像M1为1,553/1,553；AI confidence≥50历史子集181/182（99.45%）。完整90条名单及reason以 `formal_scope_coverage.json#unresolved_records` 为准。
+- M1/MR1展示代码/格式没有改动。共享仓库 M1 formatter/repair tests 22/22 PASS；没有在本批发/编辑Telegram，也没有修改任何生产或结算状态。上一轮 M1 live scan run [`38679590567`](https://github.com/ljm198964-alt/totalcorner-research-bridge/actions/runs/38679590567) 3秒左右失败且无 job steps/log；MR1 Free Runtime run [`38679532171`](https://github.com/ljm198964-alt/quant-runner/actions/runs/38679532171) 仍是最新可确认 PASS。
+
 ## 2026-10-15 正式范围未匹配名称复核 batch 140
 - 继续以共享库 master `a756473bfcc72d7b6e52dc60dde502da801a18a6` 为起点检查 formal unresolved；没有重建历史身份。对 Augšdaugavas NSS（162203）、SK Artis Brno（164619）、Ynyshir Albions（56033）、Llay Miners Welfare（149164）、Trethomas Bluebirds（149178）、Dikernis SC（57729）、Pioneers Club（90728）、Al Badari SC（89766）及 CSM Olimpia Satu Mare（161196）核验了足协/俱乐部/足球数据库和中文搜索结果。身份可确认的条目没有找到可复核的成熟简体中文队名；CSM Olimpia 的中文搜索命中存在同城俱乐部身份混淆，不能挪用译名。未使用直译或临时音译。
 - 这批 9 条负面来源审查已写入共享库 `data/football_display_names/source_review_20261015_batch140.json`，PR [#50](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/50) 已合并；master SHA `c6a888a9f9ecd399d8ebd0bbfa2ba794ae2246b5`。没有新增 canonical，原有映射保持不变。
