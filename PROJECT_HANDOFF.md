@@ -1864,3 +1864,8 @@
 - 合并后正式范围：2,468 IDs / 2,371 canonical / 97 unresolved，96.07%。M1 1,552/1,553（99.94%，1 unresolved）；M1 OU-R1 52/52（100%）；MR1 AH 1,850/1,921（96.30%，71 unresolved）；MR1 AI 声明镜像 M1 为1,552/1,553（99.94%）；MR1 AI confidence≥50历史 cohort 181/182（99.45%）。完整97项由共享 `formal_scope_coverage.json#unresolved_records` 维护。
 - M1 formatter/repair 测试18/18 PASS；MR1共享 resolver 测试2/2 PASS。resolver 隔离核验三个近似身份分别输出 `FSC马里乌波尔`、`马里乌波尔凤凰`、`马里乌波`。本次不涉及任何 Telegram 发送/编辑，历史消息实际编辑0；也未运行生产 Actions 或扫描。本地映射合并不等于 MR1 外部 registry checkout 已自动快进，部署状态应以各 runtime 实际检出的共享库 revision 为准。
 - 仅增加展示映射、正式范围快照、curation 审计和回归测试；未修改模型、策略、阈值、赛事范围、盘口、账本、结算及 Telegram 发送规则。
+
+## 2026-10-15 正式范围余项中文源复核（第128批）
+- 共享 PR [#39](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/39) 已合并，master commit `3021bd1d1ccd533e2c1ef4e3ca8eea505f9bd833`。正式范围仍为2,468 IDs、2,371 canonical、97 unresolved（96.07%）。新增只读来源审查 `data/football_display_names/source_review_20261015_batch136.json`，本次 mapping changes=0。
+- 复核 Asyut Cement、Belbeis FC、Al Badari SC、Mallawi SC/Naser Malawy、Mostaqbal Watan Club、UCSA、Asil Lysis。中文/本地化足球页面仍保留英文/拉丁名，或只有外文/阿文身份资料；没有将“艾斯尤特石油”套给 Asyut Cement，也没有把政党“未来国家”中文名用于 Mostaqbal Watan Club。未以直译/音译补数。
+- 对应来源审查文件保留每个 TC team ID、provider name、league_id、来源 URL 及 unresolved 原因。没有变更共享 canonical、生产 formatter、策略、账本、结算或 Telegram 消息。
