@@ -2429,6 +2429,10 @@
 - 共享库 PR [#115](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/115) 已合并，master SHA `e9f59c028c1d8b9f148e76ae66c629da56346c51`。审查证据 `data/football_display_names/source_review_20261015_batch185.json` 涵盖 IDs 49842 KF Bashkimi Koretin、49843 KF Drenasi、51504 FK Onix Banje、51602 FK Atmosfera；核对俱乐部/足协和中文检索后没有 exact-ID 主流简体中文 canonical，新增0，原记录仍 unresolved。
 - 最新正式范围并集保持2,468 / 2,407 / 61（97.53%）。本批仅追加来源审查证据，没有改名称库、生产代码、模型、策略、范围、账本、结算或 Telegram。
 
+## 2026-10-15 正式范围未匹配队名来源续审（批次186）
+- 共享库 PR [#116](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/116) 已合并，master SHA `a55cc12f380c9d37a1c7bde77d24258400bc7ade`。来源审查文件 `data/football_display_names/source_review_20261015_batch186.json` 记录 IDs 42120 Buducnost Popovac、43363 Sluch Starokonstyantyniv、46573 Fortetsya Kamianets-Podilskyi、46899 Iskra Teofipol。身份来源可以核实，但没有准确绑定该 ID 的主流简体中文队名；新增 canonical 为0。
+- formal union 仍为2,468 / 2,407 / 61（97.53%）。本批仅归档审查证据，不改展示映射、生产代码、模型、策略、账本、结算或 Telegram。
+
 ## 2026-10-15 正式范围未匹配队名来源续审（批次180–182）
 - 共享库 PR [#110](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/110)、[#111](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/111)、[#112](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/112) 已合并；最新共享 master `0b664ef5959907770c67fd75588bb8bc5aeac193`。三批均只增加按球队 ID/身份核实的公开来源审查证据，未找到可安全写入的新 canonical，未改变 `display_names.json`。
 - 三批检查包括 APEA Akrotiriou、Asil Lysis、Al Hilal El Dabaa、Goldi SC、KF Dukagjini Gjakove、KF Vllaznia、Jedinstvo Bihać、Ynyshir Albions、Cetatea 1932 Suceava、KF Tefik Canga、Aresimi 1973、Ganjabasar FK。需防止将 Kosovo Superliga 的 KF Dukagjini（Klinë）中文名错配到不同身份的 Gjakovë 球队；Aresimi 的简中 FootyStats 页面仍保留英文队名；其余本批来源未能提供可核验的主流简体中文名称或无法排除别名/身份冲突，因此保留 unresolved，不临时音译。
