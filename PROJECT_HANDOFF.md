@@ -1766,3 +1766,8 @@
 - 对威尔士低级别余项 Llay Miners Welfare、Trethomas Bluebirds、Cardiff Draconians、Treowen Stars 做定向中文资料检索。虽有俱乐部/FAW 官方资料可确认英文身份及当前联赛（如 Cardiff Draconians 官方站、FAW 联赛构成文件、Treowen 官方站），未找到可信简体中文足球队名；中文搜索未返回可用中文名称，故不按地名或词面翻译生成 canonical。
 - 身份交叉参考：Cardiff Draconians 官方 `https://cardiffdracs.com/`；FAW 2025–26 联赛构成 `https://d1zqj8o9na6wgl.cloudfront.net/faw/20250604094634/2025-26-FAW-Mens-National-Leagues-Composition.pdf`；Treowen Stars 官方 `https://treowenstarsfc.co.uk/`；Llay Miners Welfare 官方 `https://llayminerswelfarefc.co.uk/`。这些来源支持英文身份，不支持中文 canonical。
 - 本批新增0；正式范围维持2,468 / 2,360 / 108（95.62%）。共享库和生产 TG 均未修改。
+
+## 2026-10-15 正式范围余项来源复核（第117批）
+- 继续核查 NK Jedinstvo Bihać（ID 46488）、GFK Ohrid Lichnidos（56852）、Detonit Plačkovica（113061）、FK Proleter 023（185424）。中文 Livescore 页面“塞尔维亚 Proleter 023”虽确认该正式参赛队，但仍以拉丁字母显示原队名；协会和联赛资料确认其身份、城市或赛季改名，未提供简体中文惯用队名。其余精确中文搜索未找到匹配队名。
+- 可核验证据：Livescore 简中 Proleter 023 队页 `https://www.livescore.com/zh/zuqiu/team/name/409593/tables/25593/`；塞尔维亚 Prva Liga 官方 Proleter 023 身份/赛季改名资料 `https://www.prvaliga.rs/en/tim/proleter-023/`；波黑联邦足协 Jedinstvo Bihać 俱乐部页 `https://www.nsfbih.ba/klubovi/wwin-prva-liga-fbih/390`。证据仅确认身份，没有可写入的中文 canonical。
+- 本批新增0，正式覆盖维持2,468 IDs / 2,360 canonical / 108 unresolved（95.62%）；无共享库、策略、账本或 TG 修改。
