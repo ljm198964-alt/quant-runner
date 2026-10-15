@@ -1885,3 +1885,9 @@
 - 共享 PR [#42](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/42) 已合并，master commit `bb532ae7b8c442c80220f2cbeb82c706fecd8cec`。新增审查文件 `source_review_20261015_batch138.json`，核验 Al Raya SC（135353）、Al Magd（94863）、Goldi SC（136149）、MS Tala（136896）。
 - 精确 TotalCorner 页面及俱乐部/足球资料可确认英文身份，但未发现能绑定相应 team ID 的成熟简体中文足球队名；Goldi 另有 Team FC 更名线索，未将潜在新名直接覆盖旧 provider identity。mapping changes=0，formal union 仍2,468 / 2,372 / 96（96.11%）。
 - 未改 canonical、球队 ID、赛事范围、模型/策略、账本、结算或 Telegram。
+
+## 2026-10-15 正式范围余项名称源审查（第132批）
+- 共享库以 `master` `bb532ae7b8c442c80220f2cbeb82c706fecd8cec` 为基线。formal union 仍为2,468个球队 ID，其中2,372个有 canonical 中文名、96个 unresolved（96.11%）；M1 1,553/1,553，M1 OU-R1 52/52，MR1 AH 1,850/1,921，MR1 AI declared mirror 1,553/1,553。原交接的740/718为旧快照，不再适用。
+- 追加只读审查 `data/football_display_names/source_review_20261015_batch139.json`：核对 Mladost Carev Dvor、El Mahalla El Kobra、Vllaznia/Vllazina/KF Vllaznia、FC Yerevan、UCSA、Cardiff Draconians、Ynyshir Albions、FS La Massana、Oldenburg Legends。mapping changes=0；原因包括缺乏成熟简体队名、多个 provider ID/联赛上下文身份冲突或来源仅能证明英文身份。没有用未经验证音译填数。
+- 复核来源包括精确 TotalCorner 队页、俱乐部/协会页面、Sofascore 中文球员/赛事上下文及公开足球数据库。尤其不得将阿尔巴尼亚 Vllaznia 的“维拉斯尼亚”跨 ID 套到 Kosovo Superliga 同名队；不得把 El Mahalla El Kobra 和 Ghazl El-Mehalla 合并。
+- 此批只更新共享库中的 source-review 证据和本交接记录，没有更改 canonical、coverage 数字、显示代码、生产工作流或 Telegram 历史消息。无 TG 编辑或发送；无 M1/MR1 策略、账本、结算改动。正式范围逐项清单以共享 `data/football_display_names/formal_scope_coverage.json#unresolved_records` 为准。
