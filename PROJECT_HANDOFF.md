@@ -1839,7 +1839,7 @@
 - 来源：[Leisu 尼瓦布佐瓦球队页](https://www.leisu.com/data/zuqiu/team-73166/lineup)、[TotalCorner team 114056](https://www.totalcorner.com/team/view/114056)。当前105个 unresolved 的完整逐队清单及原因仍保留在共享 `data/football_display_names/formal_scope_coverage.json#unresolved_records`。
 
 ## 2026-10-15 正式范围余项来源复核（第124批）
-- 以共享库当前 master `5e4c4c2b469b7d2b713204b7bfb9427491ed0899` 的 `data/football_display_names/formal_scope_coverage.json` 为准：正式范围 2,468 IDs，2,367 canonical、101 unresolved（95.91%）；M1 1,548/1,553（99.68%），M1 OU-R1 52/52（100%），MR1 AH 1,846/1,921（96.10%），MR1 AI declared mirror 1,548/1,553（99.68%）。旧交接 740/718 均非当前计数。
+- 以合并 PR #35 后共享库 master `4387ce14c9dce86fca631567a244b9592c9372e3` 的 `data/football_display_names/formal_scope_coverage.json` 为准：正式范围 2,468 IDs，2,367 canonical、101 unresolved（95.91%）；M1 1,548/1,553（99.68%），M1 OU-R1 52/52（100%），MR1 AH 1,846/1,921（96.10%），MR1 AI declared mirror 1,548/1,553（99.68%）。旧交接 740/718 均非当前计数。
 - 对 Sirens（7619）、FC Yerevan（48357）、FK Kulykiv-Bilka（149818）、Jedinstvo Bihać（46488）、Asil Lysis（15615）作精确源核验：拒绝机器翻译“警报”；拒绝把同一 FootyStats 页面里的另一球队“埃里温凤凰”映射给 FC Yerevan；其余官方/足球来源只确认拉丁身份，未找到可靠的简体中文足球 canonical。未猜译，安全新增0。
-- 共享仓库 PR #35 记录该批 source-review audit；代码提交 `b4809739`。M1 formatter/历史编辑单测 17/17 PASS。M1 ledger 只读 dry-run 有41条基于既有 message ID 与现存 canonical 可编辑候选，99条缺原消息文本，100条无可用映射；本机没有 M1 Telegram token/chat 凭据，未发送 Telegram API edit 请求，实际编辑0。其余系统历史消息未触碰。
+- 共享仓库 PR [#35](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/35) 已合并，merge commit `4387ce14c9dce86fca631567a244b9592c9372e3`（分支提交 `b4809739`）。M1 formatter/历史编辑单测 17/17 PASS。M1 ledger 只读 dry-run 有41条基于既有 message ID 与现存 canonical 可编辑候选，99条缺原消息文本，100条无可用映射；本机没有 M1 Telegram token/chat 凭据，未发送 Telegram API edit 请求，实际编辑0。其余系统历史消息未触碰。
 - M1/MR1 AH/MR1 AI 仍共用单一 registry；本批未改四系统 formatter、模型、策略、阈值、比赛范围、账本、结算或 Telegram 规则。正式范围 unresolved 的完整逐项清单与原因仍以共享库 `formal_scope_coverage.json#unresolved_records` 为权威；无新增 mapping，现有 canonical 全数保留。
