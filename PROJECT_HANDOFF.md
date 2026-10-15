@@ -1,8 +1,8 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
-## 2026-10-15 正式范围中文名续补：Dikernis SC（PR #80 待合并）
-- 在共享库最新 `master=d22083a44bc7e8bf3ba660a948eb5efb7a9c3ef4` 上核对正式范围：2,468 个 team ID / 2,391 个 canonical / 77 unresolved。经球探网（Titan007）中文赛果页核验，2022-02-24 埃及甲赛事记录将 Dikernis SC 列为“德克内斯”；TotalCorner team page `team_id=57729` 标识 provider name 为 Dikernis SC，且其正式范围联赛为 Egypt league_id 417。仅为精确 ID 57729 增加 `德克内斯`，不扩散相似名。新增共享库 PR [#80](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/80)，head commit `f5db392d`；截至本交接更新时 PR 尚未合并，远端 `master` 覆盖尚未变化。证据/重跑程序：`data/football_display_names/curated_batch_report_20261015_dikernis_57729.json`、`ops/curate_formal_scope_dikernis_57729_20261015.py`。
-- PR 分支文件实算 formal union 为 2,392/2,468（96.92%），剩余 76；MR1 AH 为 1,866/1,921（97.14%，55 unresolved）；M1 1,553/1,553、M1 OU-R1 52/52 继续全覆盖；MR1 AI 声明镜像 M1 范围仍 1,553/1,553。共享库整体 12,276 ID / 4,408 canonical / 7,868 unresolved（35.91%）。上述数字按本次 PR 分支文件统计，master 合并前勿作为生产端已更新覆盖。
+## 2026-10-15 正式范围中文名续补：Dikernis SC（PR #80 已合并）
+- 在共享库 `master=d22083a44bc7e8bf3ba660a948eb5efb7a9c3ef4` 上核对正式范围：2,468 个 team ID / 2,391 个 canonical / 77 unresolved。经球探网（Titan007）中文赛果页核验，2022-02-24 埃及甲赛事记录将 Dikernis SC 列为“德克内斯”；TotalCorner team page `team_id=57729` 标识 provider name 为 Dikernis SC，且其正式范围联赛为 Egypt league_id 417。仅为精确 ID 57729 增加 `德克内斯`，不扩散相似名。共享库 PR [#80](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/80) 已合并，merge SHA `b94da7468f47daeccb833db8900232987c5ade2d`。证据/重跑程序：`data/football_display_names/curated_batch_report_20261015_dikernis_57729.json`、`ops/curate_formal_scope_dikernis_57729_20261015.py`。
+- 合并后正式 union 为 2,392/2,468（96.92%），剩余 76；MR1 AH 为 1,866/1,921（97.14%，55 unresolved）；M1 1,553/1,553、M1 OU-R1 52/52 继续全覆盖；MR1 AI 声明镜像 M1 范围仍 1,553/1,553。共享库整体 12,276 ID / 4,408 canonical / 7,868 unresolved（35.91%）。
 - 本地通过 MR1 shared display resolver 隔离渲染：team_id 57729 输出“德克内斯”；`npm run test-v6-cross-market` 4/4、`npm run test-v7-ai-picks-telegram` 3/3。检查 MR1 AH sent ledger 125 条、MR1 AI sent ledger 201 条，均无 match_id 对应 team_id 57729 的历史已发消息，故本次没有可编辑的历史 Telegram。M1 ledger 不在当前 MR1 checkout；未调用 TG API、未触发生产工作流、未声称任何线上历史消息已修改。生产链以后通过既有 shared-registry checkout 读取合并后的唯一 registry；无需独立映射库。
 - 本轮仅增加展示映射/来源和 coverage，以及交接文档；未修改 M1/M1 OU-R1/MR1 AH/MR1 AI 模型、策略、赛事范围、发送格式、ledger 或 settlement。当前工作剩余 76 项均保留逐 ID 的 `NO_VERIFIED_CANONICAL_ZH` 或 provider identity invalid 原因；不可用机械音译填充。
 
