@@ -1,5 +1,10 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 正式范围未匹配名称定向来源复查（PR #75 已合并）
+- 在 PR #74 记录基础上，又对当前 unresolved 中 19 个代表性身份做定向搜索：埃及低级别队、科索沃队、波黑/塞尔维亚/罗马尼亚/北爱尔兰队，以及安道尔/塞浦路斯/拉脱维亚队。检索并交叉看了中文足球站点、Sofascore 中文页、俱乐部及协会资料。结果只有身份核实或保留拉丁原名，没有足以证明主流简体中文 canonical 的来源；新增名称 0。详细范围、查询类型和 false-match 处置见共享审计 `data/football_display_names/source_review_20261015_batch155.json`。
+- 审计 PR [#75](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/75) 已合并，merge SHA `7ccbf761863115a94e0a17be460f4b0168103130`。共享库未变；正式并集仍 2,468 IDs / 2,391 canonical / 77 unresolved（96.88%），其中 76 项 `NO_VERIFIED_CANONICAL_ZH`、team 4931 的 provider 名字 `0` 为 `PROVIDER_IDENTITY_INVALID`。权威逐项列表仍在 `formal_scope_coverage.json#unresolved_records`。
+- 最近生产 Telegram 历史编辑回执仍是上节记录的 0 条成功编辑；本轮没有触发重发、TG API 编辑或生产工作流。不得宣称历史消息已全中文修复。
+
 ## 2026-10-15 正式范围中文名来源审查（PR #74 已合并）
 - 以共享库最新 coverage 为准：formal-scope union 2,468 个 team ID，其中 canonical_zh 2,391、unresolved 77、覆盖 96.88%；不是交接旧快照中的 718/740。分系统：M1 1,553/1,553，M1 OU-R1 52/52，MR1 AH 1,865/1,921（56 未匹配），MR1 AI 声明镜像 M1 范围 1,553/1,553。唯一库仍为 `data/football_display_names/display_names.json`。
 - 对 77 项完成批量来源核查并提交审计：PR [#74](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/74) 已合并，merge SHA `a0b4e829cb0776b442c5cacb32b0b53052a2d871`；审计文件 `data/football_display_names/source_review_20261015_batch154.json`。45,337 行 Reep 名称表精确规范化匹配出 18 个英文候选，但候选 Wikidata 条目均无简体中文标签；其余 59 项无精确候选；经核验的中文足球别名集精确命中 0。7M 的近似名 `KF Bashkimi 1947` 属北马其顿另一队，不映射给科索沃 `KF Bashkimi Koretin`。本轮可信 canonical 新增 0，未为提高覆盖率猜译，也未更改 registry/coverage 或任何策略数据。
