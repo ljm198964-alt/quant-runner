@@ -1,5 +1,12 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 精确比赛交叉证据补齐 KF FC Mitrovica（shared batch179）
+- 将 TotalCorner team 150467（KF FC Mitrovica）从 formal unresolved 中精确消歧：捷报球队档案的英文名与 provider 名相同，显示“KF米特羅維察”；其 2025-10-24 科索沃乙级 KF米特羅維察 3-0 阿伯利亚，与 TotalCorner team 150467 的相同比赛/比分吻合，球天下简体赛果页也显示“KF米特罗维察”。仅为 ID 150467 新增 canonical `KF米特罗维察`，保留繁体名为 alias；不合并女足 KFF Mitrovica 或 KF Trepca Mitrovice。证据与curation报告见共享 batch179、`curated_batch_report_20261015_kf_fc_mitrovica_150467.json`。
+- 已更新唯一共享 `display_names.json` 和 formal coverage。当前 formal 并集 2,468 IDs / 2,405 canonical / 63 unresolved（97.45%）；M1 1,493/1,553（96.14%），M1 OU R1 52/52，MR1 AH 1,865/1,921（97.08%），MR1 AI declared M1 mirror 1,493/1,553（96.14%）。共享库 PR [#105](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/105) 已合并，merge SHA `ab3e50217ad89f054100801315ecd1a3cbdfdc45`。
+- 新映射本地隔离渲染：M1 AH 输出“科索沃乙级联赛 KF米特罗维察 vs 阿伯利亚 …”；MR1 AI 输出同一中文赛事/队名，盘口/香港水位保持输入值。回归测试：M1 37/37 PASS；MR1 shared resolver/browser-forward 5/5、MR1 AH 4/4、MR1 AI 3/3 PASS。仅显示层变化，未触发生产扫描、Telegram发送或历史编辑。
+- 历史编辑最新既有 GitHub runs（不是本轮新触发）：M1 run `38721238877` edited=0、41 already matching、99缺消息原文、113 unmapped；MR1 AH run `38721246011` edited=0、125 already processed；MR1 AI run `38721252709` 9次 edit 均因 Telegram `message to edit not found` 失败、192 unresolved。新映射会让后续新通知用中文，但不能声称这些历史消息已改；若相关历史 pick 仍可编辑，需在共享映射合并后再运行既有 name-only repair 并核验回执。
+- 没有改模型、策略、盘口、订单、结算、交易条款或消息格式。剩余63项权威清单仍在共享 `formal_scope_coverage.json#unresolved_records`；team_id 4931 provider_name=`0` 仍须上游修复，其他条目须等到可验证中文足球来源。
+
 ## 2026-10-15 formal unresolved 中文队名续核（source review PR #104）
 - 基于共享库 master `5f0c3d4bfc3ecf37b28469a3d493affb3f089815` 继续定点核查7支：KF Hajvalia（39889）、KF Vjosa（117487）、GFK Ohrid Lichnidos（56852）、Mladost Carev Dvor（4607）、Cetatea 1932 Suceava（179353）、Ynyshir Albions（56033）、Trethomas Bluebirds（149178）。精确中文足球检索没有找到可绑定到相应 TotalCorner ID 的主流简体中文 canonical；部分中文地区页面仍保留拉丁队名，俱乐部/足协来源只证明外文身份。未做音译或字面翻译，新增 canonical 0。逐队证据在共享 `data/football_display_names/source_review_20261015_batch178.json`，PR [#104](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/104) 已合并，merge SHA `39b4eca5c8c2264336b4685f931035a982ae7f90`。
 - 共享正式覆盖未变：并集 2,468 IDs / 2,404 canonical / 64 unresolved（97.41%）；M1 1,492/1,553，M1 OU R1 52/52，MR1 AH 1,864/1,921，MR1 AI declared M1 mirror 1,492/1,553。64条权威明细仍以共享 `formal_scope_coverage.json#unresolved_records` 为准；其中63条缺可验证简中名，ID 4931 的 provider_name=`0` 是无效上游身份。
