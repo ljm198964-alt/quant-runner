@@ -1,5 +1,9 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 正式范围未匹配队伍定向复核（batch165，PR #89 已合并）
+- 以 master `fb4341ca93f7629f68823e0887648cefd8ca447d` 的 73 条 `formal_scope_coverage.json#unresolved_records` 为准，定向复核 9 个此前没有独立 source-review 记录的 ID：El Mahalla El Kobra (10782)、Vllazina (43486)、Marupes SC (52385)、Shaban M Qana (117362)、MS Tala (136896)、Goldi SC (136149)、Al Raya SC (135353)、Trethomas Bluebirds (149178)、KF Vjosa (117487)。本批没有找到能唯一对应 TotalCorner ID 的成熟简体中文足球队名，新增 canonical 0；证据链接及逐项结论已存 `data/football_display_names/source_review_20261015_batch165.json`。特别注意中文站点若只翻译界面、球队标签仍为英文（如 Sofascore Al Raya、FootyStats KF Vjosa），不等于存在中文队名；官方阿拉伯语/拉脱维亚语/威尔士语身份资料及韩文音译也不用于凭空构造简中 canonical。审计 PR [#89](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/89) 已合并，master SHA `1cc80f19a49e382bcfc34f7b7a086c815bb0cd04`。
+- 因此该 batch 不改变覆盖：formal union 仍 2,395/2,468，73 unresolved（97.04%）；共享库 4,411/12,276 canonical。按现有 `source_review*.json` 中精确 team_id 去重，本批后尚有 36 条 unresolved 未独立复核；ID 4931 的 `provider_name=0` 仍是身份无效，不进入翻译猜测。
+
 ## 2026-10-15 正式范围中文名称续补：Kosovo Vllaznia Pozheran（PR #88 已合并）
 - 从最新共享 master `7f58a58d2441b21c6d5c33693045a8ff2a4f0e9b` 继续，未重跑历史身份恢复。核验 TotalCorner `team_id=42262` 在 Kosovo Superliga（league_id 8293），其 2018-04-06 对 KF Liria Prizren 的 0-0 赛事可与独立 Kosovo 历史赛程中 Vllaznia Pozheran 对应；FootballAnt 中文赛事页显示“维拉斯尼亚波兹兰”。因此只将 ID 42262 canonical 设为“维拉斯尼亚波兹兰”，不移用阿尔巴尼亚 Vllaznia Shkodër 的“维拉兹尼亚”。来源及证据说明随共享映射保存。
 - 共享库 PR [#88](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/88) 已合并，merge SHA `fb4341ca93f7629f68823e0887648cefd8ca447d`。合并后从 master 文件实际读取：正式范围 2,468 IDs，2,395 canonical、73 unresolved（97.04%）；M1 1,553/1,553，M1 OU-R1 52/52，MR1 AH 1,868/1,921（53 unresolved），MR1 AI 声明镜像 M1 范围 1,553/1,553，MR1 AI observed-confidence cohort 181/182；共享总库 12,276 IDs、4,411 canonical、7,865 unresolved（35.93%）。其他模型分项未因这条 M1-only team 而增加。
