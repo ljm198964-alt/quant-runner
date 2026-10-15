@@ -2407,3 +2407,12 @@
 - 首次 [M2 Market Research Observer run 38730631560](https://github.com/ljm198964-alt/quant-runner/actions/runs/38730631560) 于 UTC 11:54 完成 **SUCCESS**；实际 GitHub workflow Job tests 4/4 PASS，源码 checkout 与只读生产源权限成功，研究特征提取步骤完成。job_id `116407231217`。
 - 运行日志实际结果：`source_run_id=M1_20261015T102804Z`、`observation_count=3`、`rejection_counts={OUT_OF_TIME_WINDOW:6, STALE_OR_FUTURE_QUOTE:57, NO_SIDE:14}`、`orders_locked=0`、`telegram_write=false`。这仅为完整 M1 扫描池的市场与基本面观察，**不是三条 M2 盈利交易信号**。旧皇冠报价大量被时间校验拒绝，后续优先研究准时采集与独立双边盘口输入。
 - 实测成功不代表 M2 预测模型已训练、已完成 walk-forward 或独立影子锁单/结算；暂不可报告 M2 ROI。生产 M1、M1 OU R1、MR1 AH/AI 未变更。
+
+## 2026-10-15 共享中文库补齐：FK Proleter 023 / 普罗莱特023
+- 共享库已更新于 `ljm198964-alt/totalcorner-research-bridge` master：PR [#108](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/108) 新增 TotalCorner team ID `185424` / `FK Proleter 023` 的 canonical `普罗莱特023`；PR [#109](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/109) 修正该 ID 同时属于 M1 与 MR1 后的正式范围统计。最终 master SHA `8735bab3a584110880ed53b181aa8ce1648c0475`。
+- 来源交叉核验：FootballAnt 简体中文球队档案、TotalCorner 精确 team ID 页面及塞尔维亚 Prva Liga 官方球队页；保留原英文 provider identity，不合并其他 Proleter 实体。
+- 最终正式范围快照：2,468 个去重 ID，2,407 个 canonical，61 个未匹配（97.53%）；M1 1,495/1,553（96.27%）；M1 OU R1 52/52（100%）；MR1 AH 1,867/1,921（97.19%）；MR1 AI declared mirror of M1 1,495/1,553（96.27%）。共享库 12,276 team IDs / 4,423 canonical。
+- 本地验证：M1 Telegram display 测试 37/37 PASS；MR1 共享 registry 与 AI formatter 测试 5/5 PASS；MR1 V6 cross-market 测试 4/4 PASS。四条链仍共享唯一中文 registry；M1 OU R1 使用 M1 展示读取链。测试为隔离渲染，没有发送 Telegram。
+- 本轮没有对历史 Telegram 消息编辑或重发。检查 M1 正式 ledger 未发现 team ID 185424 的已发送订单；其余历史编辑只能依据各自 repair ledger，不能跨模型合并统计。后续 M1/MR1 工作流会从共享 master 读取本次名称。
+- 仅修改展示名称/来源/覆盖审计和回归测试；M1、M1 OU R1、MR1 AH/AI 策略、盘口源、范围、锁单、结算与消息格式未改。
+- 来源：[FootballAnt 简中球队档案](https://www.footballant.com/zh-CN/football-data/team/67566)、[TotalCorner team 185424](https://www.totalcorner.com/team/view/185424)、[Prva Liga 官方球队页](https://www.prvaliga.rs/en/tim/proleter-023/)。
