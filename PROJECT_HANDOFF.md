@@ -1,5 +1,13 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 正式范围中文库与 Telegram 接入续核 batch 150
+- 已快进核对最新共享库 master：`a06bf123`（batch 150来源审查并入）；最新正式范围快照仍是2,468个去重team ID，2,379有canonical简体中文名、89未匹配，覆盖率96.39%。分系统：M1 1,553/1,553；M1 OU-R1 52/52；MR1 AH 1,857/1,921（64缺名）；MR1 AI声明镜像M1 1,553/1,553。当前89项由88个 `NO_VERIFIED_CANONICAL_ZH` 和team_id 4931一个 `PROVIDER_IDENTITY_INVALID` 组成；旧handoff中的90/2,378及“740”均已过期。
+- 对 `results/formal_email_ledger.json` 的13条消息记录，仅将pick `raw_line` 与当前未匹配provider名称做精确匹配；命中0条。没有复制邮件正文/收件人，也没有把字符串子串误认成旧中文映射。补充核查Mladost Carev Dvor、FC Yerevan、Pioneers Club、El Mahalla El Kobra公开中文足球页面/俱乐部资料，未找到能精确绑定这些TotalCorner team ID的成熟简体中文队名，故不写入音译或城市译名。
+- 共享库审查证据：`data/football_display_names/source_review_20261015_batch150.json`；PR [#60](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/60) 已合并，merge SHA `a06bf123`。本次canonical additions=0，coverage与模型字段不变。
+- 实际formatter/显示回归：M1 `test_m1_telegram_display.py` + `test_m1_telegram_display_repair.py` 为22/22 PASS；MR1以共享master目录挂载唯一registry，`test-football-display-names.js` + `test-v7-ai-picks-telegram.js` 为4/4 PASS。检查的MR1 consumers（MR1 AH、MR1 AI browser-forward、MR1 AI V7、MR1 OU forward）均从共享reader读取；未知项仍按既有presentation fallback，不阻塞策略/通知。未触发生产扫描或发送/编辑TG。
+- 历史Telegram真实编辑仍以此前workflow回执为准：M1 run `38679318371` 为0 edited（41 already matching、99缺账本原文、100未映射）；MR1 AH run `38679322906` 为0 edited（125 already processed/skipped）；MR1 AI run `38678553590` 的9次编辑报Telegram `400 message to edit not found`，192条unresolved。M1 OU-R1无可确认的独立历史message ID/repair链。本轮没有重复编辑、重发或改交易字段。
+- 未完成项：在不虚构中文名的约束下，88个已识别球队暂缺可核验的主流简中canonical，team_id 4931需TotalCorner上游修正无效队名；MR1 AH范围另有64项未匹配。历史TG还需可靠原消息文本/有效可编辑message ID及后续可信名称来源。不要把94%+覆盖视为全部完成，也不要修改模型、策略、盘口、范围、账本、结算或TG出单规则。
+
 ## 2026-10-15 正式范围来源复核 batch 146 与 Telegram 回执核验
 - 以共享 master `5705768f93232696f0bb3e2edd4d9b5e711c5ec8` 的 `formal_scope_coverage.json` 为唯一当前快照；没有复扫全历史身份。正式并集为2,468个team ID，其中2,378有canonical简体中文名、90未匹配（96.35%）；89项为缺少经核验的中文标准名，team_id 4931 provider原名为`0`、身份无效。分系统：M1 1,553/1,553；M1 OU-R1 52/52；MR1 AH 1,856/1,921（96.62%）；MR1 AI声明镜像M1 1,553/1,553；MR1 AI历史confidence≥50 cohort 181/182（99.45%）。这些是共享快照值，不把未匹配项作为策略Gate。
 - 新增来源审查 `data/football_display_names/source_review_20261015_batch146.json`，覆盖最后27个尚未审查的unresolved ID；至此90个正式范围未匹配项均已有来源审查记录。核查覆盖塞尔维亚、科索沃、埃及、北马其顿、拉脱维亚、立陶宛、阿塞拜疆、安道尔、罗马尼亚、威尔士等身份/俱乐部/足协或赛事记录。英文/地方语身份确认不等同于成熟简体中文队名；对同名和ID上下文冲突保留 unresolved。canonical additions=0，未添加机器音译、地名直译或未经证实别名。
