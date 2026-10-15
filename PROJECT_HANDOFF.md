@@ -1,5 +1,9 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 四个 Reep 候选的历史身份核对（PR #79 已合并）
+- 对四个名称近似候选补查公开俱乐部/协会历史：Mladost Carev Dvor 为已停办的北马其顿队；Jedinstvo Bihać 官方/协会资料仍用拉丁名；KF Onix Banjë 后名 Phoenix Banjë 并于 2024 合并；Oxford Sunnyside 是北爱尔兰本地队，不是 Oxford, England。没有查到成熟简体中文 canonical，也未将历史俱乐部名映射成当前同名队。
+- 这些 Reep/Wikidata 候选不是 TotalCorner team-ID 的独立交叉证明；对应 IDs 仍 unresolved。详细依据见共享 `source_review_20261015_batch159.json`。PR [#79](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/79) 已合并，SHA `d22083a44bc7e8bf3ba660a948eb5efb7a9c3ef4`。registry 未改，正式范围仍 2,468 / 2,391 / 77。
+
 ## 2026-10-15 前缀归一候选补查（PR #78 已合并）
 - 对 Reep 团队注册表除原精确名外，另按有限足球俱乐部类型前后缀（FC/FK/KF/NK/SC/FS/CSM 等）剥离后再做精确比较；当前 77 个未匹配中发现 24 个英文身份候选（此前仅报出 18 个原串精确候选）。这仅生成研究候选，不代表 TotalCorner ID 交叉验证。
 - 对 24 个候选 Wikidata QID 一并查询简中标签、简中别名及中文维基 sitelink，24 个均无结果；本轮新增中文 canonical 0，registry 不变。剩余 53 项无此类 Reep 候选，其中包含 provider identity 无效的 team 4931；详情见共享 `source_review_20261015_batch158.json`。共享 PR [#78](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/78) 已合并，merge SHA `f59803efaf9ea7752bad82b3b180d4e95ef543c7`。
