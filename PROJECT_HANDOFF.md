@@ -2256,3 +2256,9 @@
 - 映射测试：M1 Telegram formatter / repair 31/31 PASS；M1 formatter 隔离渲染 team 50476 得到“马萨纳”（示例的另一未匹配实体保留 provider 原名）。MR1 shared resolver + MR1 AI formatter 4/4 PASS；MR1 外部 checkout workflow 使用共享仓库 master 作为 registry 输入。
 - 历史 Telegram 编辑未执行：本机没有 `M1_TELEGRAM_BOT_TOKEN` / `M1_TELEGRAM_CHAT_ID`；现有 M1 repair dry-run 从正式 M1 ledger 统计出41条有映射可替换、99条缺存档消息文本、104条无可用名称映射。没有修改/重发消息。未发现现成历史编辑 workflow；也没有访问 MR1 AH、MR1 AI、M1 OU-R1 各自 Telegram 历史账本的可用授权执行链，故不能宣称它们的旧消息已修复。
 - 没有修改任何模型、策略、阈值、赛事范围、盘口源、订单/结算账本或 Telegram 格式。M1/MR1 生产工作流未触发。源名依据：[FootballAnt 简中 FS La Massana 页面](https://www.footballant.com/zh-CN/football-data/team/41767)，[FootballAnt 英文同队页面](https://www.footballant.com/football-data/team/41767)，[TotalCorner team 50476](https://www.totalcorner.com/team/view/50476)。
+
+## 2026-10-15 正式范围中文名称补齐（Rezeknes FA）
+- 共享 registry 已推送到 master，commit `948592ba`：TotalCorner team_id `124999` / `Rezeknes FA` 新增 canonical `雷泽克内FA`，别名保留 `Rēzekne FA`、`Rēzeknes FA/BJSS`、`雷泽克内`。依据 OddsGPT 简中球队页、7M 拉脱维亚联赛中文赛程交叉核验，并由拉脱维亚足协俱乐部页与 TotalCorner ID/联赛/近期对手确认身份；展示层映射。
+- formal union 更新为2,468 / 2,397 / 71（97.12%）；M1 1,485/1,553（95.62%），M1 OU-R1 52/52，MR1 AH 1,858/1,921（96.72%），MR1 AI declared mirror 1,485/1,553（95.62%）。
+- 验证：M1 Telegram formatter / repair 31/31 PASS，隔离渲染显示“雷泽克内FA”且盘口/水位保持原样；MR1 shared resolver + MR1 AI formatter 4/4 PASS，隔离渲染显示“雷泽克内FA vs 里加水手”。尚未运行/发送生产 Telegram；仅后续运行读取共享 master 后生效。
+- 未修改策略、模型、赛事范围、账本、结算或 TG 格式。来源：[OddsGPT 简中雷泽克内FA 页面](https://www.oddsgpt.com/yuce/team/4141/R%C4%93zekne-FA/zh)，[7M 拉脱维亚赛程示例](https://team.7m.com.cn/650125/index_gb.shtml)，[拉脱维亚足协 Rēzeknes FA/BJSS](https://lff.lv/klubi/rezeknes-fabjss-12450/)，[TotalCorner team 124999](https://www.totalcorner.com/team/view/124999)。
