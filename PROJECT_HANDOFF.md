@@ -2449,3 +2449,8 @@
 - 共享库 PR [#117](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/117) 与 [#118](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/118) 已合并；最新共享 master 为 `dce1b5c9`。批次187审查 Belbeis FC、Al Masry Salloum、Al Magd、Al Raya SC；批次188审查 Oldenburg Legends、Aresimi 1973、APEA Akrotiriou、AEP Polemidion。两批均未发现能绑定准确 team ID 的成熟简体中文标准名，新增 canonical 0。
 - 结论：formal union 仍为2,468 IDs / 2,407 canonical / 61 unresolved（97.53%）；M1 1,495/1,553（58 unresolved，96.27%）；M1 OU R1 52/52；MR1 AH 1,867/1,921（54 unresolved，97.19%）；MR1 AI 声明镜像 M1 为1,495/1,553。共享库仍为12,276 IDs / 4,423 canonical。Oldenburg Legends（ID 116419）的 TotalCorner 页面将其关联至 Greece Super League 1 且出现 Portugal Legends 对阵，记录为 provider identity/competition anomaly；待来源澄清，不猜译。
 - 逐项来源及原因见共享仓库 `data/football_display_names/source_review_20261015_batch187.json`、`batch188.json` 与 `formal_scope_coverage.json#unresolved_records`。本批只追加来源审查证据，不更改共享 canonical、代码、模型、策略、赛事范围、订单、结算或 Telegram；也未触发生产流程或发送/编辑消息。经查仍无 verified name 的记录继续显示 unresolved，审查量不能计作覆盖新增。
+
+## 2026-10-15 正式范围未匹配队名来源续审（批次189）
+- 共享仓库 PR [#119](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/119) 已合并，master SHA `3b3c3b37`。批次189复核 KF Vjosa、KF Vllaznia、Romanija Pale、Goldi SC；没有新增 canonical。KF Vllaznia 常见中文名“维拉斯尼亚”对应斯库台俱乐部，而该 unresolved provider record 的赛事身份可能是科索沃 Pozheran 同名队，因此不误用已知译名。
+- 正式范围仍为 union 2,468 IDs / 2,407 canonical / 61 unresolved（97.53%）；M1 1,495/1,553，M1 OU R1 52/52，MR1 AH 1,867/1,921，MR1 AI declared mirror M1。完整逐项 evidence 在 `source_review_20261015_batch189.json` 与共享 `formal_scope_coverage.json#unresolved_records`。
+- 本批只追加来源审查，不修改共享中文映射、显示代码、模型、策略、范围、订单、结算或 Telegram，也未触发生产运行、发送或编辑消息。
