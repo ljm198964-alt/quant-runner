@@ -1,5 +1,11 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 正式范围剩余名称来源复核（本轮无新增映射）
+- 从共享库最新 master `fe86a5fbc8acf1d4263f7b9af8593777b623deb8` 和既有交接继续；没有重扫历史身份，也没有覆盖/重建共享库。当前权威 `formal_scope_coverage.json` 仍为 2,468 个正式范围 team ID、2,375 个 canonical、93 个 unresolved（96.23%）：92 条 `NO_VERIFIED_CANONICAL_ZH`，1 条 team ID 4931 provider identity 为字面值 `0`（`PROVIDER_IDENTITY_INVALID`）。此前提出的“740”是旧快照，不是当前清单数量。
+- 检查了 M1/MR1 已保存身份与译名 evidence、共享 aliases 及英文身份。对埃及低级别队（含 El Mahalla El Kobra、MS Naser Malawy、Dikernis、Belbeis、Mallawi、Al Badari、Asyut Cement、Mostaqbal Watan 等）检索 7M/500/中文足球资料、Sofascore 与俱乐部来源；公开资料能确认部分英文/阿拉伯文俱乐部身份，例如 [Dikernis 官方站](https://dekernessc.com/) 和 [Sofascore Belbeis 页面](https://www.sofascore.com/football/team/belbeis-fc/403001)，但本轮未发现可核验的成熟中文队名。普通地名译名、机器音译或相似俱乐部译名不足以作为 canonical 证据，故本轮新增映射 0，93 条仍按 JSON 中逐条原因保留。
+- 7M/500 精确队名检索未返回可用结果；没有据此声称覆盖完成。未改 M1/M1 OU R1/MR1 AH/MR1 AI 的代码、策略、scope、ledger、结算或通知；未触发扫描、Telegram 编辑或重发。历史 Telegram 编辑数据仍以本节之前记录的实际工作流回执为准。
+- 正式范围与逐项未匹配名单见 `ljm198964-alt/totalcorner-research-bridge:data/football_display_names/formal_scope_coverage.json#unresolved_records`。下轮优先查有稳定俱乐部/联赛身份且可找到中文赛事资料的队；不得把地区名称翻译误当成俱乐部标准名。
+
 ## 2026-10-15 Al-Saqer 映射与已发送消息中文核对补记
 - 共享映射 PR #46 merge SHA `fe86a5fbc8acf1d4263f7b9af8593777b623deb8`；仅为 MR1 AH team 93485 增加 `阿尔萨克尔`（alias `萨克尔`）。formal union 2,468/2,375/93 unresolved（96.23%）；M1 1,553/1,553、M1 OU-R1 52/52、MR1 AH 1,853/1,921、MR1 AI declared mirror 1,553/1,553。M1 formatter 21/21 与 MR1 shared registry 2/2 均通过。
 - 已在共享库更新后实际 dispatch 三条名称-only 修复：M1 `38675377300` PASS，artifacts 报告 eligible 41、edited 0、already_matching 41、missing original text 99、unmapped 100、failed 0；因此没有历史消息实际需要修改成功。MR1 AH `38675380729` PASS，edited 0、eligible 0、already_processed 125、unresolved 0、failed 0。MR1 AI `38675384525` 的 Telegram edit 步骤执行完毕但原 workflow 因并发 push 在回执持久化阶段失败；实际结果 total 201、candidates 9、edited 0、already matching 0、unresolved 192、failed 9，9 条 API 错误均为 `message to edit not found`。该次完整报告已按真实 workflow 输出补写并推送至 MR1 master，commit `35d6d8cdbccb12c8c009c6ad5d008e045a5fdadb`。没有重发任何订单。
