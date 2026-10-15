@@ -2331,3 +2331,10 @@
 - 共享库 PR [#96](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/96) 已合并，merge commit `60b4db67d1a39d5a068be4917f15139e9714c376`。新增来源证据 `data/football_display_names/source_review_20261015_batch172.json`：检查 `qqyg000/lottery-football` 的 119 个 verified candidate groups（源 commit `b4dab52648ebbf8aa52c447897ba046c795060ea`），与当时 formal unresolved 67 个 provider names 按 Unicode NFKD/case-fold/去分隔符做精确别名匹配，结果0个命中。未把近似英文名或未合并候选转写到共享 canonical。
 - 本次仅新增来源审查，不更改 `display_names.json`；正式范围仍为2,468 IDs / 2,401 canonical / 67 unresolved（97.29%）。M1 1,489/1,553（95.88%），M1 OU-R1 52/52，MR1 AH 1,862/1,921（96.93%），MR1 AI declared mirror M1 1,489/1,553。
 - 没有修改策略、模型、Telegram、账本或 settlement，也没有触发生产 workflow。未匹配完整清单与原因以共享 `formal_scope_coverage.json#unresolved_records` 为准；新来源证据已存档，避免重复审查同一数据集版本。
+
+## 2026-10-15 正式范围中文名续补（Spartakos Kitiou / TotalCorner team_id 143674）
+- 共享库 PR [#99](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/99) 已于 11:18 UTC 合并，master merge SHA `dc4b756e6b1ef2050ad682ca99d47415895d52de`。唯一共享 `data/football_display_names/display_names.json` 为 TotalCorner team_id `143674` 新增 canonical `基提奥斯巴达队`；英语 provider identity、ID 和 league_id 571 全部保留，未合并任何同名球队。证据记录及可重跑 curator 为 `data/football_display_names/curated_batch_report_20261015_spartakos_kitiou.json` 与 `ops/curate_formal_scope_spartakos_kitiou_143674_20261015.py`。
+- Tips.GG 简中 AEP Polemidion 赛程将其 2026-09-12 对手 Spartakos Kitiou 显示为“基提奥斯巴达队”；TotalCorner team/league 页确认 ID 143674 属于 Cyprus Division 2，Sofascore 独立核验对应球队身份与同级比赛。非标准来源或近似名称没有被转写。
+- 合并后 formal union 为2,468 IDs / 2,403 canonical / 65 unresolved（97.37%）；M1 1,491/1,553（96.01%），M1 OU-R1 52/52（100%），MR1 AH 1,864/1,921（97.03%），MR1 AI declared mirror 1,491/1,553（96.01%）。共享库总计12,276 IDs / 4,419 canonical。完整剩余清单及逐项原因以共享 coverage 文件为准。
+- 验证：M1 formatter + history-repair 36/36 PASS；MR1 shared-registry/browser-forward 5/5 PASS；MR1 resolver 隔离输出“塞浦路斯乙级联赛 / 基提奥斯巴达队 vs AEP Polemidion”。M1 ledger 和 MR1 已检查的正式发送账本/条目中没有该 ID 的已发送 TG Pick，因此此队无可编辑的历史消息；没有调用 Telegram API、没有重发、没有触发生产 workflow。
+- 仅更改公共展示映射、来源记录、coverage 和隔离测试。M1/M1 OU-R1/MR1 AH/MR1 AI 的模型、策略、赛事范围、盘口来源、账本、结算、Telegram 内容规则及运行调度均未改。
