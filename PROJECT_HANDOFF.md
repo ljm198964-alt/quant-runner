@@ -1,5 +1,10 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 CSM Olimpia Satu Mare 候选译名身份冲突复核
+- 从共享 master `9ac9584ff10a0ba9dc8a55300df2e38949dde250` 当前 unresolved 中复核 TotalCorner `team_id=161196 / CSM Olimpia Satu Mare`。中文搜索命中“萨图马雷奥林匹亚”，但交叉检索发现该译名来源存在赛事身份混淆：雷速相关中文记录将其列在 2025-07-20 Kecskeméti TE 赛程，而罗马尼亚俱乐部 Olimpia MCMXXI 的公开赛程明确记录同日 Kecskeméti TE 6-0 Olimpia MCMXXI；CSM Olimpia 是另一独立实体。TotalCorner ID 161196 则是 CSM Olimpia Satu Mare。故不能把该中文标签套到 ID 161196；不新增 mapping，不更改 provider identity，也不合并两支队伍。参照：[TotalCorner ID 161196](https://www.totalcorner.com/team/view/161196)、[Olimpia MCMXXI 官方赛程](https://fcolimpia.ro/calendar/rezultate/)、[雷速中文记录](https://live.leisu.com/shujufenxi-4365384)。
+- 本轮对其余抽样未匹配项（Mladost Carev Dvor、El Mahalla El Kobra、KF Hajvalia、威尔士业余队等）作定向中文精确检索，未获得能唯一连接到对应 TotalCorner 身份的成熟简体中文球队名；继续保留 unresolved，不用地名直译或自动音译填库。共享覆盖仍以 master 的 `formal_scope_coverage.json` 为准：2,468 formal IDs、2,376 canonical、92 unresolved（96.27%）；M1 1,553/1,553，M1 OU-R1 52/52，MR1 AH 1,854/1,921，MR1 AI declared mirror 1,553/1,553。
+- 四条 Telegram formatter 仍使用唯一共享 registry；MR1 checkout 路径已核对为 `external/football-display-registry/data/football_display_names/display_names.json`，M1 按 `team_id/league_id` 读取同一共享文件。没有策略或展示代码修改。最新历史名称修复既有运行仍是 M1 `38675377300`（edited 0、already_matching 41、missing original text 99、unmapped 100、failed 0），MR1 AH `38675380729`（edited 0、already_processed 125、unresolved 0、failed 0），MR1 AI `38675384525`（edited 0、9 failed with Telegram `400 message to edit not found`、192 unresolved）；本轮无新 canonical，因此没有重复运行编辑器，也没有重发历史单。
+
 ## 2026-10-15 正式中文库新增 Difai Agsu 映射
 - 共享中文库 PR [#47](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/47) 已合并，master SHA `9ac9584ff10a0ba9dc8a55300df2e38949dde250`。TotalCorner `team_id=135458` / provider `Difai FK` 新增 canonical `迪法伊阿格苏队`，别名含 `Difai Ağsu` / `Difai Agsu`；依据 Tips.GG 简体中文球队档案“迪法伊阿格苏队”，并以 TotalCorner 对应 ID、2025-09-13 对阵 Baku Sporting 的 2-2（与中文档案比赛记录一致）及俱乐部官网身份交叉核对。仅展示名称，不改原 ID/provider name。
 - 合并后重新读取权威 coverage：formal union 2,468/2,376/92（96.27%）；M1 1,553/1,553，M1 OU-R1 52/52，MR1 AH 1,854/1,921（96.51%），MR1 AI declared mirror M1 1,553/1,553。其余 92 条逐项记录继续以共享 `data/football_display_names/formal_scope_coverage.json` 为准。
