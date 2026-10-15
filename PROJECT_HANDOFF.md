@@ -1891,3 +1891,9 @@
 - 追加只读审查 `data/football_display_names/source_review_20261015_batch139.json`：核对 Mladost Carev Dvor、El Mahalla El Kobra、Vllaznia/Vllazina/KF Vllaznia、FC Yerevan、UCSA、Cardiff Draconians、Ynyshir Albions、FS La Massana、Oldenburg Legends。mapping changes=0；原因包括缺乏成熟简体队名、多个 provider ID/联赛上下文身份冲突或来源仅能证明英文身份。没有用未经验证音译填数。
 - 复核来源包括精确 TotalCorner 队页、俱乐部/协会页面、Sofascore 中文球员/赛事上下文及公开足球数据库。尤其不得将阿尔巴尼亚 Vllaznia 的“维拉斯尼亚”跨 ID 套到 Kosovo Superliga 同名队；不得把 El Mahalla El Kobra 和 Ghazl El-Mehalla 合并。
 - 此批只更新共享库中的 source-review 证据和本交接记录，没有更改 canonical、coverage 数字、显示代码、生产工作流或 Telegram 历史消息。无 TG 编辑或发送；无 M1/MR1 策略、账本、结算改动。正式范围逐项清单以共享 `data/football_display_names/formal_scope_coverage.json#unresolved_records` 为准。
+
+## 2026-10-15 正式赛事中文名补齐（第133批）
+- 共享 PR [#44](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/44) 已合并，master commit `925c4952b01f003a640f04e12298905ad1417886`。为 TotalCorner team_id `151289`（Al-Anwar，league_id 246）补入 canonical `安瓦尔SA`，别名保留 `Al Anwar SA`、`安瓦尔 SA`、`安瓦尔`。FootballAnt 简中对阵页使用“安瓦尔SA”，Tips.GG 用“安瓦尔 SA”，17500/8BO 用“安瓦尔”；TotalCorner 精确 ID 页与赛程/联赛对照身份。没有合并其它安瓦尔类球队。
+- 正式范围现为2,468 IDs / 2,373 canonical / 95 unresolved（96.15%）；M1 1,553/1,553，M1 OU-R1 52/52，MR1 AH 1,851/1,921（96.36%），MR1 AI 声明镜像M1 1,553/1,553。共享库12,276个ID中4,389有canonical。
+- M1 formatter回归测试19/19 PASS；MR1共享注册表测试2/2 PASS。额外用MR1实际resolver隔离渲染 `Al Faisaly Harmah vs 安瓦尔SA`，联赛解析为“沙特阿拉伯甲级联赛”；未发测试TG。精确搜索当前本机 M1 formal ledger 未发现 team_id 151289，因此本批历史消息编辑0（无对应单）；没有运行或重复发送历史订单。M1/MR1运行工作流按既有配置在运行时 checkout 共享仓库 master，后续自然运行可读取该映射。
+- 数据统计按当前正式快照修正：该 unresolved 项的历史 `systems` 标签若机械递增会令 M1 成为1554/1553；本批按正式范围基线校准，M1仍为1553/1553，仅对MR1 AH和总并集移除该未匹配项。没有修改模型、策略、发送/锁单条件、账本或结算。
