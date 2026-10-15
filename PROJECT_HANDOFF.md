@@ -1880,3 +1880,8 @@
 - formal union 从2,468 IDs / 2,371 canonical / 97 unresolved（96.07%）变为2,468 / 2,372 / 96（96.11%）。M1 为1,553/1,553（100%）；M1 OU-R1仍52/52；MR1 AH仍1,850/1,921（96.30%）；MR1 AI声明范围1,553/1,553。历史confidence≥50 cohort仍181/182。
 - M1 formatter/repair测试18/18 PASS；MR1 shared resolver测试2/2 PASS，隔离结果 `希腊足球超级联赛 葡萄牙传奇队 vs Oldenburg Legends`。精确 team ID 在当前M1 formal ledger及策略/前瞻记录中没有正式发送记录，本映射没有待编辑历史TG；未发送/编辑Telegram，也未触发生产workflow。该队 TotalCorner 页面含室内/40分钟比赛记录，而 formal scope 保留 league_id 141；本次只改队名展示，未重释赛事关联。
 - 未改任何生产模型、策略、筛选、账本、结算或通知规则。
+
+## 2026-10-15 正式范围余项名称源审查（第131批）
+- 共享 PR [#42](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/42) 已合并，master commit `bb532ae7b8c442c80220f2cbeb82c706fecd8cec`。新增审查文件 `source_review_20261015_batch138.json`，核验 Al Raya SC（135353）、Al Magd（94863）、Goldi SC（136149）、MS Tala（136896）。
+- 精确 TotalCorner 页面及俱乐部/足球资料可确认英文身份，但未发现能绑定相应 team ID 的成熟简体中文足球队名；Goldi 另有 Team FC 更名线索，未将潜在新名直接覆盖旧 provider identity。mapping changes=0，formal union 仍2,468 / 2,372 / 96（96.11%）。
+- 未改 canonical、球队 ID、赛事范围、模型/策略、账本、结算或 Telegram。
