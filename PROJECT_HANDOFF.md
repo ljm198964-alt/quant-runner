@@ -2267,3 +2267,10 @@
 - formal union 更新为2,468 / 2,397 / 71（97.12%）；M1 1,485/1,553（95.62%），M1 OU-R1 52/52，MR1 AH 1,858/1,921（96.72%），MR1 AI declared mirror 1,485/1,553（95.62%）。
 - 验证：M1 Telegram formatter / repair 31/31 PASS，隔离渲染显示“雷泽克内FA”且盘口/水位保持原样；MR1 shared resolver + MR1 AI formatter 4/4 PASS，隔离渲染显示“雷泽克内FA vs 里加水手”。尚未运行/发送生产 Telegram；仅后续运行读取共享 master 后生效。
 - 未修改策略、模型、赛事范围、账本、结算或 TG 格式。来源：[OddsGPT 简中雷泽克内FA 页面](https://www.oddsgpt.com/yuce/team/4141/R%C4%93zekne-FA/zh)，[7M 拉脱维亚赛程示例](https://team.7m.com.cn/650125/index_gb.shtml)，[拉脱维亚足协 Rēzeknes FA/BJSS](https://lff.lv/klubi/rezeknes-fabjss-12450/)，[TotalCorner team 124999](https://www.totalcorner.com/team/view/124999)。
+
+## 2026-10-15 M1 每周正式实战双账规则（用户明确确认）
+- 从本日起，M1 所有成绩汇报须同时提供**全历史总账**与**自然周周账**，不能仅报总累计。
+- 周账以 **北京时间 Asia/Shanghai 周一 00:00:00 至下周一 00:00:00（不含）**为边界，等同周一至周日；以该周**首次正式 Telegram SENT 时间**归属订单，不按结算时间将旧单误算为本周新单。周跨期未结订单在所属原周持续追踪，后续结算更新归属原周，不重复计算。
+- 模型身份独立：M1 AH / M1 OU 旧线 / M1 OU R1 各自已发、已结、待结、全赢/半赢/走水/半输/全输、净盈利U、ROI；可以提供合计，但不得将旧 OU + R1 合并冒充 R1。
+- 仅确认实际 TG 正式 SENT 回执的订单，研究/测试/影子/UNKNOWN 不算正式。严格保留 Crown 盘口证据，不修改策略、TG 派单或结算源。
+- 每周一上午（北京时间）自动交付上一自然周及最新全历史双账；第一次预定 2026-10-19。已建立每周自动汇报任务，但**未部署生产仓库内自动生成 weekly report 的代码或 workflow**，不能将提醒/汇报任务称为生产报表部署成功。若逐单 ledger 因体量限制无法取全，须披露缺口，不推测周账。
