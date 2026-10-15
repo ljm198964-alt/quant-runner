@@ -1,5 +1,10 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 塞浦路斯/捷克/拉脱维亚未匹配名精确检索
+- 继续使用共享 master `fe86a5fbc8acf1d4263f7b9af8593777b623deb8` 当前 93 条 formal unresolved。对 `ASIL Lysi`（15615）、`Spartakos Kitiou`（143674）、`SK Artis Brno`（164619）、`Augšdaugavas NSS`（162203）及同批已确认身份进行简体中文精确查询，并查 UEFA、俱乐部、拉脱维亚足协资料。页面提供英文/希腊文/捷克文/拉脱维亚文队名，没有发现可靠简体中文足球资料采用的 canonical 名。
+- 搜索结果虽可核实 ASIL Lysi 的 Cyprus 身份及 SK Artis Brno 的俱乐部现名，但把 Lysi、Brno 或 Augšdaugava 地名翻译后拼成队名属于自行构造；不加入共享库。本批新增 canonical 0，统计保持 2,468 / 2,375 / 93。
+- 参考：[UEFA ASIL Lysi](https://www.uefa.com/nationalassociations/teams/2601426--asil-lysi/)、[SK Artis Brno 官网](https://www.artisbrno.cz/sk-artis-brno-a-tym)、[拉脱维亚足协 Augšdaugavas NSS](https://lff.lv/klubi/augsdaugavas-nss-36419/)。
+
 ## 2026-10-15 塞尔维亚/乌克兰 formal-unresolved 名称核验
 - 从共享 master `fe86a5fbc8acf1d4263f7b9af8593777b623deb8` 提取联赛上下文为 337/55/63 的 6 条未匹配身份：FC Yerevan、UCSA、FK Kulykiv-Bilka、SU Dinamo Jug、FK Usce Novi Beograd、FK Proleter 023。精确中文队名检索并对照俱乐部/联赛身份资料后，没有命中可确认的成熟简体中文名；乌克兰协会/俱乐部使用的拉丁/乌克兰语名称及中文页面 UI 均不足以据此造中文 canonical。FK Proleter 023 近期发生迁址/更名，须避免误接到其他同名 Proleter 俱乐部的旧中文名。
 - 本批未新增 canonical；整体仍为 2,468 IDs / 2,375 canonical / 93 unresolved。已核实来源：[UCSA 官方/俱乐部信息](https://fcucsa.github.io/ucsa/)、[SU Dinamo Jug 官网](https://sudinamojug.com/zvanicno-dinamo-jug-u-prvoj-ligi-srbije/)、[塞尔维亚甲级联赛 Proleter 023 页面](https://www.prvaliga.rs/en/tim/proleter-023/)。
