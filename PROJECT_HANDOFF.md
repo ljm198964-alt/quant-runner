@@ -1,5 +1,11 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 前缀归一候选补查（PR #78 已合并）
+- 对 Reep 团队注册表除原精确名外，另按有限足球俱乐部类型前后缀（FC/FK/KF/NK/SC/FS/CSM 等）剥离后再做精确比较；当前 77 个未匹配中发现 24 个英文身份候选（此前仅报出 18 个原串精确候选）。这仅生成研究候选，不代表 TotalCorner ID 交叉验证。
+- 对 24 个候选 Wikidata QID 一并查询简中标签、简中别名及中文维基 sitelink，24 个均无结果；本轮新增中文 canonical 0，registry 不变。剩余 53 项无此类 Reep 候选，其中包含 provider identity 无效的 team 4931；详情见共享 `source_review_20261015_batch158.json`。共享 PR [#78](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/78) 已合并，merge SHA `f59803efaf9ea7752bad82b3b180d4e95ef543c7`。
+- 同日体彩公开数据两项补查亦已合并：PR [#76](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/76) merge `e2f9c9b6df88ea7c07fa13be77308002bbdf4131`（24,888 行英文别名表没有简中 standard 名；13 个命中只是拉丁别名），PR [#77](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/77) merge `6a84dc428243179946c670ff3c3ed1665e85864e`（历史赔率 CSV 29,730 行的英文主客队名列全空，无法英中 join）。
+- 最新共享正式覆盖应以 master `f59803ef` 的 `formal_scope_coverage.json` 实读为准；本批仅审计文档，不改 registry、production formatter、策略、账本或 Telegram，也未触发 Telegram 历史编辑。
+
 ## 2026-10-15 体彩公开名称资源交叉核验（PR #76、#77 已合并）
 - 新检查公开 `qqyg000/lottery-football` 两份资源。24,888 行 `team_name_mappings.csv` 与当前 77 个未匹配名按英文规范化精确比对，13 个仅命中拉丁别名；该文件所有 24,888 个 `standard_team_name` 均无简体中文字，且别名表不含 TotalCorner team-ID，不能作为中文 canonical 或唯一身份 crosswalk。详见共享审计 `source_review_20261015_batch156.json`，PR [#76](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/76) merge SHA `e2f9c9b6df88ea7c07fa13be77308002bbdf4131`。
 - 同仓库 `historical_odds_data.csv` 共 29,730 行；虽有 `home_team_en` / `away_team_en` 栏，但当前快照两栏全部为空，因此不能把该文件的中文主客队名可靠连接到 77 个英文 provider identity。详见 `source_review_20261015_batch157.json`，PR [#77](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/77) merge SHA `6a84dc428243179946c670ff3c3ed1665e85864e`。
