@@ -1897,3 +1897,8 @@
 - 正式范围现为2,468 IDs / 2,373 canonical / 95 unresolved（96.15%）；M1 1,553/1,553，M1 OU-R1 52/52，MR1 AH 1,851/1,921（96.36%），MR1 AI 声明镜像M1 1,553/1,553。共享库12,276个ID中4,389有canonical。
 - M1 formatter回归测试19/19 PASS；MR1共享注册表测试2/2 PASS。额外用MR1实际resolver隔离渲染 `Al Faisaly Harmah vs 安瓦尔SA`，联赛解析为“沙特阿拉伯甲级联赛”；未发测试TG。精确搜索当前本机 M1 formal ledger 未发现 team_id 151289，因此本批历史消息编辑0（无对应单）；没有运行或重复发送历史订单。M1/MR1运行工作流按既有配置在运行时 checkout 共享仓库 master，后续自然运行可读取该映射。
 - 数据统计按当前正式快照修正：该 unresolved 项的历史 `systems` 标签若机械递增会令 M1 成为1554/1553；本批按正式范围基线校准，M1仍为1553/1553，仅对MR1 AH和总并集移除该未匹配项。没有修改模型、策略、发送/锁单条件、账本或结算。
+
+## 2026-10-15 正式赛事中文名补齐（第134批）
+- 共享库 PR [#45](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/45) 已合并，merge commit `949d00ffffb999895c3185d4dbe664d83c43c1e6`，新增 team_id `171382`（Sporting Club d'Escaldes）canonical `埃斯卡尔德斯SC`。Sofascore 简中球员档案使用该中文队名；TotalCorner 精确 ID 页显示同一英文队名并列出 Andorra Premier/Second Division；俱乐部官网与 Sofascore 队页交叉确认 SC Escaldes。与其他 Escaldes 队保持各自 ID/名称，不合并。
+- 最新 formal union：2,468 IDs、2,374 canonical、94 unresolved（96.19%）；M1 1,553/1,553；M1 OU-R1 52/52；MR1 AH 1,852/1,921（96.41%）；MR1 AI declared mirror 1,553/1,553。共享库12,276 IDs / 4,390 canonical。
+- M1 formatter/repair tests 20/20 PASS；MR1 shared-registry tests 2/2 PASS，额外隔离 resolver 实际输出 `安道尔乙级联赛 / 埃斯卡尔德斯SC vs CE Casa de Portugal`。没有发送或编辑 Telegram。此批只改展示映射、coverage/审计/curator/formatter测试；模型、策略、账本、结算均未改。
