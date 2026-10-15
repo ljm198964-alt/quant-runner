@@ -1843,3 +1843,9 @@
 - 对 Sirens（7619）、FC Yerevan（48357）、FK Kulykiv-Bilka（149818）、Jedinstvo Bihać（46488）、Asil Lysis（15615）作精确源核验：拒绝机器翻译“警报”；拒绝把同一 FootyStats 页面里的另一球队“埃里温凤凰”映射给 FC Yerevan；其余官方/足球来源只确认拉丁身份，未找到可靠的简体中文足球 canonical。未猜译，安全新增0。
 - 共享仓库 PR [#35](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/35) 已合并，merge commit `4387ce14c9dce86fca631567a244b9592c9372e3`（分支提交 `b4809739`）。M1 formatter/历史编辑单测 17/17 PASS。M1 ledger 只读 dry-run 有41条基于既有 message ID 与现存 canonical 可编辑候选，99条缺原消息文本，100条无可用映射；本机没有 M1 Telegram token/chat 凭据，未发送 Telegram API edit 请求，实际编辑0。其余系统历史消息未触碰。
 - M1/MR1 AH/MR1 AI 仍共用单一 registry；本批未改四系统 formatter、模型、策略、阈值、比赛范围、账本、结算或 Telegram 规则。正式范围 unresolved 的完整逐项清单与原因仍以共享库 `formal_scope_coverage.json#unresolved_records` 为权威；无新增 mapping，现有 canonical 全数保留。
+
+## 2026-10-15 正式范围余项来源复核（第125批）
+- 共享库 master 更新至 PR #36 merge `3d8412d802e3c51a429f0dd05d9e605b498a1f32`；该 PR 仅增加 8 条未匹配身份的来源审查记录，没有新增 canonical。当前覆盖仍为 2,468 IDs / 2,367 canonical / 101 unresolved（95.91%）；M1 1,548/1,553、M1 OU-R1 52/52、MR1 AH 1,846/1,921、MR1 AI declared mirror 1,548/1,553。
+- 核验 KF Hajvalia、KF Bashkimi Koretin、KF Dardana、FK Sveikata、Dunaivtsi、Sluch Starokonstyantyniv、Fortetsya Kamianets-Podilskyi、Iskra Teofipol、St. James Swifts。中文足球页面对 St James Swifts 仍保留英文名；Epicentr Dunaivtsi 的中文页面不足以证明与 formal unresolved Dunaivtsi ID 是同队；其他资料没有提供可验证的简体中文 canonical，故均未猜译。证据记录在共享 `source_review_20261015_batch135.json`。
+- M1 formatter/历史 TG edit 单测仍为 17/17 PASS。没有映射变化，本批没有触发 Telegram 历史编辑或生产工作流；此前 dry-run 的41条候选仍需具备本地安全凭据或既有正式工作流执行，历史消息实际编辑数没有增加。
+- 未修改 M1、M1 OU-R1、MR1 AH、MR1 AI 的模型/策略、规则、账本、结算、发送条件或消息格式。剩余逐项名单及原因以共享 `formal_scope_coverage.json#unresolved_records` 为准。
