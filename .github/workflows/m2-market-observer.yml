@@ -1,0 +1,73 @@
+name: M2 Market Research Observer
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'research/m2/**'
+      - '.github/workflows/m2-market-observer.yml'
+  schedule:
+    - cron: '50 4,10,16,22 * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: m2-market-observer
+  cancel-in-progress: false
+
+jobs:
+  observe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout public M2 observer
+        uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: M2 strict time and Crown unit tests
+        run: python -m unittest -v research.m2.test_m2_shadow
+      - name: Validate existing source access
+        shell: bash
+        env:
+          PRIVATE_REPO_TOKEN: ${{ secrets.PRIVATE_REPO_TOKEN }}
+        run: |
+          if [ -z "${PRIVATE_REPO_TOKEN:-}" ]; then
+            echo "::error::Existing source checkout token is unavailable"
+            exit 2
+          fi
+      - name: Checkout existing market evidence read-only
+        uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/totalcorner-research-bridge
+          ref: master
+          path: source
+          persist-credentials: false
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+      - name: Observe latest complete scan and market residual features
+        env:
+          SOURCE_PATH: source/results/latest.json
+          OUTPUT_PATH: ${{ runner.temp }}/m2-observations.json
+        shell: bash
+        run: |
+          python research/m2/m2_shadow.py --source "$SOURCE_PATH" --output "$OUTPUT_PATH"
+          python - <<'PY'
+          import json, os
+          from datetime import datetime, timezone
+          from pathlib import Path
+          r=json.loads(Path(os.environ["OUTPUT_PATH"]).read_text())
+          finished=datetime.fromisoformat(r["source_scan_finished_at"].replace("Z","+00:00"))
+          age=(datetime.now(timezone.utc)-finished).total_seconds()/3600
+          summary=Path(os.environ["GITHUB_STEP_SUMMARY"])
+          with summary.open("a") as f:
+              f.write("## M2 read-only forward observation\n\n")
+              f.write(f"- Source scan: {r['source_run_id']}\n")
+              f.write(f"- Age of source scan: {age:.2f} hours\n")
+              f.write(f"- Eligible observations: {r['observation_count']}\n")
+              f.write("- Locked orders: 0; Telegram sends: 0\n")
+              f.write("- No performance or ROI claim; independent calibration pending.\n")
+          if age < -0.1 or age > 6:
+              raise SystemExit("Source scan stale: cannot call this a fresh forward observation")
+          PY
+      # Protected Crown snapshots stay in runner.temp, never public artifacts.
