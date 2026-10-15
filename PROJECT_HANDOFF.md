@@ -1,5 +1,11 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 正式范围球队中文续补（batch 123）
+- 从共享库 master `0883dd065eb53307f41f8b31508f410e19d1df28` 继续，对剩余正式未匹配项做定向身份核查；没有重跑历史身份恢复。新增 TotalCorner `team_id=2442`：provider 原名仍为 `CS Stefanesti`，canonical 简中名 `斯特凡内什蒂林达布队`，别名保留 `Lindab Stefanesti`。Tips.GG 简中球队页以 `斯特凡内什蒂林达布队` 标注 Lindab Stefanesti；罗马尼亚县足协及俱乐部历史资料证明 `CS/FC Stefanesti` 与 `Lindab Stefanesti` 为同一俱乐部名称沿革；TotalCorner 比赛历史核对罗马尼亚赛事身份。证据链接及说明写入唯一共享 registry 的 source 字段。
+- 共享库 PR [#26](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/26) 已合并，merge SHA `58f338d89e69be7ce0f3facbd11fa0fcc144bfed`。formal union 当前 2,468 IDs / 2,357 canonical / 111 unresolved（95.50%）；M1 1,539/1,553（99.10%），M1 OU-R1 52/52（100%），MR1 AH 1,837/1,921（95.63%），MR1 AI 声明镜像 M1 1,539/1,553（99.10%）。剩余身份和原因以共享库 `formal_scope_coverage.json#unresolved_records` 为准；无可靠来源项继续 unresolved，不做猜译。
+- M1 formatter 与 display-repair 本地测试 13/13 PASS，新增测试通过 ID 2442 确认中英别名均按 team ID 渲染，不改盘口、方向数据或正式 pick。可读取的 M1/M1 OU-R1 正式账本中未找到该 team ID 的既有 pick；本批没有运行历史 TG 编辑工作流或发送 Telegram，因此 TG 历史编辑 0；未来消息依赖正式 runtime 读取已合并的共享 registry。MR1 AH、MR1 AI 没有额外触发生产运行。
+- 本轮只更新共享展示名称、来源/coverage、独立 formatter 测试及本交接；未改 M1、M1 OU-R1、MR1 AH、MR1 AI 模型/策略、scope、阈值、盘口源、账本、结算或发送规则。
+
 ## 2026-10-15 剩余正式范围缺名定向复核（batch 122）
 - 先以共享 master `0883dd065eb53307f41f8b31508f410e19d1df28` 的实际 `formal_scope_coverage.json` 为准：仍为 2,468 个正式范围球队 ID，2,356 有 canonical，112 未匹配；未沿用旧“740/718”快照。
 - 对共享库全部历史 JSON 身份/中文证据档案做了按 unresolved provider identity 的精确交叉检查，没有发现此前未登记的同 ID 中文别名。对埃及低级别、科索沃、马耳他、北马其顿、威尔士及波罗的海候选做了中文来源定向检索；找到的官方/权威球队资料多数只保留英文/本地品牌，不能据此造中文名。
