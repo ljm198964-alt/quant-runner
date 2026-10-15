@@ -12,6 +12,10 @@
 - 对照 Tips.GG 英文/中文球队页以及协会/俱乐部资料复查 Cyprus、Wales、Ukraine、Baltics、Balkans 等未匹配项；可确认身份或页面存在，但未得到同队、已采用的简体中文球队名称。新增 canonical 仍为 0，formal counts 不变；唯一可推进点为留下可复用的负面来源核验，避免后续重复把英文页面标题误判为中文证据。
 - 共享库工作树未修改；交接记录更新与推送另见本次 Runner 提交。未触发 M1/MR1 运行或 Telegram 操作。
 
+## 2026-10-15 正式范围近似名排除复核（El Mahalla）
+- 针对 `team_id=10782 / El Mahalla El Kobra` 检索中文足球站。结果中的“加斯马哈拉”来自 `Ghazl El Mahalla SC`（中文资料有球队条目），不能移植给 ID 10782：TotalCorner 的 [10782 球队页](https://www.totalcorner.com/team/view/10782)明确标作 Egypt Division 2，并列出其与 Baladiyet El Mahallah、El Hammam、Abo Qir Semad 等同级赛事；中文“加斯马哈拉”资料对应顶级俱乐部 Ghazl El Mahalla。英语近似地名不足以证明同一球队，因此 10782 保持 unresolved，未把两个俱乐部合并。
+- 本次检索也出现 365Scores 中 `Baladiyet El Mahalla` 的中文页面，但这是另一个球队身份（共享库有独立 provider identity），不能作为 10782 的名称来源。未新增 canonical；正式覆盖计数不变。
+
 ## 2026-10-15 Al-Saqer 映射与已发送消息中文核对补记
 - 共享映射 PR #46 merge SHA `fe86a5fbc8acf1d4263f7b9af8593777b623deb8`；仅为 MR1 AH team 93485 增加 `阿尔萨克尔`（alias `萨克尔`）。formal union 2,468/2,375/93 unresolved（96.23%）；M1 1,553/1,553、M1 OU-R1 52/52、MR1 AH 1,853/1,921、MR1 AI declared mirror 1,553/1,553。M1 formatter 21/21 与 MR1 shared registry 2/2 均通过。
 - 已在共享库更新后实际 dispatch 三条名称-only 修复：M1 `38675377300` PASS，artifacts 报告 eligible 41、edited 0、already_matching 41、missing original text 99、unmapped 100、failed 0；因此没有历史消息实际需要修改成功。MR1 AH `38675380729` PASS，edited 0、eligible 0、already_processed 125、unresolved 0、failed 0。MR1 AI `38675384525` 的 Telegram edit 步骤执行完毕但原 workflow 因并发 push 在回执持久化阶段失败；实际结果 total 201、candidates 9、edited 0、already matching 0、unresolved 192、failed 9，9 条 API 错误均为 `message to edit not found`。该次完整报告已按真实 workflow 输出补写并推送至 MR1 master，commit `35d6d8cdbccb12c8c009c6ad5d008e045a5fdadb`。没有重发任何订单。
