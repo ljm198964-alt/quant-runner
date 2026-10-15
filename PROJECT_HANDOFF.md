@@ -1,5 +1,11 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 现成体育彩票映射与正式 unresolved 精确交叉（batch 131）
+- 复核共享 master `dededd6cb0844b4029c49c72997a3c0f686a6ab5` 当前 `formal_scope_coverage.json`：正式范围仍为 2,468 IDs / 2,365 canonical / 103 unresolved（95.83%）。
+- 为避免重复零散网页搜索，本轮直接使用既有公开中文映射证据 `qqyg000/lottery-football` 的 `reports/verified-team-name-mappings-2026-09-28.json`（其报告基于已核验别名与俱乐部身份来源），将当前 103 个 provider_name 与 `mapping_rows_added.alias_team_name` 做 Unicode/重音/标点归一化后的全量精确匹配：0 命中。没有使用模糊字符串相似度、同联赛近似名或同比分关系推断球队身份。故无安全可导入项，registry 数量不变。
+- 该结果改变后续检索优先级：已确认常见中国足彩中英别名库不能覆盖这批余项；下一批应继续按 unresolved `team_id + league_ids` 查公开中文比赛档案/俱乐部身份资料，重点留意跨平台英文别名。若只找到英文或其他语言的音译，仍不足以登记 canonical_zh。完整 103 项与理由见唯一共享库 `data/football_display_names/formal_scope_coverage.json#unresolved_records`（102 `NO_VERIFIED_CANONICAL_ZH`，1 `PROVIDER_IDENTITY_INVALID`）。
+- 未改 shared registry、模型、策略、TG、账本、结算或调度。本条只记录可复核的批量交叉结果。
+
 ## 2026-10-15 正式范围中文库与 Telegram 被动复核（batch 130）
 - 从共享 master `dededd6cb0844b4029c49c72997a3c0f686a6ab5` 及 quant-runner handoff `8049f619605394b1a96cb24b718e8603d2d0138f` 接续；没有重跑全历史身份恢复，也没有改动策略/账本/调度。
 - 以共享库 `data/football_display_names/formal_scope_coverage.json` 当前实际统计为准：正式范围 union 2,468 个 team ID，canonical 2,365，unresolved 103，覆盖率 95.83%。M1 1,546/1,553（99.55%）；M1 OU R1 52/52（100%）；MR1 AH 1,844/1,921（95.99%）；MR1 AI 声明范围镜像 M1 1,546/1,553（99.55%），观测 confidence>=50 cohort 181/182（99.45%）。共享库 12,276 个 team ID / 4,381 个 canonical。
