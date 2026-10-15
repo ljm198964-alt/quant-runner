@@ -1874,3 +1874,9 @@
 - 共享 PR [#40](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/40) 已合并，master commit `3523068eceb8b1e7df1d429b1c9920bee2b0c6e4`。正式覆盖计数未变：2,468 IDs / 2,371 canonical / 97 unresolved（96.07%）。新增来源审查 `data/football_display_names/source_review_20261015_batch137.json`，mapping changes=0。
 - 复核 FC Yerevan、CSM Olimpia Satu Mare、UCSA、FK Proleter 023；官方/联赛资料能确认球队身份，但检索未找到足以定为简体中文足球常用队名的标签，故不音译/直译补入。每项保存 team ID、联赛上下文、证据及保留 unresolved 的原因。
 - 未修改共享 canonical、M1/MR1 formatter、模型策略、正式账本、结算或 Telegram 消息。
+
+## 2026-10-15 正式范围中文名补齐（第130批）
+- 共享 PR [#41](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/41) 已合并，master commit `f926bb26d56918b117c9d47af8b6b592913defb7`。为 TotalCorner team_id `47589`（Portugal Legends）新增 canonical `葡萄牙传奇队`。中国体育媒体 [体坛周报](https://www.ttplus.cn/publish/app/data/2025/09/16/568925/os_news.html)及[新浪体育](https://sports.sina.cn/global/europe/2024-05-21/detail-inavykhu4242249.d.html?cid=75552&node_id=75552&vt=4)使用该中文名称；[TotalCorner 精确 ID 页](https://www.totalcorner.com/team/view/47589)显示该实体参加葡萄牙/法国/德国等传奇队比赛。保留现有 ID 和联赛关联，不改比赛范围。
+- formal union 从2,468 IDs / 2,371 canonical / 97 unresolved（96.07%）变为2,468 / 2,372 / 96（96.11%）。M1 为1,553/1,553（100%）；M1 OU-R1仍52/52；MR1 AH仍1,850/1,921（96.30%）；MR1 AI声明范围1,553/1,553。历史confidence≥50 cohort仍181/182。
+- M1 formatter/repair测试18/18 PASS；MR1 shared resolver测试2/2 PASS，隔离结果 `希腊足球超级联赛 葡萄牙传奇队 vs Oldenburg Legends`。精确 team ID 在当前M1 formal ledger及策略/前瞻记录中没有正式发送记录，本映射没有待编辑历史TG；未发送/编辑Telegram，也未触发生产workflow。该队 TotalCorner 页面含室内/40分钟比赛记录，而 formal scope 保留 league_id 141；本次只改队名展示，未重释赛事关联。
+- 未改任何生产模型、策略、筛选、账本、结算或通知规则。
