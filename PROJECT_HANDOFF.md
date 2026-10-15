@@ -2050,3 +2050,8 @@
 - 共享 master 当前为 `da6ad326b71cdec1c1eba75c90cde60e35ba725d`；对 FC Yerevan（48357）、Al Masry Salloum（93070）、Mallawi SC（90141）、AEP Polemidion（114610）、UCSA（146029）、Pioneers Club（90728）追加检查中文足球数据页。相应中文界面仍保留英文名，或没有精确绑定该 TotalCorner ID 的惯用简中译名；FC Yerevan 页面还将“埃里温凤凰”作为另一队列出，故不得把它移植到 FC Yerevan。
 - PR [#58](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/58) 已合并，新增审查记录 `data/football_display_names/source_review_20261015_batch148.json`；没有更改 canonical 或 coverage 数字。当前正式并集仍2,468 IDs、2,379 canonical、89 unresolved（96.39%）。本次审查证据支持继续保留这些球队为 unresolved，而不是音译填数。
 - 本轮没有触发比赛扫描或 Telegram 操作；其余生产规则和后台状态不变。
+
+## 2026-10-15 公开球队映射表覆盖审计（第137批）
+- 共享 master 更新为 `5bbf315e8c64481997147f34600da8c999a7539e`。对 QiuXiaoCe/lottery-football 当前 `team_name_mappings.csv`（24,888行，源提交 `b4dab52648ebbf8aa52c447897ba046c795060ea`）与当前89个 unresolved provider names 做规范化精确匹配，命中15个ID、63条匹配行；逐行检查无一条含中文名称，字段只有英文/拉丁身份别名。因此这份表可辅助确认英文身份，但不能为这些 ID 提供 canonical 中文名。
+- 结果写入共享库 `data/football_display_names/source_review_20261015_batch149.json`，PR [#59](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/59) 已合并。未新增名称，coverage 仍2,468 IDs / 2,379 canonical / 89 unresolved（96.39%）；M1和M1 OU-R1仍100%。不以英文别名、机器音译或赛事地名填充 canonical。
+- 未触发生产扫描或 Telegram 操作；策略、账本、通知规则均未改。
