@@ -1,5 +1,11 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 formal unresolved 继续核名（source review PR #101）
+- 在上节共享 master `2b7e6e98` 基线上继续对9个正式范围未匹配项做精确名称检索，覆盖 Mladost Carev Dvor、Buducnost Popovac、FK Atmosfera、Fortetsya Kamianets-Podilskyi、Jedinstvo Bihac、AEP Polemidion、Trethomas Bluebirds、FK Majevica Lopare、Cetatea 1932 Suceava。以俱乐部/协会/赛程来源核对身份，但没有发现可绑定至对应 TotalCorner team ID 的成熟简体中文足球标准名；未将中文页面上的拉丁名误记为中文名，也未做字面翻译。来源和逐项决定已写入共享 `data/football_display_names/source_review_20261015_batch175.json`，PR [#101](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/101) 已合并，merge SHA `b420f5f3774df292e8e28ad9122c21735be4c0de`。
+- 这批只增加 source-review 证据，不改 `display_names.json` 或 coverage；formal union 仍为 2,468 个 team ID / 2,404 canonical / 64 unresolved（97.41%）。当前64个 unresolved 全量名单及原因仍以共享 `data/football_display_names/formal_scope_coverage.json#unresolved_records` 为权威来源。
+- 自动化本地精确别名反查对64个 provider name 在共享12,276条team记录中未发现规范化后的完全别名命中。Telegram 状态没有改变：M1 formatter/repair 仍为37/37本地测试通过，MR1相关测试为11/11；M1 dry-run 41条可替名、99条缺原文、114条无可替映射。本轮无本机 M1 Telegram 凭据，未调用 Telegram API；无历史消息编辑回执、无新真实 TG 发送验收。旧的历史编辑结果仍按上节记录。
+- 没有更改任何模型、策略、盘口、正式账本、结算或消息格式。下一轮从共享 master `b420f5f3` 及最新 formal coverage 继续，不重新做全历史身份恢复。
+
 ## 2026-10-15 正式范围中文库与 Telegram 续核（shared master `2b7e6e98`）
 - 从共享仓库最新 master `2b7e6e9873e149329859f15a098dd7db027ab689` 实读：formal-scope union 为 2,468 个 team ID，2,404 有 canonical 中文、64 未匹配（97.41%）；M1 1,492/1,553（96.07%），M1 OU R1 52/52（100%），MR1 AH 1,864/1,921（97.03%），MR1 AI declared M1 mirror 1,492/1,553（96.07%）。64 条完整 ID/name/league/system/reason 清单在共享 `data/football_display_names/formal_scope_coverage.json#unresolved_records`；其中63条 `NO_VERIFIED_CANONICAL_ZH`、team_id 4931 的 provider_name=`0` 为 `PROVIDER_IDENTITY_INVALID`。旧交接中的“740 个未匹配”已过期，不应继续作为当前数字。
 - 本轮针对 Mladost Carev Dvor、Buducnost Popovac、FK Atmosfera、Fortetsya Kamianets-Podilskyi、KF Hajvalia、Jedinstvo Bihać、埃及低级别俱乐部、Shkëndija Haračine、AEP Polemidion、Trethomas Bluebirds 等做了精确名/中文来源查询。可用页面多仅能确认英文身份，中文站也有保留拉丁原名的情况；没有新增可核实且适合 canonical 的简体中文名，因此共享 registry 未改、未用音译补齐。此前所有 64 个正式 unresolved 均已有独立 source-review。
