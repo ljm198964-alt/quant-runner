@@ -2248,3 +2248,11 @@
 - 重点防止实体混淆：A&N 已解散并与 FC Suhareka 合并，女队 KFF A&N 是另一实体；Mladost Carev Dvor 已解散；Drini i Bardhë 不按字面翻译；Shkëndija Haraçinë 与 Tetovo 的 Shkëndija 区分。
 - 覆盖快照仍为 formal union 2,468 / 2,395 / 73 unresolved（97.04%）；M1 1,553/1,553、M1 OU R1 52/52、MR1 AH 1,868/1,921、MR1 AI declared mirror 1,553/1,553。现有源审查索引覆盖 formal unresolved 73/73；经审查不等于所有名称都已译定。
 - 本批只增加来源审查证据；没有改 canonical、coverage、生产显示代码、模型/策略/范围/账本/结算/Telegram，也未发送或编辑历史消息。
+
+## 2026-10-15 正式范围中文名称补齐（FS La Massana）
+- 共享 registry 更新已推送至 `ljm198964-alt/totalcorner-research-bridge` master，commit `3e278b56`：TotalCorner team_id `50476` / `FS La Massana` 新增 canonical `马萨纳`。依据 FootballAnt 简体中文球队页与同站英文实体名交叉核对，并以 TotalCorner 精确 ID 页确认 provider identity；仅展示层映射。推送前先快进同步了 4 个远端 M1 durable-state 提交，均予以保留。
+- 当前正式 union：2,468 IDs / 2,396 canonical / 72 unresolved（97.08%）。M1：1,484/1,553（95.56%）；M1 OU-R1：52/52；MR1 AH：1,857/1,921（96.67%）；MR1 AI declared mirror of M1：1,484/1,553（95.56%）。共享库总量仍为12,276 team IDs。
+- 本次校正覆盖统计：旧快照的 M1 1,553/1,553 与 unresolved_records 中仍标为 M1 的记录不一致；现在按 formal unresolved records 的 systems 标签重算。新增 `ops/curate_formal_scope_public_club_tables.py` 的幂等统计修复，避免未来重复执行累计出超过 team_ids 的覆盖数。不要将“已有 source review”误报为 canonical 已匹配。
+- 映射测试：M1 Telegram formatter / repair 31/31 PASS；M1 formatter 隔离渲染 team 50476 得到“马萨纳”（示例的另一未匹配实体保留 provider 原名）。MR1 shared resolver + MR1 AI formatter 4/4 PASS；MR1 外部 checkout workflow 使用共享仓库 master 作为 registry 输入。
+- 历史 Telegram 编辑未执行：本机没有 `M1_TELEGRAM_BOT_TOKEN` / `M1_TELEGRAM_CHAT_ID`；现有 M1 repair dry-run 从正式 M1 ledger 统计出41条有映射可替换、99条缺存档消息文本、104条无可用名称映射。没有修改/重发消息。未发现现成历史编辑 workflow；也没有访问 MR1 AH、MR1 AI、M1 OU-R1 各自 Telegram 历史账本的可用授权执行链，故不能宣称它们的旧消息已修复。
+- 没有修改任何模型、策略、阈值、赛事范围、盘口源、订单/结算账本或 Telegram 格式。M1/MR1 生产工作流未触发。源名依据：[FootballAnt 简中 FS La Massana 页面](https://www.footballant.com/zh-CN/football-data/team/41767)，[FootballAnt 英文同队页面](https://www.footballant.com/football-data/team/41767)，[TotalCorner team 50476](https://www.totalcorner.com/team/view/50476)。
