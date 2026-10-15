@@ -1,5 +1,10 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 正式范围剩余项来源复核 batch 145
+- 对14个 team_id（43945、49843、51504、51602、52385、56852、50576、113675、113979、117487、154158、154224、154225、154405）做定点身份/简体名称来源核验。覆盖 Kosovo、Lithuania、Latvia、North Macedonia、Egypt；俱乐部身份可确认的条目仍无精确绑定到 provider ID 的成熟简体中文标准名，名称模糊项保持 unresolved。canonical 新增0。
+- 审查证据位于共享库 `data/football_display_names/source_review_20261015_batch145.json`；PR [#55](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/55) 已合并，merge SHA `5705768f93232696f0bb3e2edd4d9b5e711c5ec8`。formal coverage 数值保持不变。
+- 不改共享 canonical、任何生产模型/策略/阈值/范围/账本/结算/TG 规则；本批不触发扫描或消息编辑。
+
 ## 2026-10-15 正式范围剩余项来源复核 batch 144
 - 以 batch 143 合并后的共享 master 继续，对 team_id 15615（Asil Lysis）、114288（APEA Akrotiriou）、114610（AEP Polemidion）、143652（Shturmi）、143674（Spartakos Kitiou）做精确中文来源核查。可确认部分俱乐部身份，但未找到能绑定精确 provider ID 的成熟简体中文 canonical；Tips.GG 简中 AEP 页面仍保留英文名，塞浦路斯足协页面只给希腊文/拉丁身份，故不造音译。映射新增0。
 - 审查证据：共享 `data/football_display_names/source_review_20261015_batch144.json`；PR [#54](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/54) 已合并，merge SHA `266c484257ac3e6385dfcff9bf65a7f8a7e15f9b`。唯一 canonical registry 与正式范围计数不变，仍按 master `formal_scope_coverage.json` 读取。
