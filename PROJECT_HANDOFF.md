@@ -1747,3 +1747,7 @@
 - 最新共享 master 为 `2b76721aaa408e38b6578e1476dc3ba6e164d9b5`。正式范围2,468 IDs：2,360 canonical、108 unresolved（95.62%）。M1 1,541/1,553（99.23%）；M1 OU-R1 52/52（100%）；MR1 AH 1,840/1,921（95.78%）；MR1 AI declared mirror of M1 1,541/1,553（99.23%）；MR1 AI observed confidence≥50 cohort 181/182（99.45%）。完整 unresolved 名单及逐项原因仍只在共享 `data/football_display_names/formal_scope_coverage.json#unresolved_records`。
 - 展示回归：M1 formatter/history repair 16/16 PASS；MR1 mounted shared-registry + MR1 AI formatter 5/5 PASS。隔离解析分别确认 team ID 65036 输出“法罗群岛足球甲级联赛 霍伊维克FC vs …”，team ID 43875 输出“科索沃甲级联赛 KF Kika队 vs …”。M1 formal ledger 未找到这两个 ID 的已发送 Pick；MR1 V6 formal、MR1 AI sent ledger / prospective ledger 搜索也未找到对应记录，故本批没有历史 TG 待编辑项，不重跑编辑器。未来消息将由既有共享 registry 自动解析。
 - 本批只改共享展示数据、curator、coverage 和测试；历史 Telegram 实际编辑0，未重发任何消息。策略、盘口、赛事范围、订单、结算及通知规则均未修改。其余108个缺乏可核验简体中文名称的队继续 unresolved，不用机器音译凑覆盖率。
+
+## 2026-10-15 正式范围余项来源复核（第113批）
+- 以共享 master `2b76721aaa408e38b6578e1476dc3ba6e164d9b5` 的108项 unresolved 为对象继续定向搜索。Tips.GG 简中 `KF Vjosa` 球队页虽然带中文界面，但标题和正文仍保留官方拉丁名；Sofascore 简中 `Al Masry Salloum` 页面亦保留英文队名；Sofascore/LiveScore 的 `Proleter 023` 页面保留英文品牌；其余被查的埃及低级别队、马其顿/塞尔维亚队仅找到外文身份或联赛记录。均不足以形成可信简体 canonical，因此新增0、正式未匹配维持108。
+- 本批检查没有修改共享 JSON、formatter、策略或账本，也未触发 Telegram 编辑/发送。完整候选和未匹配原因仍以共享 `formal_scope_coverage.json#unresolved_records` 为准；后续继续按正式 team ID 和比赛级身份核对，不把地点转写或机器翻译当中文来源。
