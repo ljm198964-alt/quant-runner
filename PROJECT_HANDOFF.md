@@ -1,5 +1,11 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 正式范围中文名称续补（batch 120）
+- 继续 PR #23 后，补入 TotalCorner `team_id=135539` / `Hellas Syrou → 希腊锡罗斯`。来源为球天下体育中文赛事页及多个中文赛程页对同一 Hellas Syrou 对阵的稳定用名；ID 和原英文身份保持不变。共享库 PR [#24](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/24) 已合并，master merge SHA `f6328b064869a5e838edf426d8383ecab72d0164`。
+- 当前唯一正式范围统计：2,468 个队 ID，2,356 有 canonical display 名称，112 unresolved（95.46%）。M1 1,538/1,553（99.03%）；M1 OU-R1 52/52（100%）；MR1 AH 1,836/1,921（95.58%）；MR1 AI 镜像 M1 1,538/1,553（99.03%）。剩余完整队名/原因请读取 M1 master `data/football_display_names/formal_scope_coverage.json#unresolved_records`：111 个 `NO_VERIFIED_CANONICAL_ZH`，1 个 `PROVIDER_IDENTITY_INVALID`（ID 4931 的原始队名为字面 `0`）。本轮对候选名称做了定向核验，没有把无中文来源的球队音译后冒充主流规范名。
+- 本地展示验收：M1 display tests 9/9 PASS；MR1 shared registry reader/formatter 2/2 PASS，测试通过 `FOOTBALL_DISPLAY_REGISTRY_DIR` 直接读取共享 registry。四条正式展示链仍共享唯一 registry；未改 Telegram 版式、签名或策略字段。对本轮映射涉及的历史 M1 ledger/TG repair 状态没有找到可编辑已发送订单，因此本轮真实编辑 0；无测试发送、无历史重发。没有启动生产 workflow，云端新 Telegram 展示回执未验证。
+- 本 runner handoff 随 PR #7 同步。模型、策略、阈值、赛事范围、盘口、正式订单、账本、结算和发送规则未改。
+
 ## 2026-10-15 正式范围中文名称续补（batch 119）
 - 从共享库 master `533c2765` 继续。新增 3 个带公开中文赛事数据来源的正式范围映射：`109103 NK Stupcanica Olovo → 斯图普卡尼察`（Tips.GG 简中球队页，并以波黑联赛赛程核对）、`82622 BE1 NFA → Be1 NFA`（LiveScore 简中站使用“立陶宛Be1 Nfa”，品牌名保留）、`110165 Attard → 阿塔德`（Tips.GG 简中球队页）。ID、provider identity 和赛事归属均未改；未合并重复 provider ID。
 - 更新后唯一共享库正式范围实算：2,468 IDs，2,355 canonical，113 unresolved，95.42%。M1 1,537/1,553（98.97%）；M1 OU-R1 52/52（100%）；MR1 AH 1,835/1,921（95.52%）；MR1 AI 声明镜像 M1 1,537/1,553（98.97%）。完整剩余队名和逐项原因以 `data/football_display_names/formal_scope_coverage.json#unresolved_records` 为准；其中 112 个目前无经核实 canonical 中文名，1 个 `team_id=4931` 的 provider identity 是无效字面 `0`，均未猜译。
