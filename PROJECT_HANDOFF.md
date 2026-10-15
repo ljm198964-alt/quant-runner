@@ -1756,3 +1756,8 @@
 - 继续核验 FC Yerevan（ID 48357）、Sirens（7619）、Besa（42740）及埃及低级别球队。FC Yerevan 的球队/身份来源确认它是亚美尼亚球队，但简中足球资料没有给出球队中文标准名；“叶里温/埃里温”只能确认城市译名，不能据此拼造球队名。Sirens 的简中页面仍以英文队名显示；Besa 的资料存在多个国家/城市同名俱乐部，当前 TotalCorner 只给出 Kosovo Superliga 联赛关联，不足以选定唯一中文名。Qena SC 与 Shaban M Qana 是不同身份，不转移名称。埃及低级别队检索结果多为英文、阿拉伯文或不可靠机器翻译，未形成新增映射。
 - 可复核来源：Sofascore FC Yerevan 身份页 `https://www.sofascore.com/football/team/fc-yerevan/294403`；其俄语页面用“ФК Ереван”，不是简中标准名 `https://www.sofascore.com/ru/football/team/fc-yerevan/294403`；Tips.GG Sirens 比赛页 `https://tips.gg/cn/archive/naxxar-lions-football-vs-sirens-football/`；Besa Peja 身份资料 `https://en.wikipedia.org/wiki/FC_Besa_Peja`；Qena SC 身份资料 `https://en.wikipedia.org/wiki/Qena_SC`。
 - 本批新增0；共享库仍为正式范围2,468 IDs、2,360 canonical、108 unresolved。未修改共享 JSON、展示 formatter、策略、正式账本或 TG 消息。不能把地名音译、赛果页自动翻译或同名球队译名移植当作可靠中文球队名。
+
+## 2026-10-15 正式范围余项来源复核（第115批）
+- 对余项中的科索沃低级别队再查 7M、500、雷速及简中网页：KF Drenasi、KF Vitia、KF Vjosa、KF Hajvalia 均未找到可核验的简体中文标准队名；现有中文界面赛事页仍直接显示拉丁名，不作为中文 mapping 证据。
+- 检查异常身份 team_id 4931：当前 M1 记录的 provider_name 为字面值 `0`。本机历史缓存 `data/m1_history_cache/299.json` 全部联赛缓存检索只发现一条引用：Azerbaijan Premier League、2016-05-15、对阵 Zira IK，主队仍记为 `0`；无可恢复的球队身份或中文名称。因此该项保持 `PROVIDER_IDENTITY_INVALID`，不从对手、赛果或联赛猜队名。
+- 本批新增0；正式范围仍 2,468 IDs / 2,360 canonical / 108 unresolved（95.62%）。没有改共享库、模型、账本、展示代码或 Telegram 消息。7M/500/雷速检索无结果，源身份细节及缓存证据路径已保留供后续复核。
