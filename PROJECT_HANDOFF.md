@@ -1,5 +1,11 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 正式范围英文-中文本地语料再交叉与罗马尼亚/格鲁吉亚核验
+- 重新以共享远端 `master=fe86a5fbc8acf1d4263f7b9af8593777b623deb8` 为准，确认 formal union 仍为 2,468 IDs / 2,375 canonical / 93 unresolved（96.23%），其中 M1 1,553/1,553、M1 OU-R1 52/52、MR1 AH 1,853/1,921、MR1 AI declared M1 mirror 1,553/1,553。旧“740”与当前 unresolved 清单不一致。
+- 把当前 93 条逐一与仓库既有 `country_team_backfill_audit_20261011.json`、`reep_chinese_name_evidence.json` 做名称规范化后的精确英文交叉：两个数据集分别 258、229 条，本轮命中均为 0。未使用模糊拼写或地名相似度。
+- 对 CSM Olimpia Satu Mare、FC Yerevan、Shturmi 等核对中文检索结果与俱乐部/协会身份。中文检索没有提供能和当前 TotalCorner identity 唯一对应的成熟中文队名；FC Yerevan 名称还存在旧俱乐部与当前同名实体时间/身份差异，不能据泛化城市译名映射。故无安全新增 canonical。
+- 本次只补记审计证据；正式映射和 coverage 数字未改。参考：[CSM Olimpia Satu Mare 官方足球页](https://csmolimpia.ro/ro/fotbal)、[官方票务赛事页](https://www.bilete-csmolimpia.ro/matches)、[FC Yerevan 官网](https://www.fcyerevan.com/en)、[SFC Shturmi 身份资料](https://en.wikipedia.org/wiki/SFC_Shturmi)。
+
 ## 2026-10-15 科索沃/波黑/黑山低级别队来源核验补记
 - 以共享 registry `master=fe86a5fbc8acf1d4263f7b9af8593777b623deb8` 的 formal unresolved 清单为准，抽查 KF Hajvalia、KF Vllaznia/Vllazina、Besa、KF Vitia、KF Bashkimi Koretin、KF Drenasi、Onix Banje、KF Dardana、A&N、KF Vjosa、KF FC Mitrovica、KF Dukagjini Gjakove、Romanija Pale、Jedinstvo Bihac、Majevica Lopare 等 26 个 TotalCorner 身份；对照查询中文比分/7M/500、Sofascore 中文入口及当地足协/俱乐部资料。
 - 公开来源可核实若干球队英文/本地语身份，但未找到足以证明具体简体中文惯用队名的中文资料。特别是 `Jedinstvo Bihac`（波黑）与 `FK Jedinstvo Franca`（黑山）是不同俱乐部；`Vllaznia` 的常见中文名“维拉斯尼亚”对应阿尔巴尼亚 Shkodër 俱乐部，不能移植给 Kosovo 联赛中的相近 provider 名。`Romanija Pale` 中文赛程页面仍使用英文队名，也不构成中文 canonical 证据。因此本批新增映射 0，未写机器音译或近似队名。
