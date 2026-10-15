@@ -1,5 +1,10 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 正式中文库续补：FK Jedinstvo Franca（PR #71 待合并）
+- 在共享 master `0476223047547874e49c824520ec10c522daaeb5` 的正式 unresolved 清单中确认 TotalCorner `team_id=151147` / `FK Jedinstvo Franca` / league IDs `47, 280`。Tips.GG 简中赛程页在黑山乙级联赛将同一支 Bijelo Polje 的 Jedinstvo 标为“耶丁斯特沃队”；TotalCorner 同 ID 页面显示 FK Jedinstvo Franca 与 Montenegro Prva Liga 赛程，黑山足协俱乐部页确认 Jedinstvo Franca 为该俱乐部官方名称。按精确 ID 新增 canonical“耶丁斯特沃”，别名保留“耶丁斯特沃队”；不向其他同名 Jedinstvo 传播。来源与幂等 curator 见共享库 `curated_batch_report_20261015_jedinstvo_franca_151147.json`、`ops/curate_formal_scope_jedinstvo_franca_151147_20261015.py`。
+- 共享库 PR [#71](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/71) 已创建，分支 commit `ae2ad651`，等待合并；合并前权威 master 仍为上面的 SHA。该 PR 分支覆盖预览：正式并集 2,468 IDs / 2,389 canonical / 79 unresolved（96.80%）；M1 1,553/1,553、M1 OU-R1 52/52、MR1 AH 1,864/1,921（57 unresolved）、MR1 AI 声明范围 1,553/1,553。PR 合并后再以 master 文件核对最终数字。
+- 验证：M1 display 单测 24/24 PASS；M1 和 MR1 均使用该分支同一共享 registry 做按 team ID 隔离渲染，结果为“黑山甲级联赛 耶丁斯特沃 vs 波德戈里察未来”。MR1 shared-registry 测试 2/2 PASS。没有触发生产 runtime，也没有发送或编辑 TG 消息；策略、模型和账本不变。
+
 ## 2026-10-15 正式中文库续补：UCSA Tarasivka（PR #70）
 - 对 TotalCorner `team_id=146029` / provider `UCSA` / `league_id=63` 补入中文赛事数据站明确使用的“UCSA塔拉西夫卡”。体球网比赛页同时列出中文名与英文 `UCSA Tarasivka`；TotalCorner 同 ID 球队页确认 UCSA 及 Ukraine Persha Liga 赛程。Exact-ID curator/report：共享库 `curated_batch_report_20261015_ucsa_146029.json`、`ops/curate_formal_scope_ucsa_146029_20261015.py`。
 - PR [#70](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/70) 已合并，master merge `0476223047547874e49c824520ec10c522daaeb5`。正式并集 2,468 IDs / 2,388 canonical / 80 unresolved（96.76%）；M1 1,553/1,553、M1 OU-R1 52/52、MR1 AH 1,863/1,921（58 unresolved）、MR1 AI 声明范围 1,553/1,553。剩余逐项见共享 master `formal_scope_coverage.json#unresolved_records`。
