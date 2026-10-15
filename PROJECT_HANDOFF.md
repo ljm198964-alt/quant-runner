@@ -1,5 +1,11 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 正式中文库续补：UCSA Tarasivka（PR #70）
+- 对 TotalCorner `team_id=146029` / provider `UCSA` / `league_id=63` 补入中文赛事数据站明确使用的“UCSA塔拉西夫卡”。体球网比赛页同时列出中文名与英文 `UCSA Tarasivka`；TotalCorner 同 ID 球队页确认 UCSA 及 Ukraine Persha Liga 赛程。Exact-ID curator/report：共享库 `curated_batch_report_20261015_ucsa_146029.json`、`ops/curate_formal_scope_ucsa_146029_20261015.py`。
+- PR [#70](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/70) 已合并，master merge `0476223047547874e49c824520ec10c522daaeb5`。正式并集 2,468 IDs / 2,388 canonical / 80 unresolved（96.76%）；M1 1,553/1,553、M1 OU-R1 52/52、MR1 AH 1,863/1,921（58 unresolved）、MR1 AI 声明范围 1,553/1,553。剩余逐项见共享 master `formal_scope_coverage.json#unresolved_records`。
+- 验证：M1 display/repair 25/25 PASS，team 146029 精确 ID 解析 PASS；MR1 shared-registry/AI formatter/history-repair 5/5 PASS。隔离 MR1 渲染得到“乌克兰足球甲级联赛 UCSA塔拉西夫卡 vs 乌斯诺维贝尔格莱德”。没有触发生产 runtime 或发送/编辑 Telegram。
+- 只改变共享展示名称数据；策略、模型、范围、盘口、账本和结算保持原样。历史 TG 未编辑或重发。
+
 ## 2026-10-15 正式中文库续补：FK Usce Novi Beograd（PR #69）
 - 在正式 unresolved 中确认 TotalCorner `team_id=165687` / `FK Usce Novi Beograd` / `league_id=337` 的雷速中文球队档案 canonical 为“乌斯诺维贝尔格莱德”；TotalCorner 同 ID/英文名页面与中文塞尔维亚甲级联赛比赛页交叉确认身份。另一个中文译法“乌斯切诺维贝尔格莱德”仅留 alias。证据和复跑脚本分别见共享库 `curated_batch_report_20261015_usce_165687.json` 与 `ops/curate_formal_scope_usce_165687_20261015.py`。
 - PR [#69](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/69) 已合并，master merge `098f31814efd2771b642af64fad5326d23b35493`。最新正式并集 2,468 IDs / 2,387 canonical / 81 unresolved（96.72%）；M1 1,553/1,553、M1 OU-R1 52/52、MR1 AH 1,862/1,921（59 unresolved）、MR1 AI 声明范围 1,553/1,553。逐项余项见共享 master `data/football_display_names/formal_scope_coverage.json#unresolved_records`。
