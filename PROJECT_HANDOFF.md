@@ -1,5 +1,12 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 正式范围中文名称续补：Kosovo Vllaznia Pozheran（PR #88 已合并）
+- 从最新共享 master `7f58a58d2441b21c6d5c33693045a8ff2a4f0e9b` 继续，未重跑历史身份恢复。核验 TotalCorner `team_id=42262` 在 Kosovo Superliga（league_id 8293），其 2018-04-06 对 KF Liria Prizren 的 0-0 赛事可与独立 Kosovo 历史赛程中 Vllaznia Pozheran 对应；FootballAnt 中文赛事页显示“维拉斯尼亚波兹兰”。因此只将 ID 42262 canonical 设为“维拉斯尼亚波兹兰”，不移用阿尔巴尼亚 Vllaznia Shkodër 的“维拉兹尼亚”。来源及证据说明随共享映射保存。
+- 共享库 PR [#88](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/88) 已合并，merge SHA `fb4341ca93f7629f68823e0887648cefd8ca447d`。合并后从 master 文件实际读取：正式范围 2,468 IDs，2,395 canonical、73 unresolved（97.04%）；M1 1,553/1,553，M1 OU-R1 52/52，MR1 AH 1,868/1,921（53 unresolved），MR1 AI 声明镜像 M1 范围 1,553/1,553，MR1 AI observed-confidence cohort 181/182；共享总库 12,276 IDs、4,411 canonical、7,865 unresolved（35.93%）。其他模型分项未因这条 M1-only team 而增加。
+- 验证：`python3 -m unittest test_m1_telegram_display test_m1_telegram_display_repair` 31/31 通过；M1 formatter 隔离渲染确认 AH 方向也显示“维拉斯尼亚波兹兰”。MR1 shared resolver 从 `FOOTBALL_DISPLAY_REGISTRY_DIR` 读取同一共享库并正确展示该球队；MR1 AI Telegram formatter 3/3 通过。没有发送测试 Telegram，也没有修改正式策略、账本或结算。
+- 剩余正式范围的完整逐 ID 名称、别名、联赛和未匹配原因，以共享 master `data/football_display_names/formal_scope_coverage.json` 的 `unresolved_records`（73 条）为准；本轮抽查 Mārupes SC、MS Tala 等未发现可采用的成熟简体中文队名，只有协会身份/拉丁或阿拉伯名称、或非中文转写，不据此造名。旧交接快照“740 未匹配”已过时，当前为 73。
+- 历史 Telegram 编辑状态仍按已完成的正式修复工作流回执记录，不把本次映射提交当成历史消息修复：M1 repair run `38707019598` 成功，符合检查的 41 条已是正确文本（edited 0），99 条缺原始消息文本，104 条因未映射跳过，失败 0；MR1 AH run `38707026076` 成功，eligible 0、125 条已处理/无需重复，失败 0；MR1 AI run `38707032804` 未能编辑 9 条（Telegram 返回 `message to edit not found`），192 条因原始映射未解析跳过，成功编辑 0。不得声称历史消息已改好或重发；新映射仅供后续共享 resolver 使用。该 ID 未发现 M1 正式 ledger 的对应 Pick。
+
 ## 2026-10-15 正式范围中文名续补：Simal FK（PR #81 已合并）
 - 从已交接的正式范围清单继续，没有重跑历史身份恢复。8BO 球队资料将英文名 `Simal FK` 与简体中文“西马尔”明确并列；TotalCorner `team_id=168002` 页面确认同一 provider name，且 league_id 227 为 Azerbaijan Division 1。因此只给精确 team ID 168002 增加“西马尔”，来源和交叉核验链接写入共享 `display_names.json`。未把名称传播至其他 ID。
 - 共享库 PR [#81](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/81) 已合并，merge SHA `f93e3198e5121df9f961df9803dcbca2c4beec2e`。正式统计（从合并后 master 的 `formal_scope_coverage.json` 重读）：2,468 正式 team IDs、2,393 canonical、75 unresolved（96.96%）；MR1 AH 1,867/1,921（97.19%，54 unresolved），M1 1,553/1,553，M1 OU-R1 52/52，声明镜像 M1 scope 的 MR1 AI 1,553/1,553。共享总库 12,276 IDs、4,409 canonical、7,867 unresolved。
