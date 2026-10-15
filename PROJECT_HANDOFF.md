@@ -2109,3 +2109,9 @@
 - 本地验证：M1 Telegram formatter/repair 测试25/25 PASS；MR1 shared registry 与 browser-forward notifier 测试3/3 PASS。隔离 M1 formatter 对 team_id 164619 输出中文联赛/队名和中文 AH 方向；MR1 resolver 的共享库测试通过。没有测试或生产 TG 发送。
 - 以精确 ID 检查 M1 formal ledger 和 MR1 prospective ledgers，未发现 team_id 164619 的正式已发送 Pick；历史消息编辑0、失败0（无对应可编辑目标）。既有 formatter 读取唯一共享 registry，后续自然运行会消费新名称；本批未触发生产工作流。
 - 仅更改公共展示映射、覆盖报告、来源记录和 curator。未修改 M1/M1 OU-R1/MR1 AH/MR1 AI 的模型、策略、阈值、赛事范围、盘口来源、正式账本、结算或通知规则。
+
+## 2026-10-15 正式范围剩余名称来源核验（第154批）
+- 共享仓库 PR [#67](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/67) 已合并，master commit `14cd98a0e98d8416a3d2695e65db1d33a8371abe`。新增 `data/football_display_names/source_review_20261015_batch153.json`，逐项记录16个仍未匹配的 TotalCorner team ID、联赛范围、核验来源与保留 unresolved 的原因。
+- 复核对象包括 FK Atmosfera、Marupes SC、Spartakos Kitiou、AEP Polemidion、Al Masry Salloum、Mostaqbal Watan Club、Belbeis FC、UCSA、FK Kulykiv-Bilka、Fortetsya Kamianets-Podilskyi、Ganjabasar FK、Khankendi FK、FK Potkozarje、KF Kamjani、CSM Olimpia Satu Mare、St. James Swifts。中文界面未提供可绑定精确 ID 的成熟简中 canonical，或跨源身份仍有冲突；未采用机器音译。
+- 本批 mapping changes=0；正式范围仍为2,468 IDs / 2,383 canonical / 85 unresolved（96.56%）。M1 1,553/1,553；M1 OU-R1 52/52；MR1 AH 1,859/1,921；MR1 AI declared mirror 1,553/1,553。逐队证据与原因见共享 coverage 的 `unresolved_records` 及 source-review 文件。
+- 仅添加只读来源审查记录。没有触发生产扫描、发送/编辑 Telegram，未更改任何模型、策略、阈值、赛事范围、账本或结算。
