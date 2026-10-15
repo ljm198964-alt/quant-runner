@@ -2160,3 +2160,10 @@
 - MR1 AH run [38689813133](https://github.com/ljm198964-alt/quant-runner/actions/runs/38689813133) 成功；报告 125 条已处理、unresolved=0、failed=0、newly edited=0。此回合没有新增 edit receipt，故不把 workflow PASS 当成新消息编辑成功。
 - MR1 AI run [38689817402](https://github.com/ljm198964-alt/quant-runner/actions/runs/38689817402) 成功并将回执持久化到 MR1 自己的 `telegram-edit-repair.json`：201 条中192条因无可核实 canonical 名称 unresolved；9条可尝试编辑、edited=0、failed=9，Telegram 均返回 `message to edit not found`。失败原因按 API 回执记录；不能据此断定消息被删除还是由其他发送主体发出，也没有重发。
 - 本轮没有新增共享 canonical 名称，也没有新建生产逻辑。M1、M1 OU R1、MR1 AH、MR1 AI 的策略、模型、scope、阈值、盘口源、账本、结算均未改；历史 TG 只运行上述名称-only原地编辑器，未发任何新消息。剩余阻碍是85个暂无可靠中文名、M1部分旧账本缺原文或映射、MR1 AI 部分旧消息不可由现有 bot 编辑。
+
+## 2026-10-15 正式范围中文名称续补（Dunaivtsi / TotalCorner team_id 46574）
+- 共享库 PR [#73](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/73) 已合并，master merge SHA `3bb50f32c22dbc00fe2b0cd8d19707d51f788bb5`。唯一共享 `data/football_display_names/display_names.json` 为 team_id `46574`（provider `Dunaivtsi`，league_id `319`）新增 canonical `杜纳伊夫齐`，只绑定该 ID；保留原始英文 identity，不向其他同名/同城球队扩散。
+- 名称证据：TotalCorner 精确 team 页面与乌克兰足协俱乐部资料核对身份；中文足球赛程/比赛资料以“杜納伊夫齊/杜纳伊夫齐”称呼该队或同名足球俱乐部，中文地名条目引用中国地图出版社。来源与判定记录在共享库 `curated_batch_report_20261015_dunaivtsi_46574.json`。
+- 以合并后的 `formal_scope_coverage.json` 实数：正式并集 2,468 IDs / 2,391 canonical / 77 unresolved（96.88%）；M1 1,553/1,553，M1 OU R1 52/52，MR1 AH 1,865/1,921（56 unresolved），MR1 AI 声明镜像 M1 1,553/1,553。共享库 12,276 IDs / 4,407 canonical。完整未匹配名单与原因以共享 coverage 的 `unresolved_records` 为准；旧“718/740”是历史快照，不代表当前剩余数。
+- 验证：M1 Telegram formatter 26/26 PASS；历史显示修复器测试 2/2 PASS；JSON 解析及 `git diff --check` PASS。隔离渲染按 team_id 46574 显示“杜纳伊夫齐”，AH 方向和水位不变。没有触发正式 runtime、没有发送/编辑 Telegram 历史消息、没有修改账本。
+- 本批只更改共享展示映射、来源证据、覆盖快照及隔离测试；不涉及模型、策略、赛事范围、盘口来源、锁单、结算或通知条件。剩余 77 项继续按精确 team ID 查证；没有可靠中文来源的仍保留 unresolved，不猜译。
