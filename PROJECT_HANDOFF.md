@@ -1,5 +1,10 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 正式范围中文名续补：Pioneers Club（team_id 90728）
+- 按当前共享 master 正式范围清单继续处理，不做历史身份大扫描。Betimate 简体中文赛前页将 `Pioneers Club` 与“先锋俱乐部”配对，并列出同一埃及乙级联赛 B 组对阵 Bani Ebeid FC；TotalCorner `team_id=90728` 页面确认 provider identity 为 Pioneers Club 且列出 Egypt Second Division B fixtures。仅为 90728 写入 canonical `先锋俱乐部`，保留 provider 原名/ID及来源说明；不向相似球队传播。来源：[Betimate 中文对阵页](https://betimate.com/cn/news/previews/pioneers-club-vs-bani-ebeid-fc-prediction-odds-betting-tips-10012025-2271066)、[TotalCorner team 90728](https://www.totalcorner.com/team/view/90728)。
+- 共享库已推送到 `master`：`53b09f3791ad470c14dfc6f9910a0461b0ae06a7`。验证：M1 formatter/display-repair 32/32；MR1 shared-registry resolver 2/2；MR1 AI 使用同一 registry 的隔离 formatter 显示“埃及第二级联赛 先锋俱乐部 vs 巴尼”，AH 方向“先锋俱乐部”，水位保持香港水位。M1 ledger 没有 team_id 90728 的历史 Pick。
+- 使用现有 name-only repair workflows（仅编辑既有消息，不重新发送订单）复核历史显示：M1 run [38712935410](https://github.com/ljm198964-alt/quant-runner/actions/runs/38712935410) PASS，edited 0、already matching 41、缺原始文本 99、unmapped 113、failed 0；MR1 AH run [38712941222](https://github.com/ljm198964-alt/quant-runner/actions/runs/38712941222) PASS，edited 0、已处理/无需再编辑 125、unresolved 0、failed 0；MR1 AI run [38712946503](https://github.com/ljm198964-alt/quant-runner/actions/runs/38712946503) workflow PASS，但 Telegram 实际 edited 0、unresolved 192、failed 9，9 条 API 原因均为 `400 message to edit not found`。因此没有任何历史消息可声称已编辑成功；新发消息将读共享 registry。未改策略、模型、订单字段、正式结算或派单规则。
+
 ## 2026-10-15 正式范围未匹配队伍定向复核（batch166，PR #90 已合并）
 - 继续按共享 master `1cc80f19a49e382bcfc34f7b7a086c815bb0cd04` 的 `formal_scope_coverage.json` 核查，检查 AEP Polemidion (114610)、FK Potkozarje (188078)、FK Atmosfera (51602)、MS Naser Malawy (50576)、Al Magd (94863)、KF Tefik Canga (154225)。Tips.GG、中文 Livescore/角球数据页或中文球衣资料中，队名仍显示英文；其余可核查资料使用当地语/英文，没有可靠简中 canonical 与具体 TotalCorner ID 的对应证据。新增 canonical 0，逐项来源和理由记入 `data/football_display_names/source_review_20261015_batch166.json`。审计 PR [#90](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/90) 已合并，master SHA `ead29d2162138e9475bb9ff944459498bc0be893`；覆盖仍为正式 2,395/2,468（73 未匹配）。
 
