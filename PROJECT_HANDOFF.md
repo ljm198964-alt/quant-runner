@@ -1,5 +1,12 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 正式范围中文名续补（batch 133）
+- 从共享库最新 master `e277794500ce51a3129e73e6464bebd04f3d0f46` 接续。为 TotalCorner `team_id=185790`、`FSC Feniks-Mariupol` 增加 canonical `马里乌波尔凤凰`。依据 Qtx 中文足球赛程中的对应中文队名，并交叉核验 TotalCorner ID/乌克兰甲级联赛、俱乐部官网现名“Фенікс-Маріуполь”和乌克兰足协所列俱乐部及官网链接。未将不同的旧 ID `111435`（`FSC Mariupol`）合并或擅自赋予同一中文名。唯一共享 registry、formal coverage 和可重复策展脚本/测试均已更新。
+- PR [#34](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/34) 已合并；merge SHA `5e4c4c2b469b7d2b713204b7bfb9427491ed0899`。最新 formal union 实算 2,468 IDs、2,367 canonical、101 unresolved（95.91%）；M1 1,548/1,553（99.68%）；M1 OU-R1 52/52（100%）；MR1 AH 1,846/1,921（96.10%）；MR1 AI declared mirror 1,548/1,553（99.68%）。完整剩余名单/原因以该共享提交的 `data/football_display_names/formal_scope_coverage.json#unresolved_records` 为准。共享 registry 为12,276个 team IDs、4,383 canonical；中文来源类别新增1条 `verified_chinese_sports_data_crosschecked_official_club_and_provider`。
+- M1 AH/OU 共用 formatter 隔离输出为“乌克兰足球甲级联赛 马里乌波尔凤凰 vs … 全场让球 马里乌波尔凤凰 0@0.92”；M1 显示测试15/15、历史显示修复纯函数测试2/2通过。MR1 以已合并共享文件挂载唯一 registry 运行 resolver 测试2/2通过，ID 185790 解析为“马里乌波尔凤凰”，未知 ID 仍按原逻辑回退 provider 名，不影响信号/模型。代码检查确认 M1、MR1 AH 与 MR1 AI 展示均读取这一共享 registry。
+- 当前可读 M1 正式账本中，team ID 185790/旧名无已发送 Pick；GitHub 上 MR1 formal sent ledger 和 MR1 AI Telegram 状态也未发现该 team ID/provider name 的既有发送记录。因此本批历史 TG 编辑 0（没有可编辑的对应消息），没有重发或发送测试消息。merge 后的新 formatter 输入将使用 canonical 名；这不等同于历史其他 unresolved 消息已全部编辑。历史已发送消息的总体验收/编辑数须以 Telegram API 回执为准。
+- 本批仅改共享展示映射、来源/覆盖证据、测试与本交接；未改 M1、M1 OU-R1、MR1 AH、MR1 AI 的模型、策略、阈值、scope、盘口、正式账本、结算或发送条件。
+
 ## 2026-10-15 正式范围中文库续补（batch 132）
 - 新增并验证 TotalCorner `team_id=165365` / `Treowen Stars → 特雷欧文星队`。Sofascore 简体中文球队页以“特雷欧文星队”作为标题和球队称呼，英文身份为 Treowen Stars，国家威尔士、赛事 Cymru South；TotalCorner 对应 ID 页面同为 Treowen Stars / Wales Championship South，与共享库 `league_id=11959` 一致。唯一 registry 的 source 记录保存两边证据链接；没有修改 provider 原名、team_id 或模型字段。
 - 共享库变更 PR [#33](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/33) 已合并，master SHA `e277794500ce51a3129e73e6464bebd04f3d0f46`。正式 union 当前 2,468 个 ID / 2,366 canonical / 102 unresolved，覆盖率 95.87%；M1 1,547/1,553（99.61%），M1 OU R1 52/52（100%），MR1 AH 1,845/1,921（96.04%），MR1 AI 声明镜像 M1 1,547/1,553（99.61%）。共享库为 12,276 IDs / 4,382 canonical。
