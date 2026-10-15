@@ -1,5 +1,8 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 正式范围未匹配队伍定向复核（batch166，PR #90 已合并）
+- 继续按共享 master `1cc80f19a49e382bcfc34f7b7a086c815bb0cd04` 的 `formal_scope_coverage.json` 核查，检查 AEP Polemidion (114610)、FK Potkozarje (188078)、FK Atmosfera (51602)、MS Naser Malawy (50576)、Al Magd (94863)、KF Tefik Canga (154225)。Tips.GG、中文 Livescore/角球数据页或中文球衣资料中，队名仍显示英文；其余可核查资料使用当地语/英文，没有可靠简中 canonical 与具体 TotalCorner ID 的对应证据。新增 canonical 0，逐项来源和理由记入 `data/football_display_names/source_review_20261015_batch166.json`。审计 PR [#90](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/90) 已合并，master SHA `ead29d2162138e9475bb9ff944459498bc0be893`；覆盖仍为正式 2,395/2,468（73 未匹配）。
+
 ## 2026-10-15 正式范围未匹配队伍定向复核（batch165，PR #89 已合并）
 - 以 master `fb4341ca93f7629f68823e0887648cefd8ca447d` 的 73 条 `formal_scope_coverage.json#unresolved_records` 为准，定向复核 9 个此前没有独立 source-review 记录的 ID：El Mahalla El Kobra (10782)、Vllazina (43486)、Marupes SC (52385)、Shaban M Qana (117362)、MS Tala (136896)、Goldi SC (136149)、Al Raya SC (135353)、Trethomas Bluebirds (149178)、KF Vjosa (117487)。本批没有找到能唯一对应 TotalCorner ID 的成熟简体中文足球队名，新增 canonical 0；证据链接及逐项结论已存 `data/football_display_names/source_review_20261015_batch165.json`。特别注意中文站点若只翻译界面、球队标签仍为英文（如 Sofascore Al Raya、FootyStats KF Vjosa），不等于存在中文队名；官方阿拉伯语/拉脱维亚语/威尔士语身份资料及韩文音译也不用于凭空构造简中 canonical。审计 PR [#89](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/89) 已合并，master SHA `1cc80f19a49e382bcfc34f7b7a086c815bb0cd04`。
 - 因此该 batch 不改变覆盖：formal union 仍 2,395/2,468，73 unresolved（97.04%）；共享库 4,411/12,276 canonical。按现有 `source_review*.json` 中精确 team_id 去重，本批后尚有 36 条 unresolved 未独立复核；ID 4931 的 `provider_name=0` 仍是身份无效，不进入翻译猜测。
