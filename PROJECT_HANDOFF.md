@@ -2380,3 +2380,10 @@
 - 合并后 formal union 为 2,468 IDs / 2,404 canonical / 64 unresolved（97.41%）；M1 1,492/1,553（96.07%），M1 OU-R1 52/52（100%），MR1 AH 1,864/1,921（97.03%），MR1 AI declared mirror 1,492/1,553（96.07%）。共享库 12,276 IDs / 4,420 canonical。ID 43486 属于 M1 scope；MR1 AH 覆盖数字因此不变。其余未匹配及原因以共享 `formal_scope_coverage.json` 为准。
 - 新增 M1 精确 ID 格式回归；M1 formatter + history-repair 37/37 PASS。MR1 用刚合并共享库路径执行 shared resolver、browser-forward 与 AI formatter 隔离测试 8/8 PASS；ID 43486 和 42262 显示同一俱乐部中文名，ID 119602（KF Vllaznia）、52837（KF Dardana）、94863（Al Magd）未错误借用相似 ID 的映射。
 - 仅更新共享展示名称、覆盖/来源记录、curator 与隔离测试。未编辑或重发历史 TG；未触发 M1/MR1 生产 workflow；真实生产 TG 显示仍需后续自然消息验证。未修改任何模型、策略、赛事范围、盘口、账本、结算或通知规则。
+
+## 2026-10-15 M2 皇冠市场残差新模型启动（只读观测阶段）
+- 用户明确授权开始新 M2 研究，以高质量样本外 ROI 为目标，但不能事后调参制造盈利或变更任何现有正式模型。首阶段为 M2_MARKET_RESIDUAL_OBSERVER_V0_1：**不是已经训练好的模型，不发 TG，不算已锁影子单，不报 ROI**。
+- 在公开仓库 `quant-runner` 新增 `research/m2/m2_shadow.py`（提交 `7c3388d5`，引用扫描完成时间修正 `827c3d9e`）、`research/m2/test_m2_shadow.py`（`5ec70a0a`）、`.github/workflows/m2-market-observer.yml`（`532afff5`）。由公开 Runner 只读 checkout 现有生产市场证据，提取 Crown 市场概率、盘口变化、M1 概率差、5/10/20场状态代理、射正、危险进攻与控球等前瞻特征，严格检查已确认 Crown、4–36h赛前窗口、市场时间戳 ≤45分钟，遇到缺失不推断。
+- 流程只产生 `UNTRAINED_RESEARCH_OBSERVATION`，不产生投资建议、正式/影子订单或结算，也不修改现有 M1/MR1 策略与账本。Crown 原始数据保存在 Runner 临时目录，不作为公开 artifact/commit 上传；日志仅打印汇总。实际生产独立历史锁单、训练/时间前推验证、影子结算和长期持久化仍**未实现**，均不可宣称已经运行。
+- 公共 GitHub Actions 首次触发 [run 38730631560](https://github.com/ljm198964-alt/quant-runner/actions/runs/38730631560)，创建于 UTC 2026-10-15 11:53:59。测试、私有源权限检查已成功，最新核查时 checkout 源仍在进行中，最终运行状态须继续复核。原 M1 4个定时扫描之后45分钟触发 M2只读观测（UTC 04:50/10:50/16:50/22:50），若源超过6小时则工作流报 stale。
+- 下一步：确认首次运行日志及时间/数据校验；建立 M2 的真正独立双边市场概率基线、历史 walk-forward/OOS 与消融，之后经验证的 Crown 锁价影子账本、FT结算、ROI/回撤/CLV，再考虑独立TG是否需要用户另行授权。禁止未经验证的权重触发真实派单。
