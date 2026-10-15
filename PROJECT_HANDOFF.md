@@ -1761,3 +1761,8 @@
 - 对余项中的科索沃低级别队再查 7M、500、雷速及简中网页：KF Drenasi、KF Vitia、KF Vjosa、KF Hajvalia 均未找到可核验的简体中文标准队名；现有中文界面赛事页仍直接显示拉丁名，不作为中文 mapping 证据。
 - 检查异常身份 team_id 4931：当前 M1 记录的 provider_name 为字面值 `0`。本机历史缓存 `data/m1_history_cache/299.json` 全部联赛缓存检索只发现一条引用：Azerbaijan Premier League、2016-05-15、对阵 Zira IK，主队仍记为 `0`；无可恢复的球队身份或中文名称。因此该项保持 `PROVIDER_IDENTITY_INVALID`，不从对手、赛果或联赛猜队名。
 - 本批新增0；正式范围仍 2,468 IDs / 2,360 canonical / 108 unresolved（95.62%）。没有改共享库、模型、账本、展示代码或 Telegram 消息。7M/500/雷速检索无结果，源身份细节及缓存证据路径已保留供后续复核。
+
+## 2026-10-15 正式范围余项来源复核（第116批）
+- 对威尔士低级别余项 Llay Miners Welfare、Trethomas Bluebirds、Cardiff Draconians、Treowen Stars 做定向中文资料检索。虽有俱乐部/FAW 官方资料可确认英文身份及当前联赛（如 Cardiff Draconians 官方站、FAW 联赛构成文件、Treowen 官方站），未找到可信简体中文足球队名；中文搜索未返回可用中文名称，故不按地名或词面翻译生成 canonical。
+- 身份交叉参考：Cardiff Draconians 官方 `https://cardiffdracs.com/`；FAW 2025–26 联赛构成 `https://d1zqj8o9na6wgl.cloudfront.net/faw/20250604094634/2025-26-FAW-Mens-National-Leagues-Composition.pdf`；Treowen Stars 官方 `https://treowenstarsfc.co.uk/`；Llay Miners Welfare 官方 `https://llayminerswelfarefc.co.uk/`。这些来源支持英文身份，不支持中文 canonical。
+- 本批新增0；正式范围维持2,468 / 2,360 / 108（95.62%）。共享库和生产 TG 均未修改。
