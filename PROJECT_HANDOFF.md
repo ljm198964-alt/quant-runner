@@ -1,5 +1,12 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 继续补齐：Asyut Cement 中文名
+- 从共享 master `73acc19b9b3628243d08bf6bf0e32793f4789ac1` 继续核验 formal unresolved。TotalCorner `team_id=85299 / Asyut Cement` 在中文足球赛事页标为“艾斯尤特水泥”；该页列出的 Sila 对阵开赛时刻为中国时间 10/01 21:30，与 TotalCorner 球队页上的 10/01 14:30 Europe/London 对应。中文页比分与 TotalCorner 完赛比分不一致，因此没有把中文页当赛果来源，只用于名称展示证据。PR [#49](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/49) 已合并，master SHA `a756473bfcc72d7b6e52dc60dde502da801a18a6`；新增 1 名，别名包含原始英文和 canonical。
+- 最新正式并集为 2,468 个 team ID，2,378 有中文 canonical、90 未匹配（96.35%）；M1 1,553/1,553，M1 OU-R1 52/52，MR1 AH 1,856/1,921（96.62%），MR1 AI declared mirror 1,553/1,553。未匹配 90 条均为 `NO_VERIFIED_CANONICAL_ZH`；之前那个无效 provider identity 已不在当前名单。完整 IDs/names/leagues/reasons 以共享 `formal_scope_coverage.json` 的 `unresolved_records` 为准。
+- 验证：M1 Telegram display + repair 22/22 PASS；MR1 registry/display/browser-forward 5/5 PASS，MR1 V6 fixture tests 2/2 PASS。M1 formatter 隔离渲染出 `埃及乙级联赛B组 艾斯尤特水泥 vs Sila ...`，没有发 TG；真实比赛中的未解析对手继续依现有 fallback。
+- 使用最新共享 master 执行仅编辑既有消息的工作流：M1 run [`38679318371`](https://github.com/ljm198964-alt/quant-runner/actions/runs/38679318371) PASS，edited 0、already matching 41、missing original text 99、unmapped 100、failed 0；没有现存 M1 历史消息需要补改。MR1 AH run [`38679322906`](https://github.com/ljm198964-alt/quant-runner/actions/runs/38679322906) PASS，edited 0、eligible 0、already processed 125、unresolved 0、failed 0。没有重发订单，也没有触碰历史结算。
+- PR #49 merge 后的真实 `MR1 Free Runtime` run [`38679532171`](https://github.com/ljm198964-alt/quant-runner/actions/runs/38679532171) 整体 PASS，发生在新共享 master `a756473...` 已合并之后；成功 checkout 最新 registry，中文 delivery regressions、API runtime、状态持久化及所有后续 MR1 步骤均成功。未发送测试 Telegram。此前 run `38679088866` 早于 PR #49 merge，不作为 Asyut mapping 的云端验收。
+
 ## 2026-10-15 Cardiff Draconians 中文名及 Telegram 历史修复
 - 从最新共享 master `73acc19b9b3628243d08bf6bf0e32793f4789ac1` 继续；没有重建身份库。PR [#48](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/48) 合并后，唯一共享 `display_names.json` 为 TotalCorner `team_id=165364 / Cardiff Draconians` 新增 canonical `加的夫龙骑士队`，来源为 Tips.GG 简体中文球队档案，并以同场 Cardiff Draconians–Llanelli 4-2 及 TotalCorner `league_id=11959` 交叉核验。共新增 1 个名称。
 - 合并后共享正式范围：2,468 个 ID，2,377 有 canonical，91 未匹配（96.31%）；M1 1,553/1,553、M1 OU-R1 52/52、MR1 AH 1,855/1,921（96.56%）、MR1 AI declared mirror 1,553/1,553。91 条逐条清单和原因在共享仓库 `data/football_display_names/formal_scope_coverage.json` 的 `unresolved_records`；其中 90 条没有唯一、可核验的简体中文名，1 条 provider identity 无效（球队名为 `0`），未用猜测填库。
