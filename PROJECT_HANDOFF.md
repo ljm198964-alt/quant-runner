@@ -1796,3 +1796,9 @@
 ## 2026-10-15 正式范围中文标签批量交叉核验（第122批）
 - 对当前105个有效英文 unresolved 名称（剔除 provider identity 字面值 `0`）逐一查询 Wikidata 英文实体搜索及中文标签，筛选带中文标签且实体描述明确为足球队的候选；本次没有得到可直接绑定到正式 TotalCorner team ID 的可靠结果。精确标签查询中的 `Dunaivtsi` 中文实体是城市/消歧页而非球队，不能把城市中文名当球队名。
 - 结论仍为共享 master `4a59d0ac18a589686c229c1950d4fb919636592e`、正式覆盖2,468/2,362/106（95.71%）。本批只扩展来源核验，不改共享 registry、formatter、任何生产模型/策略/账本或 Telegram。
+## 2026-10-15 正式范围中文名补齐（第123批）
+- 共享库 PR [#31](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/31) 已合并，master commit `226b57da5c2160558a3444a3723f3f6b15acf3c9`。新增 TotalCorner `team_id 114056`、provider `FK Nyva Buzova` 的 canonical `尼瓦布佐瓦`；Leisu 简中球队档案明确给出该中文名和对应英文名，TotalCorner 精确 ID 队页显示同名球队及 Ukraine Persha Liga，formal registry league_id 为63。只增加展示名/别名及来源，不改 provider ID、联赛关联或模型数据。
+- 合并后覆盖：正式并集 2,468 IDs，2,363 canonical、105 unresolved（95.75%）；M1 1,544/1,553（99.42%，9 unresolved）；M1 OU-R1 52/52（100%）；MR1 AH 1,842/1,921（95.89%，79 unresolved）；MR1 AI declared mirror 1,544/1,553（99.42%，9 unresolved）。
+- 验证：curator 对 team ID/provider name/league_id 设精确拒写保护；M1 formatter 隔离输出 `乌克兰足球甲级联赛 尼瓦布佐瓦 vs 胡斯特城 全场让球 尼瓦布佐瓦 -0.25@0.92`；MR1 共用 registry/AI Telegram 显示测试 4/4 PASS，直接 fixture resolver 输出 `尼瓦布佐瓦 vs 胡斯特城`。未向 Telegram 发送测试消息。
+- 按精确 team ID 检查 M1 正式账本、M1 OU-R1（共用 M1 账本）及 MR1 shadow/AI 数据，未发现已有正式 TG Pick，因此没有历史消息可编辑；不重发任何消息。该名称只影响后续显示。PR 未报告云端 checks，本地测试不代表云端 workflow 验证。
+- 来源：[Leisu 尼瓦布佐瓦球队页](https://www.leisu.com/data/zuqiu/team-73166/lineup)、[TotalCorner team 114056](https://www.totalcorner.com/team/view/114056)。当前105个 unresolved 的完整逐队清单及原因仍保留在共享 `data/football_display_names/formal_scope_coverage.json#unresolved_records`。
