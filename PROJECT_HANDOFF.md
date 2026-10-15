@@ -1,5 +1,11 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 正式范围中文名称续补（batch 119）
+- 从共享库 master `533c2765` 继续。新增 3 个带公开中文赛事数据来源的正式范围映射：`109103 NK Stupcanica Olovo → 斯图普卡尼察`（Tips.GG 简中球队页，并以波黑联赛赛程核对）、`82622 BE1 NFA → Be1 NFA`（LiveScore 简中站使用“立陶宛Be1 Nfa”，品牌名保留）、`110165 Attard → 阿塔德`（Tips.GG 简中球队页）。ID、provider identity 和赛事归属均未改；未合并重复 provider ID。
+- 更新后唯一共享库正式范围实算：2,468 IDs，2,355 canonical，113 unresolved，95.42%。M1 1,537/1,553（98.97%）；M1 OU-R1 52/52（100%）；MR1 AH 1,835/1,921（95.52%）；MR1 AI 声明镜像 M1 1,537/1,553（98.97%）。完整剩余队名和逐项原因以 `data/football_display_names/formal_scope_coverage.json#unresolved_records` 为准；其中 112 个目前无经核实 canonical 中文名，1 个 `team_id=4931` 的 provider identity 是无效字面 `0`，均未猜译。
+- 本地展示验证：M1 display + formal runtime 21/21 PASS；MR1 shared registry reader/formatter 2/2 PASS，MR1 测试直接读取本批共享 JSON。涵盖的 M1 AH、M1 OU-R1、MR1 AH、MR1 AI formatter 代码均读取唯一共享 registry；未改消息格式或策略字段。没有新可编辑历史 Telegram 目标，本批历史实际编辑 0；没有发送测试或历史重发。云端运行/Telegram 实际回执未验证。
+- 本批共享库 PR [#23](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/23) 已合并；分支提交 `dd3ac8c16e7bf032c803be3beb3ac6394c5098a4`，master merge SHA `1b0120dd7d2efb29ae1ec6afc5fa13671775fe92`。本 runner handoff 随后提交更新。未更改模型、策略、赛事范围、赔率、账本、结算或正式派单规则。
+
 ## 2026-10-15 正式范围中文名称续补（batch 118）
 - 从共享库 `totalcorner-research-bridge/master` 的 PR #21 merge `daa5b066ae00d6c89705d8e0b22a651354fcc907` 继续。本批唯一可靠新增为 TotalCorner `team_id=113064`，`Ittihad Nabarouh → 纳巴鲁伊蒂哈德`；来源是 Sofascore 简体中文球队档案（https://www.sofascore.com/zh/football/team/ittihad-nabarouh/275010），同页英文队名和埃及 Second Division B 背景核对一致。原 provider identity、ID 和策略数据未改。
 - 共享库 PR [#22](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/22) 已合并，master commit `533c2765`（本批分支提交 `de2fd662f989477863804b47cd812d219439ccc2`）。本批使用既有精确 ID curation 脚本，二次运行幂等（新增 0）。
