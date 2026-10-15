@@ -4,7 +4,7 @@
 - 基于共享仓库 master `226b57da5c2160558a3444a3723f3f6b15acf3c9` 完成整理；本批 PR [#32](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/32) 已合并，当前 master merge SHA `dededd6c`。未重跑历史身份恢复。唯一共享表仍为 `totalcorner-research-bridge/data/football_display_names/display_names.json`。
 - 新增两个有来源核验的 canonical：TotalCorner `team_id=76198` `Asmant Asyut → 阿斯芒特`；`team_id=56906` `Qena SC → 艾尔奎纳赫`。二者的 FootyStats 简体中文球队页明确列出该英文队名、中文标题和埃及乙级身份，另以 TotalCorner 对应 ID/联赛交叉核验；source 与审核脚本、单批报告均留在共享库。保留原 provider 名、ID、别名；展示专用。
 - 共享库仍有 12,276 个 team ID；4,381 个已登记 canonical。正式 union 2,468 个，2,365 已匹配、103 未匹配，覆盖率 95.83%。M1 1,546/1,553（99.55%）；M1 OU R1 52/52（100%）；MR1 AH 1,844/1,921（95.99%）；MR1 AI 声明镜像 M1 1,546/1,553（99.55%）。最终逐项清单和原因以共享库 `formal_scope_coverage.json#unresolved_records` 为准；无可核验中文来源的名称继续 unresolved，不按拼音/机器音译补齐。
-- 校验：两份 curation Python 脚本 `py_compile` 通过；核对 registry 的 canonical 总数和 formal unresolved 统计一致；本批两条来源、ID及显示名通过断言。历史 Telegram 未编辑，未发送任何 TG；本批也没有进行云端工作流触发或宣称生产部署。消费者仍通过既有统一展示解析逻辑读取共享 registry；生产消息自然验证待后续正式信号发生。
+- 校验：两份 curation Python 脚本 `py_compile` 通过；核对 registry 的 canonical 总数和 formal unresolved 统计一致；M1 Telegram formatter 测试 14/14 PASS，本批两队隔离渲染 PASS；MR1 shared-registry / MR1 AI browser display 测试 4/4 PASS，本批两队经实际 MR1 resolver 按 ID 渲染 PASS。附带运行 `test-v6-ah-formal.js` 时 1 项失败：该既有测试夹具给 Test League 一个未在 registry 登记 canonical 的 `league_id=1`，但仍期待 name override 生效；当前 resolver 按约定将已提供 ID 视为权威，不回退同名 override。这是既有 fixture/约定不一致，不是本批名称失败，且未改 MR1 代码。可读 M1 正式 ledger 对 team ID 76198/56906 的匹配 Pick 数为 0，MR1 AH sent ledger 匹配数也为 0；没有这两队的既有消息可编辑。本轮未编辑或发送任何 TG；这不代表其他历史英文消息已经全部修复，也没有进行云端工作流触发或宣称生产部署。生产消息自然验证待后续正式信号发生。
 - 两条新增记录已合并到共享 master（PR #32）。quant-runner handoff 本条待提交/推送。未修改任何模型、策略、盘口来源、赛事范围、锁单/发送规则、正式账本或结算。
 
 ## 2026-10-15 正式范围球队中文续补（batch 123）
