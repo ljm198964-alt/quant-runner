@@ -2317,3 +2317,8 @@
 - 使用完整 M1 run `M1_20261015T102804Z`（2026-10-15 10:28:04–10:35:00 UTC）：40 场、80 个不同球队 ID，80/80 由唯一共享 registry 精确命中中文名，当前池覆盖率100%。原先 88 场/176 槽、1个 unresolved 的旧快照不再代表最新已完成扫描池。
 - 正式范围总量未变：2,468 IDs / 2,401 canonical / 67 unresolved（97.29%）；分系统：M1 1,489/1,553（95.88%），M1 OU-R1 52/52，MR1 AH 1,862/1,921（96.93%），MR1 AI declared mirror 1,489/1,553。共享 registry 总计12,276个 team ID，其中4,417个有 canonical 中文名。67项逐条仍有来源审查记录；本批没有新增可被可靠来源确认的中文标准队名。
 - 验证：将最新运行中80个 home/away team_id 与合并后的共享 registry 对照，缺失0；coverage JSON 解析和 `git diff --check` 通过。没有触发生产扫描、发送/编辑 Telegram、修改账本、模型或策略。历史 TG 修复的最近回执仍按上文记录，不宣称已修复。
+
+## 2026-10-15 未匹配名称新公开数据集交叉审查
+- 共享库 PR [#96](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/96) 已合并，merge commit `60b4db67d1a39d5a068be4917f15139e9714c376`。新增来源证据 `data/football_display_names/source_review_20261015_batch172.json`：检查 `qqyg000/lottery-football` 的 119 个 verified candidate groups（源 commit `b4dab52648ebbf8aa52c447897ba046c795060ea`），与当时 formal unresolved 67 个 provider names 按 Unicode NFKD/case-fold/去分隔符做精确别名匹配，结果0个命中。未把近似英文名或未合并候选转写到共享 canonical。
+- 本次仅新增来源审查，不更改 `display_names.json`；正式范围仍为2,468 IDs / 2,401 canonical / 67 unresolved（97.29%）。M1 1,489/1,553（95.88%），M1 OU-R1 52/52，MR1 AH 1,862/1,921（96.93%），MR1 AI declared mirror M1 1,489/1,553。
+- 没有修改策略、模型、Telegram、账本或 settlement，也没有触发生产 workflow。未匹配完整清单与原因以共享 `formal_scope_coverage.json#unresolved_records` 为准；新来源证据已存档，避免重复审查同一数据集版本。
