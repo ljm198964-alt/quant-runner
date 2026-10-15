@@ -1790,3 +1790,6 @@
 - 复核 TotalCorner `team_id 10782`（El Mahalla El Kobra）与既有 `team_id 7378`（Ghazl El Mahallah）：TotalCorner 队页分别归入 Egypt Division 2 / league_id 417 与 Egypt Division 1 / league_id 378，并显示为不同参赛身份。没有证据证明 ID 10782 就是既有 Ghazl El Mahallah，因此不转移中文名。城市名“大迈哈莱”也不足以证明其为该队的惯用中文队名。
 - 定向检索 Mladost Carev Dvor、Sirens、Porto EL Sokhna SC 等候选后，找到的资料确认部分英文身份或外文别称，但未发现能绑定相应 TotalCorner ID 的成熟简体中文球队名。新增 canonical 为0，未修改共享 JSON、formatter、模型、账本或 Telegram 消息；正式范围仍为106 unresolved。没有新增证据支持重跑历史 Telegram name-only 编辑，因此本批未触发工作流。
 - 参考：TotalCorner 精确队页 [ID 10782](https://www.totalcorner.com/team/view/10782)、[ID 7378](https://www.totalcorner.com/team/view/7378)。完整逐项 unresolved 身份及原因仍以共享 `data/football_display_names/formal_scope_coverage.json#unresolved_records` 为准。
+## 2026-10-15 正式范围同名球队冲突复核（第121批）
+- 共享库 master 与正式范围计数未变化。进一步复核 Vllaznia 候选：中文资料“维拉兹尼亚”对应阿尔巴尼亚 Shkodër 球队；但 unresolved `team_id 42262` 关联 `league_id 8293` Kosovo Superliga，TotalCorner 队页赛程也显示科索沃对手，故不可把阿尔巴尼亚球队译名移植过去。另一个 `team_id 119602`（KF Vllaznia）同时关联 Albania/Kosovo 多个联赛 ID，仍缺乏唯一身份映射依据。
+- 参考：中文球队资料 [Tips.GG 维拉兹尼亚页](https://tips.gg/cn/team/vllaznia-shkoder-football/)，TotalCorner [ID 42262](https://www.totalcorner.com/team/view/42262)、[ID 119602](https://www.totalcorner.com/team/view/119602)。本批新增 canonical 0，未改共享映射、代码、模型、账本或 Telegram；106 项仍按 `UNRESOLVED_DISPLAY_NAME` 保留。
