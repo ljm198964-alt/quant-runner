@@ -2338,3 +2338,10 @@
 - 合并后 formal union 为2,468 IDs / 2,403 canonical / 65 unresolved（97.37%）；M1 1,491/1,553（96.01%），M1 OU-R1 52/52（100%），MR1 AH 1,864/1,921（97.03%），MR1 AI declared mirror 1,491/1,553（96.01%）。共享库总计12,276 IDs / 4,419 canonical。完整剩余清单及逐项原因以共享 coverage 文件为准。
 - 验证：M1 formatter + history-repair 36/36 PASS；MR1 shared-registry/browser-forward 5/5 PASS；MR1 resolver 隔离输出“塞浦路斯乙级联赛 / 基提奥斯巴达队 vs AEP Polemidion”。M1 ledger 和 MR1 已检查的正式发送账本/条目中没有该 ID 的已发送 TG Pick，因此此队无可编辑的历史消息；没有调用 Telegram API、没有重发、没有触发生产 workflow。
 - 仅更改公共展示映射、来源记录、coverage 和隔离测试。M1/M1 OU-R1/MR1 AH/MR1 AI 的模型、策略、赛事范围、盘口来源、账本、结算、Telegram 内容规则及运行调度均未改。
+
+## 2026-10-15 中文队名与历史 Telegram 修复续核（Spartakos 合并后）
+- 基于共享库 master `dc4b756e6b1ef2050ad682ca99d47415895d52de` 重新读取 `formal_scope_coverage.json`：正式范围仍为 2,468 个去重 team ID，2,403 个有 canonical、65 个 unresolved（97.37%）；M1 1,491/1,553（96.01%），M1 OU-R1 52/52（100%），MR1 AH 1,864/1,921（97.03%），MR1 AI 按声明范围镜像 M1 为 1,491/1,553。未使用旧 handoff 中的 740 作为当前待办数。
+- 针对未匹配项追加精确英文名检索，覆盖埃及低级别队、塞浦路斯、科索沃/巴尔干、北马其顿、乌克兰及阿塞拜疆；查阅/检索 7M、500、Sofascore 中文页和其他可核验足球来源。新证据未产生可绑定到准确 TotalCorner team ID 的成熟简体中文 canonical，因此本轮新增映射为 0；特别是名字相似、已解散/合并、男女队或身份来源冲突的队伍不转移名称、不自行音译。Wikidata 公共端点在批量请求时返回 HTTP 429，未继续高频重试。逐项未匹配原因仍以共享 coverage 文件为准。
+- 显示验证：M1 Telegram formatter + history-repair 测试 36/36 PASS；MR1 共享名称解析、browser-forward、正式 AH formatter、AI formatter 相关隔离测试 9/9 PASS。仅做本地测试，没有发送 Telegram 或运行正式生产 workflow。
+- 历史正式 Telegram 的最新实际回执仍为上一节所记：M1 0 条编辑，因原始文本/映射缺失而大量不可编辑；MR1 AH 0 条编辑；MR1 AI 9 个编辑调用均被 Telegram 返回 `message to edit not found`。未重新发送历史订单，也没有声称完成历史中文化。共享名称库已合并到 master；自然消费该库的后续运行可使用已确认名称。剩余英文显示只涉及无可靠 canonical 的未匹配项，以及 Telegram 端不可编辑/原文缺失的历史消息。
+- 本轮未更改唯一共享 JSON、生产 formatter、模型、策略、赛事范围、正式账本、结算或通知规则；未修改 MR1/M1 生产运行状态。
