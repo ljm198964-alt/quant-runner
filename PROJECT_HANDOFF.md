@@ -1869,3 +1869,8 @@
 - 共享 PR [#39](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/39) 已合并，master commit `3021bd1d1ccd533e2c1ef4e3ca8eea505f9bd833`。正式范围仍为2,468 IDs、2,371 canonical、97 unresolved（96.07%）。新增只读来源审查 `data/football_display_names/source_review_20261015_batch136.json`，本次 mapping changes=0。
 - 复核 Asyut Cement、Belbeis FC、Al Badari SC、Mallawi SC/Naser Malawy、Mostaqbal Watan Club、UCSA、Asil Lysis。中文/本地化足球页面仍保留英文/拉丁名，或只有外文/阿文身份资料；没有将“艾斯尤特石油”套给 Asyut Cement，也没有把政党“未来国家”中文名用于 Mostaqbal Watan Club。未以直译/音译补数。
 - 对应来源审查文件保留每个 TC team ID、provider name、league_id、来源 URL 及 unresolved 原因。没有变更共享 canonical、生产 formatter、策略、账本、结算或 Telegram 消息。
+
+## 2026-10-15 正式范围中文名余项复核（第129批）
+- 共享 PR [#40](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/40) 已合并，master commit `3523068eceb8b1e7df1d429b1c9920bee2b0c6e4`。正式覆盖计数未变：2,468 IDs / 2,371 canonical / 97 unresolved（96.07%）。新增来源审查 `data/football_display_names/source_review_20261015_batch137.json`，mapping changes=0。
+- 复核 FC Yerevan、CSM Olimpia Satu Mare、UCSA、FK Proleter 023；官方/联赛资料能确认球队身份，但检索未找到足以定为简体中文足球常用队名的标签，故不音译/直译补入。每项保存 team ID、联赛上下文、证据及保留 unresolved 的原因。
+- 未修改共享 canonical、M1/MR1 formatter、模型策略、正式账本、结算或 Telegram 消息。
