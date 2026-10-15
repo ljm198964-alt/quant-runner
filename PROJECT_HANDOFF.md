@@ -1,5 +1,10 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 正式中文库新增 Difai Agsu 映射
+- 共享中文库 PR [#47](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/47) 已合并，master SHA `9ac9584ff10a0ba9dc8a55300df2e38949dde250`。TotalCorner `team_id=135458` / provider `Difai FK` 新增 canonical `迪法伊阿格苏队`，别名含 `Difai Ağsu` / `Difai Agsu`；依据 Tips.GG 简体中文球队档案“迪法伊阿格苏队”，并以 TotalCorner 对应 ID、2025-09-13 对阵 Baku Sporting 的 2-2（与中文档案比赛记录一致）及俱乐部官网身份交叉核对。仅展示名称，不改原 ID/provider name。
+- 合并后重新读取权威 coverage：formal union 2,468/2,376/92（96.27%）；M1 1,553/1,553，M1 OU-R1 52/52，MR1 AH 1,854/1,921（96.51%），MR1 AI declared mirror M1 1,553/1,553。其余 92 条逐项记录继续以共享 `data/football_display_names/formal_scope_coverage.json` 为准。
+- 本地 `test_m1_telegram_display.py` + `test_m1_telegram_display_repair.py` 共 22/22 PASS，新增按 team_id 的 formatter 回归测试；唯一共享 registry 仍由 M1/MR1 消费。没有发送/编辑 Telegram。查询 M1 正式 ledger 未发现该 team ID 的 Pick；当前可用 MR1 AI/strategy shadow 通知样本路径也未找到该 ID 的历史已发信号，因此本轮无历史 TG 可改，后续显示由共享 canonical 自动提供。云端 Actions 未作为验证依据（PR 无 checks），采用本地测试及合并后数据校验。
+
 ## 2026-10-15 北马其顿/塞浦路斯及安道尔公开中文源复查
 - 按共享 master `fe86a5fbc8acf1d4263f7b9af8593777b623deb8` 的 formal unresolved 继续核验 `Mladost Carev Dvor`（4607）、`KF Shkendija Haracine`（163879）、`APEA Akrotiriou`（114288）、`AEP Polemidion`（114610）和安道尔 `CE Casa de Portugal`（170638）等。俱乐部/协会资料确认了英文身份；中文检索中未找到这些球队的成熟简体中文常用队名。TotalCorner 中文页面对 Casa de Portugal 仍保留原文，也不能据葡萄牙语词义临时造“葡萄牙之家”作为 canonical。
 - 未新增映射；coverage 仍为 2,468 / 2,375 / 93。参考：[Shkëndija Haraçinë 官方站](https://shkendija77.com/)、[TotalCorner 繁中 Casa de Portugal 比赛页](https://www.totalcorner.com/zh-tw/stats/ce-casa-de-portugal-vs-ac-descaldes/201372889)、[安道尔足协 Casa de Portugal 公告](https://www.faf.ad/pnfg/NNws_ShwNewDup?cod_primaria=3001749&cod_secundaria=3001749&codigo=1009300)。
