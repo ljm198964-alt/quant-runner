@@ -2454,3 +2454,8 @@
 - 共享仓库 PR [#119](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/119) 已合并，master SHA `3b3c3b37`。批次189复核 KF Vjosa、KF Vllaznia、Romanija Pale、Goldi SC；没有新增 canonical。KF Vllaznia 常见中文名“维拉斯尼亚”对应斯库台俱乐部，而该 unresolved provider record 的赛事身份可能是科索沃 Pozheran 同名队，因此不误用已知译名。
 - 正式范围仍为 union 2,468 IDs / 2,407 canonical / 61 unresolved（97.53%）；M1 1,495/1,553，M1 OU R1 52/52，MR1 AH 1,867/1,921，MR1 AI declared mirror M1。完整逐项 evidence 在 `source_review_20261015_batch189.json` 与共享 `formal_scope_coverage.json#unresolved_records`。
 - 本批只追加来源审查，不修改共享中文映射、显示代码、模型、策略、范围、订单、结算或 Telegram，也未触发生产运行、发送或编辑消息。
+
+## 2026-10-15 正式范围未匹配队名来源续审（批次190）
+- 共享库 PR [#120](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/120) 已合并，master SHA `4349016f`。审查 Llay Miners Welfare、Trethomas Bluebirds、KF Dukagjini Gjakove、KF Dielli；4项均未发现能够绑定准确 team ID 的成熟中文标准名，新增 canonical 0。
+- 正式范围维持 2,468 / 2,407 / 61（97.53%）；M1 1,495/1,553，M1 OU-R1 52/52，MR1 AH 1,867/1,921，MR1 AI 声明镜像 M1。证据见 `source_review_20261015_batch190.json`。
+- 仅追加来源审查文件，未改映射、生产代码、模型、策略、范围、账本、结算或 Telegram；未触发生产运行或发送/编辑消息。
