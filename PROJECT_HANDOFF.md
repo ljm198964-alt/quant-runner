@@ -1,5 +1,12 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 正式范围中文库续补（Al-Saqer）
+- 以共享库最新 master `949d00ffffb999895c3185d4dbe664d83c43c1e6` 为基线，为 TotalCorner `team_id=93485`（`Al-Saqer FC`，Saudi Arabia Division 1/2）新增 canonical `阿尔萨克尔`，别名保留 `萨克尔`。名称取自 Tips.GG 简体中文比赛档案；TotalCorner 球队页以及 17500 / 中文直播赛程的 2026-09-13 对阵安瓦尔记录按联赛、日期、对手交叉核验。未改 provider 英文身份或 team ID。
+- PR [#46](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/46) 已合并，shared master SHA `fe86a5fbc8acf1d4263f7b9af8593777b623deb8`。最新 formal union：2,468 个 ID，2,375 个 canonical，93 个 unresolved，覆盖率 96.23%；M1 1,553/1,553，M1 OU-R1 52/52，MR1 AH 1,853/1,921（96.46%），MR1 AI 声明镜像 1,553/1,553。共享库 12,276 IDs、4,391 canonical。逐项未匹配原因见共享库 `data/football_display_names/formal_scope_coverage.json#unresolved_records`。
+- M1 AH/OU 隔离 formatter 测试 21/21 PASS；MR1 shared-registry tests 2/2 PASS，Team ID 93485 解析为“阿尔萨克尔”。M1、MR1 AH、MR1 AI notifier 代码均读取同一共享 registry；两套工作流后续正常运行会从 master 挂载该映射。本次没有触发扫描、发送测试消息或改动策略/账本。
+- 已检查 MR1 AI AH 已发送 JSONL，未发现 team ID 93485 的历史发送记录；本次历史 TG 编辑 0（无可编辑对应消息）。其他历史英文消息仍需按各自账本回执及 Telegram edit API 逐条审计，不能以本次 formatter 测试宣称历史消息已修复。
+- 只改共享 display registry、formal coverage/source evidence、复现脚本和 M1 formatter regression test；M1、M1 OU-R1、MR1 AH、MR1 AI 模型、阈值、盘口源、赛事范围、订单/结算账本及发送规则均未修改。
+
 ## 2026-10-15 正式范围中文名续补（batch 133）
 - 从共享库最新 master `e277794500ce51a3129e73e6464bebd04f3d0f46` 接续。为 TotalCorner `team_id=185790`、`FSC Feniks-Mariupol` 增加 canonical `马里乌波尔凤凰`。依据 Qtx 中文足球赛程中的对应中文队名，并交叉核验 TotalCorner ID/乌克兰甲级联赛、俱乐部官网现名“Фенікс-Маріуполь”和乌克兰足协所列俱乐部及官网链接。未将不同的旧 ID `111435`（`FSC Mariupol`）合并或擅自赋予同一中文名。唯一共享 registry、formal coverage 和可重复策展脚本/测试均已更新。
 - PR [#34](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/34) 已合并；merge SHA `5e4c4c2b469b7d2b713204b7bfb9427491ed0899`。最新 formal union 实算 2,468 IDs、2,367 canonical、101 unresolved（95.91%）；M1 1,548/1,553（99.68%）；M1 OU-R1 52/52（100%）；MR1 AH 1,846/1,921（96.10%）；MR1 AI declared mirror 1,548/1,553（99.68%）。完整剩余名单/原因以该共享提交的 `data/football_display_names/formal_scope_coverage.json#unresolved_records` 为准。共享 registry 为12,276个 team IDs、4,383 canonical；中文来源类别新增1条 `verified_chinese_sports_data_crosschecked_official_club_and_provider`。
