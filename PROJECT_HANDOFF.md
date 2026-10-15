@@ -1,5 +1,9 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 北马其顿/塞浦路斯及安道尔公开中文源复查
+- 按共享 master `fe86a5fbc8acf1d4263f7b9af8593777b623deb8` 的 formal unresolved 继续核验 `Mladost Carev Dvor`（4607）、`KF Shkendija Haracine`（163879）、`APEA Akrotiriou`（114288）、`AEP Polemidion`（114610）和安道尔 `CE Casa de Portugal`（170638）等。俱乐部/协会资料确认了英文身份；中文检索中未找到这些球队的成熟简体中文常用队名。TotalCorner 中文页面对 Casa de Portugal 仍保留原文，也不能据葡萄牙语词义临时造“葡萄牙之家”作为 canonical。
+- 未新增映射；coverage 仍为 2,468 / 2,375 / 93。参考：[Shkëndija Haraçinë 官方站](https://shkendija77.com/)、[TotalCorner 繁中 Casa de Portugal 比赛页](https://www.totalcorner.com/zh-tw/stats/ce-casa-de-portugal-vs-ac-descaldes/201372889)、[安道尔足协 Casa de Portugal 公告](https://www.faf.ad/pnfg/NNws_ShwNewDup?cod_primaria=3001749&cod_secundaria=3001749&codigo=1009300)。
+
 ## 2026-10-15 塞浦路斯/捷克/拉脱维亚未匹配名精确检索
 - 继续使用共享 master `fe86a5fbc8acf1d4263f7b9af8593777b623deb8` 当前 93 条 formal unresolved。对 `ASIL Lysi`（15615）、`Spartakos Kitiou`（143674）、`SK Artis Brno`（164619）、`Augšdaugavas NSS`（162203）及同批已确认身份进行简体中文精确查询，并查 UEFA、俱乐部、拉脱维亚足协资料。页面提供英文/希腊文/捷克文/拉脱维亚文队名，没有发现可靠简体中文足球资料采用的 canonical 名。
 - 搜索结果虽可核实 ASIL Lysi 的 Cyprus 身份及 SK Artis Brno 的俱乐部现名，但把 Lysi、Brno 或 Augšdaugava 地名翻译后拼成队名属于自行构造；不加入共享库。本批新增 canonical 0，统计保持 2,468 / 2,375 / 93。
