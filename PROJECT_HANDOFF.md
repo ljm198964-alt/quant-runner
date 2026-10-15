@@ -21,6 +21,10 @@
 - Sofascore 中文页仍以英文展示 `Pioneers Club` 与 `Al Masry Salloum`，只翻译页面 UI；Pioneers 可见阿拉伯语球队称谓“نادي الرواد”，但未发现成熟中文足球资料采用的队名。FootballAnt/其他页面同样主要保留英文 provider name。页面中文化本身不是 canonical 中文名证据，阿拉伯语直译“先锋俱乐部”等也不写入。
 - 本轮未发现能同时与对应 TotalCorner identity 交叉核验的成熟中文 canonical 名，新增映射 0；formal scope 仍 2,468 / 2,375 / 93（96.23%）。检索证据例：[Sofascore 中文 Pioneers](https://www.sofascore.com/zh/football/team/pioneers-club/404313)、[Sofascore 中文 Al Masry Salloum](https://www.sofascore.com/zh/football/team/al-masry-salloum/396726)。
 
+## 2026-10-15 威尔士/北爱低级别未匹配队核验补记
+- 复查 formal unresolved 中 `Ynyshir Albions`（56033）、`Llay Miners Welfare`（149164）、`Trethomas Bluebirds`（149178）、`Cardiff Draconians`（165364）、`Pure Swansea`（186109）、`Caerphilly Athletic`（186110）及 `St. James Swifts`（47722）等。俱乐部官网、足协/联赛资料可交叉确认身份与地区，例如 [Llay Miners Welfare 官网](https://llayminerswelfarefc.co.uk/)、[Cardiff Draconians 官网](https://cardiffdracs.com/) 和 [Caerphilly Athletic 联赛档案](https://ardalsouthern.cymru/ardal-se/clubs-se/caerphilly-athletic/)；足协公开联赛组成亦能确认相关参赛范围。
+- 7M/500/中文比分检索未发现这些具体业余队的稳定中文队名。中文音译方案（如按音节逐字转写）不属于已核验的成熟中文命名，故本轮新增 canonical 0；没有把 Swansea University 旧身份与 Pure Swansea 直接当作同名映射写入。formal scope 未变（2,468 / 2,375 / 93）。
+
 ## 2026-10-15 Al-Saqer 映射与已发送消息中文核对补记
 - 共享映射 PR #46 merge SHA `fe86a5fbc8acf1d4263f7b9af8593777b623deb8`；仅为 MR1 AH team 93485 增加 `阿尔萨克尔`（alias `萨克尔`）。formal union 2,468/2,375/93 unresolved（96.23%）；M1 1,553/1,553、M1 OU-R1 52/52、MR1 AH 1,853/1,921、MR1 AI declared mirror 1,553/1,553。M1 formatter 21/21 与 MR1 shared registry 2/2 均通过。
 - 已在共享库更新后实际 dispatch 三条名称-only 修复：M1 `38675377300` PASS，artifacts 报告 eligible 41、edited 0、already_matching 41、missing original text 99、unmapped 100、failed 0；因此没有历史消息实际需要修改成功。MR1 AH `38675380729` PASS，edited 0、eligible 0、already_processed 125、unresolved 0、failed 0。MR1 AI `38675384525` 的 Telegram edit 步骤执行完毕但原 workflow 因并发 push 在回执持久化阶段失败；实际结果 total 201、candidates 9、edited 0、already matching 0、unresolved 192、failed 9，9 条 API 错误均为 `message to edit not found`。该次完整报告已按真实 workflow 输出补写并推送至 MR1 master，commit `35d6d8cdbccb12c8c009c6ad5d008e045a5fdadb`。没有重发任何订单。
