@@ -1,5 +1,11 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 正式中文库续补：Khankendi FK（PR #72 待合并）
+- 在共享 master `0476223047547874e49c824520ec10c522daaeb5` 的正式 unresolved 清单中核对 TotalCorner `team_id=170762` / `Khankendi FK` / Azerbaijan Division 1 `league_id=227`。FootballAnt 简中比赛页将相同 2026 联赛赛程中的 Qarabag Khankendi 显示为“卡拉巴格汉肯迪”；其 2026 对阵顺序、比分与 TotalCorner 同 ID 球队页吻合，Sofascore 的 Xankəndi FK 档案提供俱乐部身份交叉核验。名称严格绑定 170762，不映射至其他 Qarabağ 历史球队。证据及幂等 curator：共享库 `curated_batch_report_20261015_khankendi_170762.json`、`ops/curate_formal_scope_khankendi_170762_20261015.py`。
+- 共享库 PR [#72](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/72) 已推送，commit `7edfaf36`，等待合并。它从 master 单独分支；PR #71 的 Jedinstvo 映射也仍未合并，两个 PR 不互相包含。以本 PR 分支单独计算：正式并集 2,468 IDs / 2,389 canonical / 79 unresolved（96.80%）；M1 1,553/1,553、M1 OU-R1 52/52、MR1 AH 1,864/1,921（57 unresolved）、MR1 AI 声明范围 1,553/1,553。若 #71 与 #72 都合并，最终须从最新 master 重新计算，不能简单拿单 PR 统计冒充正式值。
+- 验证：M1 Telegram formatter 单测 24/24 PASS，按 ID 隔离渲染为“阿塞拜疆甲级联赛 卡拉巴格汉肯迪 vs … / 全场让球 卡拉巴格汉肯迪 +0.5@0.93”。仅作隔离测试；没有发送或编辑历史 Telegram，也没有运行正式模型/账本。
+- 本轮仅共享名称数据及展示回归测试变更；M1、MR1 AH、MR1 AI 模型/策略、赛事范围、赔率、订单、结算均未改。历史 TG 编辑数 0；PR 合并和拥有可用的历史消息编辑凭据/原消息正文后，才可执行对应正式历史修复。
+
 ## 2026-10-15 正式中文库续补：FK Jedinstvo Franca（PR #71 待合并）
 - 在共享 master `0476223047547874e49c824520ec10c522daaeb5` 的正式 unresolved 清单中确认 TotalCorner `team_id=151147` / `FK Jedinstvo Franca` / league IDs `47, 280`。Tips.GG 简中赛程页在黑山乙级联赛将同一支 Bijelo Polje 的 Jedinstvo 标为“耶丁斯特沃队”；TotalCorner 同 ID 页面显示 FK Jedinstvo Franca 与 Montenegro Prva Liga 赛程，黑山足协俱乐部页确认 Jedinstvo Franca 为该俱乐部官方名称。按精确 ID 新增 canonical“耶丁斯特沃”，别名保留“耶丁斯特沃队”；不向其他同名 Jedinstvo 传播。来源与幂等 curator 见共享库 `curated_batch_report_20261015_jedinstvo_franca_151147.json`、`ops/curate_formal_scope_jedinstvo_franca_151147_20261015.py`。
 - 共享库 PR [#71](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/71) 已创建，分支 commit `ae2ad651`，等待合并；合并前权威 master 仍为上面的 SHA。该 PR 分支覆盖预览：正式并集 2,468 IDs / 2,389 canonical / 79 unresolved（96.80%）；M1 1,553/1,553、M1 OU-R1 52/52、MR1 AH 1,864/1,921（57 unresolved）、MR1 AI 声明范围 1,553/1,553。PR 合并后再以 master 文件核对最终数字。
