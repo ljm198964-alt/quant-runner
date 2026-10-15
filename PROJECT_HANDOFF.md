@@ -1,5 +1,11 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 正式中文库续补：FK Usce Novi Beograd（PR #69）
+- 在正式 unresolved 中确认 TotalCorner `team_id=165687` / `FK Usce Novi Beograd` / `league_id=337` 的雷速中文球队档案 canonical 为“乌斯诺维贝尔格莱德”；TotalCorner 同 ID/英文名页面与中文塞尔维亚甲级联赛比赛页交叉确认身份。另一个中文译法“乌斯切诺维贝尔格莱德”仅留 alias。证据和复跑脚本分别见共享库 `curated_batch_report_20261015_usce_165687.json` 与 `ops/curate_formal_scope_usce_165687_20261015.py`。
+- PR [#69](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/69) 已合并，master merge `098f31814efd2771b642af64fad5326d23b35493`。最新正式并集 2,468 IDs / 2,387 canonical / 81 unresolved（96.72%）；M1 1,553/1,553、M1 OU-R1 52/52、MR1 AH 1,862/1,921（59 unresolved）、MR1 AI 声明范围 1,553/1,553。逐项余项见共享 master `data/football_display_names/formal_scope_coverage.json#unresolved_records`。
+- 验证：M1 display/repair 单测 25/25 PASS，team 165687 ID-first resolver PASS；MR1 最新 master `e404b4224` 使用共享 registry reader，注入共享库路径后隔离渲染为“塞尔维亚甲级联赛 乌斯诺维贝尔格莱德 vs 艾尔巴达里”，registry/AI formatter/历史编辑测试 5/5 PASS。未触发生产 runtime 或 Telegram。
+- 本轮历史 TG 实际编辑/重发均为 0；此前 M1/MR1 AI 编辑限制与回执见紧邻的 batch 153。新增 canonical 会被后续正式 runtime 从共享 master 读取，但不代表历史已发送消息已被改写；不更改任何模型、策略、赛事范围、盘口源、账本或结算。
+
 ## 2026-10-15 正式中文库续补与 Telegram 验收（PR #68）
 - 继续以共享库当前正式范围清单为准，旧任务中的“740 缺名”已过期。共享仓库 PR [#68](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/68) 已合并；curation commit `dffa3940a695b98793fc70483a9a49fc29d934da`，master merge commit `6bd8068e46f6641f1428d760aa8830335cb3e91a`。唯一共享 registry 新增 3 个有来源名称：48357 FC Yerevan → 埃里温；149818 FK Kulykiv-Bilka → 库利基夫-比尔卡；89766 Al Badari SC → 艾尔巴达里。完整来源与可重复脚本在共享仓库对应 `curated_batch_report_20261015_{fc_yerevan,kulykiv_bilka,al_badari}.json` 和 `ops/curate_formal_scope_*`。
 - 合并后 master coverage：正式并集 2,468 IDs / 2,386 canonical / 82 unresolved（96.68%）；M1 1,553/1,553、M1 OU-R1 52/52、MR1 AH 1,861/1,921（60 unresolved）、MR1 AI 声明范围 1,553/1,553。相对本轮起点的共享 master 共新增 3 个 canonical；82 条逐项身份、联赛和原因见 master `data/football_display_names/formal_scope_coverage.json#unresolved_records`；其中一条为无效 provider identity（字面名 `0`），其余因没有可唯一核验的简体中文 canonical 而保留，不编造译名。
