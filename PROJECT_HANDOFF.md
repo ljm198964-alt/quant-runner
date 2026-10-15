@@ -1,5 +1,11 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 统一中文库续补：Kosovo Besa team 42740
+- 共享仓库已从旧 handoff 基线快进到 master merge SHA `9115246c628eb57c000340a9cb914d9c725603fb`（PR #63）。唯一共享表仍为 `data/football_display_names/display_names.json`；没有另建名称库或重跑全历史身份恢复。
+- 对正式 unresolved 的 TotalCorner `team_id=42740`（provider `Besa`, league_id 8293）完成精确身份交叉核查后，canonical 简中名设为“贝萨佩贾”。FootballAnt 简中球队档案给出“贝萨佩贾”；TotalCorner 42740 的 Kosovo Superliga 身份与 Kosovo 2016–17 Superliga 资料中的 Besa KF (Pejë) 相符。既有 TotalCorner `team_id=150935` / FC Besa Peja 的同名 canonical 保持原样，两个 provider ID 没有合并。来源、边界说明及可重复 curator 见共享仓库 `data/football_display_names/curated_batch_report_20261015_besa_42740.json` 和 `ops/curate_formal_scope_besa_42740_20261015.py`。
+- 最新 `formal_scope_coverage.json`：正式并集 2,468 IDs / 2,381 canonical / 87 unresolved（96.47%）；M1 1,553/1,553，M1 OU-R1 52/52，MR1 AH 1,858/1,921（63 unresolved），MR1 AI declared M1 mirror 1,553/1,553。旧“740缺名”是过期快照。共享 registry 总量 12,276 team IDs / 4,397 canonical rows；该总库数字不等同正式范围覆盖。
+- 本地验证：M1 display + repair 24/24 PASS；MR1 shared-registry + V7 formatter 4/4 PASS。隔离 formatter 中 M1、MR1 AH、MR1 AI 都能将该 ID 显示为中文。未触发生产扫描、未发送/编辑 Telegram，也未改任何模型、策略、盘口、正式账本或结算字段。其余正式未匹配条目以共享库 `formal_scope_coverage.json#unresolved_records` 为准；没有可靠简中来源的继续保留 unresolved，不猜译。
+
 ## 2026-10-15 统一球队中文库/TG显示续核
 - 按本轮任务要求读取本交接并核对远端：共享库 `totalcorner-research-bridge` 最新 master 为 `0898fcb72412e0135b67f68635ae8896206e4a10`；`quant-runner` 最新 main 为 `88e7751`。没有发现覆盖这些提交的更新。当前唯一 registry `data/football_display_names/display_names.json` 配套覆盖快照为正式并集 2,468 IDs / 2,380 canonical / 88 unresolved（96.43%）；M1 1,553/1,553，M1 OU-R1 52/52，MR1 AH 1,858/1,921（63 unresolved），MR1 AI declared M1 mirror 1,553/1,553。旧任务描述的740缺名已过期。
 - 本轮对 unresolved 中埃及 Mahalla 与 Kosovo Besa/Vllaznia 等相似身份做了额外定点中文网页核查；未找到足以绑定精确 TotalCorner team ID 的成熟简体中文 canonical。不得把 Ghazl El-Mahalla、Baladiyat El-Mahalla、阿尔巴尼亚 Vllaznia 的名称跨队移植，也不写机器音译。正式剩余 88 条完整列表及逐项原因仍以共享库 `data/football_display_names/formal_scope_coverage.json#unresolved_records` 为准；team_id 4931 的 provider identity 仍是无效字面值 `0`。
