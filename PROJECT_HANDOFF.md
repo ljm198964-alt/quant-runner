@@ -1,5 +1,11 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 近似队名冲突复核 batch 151
+- 快进确认共享 master `23321a50`；正式范围仍为2,468个team ID / 2,379 canonical / 89 unresolved（96.39%）。本批canonical新增0，不把相似拼写当作精确身份匹配。
+- 复核 `KF Dardana` (TC 52837, Kosovo Division 1) 与已映射 `KF Dardania` (TC 167867, Kosovo Division 2)：俱乐部所在地点、联赛和球队ID不同，前者为Kamenicë俱乐部并于2021年与Vushtrria合并，后者为Qyshk俱乐部；不得移植“达尔达尼亚”。`Al Raya SC` 与卡塔尔 `Al-Rayyan SC` 也因provider ID和联赛国家不同而拒绝同名迁移。St. James Swifts的简中页面仍保留英文俱乐部名。
+- 共享证据 `data/football_display_names/source_review_20261015_batch151.json`；PR [#61](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/61) 已合并，merge SHA `23321a50`。未修改唯一canonical JSON、production账本或模型。
+- 验证依据：[TotalCorner KF Dardana team page](https://www.totalcorner.com/team/view/52837)、[KF Dardana身份](https://en.wikipedia.org/wiki/KF_Dardana)、[KF Dardania身份](https://en.wikipedia.org/wiki/KF_Dardania)。此类近似项只有取得精确球队身份与可信简中标准名来源后才可消除unresolved。
+
 ## 2026-10-15 正式范围中文库与 Telegram 接入续核 batch 150
 - 已快进核对最新共享库 master：`a06bf123`（batch 150来源审查并入）；最新正式范围快照仍是2,468个去重team ID，2,379有canonical简体中文名、89未匹配，覆盖率96.39%。分系统：M1 1,553/1,553；M1 OU-R1 52/52；MR1 AH 1,857/1,921（64缺名）；MR1 AI声明镜像M1 1,553/1,553。当前89项由88个 `NO_VERIFIED_CANONICAL_ZH` 和team_id 4931一个 `PROVIDER_IDENTITY_INVALID` 组成；旧handoff中的90/2,378及“740”均已过期。
 - 对 `results/formal_email_ledger.json` 的13条消息记录，仅将pick `raw_line` 与当前未匹配provider名称做精确匹配；命中0条。没有复制邮件正文/收件人，也没有把字符串子串误认成旧中文映射。补充核查Mladost Carev Dvor、FC Yerevan、Pioneers Club、El Mahalla El Kobra公开中文足球页面/俱乐部资料，未找到能精确绑定这些TotalCorner team ID的成熟简体中文队名，故不写入音译或城市译名。
