@@ -1,5 +1,10 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 正式范围余项 source-review 闭环（PR #98）
+- 共享 registry 最新 master 为 `a1423fbc3de0b87f1345813509618f75d845a336`；新增 source review PR [#98](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/98) 合并，审查文件为 `data/football_display_names/source_review_20261015_batch174.json`。它补齐了最后 10 条原先没有独立 source-review 记录的 formal unresolved：9 个有名称的队伍未找到可核验的成熟简体中文足球名；team_id 4931 的 provider_name=`0` 身份无效。所有 66 个当前 formal unresolved ID 现在都有对应 source-review 审查记录。没有编造 canonical，`display_names.json` 与 coverage 数字未变。
+- 当前真实覆盖仍为 formal union 2,468 IDs / 2,402 canonical / 66 unresolved（97.33%）；M1 1,490/1,553（95.94%）；M1 OU-R1 52/52；MR1 AH 1,863/1,921（96.98%）；MR1 AI declared M1 mirror 1,490/1,553。完整未匹配清单、系统归属及原因在共享 `data/football_display_names/formal_scope_coverage.json#unresolved_records`。旧的“718/740未匹配”均为过期快照。
+- 对新增 10 条的检索覆盖 7M/500/雷速等中文足球来源及官方联赛/足协/俱乐部身份资料；来源与逐 ID 决策见 batch174。零映射是证据结论，不是策略 Gate，也不影响信号/通知；原始英文 fallback 保持现状。本轮未改模型、策略、赔率、ledger、结算或 Telegram。
+
 ## 2026-10-15 正式赛事中文覆盖与历史 Telegram 修复复核（PR #94 之后）
 - 以共享仓库 `ljm198964-alt/totalcorner-research-bridge` 的最新 master `15471de5417c300075c79a8d1f17442d98ec4637` 为准；Runner main 起点 `fa65870502e297f33fe94844523c0acd265f5760`。handoff 中旧的“740 个未匹配”快照已过期：当前正式范围并集 2,468 个 team ID，2,401 有 canonical 中文名，67 未匹配，覆盖率 97.29%。分项：M1 1,489/1,553（64 unresolved）；M1 OU R1 52/52；MR1 AH 1,862/1,921（59 unresolved）；MR1 AI 声明范围镜像 M1 为 1,489/1,553。逐 ID 名称、system、league_id 与原因只以共享文件 `data/football_display_names/formal_scope_coverage.json#unresolved_records` 为准；其中66个原因是 `NO_VERIFIED_CANONICAL_ZH`，team_id 4931 的 provider_name=`0` 为 `PROVIDER_IDENTITY_INVALID`。没有改动或覆盖既有映射。
 - 本轮新增 canonical 映射：0。现有 unresolved 已在共享 source-review 批次中逐项审查；本轮针对埃及低级别队、塞浦路斯/科索沃及威尔士候选追加公开精确名检索，也未得到能把简体中文队名可靠绑定到相应 TotalCorner ID 的新证据。故不采用中文站仍显示英文的队名、别的语言音译、地名直译或相似 ID 名称填充。检索样例包括 [FootballAnt Al Hilal El Dabaa 英文队页](https://www.footballant.com/football-data/team/64253)、[Sofascore Al Masry Salloum](https://www.sofascore.com/football/team/al-masry-salloum/396726)、[Sofascore Belbeis FC](https://www.sofascore.com/football/team/belbeis-fc/403001)；它们只能核对英文身份，不能证明简体 canonical。完整 unresolved 清单及逐项原因仍见共享 coverage 文件。
