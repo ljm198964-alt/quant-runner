@@ -118,7 +118,7 @@ def evaluate(match, market, scan_time):
 def observe(payload):
     if payload.get("scan_status") != "COMPLETE":
         raise ValueError("M1 source scan is not COMPLETE")
-    now = moment(payload["started_at"])
+    now = moment(payload["finished_at"])
     accepted, rejected, seen = [], {}, set()
     for m in payload.get("matches") or []:
         for market in ("AH", "OU"):
