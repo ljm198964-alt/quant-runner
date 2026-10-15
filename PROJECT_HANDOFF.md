@@ -1,5 +1,10 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 formal unresolved 续核（source review PR #102）
+- 从共享 master `b420f5f3` 后继续复核 KF Bashkimi Koretin（49842）、KF Vjosa（117487）、KF Drenasi（49843）、Ganjabasar FK（188530）、KF Kamjani（187187）。中文本地化的 FootyStats 页面仍把 KF Vjosa 显示为拉丁原名；其他可核验页面也主要确认外文身份/球队历史，没有把简体中文标准队名与该 TotalCorner ID 对上。Drenasi 的合并记录不作为替代名称，Kamjani 的马其顿文/西里尔字形也不当作简中 canonical。审查文件 `data/football_display_names/source_review_20261015_batch176.json` 已通过共享 PR [#102](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/102) 合并，merge SHA `64c1791c9b5f44255467709aef3fb4c5159ec585`。
+- PR #102 只增加 source-review，不更改唯一共享 registry 或 coverage。最新 formal coverage 仍是 2,468 个 IDs / 2,404 canonical / 64 unresolved（97.41%）；64 条权威明细仍在共享 `formal_scope_coverage.json#unresolved_records`。本轮新增 canonical 0。
+- 未触发正式扫描或 Telegram 编辑/发送；策略、模型、阈值、订单账本和结算状态均未修改。已有四链展示测试和历史 Telegram 回执按前两节记录，本轮没有新增生产验收证据。
+
 ## 2026-10-15 formal unresolved 继续核名（source review PR #101）
 - 在上节共享 master `2b7e6e98` 基线上继续对9个正式范围未匹配项做精确名称检索，覆盖 Mladost Carev Dvor、Buducnost Popovac、FK Atmosfera、Fortetsya Kamianets-Podilskyi、Jedinstvo Bihac、AEP Polemidion、Trethomas Bluebirds、FK Majevica Lopare、Cetatea 1932 Suceava。以俱乐部/协会/赛程来源核对身份，但没有发现可绑定至对应 TotalCorner team ID 的成熟简体中文足球标准名；未将中文页面上的拉丁名误记为中文名，也未做字面翻译。来源和逐项决定已写入共享 `data/football_display_names/source_review_20261015_batch175.json`，PR [#101](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/101) 已合并，merge SHA `b420f5f3774df292e8e28ad9122c21735be4c0de`。
 - 这批只增加 source-review 证据，不改 `display_names.json` 或 coverage；formal union 仍为 2,468 个 team ID / 2,404 canonical / 64 unresolved（97.41%）。当前64个 unresolved 全量名单及原因仍以共享 `data/football_display_names/formal_scope_coverage.json#unresolved_records` 为权威来源。
