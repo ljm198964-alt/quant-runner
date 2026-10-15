@@ -1,5 +1,11 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 剩余正式范围缺名定向复核（batch 122）
+- 先以共享 master `0883dd065eb53307f41f8b31508f410e19d1df28` 的实际 `formal_scope_coverage.json` 为准：仍为 2,468 个正式范围球队 ID，2,356 有 canonical，112 未匹配；未沿用旧“740/718”快照。
+- 对共享库全部历史 JSON 身份/中文证据档案做了按 unresolved provider identity 的精确交叉检查，没有发现此前未登记的同 ID 中文别名。对埃及低级别、科索沃、马耳他、北马其顿、威尔士及波罗的海候选做了中文来源定向检索；找到的官方/权威球队资料多数只保留英文/本地品牌，不能据此造中文名。
+- 特别保留身份隔离：埃及城市/球队 Ghazl El Mahalla 的中文“马哈拉/加斯马哈拉”资料不能证明另一 provider identity `El Mahalla El Kobra` 是同队；阿尔巴尼亚 Vllaznia 的中文资料也不能转给科索沃 `Vllaznia`（league_id 8293）。这些仍不写入 canonical。无新增 mapping；正式覆盖率与各模型计数不变。完整逐队余项、league_ids 与 reason 见共享库 `data/football_display_names/formal_scope_coverage.json#unresolved_records`。
+- 本轮只做证据复核及交接记录，不改共享库、模型、策略、TG、账本或工作流。后续从 remaining 112 中继续逐队找带精确身份对应的简中球队资料；无可靠资料的保留 unresolved。
+
 ## 2026-10-15 中文 Telegram 显示纠偏（batch 121）
 - 在最新共享 master `f6328b064869a5e838edf426d8383ecab72d0164` 上继续，仅修 display 层。修正 `team_id=82622`：LiveScore 简中页明确显示“立陶宛Be1 Nfa”，此前 canonical 仅为拉丁字母 `Be1 NFA`，被 M1 formatter 判作未中文化；现 canonical 为“立陶宛Be1 Nfa”，保留 Be1 NFA 官方品牌和 ID。`league_id=514` Greece Super League 2 更新为 FootyStats 简中赛事名“希腊超级联赛2”，旧通称留在 aliases。来源分别见共享 registry 的 source reference 和 `competition_curation_20261015.json`。
 - 共享库 PR [#25](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/25) 已合并，merge SHA `0883dd065eb53307f41f8b31508f410e19d1df28`。formal scope 仍是 2,468 IDs / 2,356 canonical / 112 unresolved（95.46%）；M1 与声明镜像 MR1 AI 1,538/1,553，M1 OU-R1 52/52，MR1 AH 1,836/1,921。映射数不变；修正了一个此前登记为 canonical 但不能通过 M1 中文字符判定的显示标签。完整余项及逐项原因仍以共享 `formal_scope_coverage.json#unresolved_records` 为准（111 条无可核验中文名，team_id 4931 的 provider identity 为无效字面 `0`）。
