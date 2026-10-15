@@ -2237,3 +2237,8 @@
 - 验证：M1 Telegram formatter 与 repair 测试 30/30 PASS；MR1 shared resolver、MR1 AI Telegram formatter tests 5/5 PASS；MR1 AI parser/forward tests 3/3 PASS。隔离 resolver 可由精确 team_id 渲染 `德尔菲队`，AH 方向映射生效。没有发送测试消息或触发正式 runtime。
 - 同源页还显示 Al Majd 的简中名，但共享库已有另一个 team_id `7705` 使用 `阿尔马吉德`，无法仅凭英文近似名将它赋给不同的 `Al Magd` ID `94863`；该队保留 unresolved，避免冲突误并。历史 TG 本轮未编辑：没有直接可用的 Telegram 编辑授权/凭据执行入口，也未触发既有名称修复 workflow，因此不声称已修改旧消息；正式生产显示效果需待自然运行消费最新共享 master 或既有工作流回执验证。
 - 没有修改 M1 / M1 OU-R1 / MR1 AH / MR1 AI 的模型、策略、阈值、赛事范围、盘口源、订单账本、结算或正式消息格式。
+
+## 2026-10-15 正式范围未匹配名称来源复核（第167批）
+- 共享库 master 新提交 `be2dc9fd`（`Document unresolved formal team name source checks batch 167`），新增 `data/football_display_names/source_review_20261015_batch167.json`。对 KF Vllaznia (119602)、CSM Olimpia Satu Mare (161196)、FK Majevica Lopare (170757)、Romanija Pale (133411)、KF Dardana (52837)、FK Sveikata (53177)、KF FC Mitrovica (150467) 完成精确 ID / 官方或本地足球来源核对；没有来源可证明成熟简体中文 canonical 唯一对应这些 ID，本批 canonical 新增为0。
+- 重点避免跨实体误映射：不把 Albania KF Vllaznia 的名称套到 Kosovo Vllaznia Pozheran (42262)；不把 Satu Mare 历史 Olimpia 或球迷俱乐部名称套给当前 CSM；不把已合并/继承关系未证实的 Dardana 10 当作原 KF Dardana；Romanija 地理区名称不直接译作球队名。
+- 正式范围快照仍为 2,468 IDs / 2,395 canonical / 73 unresolved（97.04%）；M1 1,553/1,553，M1 OU R1 52/52，MR1 AH 1,868/1,921，MR1 AI declared mirror 1,553/1,553。只增来源审查，不改展示映射、覆盖统计、模型/策略或 Telegram；没有历史消息编辑或测试发送。
