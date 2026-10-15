@@ -2102,3 +2102,10 @@
 - 共享 master 更新为 `5bbf315e8c64481997147f34600da8c999a7539e`。对 QiuXiaoCe/lottery-football 当前 `team_name_mappings.csv`（24,888行，源提交 `b4dab52648ebbf8aa52c447897ba046c795060ea`）与当前89个 unresolved provider names 做规范化精确匹配，命中15个ID、63条匹配行；逐行检查无一条含中文名称，字段只有英文/拉丁身份别名。因此这份表可辅助确认英文身份，但不能为这些 ID 提供 canonical 中文名。
 - 结果写入共享库 `data/football_display_names/source_review_20261015_batch149.json`，PR [#59](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/59) 已合并。未新增名称，coverage 仍2,468 IDs / 2,379 canonical / 89 unresolved（96.39%）；M1和M1 OU-R1仍100%。不以英文别名、机器音译或赛事地名填充 canonical。
 - 未触发生产扫描或 Telegram 操作；策略、账本、通知规则均未改。
+
+## 2026-10-15 正式球队中文显示补齐（第153批）
+- 共享仓库 PR [#66](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/66) 已合并，master merge commit `67120e9d18f2ee13e5e3a0a506cd6226b3937671`。TotalCorner team_id `164619`（SK Artis Brno）新增 canonical `里森`，英文 provider identity 保留，别名含 SK Líšeň / SK Lisen。Okoo 中文赛程使用“里森”；捷克官方联赛记录该队 2025 前名 SK Líšeň、2025 起名 SK Artis Brno，身份链与 TotalCorner ID 对应。未与其他球队 ID 合并。
+- 最新 formal scope：总计2,468 IDs、2,383 canonical、85 unresolved（96.56%）；M1 1,553/1,553，M1 OU-R1 52/52，MR1 AH 1,859/1,921（96.77%），MR1 AI declared mirror 1,553/1,553。共享库总计12,276 IDs、4,399 canonical。当前完整 unresolved 清单及原因以共享 `data/football_display_names/formal_scope_coverage.json#unresolved_records` 为准；旧交接中的718/740不再是当前数量。
+- 本地验证：M1 Telegram formatter/repair 测试25/25 PASS；MR1 shared registry 与 browser-forward notifier 测试3/3 PASS。隔离 M1 formatter 对 team_id 164619 输出中文联赛/队名和中文 AH 方向；MR1 resolver 的共享库测试通过。没有测试或生产 TG 发送。
+- 以精确 ID 检查 M1 formal ledger 和 MR1 prospective ledgers，未发现 team_id 164619 的正式已发送 Pick；历史消息编辑0、失败0（无对应可编辑目标）。既有 formatter 读取唯一共享 registry，后续自然运行会消费新名称；本批未触发生产工作流。
+- 仅更改公共展示映射、覆盖报告、来源记录和 curator。未修改 M1/M1 OU-R1/MR1 AH/MR1 AI 的模型、策略、阈值、赛事范围、盘口来源、正式账本、结算或通知规则。
