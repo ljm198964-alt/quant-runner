@@ -2459,3 +2459,8 @@
 - 共享库 PR [#120](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/120) 已合并，master SHA `4349016f`。审查 Llay Miners Welfare、Trethomas Bluebirds、KF Dukagjini Gjakove、KF Dielli；4项均未发现能够绑定准确 team ID 的成熟中文标准名，新增 canonical 0。
 - 正式范围维持 2,468 / 2,407 / 61（97.53%）；M1 1,495/1,553，M1 OU-R1 52/52，MR1 AH 1,867/1,921，MR1 AI 声明镜像 M1。证据见 `source_review_20261015_batch190.json`。
 - 仅追加来源审查文件，未改映射、生产代码、模型、策略、范围、账本、结算或 Telegram；未触发生产运行或发送/编辑消息。
+
+## 2026-10-15 正式范围未匹配队名补充检索（批次191）
+- 共享仓库 PR [#121](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/121) 已合并，master SHA `0c7f3e00`。针对埃及队伍 El Mahalla El Kobra、MS Naser Malawy、Al Hilal El Dabaa、Mostaqbal Watan Club 做了精确身份与中文足球来源（含7M/500定向检索）复核；没有找到可绑定该 team ID 的主流固定简中队名，新增 canonical 0。
+- 正式范围维持 union 2,468 / 2,407 / 61（97.53%）；分项仍是 M1 1,495/1,553、M1 OU-R1 52/52、MR1 AH 1,867/1,921、MR1 AI 声明镜像 M1。证据见 `source_review_20261015_batch191.json`。
+- 仅追加来源审查证据；未改映射、代码、模型、策略、赛事范围、订单、结算或 Telegram，也未触发生产运行或消息编辑/发送。
