@@ -1,5 +1,9 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 塞尔维亚/乌克兰 formal-unresolved 名称核验
+- 从共享 master `fe86a5fbc8acf1d4263f7b9af8593777b623deb8` 提取联赛上下文为 337/55/63 的 6 条未匹配身份：FC Yerevan、UCSA、FK Kulykiv-Bilka、SU Dinamo Jug、FK Usce Novi Beograd、FK Proleter 023。精确中文队名检索并对照俱乐部/联赛身份资料后，没有命中可确认的成熟简体中文名；乌克兰协会/俱乐部使用的拉丁/乌克兰语名称及中文页面 UI 均不足以据此造中文 canonical。FK Proleter 023 近期发生迁址/更名，须避免误接到其他同名 Proleter 俱乐部的旧中文名。
+- 本批未新增 canonical；整体仍为 2,468 IDs / 2,375 canonical / 93 unresolved。已核实来源：[UCSA 官方/俱乐部信息](https://fcucsa.github.io/ucsa/)、[SU Dinamo Jug 官网](https://sudinamojug.com/zvanicno-dinamo-jug-u-prvoj-ligi-srbije/)、[塞尔维亚甲级联赛 Proleter 023 页面](https://www.prvaliga.rs/en/tim/proleter-023/)。
+
 ## 2026-10-15 正式范围英文-中文本地语料再交叉与罗马尼亚/格鲁吉亚核验
 - 重新以共享远端 `master=fe86a5fbc8acf1d4263f7b9af8593777b623deb8` 为准，确认 formal union 仍为 2,468 IDs / 2,375 canonical / 93 unresolved（96.23%），其中 M1 1,553/1,553、M1 OU-R1 52/52、MR1 AH 1,853/1,921、MR1 AI declared M1 mirror 1,553/1,553。旧“740”与当前 unresolved 清单不一致。
 - 把当前 93 条逐一与仓库既有 `country_team_backfill_audit_20261011.json`、`reep_chinese_name_evidence.json` 做名称规范化后的精确英文交叉：两个数据集分别 258、229 条，本轮命中均为 0。未使用模糊拼写或地名相似度。
