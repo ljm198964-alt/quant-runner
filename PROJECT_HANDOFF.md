@@ -1,5 +1,12 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 正式范围中文库续补（batch 132）
+- 新增并验证 TotalCorner `team_id=165365` / `Treowen Stars → 特雷欧文星队`。Sofascore 简体中文球队页以“特雷欧文星队”作为标题和球队称呼，英文身份为 Treowen Stars，国家威尔士、赛事 Cymru South；TotalCorner 对应 ID 页面同为 Treowen Stars / Wales Championship South，与共享库 `league_id=11959` 一致。唯一 registry 的 source 记录保存两边证据链接；没有修改 provider 原名、team_id 或模型字段。
+- 共享库变更 PR [#33](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/33) 已合并，master SHA `e277794500ce51a3129e73e6464bebd04f3d0f46`。正式 union 当前 2,468 个 ID / 2,366 canonical / 102 unresolved，覆盖率 95.87%；M1 1,547/1,553（99.61%），M1 OU R1 52/52（100%），MR1 AH 1,845/1,921（96.04%），MR1 AI 声明镜像 M1 1,547/1,553（99.61%）。共享库为 12,276 IDs / 4,382 canonical。
+- 隔离真实 formatter 验收：M1 与 M1 OU R1 共用 M1 formatter，输出 `【M1】2026-10-17 02:30 威尔士冠军联赛南区 特雷欧文星队 vs 兰特威特梅杰 全场让球 特雷欧文星队 -0.25@0.92`；MR1 AI 共用 registry 实际渲染同一赛事/两队/主队方向为中文。MR1 shared reader、AI formatter、browser-forward 及 notifier tests 8/8 PASS；M1 Telegram display repair tests 2/2 PASS；registry canonical 计数与 coverage 文件一致。没有发送测试或正式 Telegram。
+- 审阅已发送账本未发现 team_id 165365 / 本次隔离 fixture 对应的 M1、MR1 AH 或 MR1 AI 消息，因此无需也未编辑/重发历史消息。M1 repair dry-run 仅本地模拟、无 Telegram API 请求；本地账本提示 41 条候选，而此前最近实际运行对同一批均为 Telegram `already_matching`，其余旧统计仍是缺原文/未映射，不能宣称本次历史修复有新增编辑。
+- 本轮新增 canonical 1；当前仍有 102 条 unresolved：101 条 `NO_VERIFIED_CANONICAL_ZH`、1 条 `PROVIDER_IDENTITY_INVALID`。清单及逐条原因见共享库 `formal_scope_coverage.json#unresolved_records`。最近已核对的彩票公开中文映射集对原 103 条精确归一化匹配为 0；不要用模糊名称把不同低级别球队合并。未改任何模型、策略、盘口、赛事范围、账本、结算或发送规则。
+
 ## 2026-10-15 现成体育彩票映射与正式 unresolved 精确交叉（batch 131）
 - 复核共享 master `dededd6cb0844b4029c49c72997a3c0f686a6ab5` 当前 `formal_scope_coverage.json`：正式范围仍为 2,468 IDs / 2,365 canonical / 103 unresolved（95.83%）。
 - 为避免重复零散网页搜索，本轮直接使用既有公开中文映射证据 `qqyg000/lottery-football` 的 `reports/verified-team-name-mappings-2026-09-28.json`（其报告基于已核验别名与俱乐部身份来源），将当前 103 个 provider_name 与 `mapping_rows_added.alias_team_name` 做 Unicode/重音/标点归一化后的全量精确匹配：0 命中。没有使用模糊字符串相似度、同联赛近似名或同比分关系推断球队身份。故无安全可导入项，registry 数量不变。
