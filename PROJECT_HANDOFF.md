@@ -1,5 +1,13 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 正式中文库续核与 TG 状态（batch 152）
+- 已读取本交接并快进核对：本轮起点共享 master 为 `06cf85ec7a58ddd8c5b3e09a595e69f74a644c39`，Runner main 为 `b29cb64a0cd93d1efb39b82e4c53c95e9bebd178`。定点负面来源审查保存至 `data/football_display_names/source_review_20261015_batch152.json`，共享 PR #65 已合并，最新共享 master `b21eaa76e16685c67055053cbe3b962a6d57d067`。唯一名称表仍是 `data/football_display_names/display_names.json`；本次未重扫历史身份，也未更改任何 canonical。
+- 最新正式范围快照为 2,468 个 team ID / 2,382 个 canonical / 86 个 unresolved（96.52%）。分系统：M1 1,553/1,553；M1 OU-R1 52/52；MR1 AH 1,858/1,921（63 unresolved）；MR1 AI declared M1 mirror 1,553/1,553。旧“740缺名”不是当前 master 状态。候选源复核没有取得可安全绑定到新 ID 的主流简体中文名称：特别是 TC 10782 `El Mahalla El Kobra` 与 Leisu 所列 `Sed Elmahla` 不是可直接互换的标签（TC 页面将二者列为对赛双方）；TC 136896 `MS Tala`、114610 `AEP Polemidion` 亦未找到精确 ID 对应的成熟简体 canonical。故保留 unresolved，不猜译、不跨队迁移。
+- M1 AH / M1 OU-R1 共用现有 M1 显示和修复链；M1 formatter、formal runtime、historical repair 测试 `python3 -m pytest -q test_m1_formal_runtime.py test_m1_telegram_display.py test_m1_telegram_display_repair.py` 为 37/37 PASS。隔离 dry-run 汇总：41 条可生成名称替换、99 条缺原发送正文、104 条名称仍未映射；该 dry-run 不是 Telegram 实际编辑回执。既有真实修复 run `38679318371` 的结果仍为 edited 0 / already matching 41 / missing original text 99 / unmapped 100；本轮未重复调用同一目标，也未重发。当前本机没有 M1 专用 TG 环境凭据，无法安全地本地执行 editMessageText。
+- MR1 AH / MR1 AI 继续读取共享 registry。MR1 shared-registry、V7 formatter、V6 历史名称修复隔离测试 `node --test test-football-display-names.js test-v7-ai-picks-telegram.js test-v6-ah-display-repair-v5.js` 为 4/4 PASS。MR1 AH 最近真实历史修复 run `38679322906` 为 edited 0、125 条已处理/跳过。MR1 AI 最近 run `38683043467` workflow success，但业务回执不是成功编辑：9 条候选、edited 0、9 条 Telegram API `400 message to edit not found`、192 unresolved；该业务结果已由 MR1 master 持久化（现 master `a18e8422883e6bc7f4c83984638432fbce18df3c`）。不重复调用同一组失效 message ID。
+- 历史 Telegram 修复实况：本轮实际编辑 0、重发 0。M1 OU-R1 目前只有 M1 总账中的 Telegram 回执，没有额外独立可编辑 ledger；当前 M1 共账的 formatter/修复链可识别其记录，但历史消息是否可编辑仍以每条真实 Telegram API 回执为准。上述 workflow 的 CI `success` 不等于消息已改。
+- 本轮没有新增映射、生产部署或 GitHub Actions dispatch；没有修改 M1、M1 OU-R1、MR1 AH、MR1 AI 的模型、策略、盘口源、范围、订单、结算或通知规则。剩余名单及逐项 ID/联赛上下文以共享 master 的 `data/football_display_names/formal_scope_coverage.json#unresolved_records` 为唯一准据。
+
 ## 2026-10-15 统一中文库续补：Detonit Plackovica team 113061
 - 共享仓库继续从 merge `9115246c` 快进至 master merge SHA `06cf85ec7a58ddd8c5b3e09a595e69f74a644c39`（PR #64）。唯一共享表仍为 `data/football_display_names/display_names.json`。
 - 为正式未匹配项 TotalCorner `team_id=113061` / provider `Detonit Plackovica` / `league_id=15517` 增补 canonical 简中名“德托尼特普拉柯维卡”。依据是同 ID TotalCorner 繁中球队页稳定显示“德托尼特普拉柯維卡”，匹配赛页与独立足球资料交叉核验；canonical 只做繁体字形转简体，不另造音译。来源、边界及复跑脚本见 `data/football_display_names/curated_batch_report_20261015_detonit_113061.json`、`ops/curate_formal_scope_detonit_113061_20261015.py`。
