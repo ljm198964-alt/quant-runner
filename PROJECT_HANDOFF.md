@@ -2417,6 +2417,12 @@
 - 仅修改展示名称/来源/覆盖审计和回归测试；M1、M1 OU R1、MR1 AH/AI 策略、盘口源、范围、锁单、结算与消息格式未改。
 - 来源：[FootballAnt 简中球队档案](https://www.footballant.com/zh-CN/football-data/team/67566)、[TotalCorner team 185424](https://www.totalcorner.com/team/view/185424)、[Prva Liga 官方球队页](https://www.prvaliga.rs/en/tim/proleter-023/)。
 
+## 2026-10-15 正式范围未匹配队名来源续审（批次180–182）
+- 共享库 PR [#110](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/110)、[#111](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/111)、[#112](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/112) 已合并；最新共享 master `0b664ef5959907770c67fd75588bb8bc5aeac193`。三批均只增加按球队 ID/身份核实的公开来源审查证据，未找到可安全写入的新 canonical，未改变 `display_names.json`。
+- 三批检查包括 APEA Akrotiriou、Asil Lysis、Al Hilal El Dabaa、Goldi SC、KF Dukagjini Gjakove、KF Vllaznia、Jedinstvo Bihać、Ynyshir Albions、Cetatea 1932 Suceava、KF Tefik Canga、Aresimi 1973、Ganjabasar FK。需防止将 Kosovo Superliga 的 KF Dukagjini（Klinë）中文名错配到不同身份的 Gjakovë 球队；Aresimi 的简中 FootyStats 页面仍保留英文队名；其余本批来源未能提供可核验的主流简体中文名称或无法排除别名/身份冲突，因此保留 unresolved，不临时音译。
+- 最新 `formal_scope_coverage.json`：正式并集 2,468 IDs / 2,407 canonical / 61 unresolved（97.53%）；M1 1,495/1,553（58 unresolved，96.27%）；M1 OU R1 52/52；MR1 AH 1,867/1,921（54 unresolved，97.19%）；MR1 AI 声明镜像 M1 为 1,495/1,553。共享库 12,276 IDs / 4,423 canonical。ID 4931 的 provider identity 为无效值 `0`；其余60项没有经核验的 canonical 简中名称。完整逐项清单及来源审查证据见共享仓库 `data/football_display_names/formal_scope_coverage.json#unresolved_records` 和 `source_review_20261015_batch180.json` 至 `batch182.json`。
+- 这三批没有改模型、策略、展示代码、Telegram、账本或结算，也未运行生产扫描或发送/编辑 Telegram。来源审查完成不等于 canonical 匹配完成；历史 Telegram 编辑情况沿用前一节实际回执，不将审查批次计作消息修复。
+
 ## 2026-10-15 名称变更后的历史 Telegram 原位编辑验收
 - M1 既有 `M1 TG Historical Chinese Name Repair` run [38735525989](https://github.com/ljm198964-alt/quant-runner/actions/runs/38735525989) SUCCESS。正式 M1 ledger（含登记在同一账本的 M1 OU R1 policy 行）实际报告：eligible 41、edited 0、already_matching 41、缺原始消息文本 99、无映射 114、failed 0。没有发送新消息。M1 账本无 team ID 185424 的已发记录。
 - MR1 AH 既有 `MR1 Formal Telegram Historical Name Repair` run [38735926659](https://github.com/ljm198964-alt/quant-runner/actions/runs/38735926659) SUCCESS：125 条已处理、eligible 0、edited 0、unresolved 0；没有历史消息需要本轮编辑。
