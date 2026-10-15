@@ -1,5 +1,12 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 统一球队中文库/TG显示续核
+- 按本轮任务要求读取本交接并核对远端：共享库 `totalcorner-research-bridge` 最新 master 为 `0898fcb72412e0135b67f68635ae8896206e4a10`；`quant-runner` 最新 main 为 `88e7751`。没有发现覆盖这些提交的更新。当前唯一 registry `data/football_display_names/display_names.json` 配套覆盖快照为正式并集 2,468 IDs / 2,380 canonical / 88 unresolved（96.43%）；M1 1,553/1,553，M1 OU-R1 52/52，MR1 AH 1,858/1,921（63 unresolved），MR1 AI declared M1 mirror 1,553/1,553。旧任务描述的740缺名已过期。
+- 本轮对 unresolved 中埃及 Mahalla 与 Kosovo Besa/Vllaznia 等相似身份做了额外定点中文网页核查；未找到足以绑定精确 TotalCorner team ID 的成熟简体中文 canonical。不得把 Ghazl El-Mahalla、Baladiyat El-Mahalla、阿尔巴尼亚 Vllaznia 的名称跨队移植，也不写机器音译。正式剩余 88 条完整列表及逐项原因仍以共享库 `data/football_display_names/formal_scope_coverage.json#unresolved_records` 为准；team_id 4931 的 provider identity 仍是无效字面值 `0`。
+- 最新共享 master 本地回归：M1 `python3 -m pytest -q test_m1_telegram_display.py test_m1_telegram_display_repair.py` 为 23/23 PASS；MR1 `node --test test-football-display-names.js test-v7-ai-picks-telegram.js` 为 3/3 PASS，`node --test test-v6-ah-display-repair-v5.js` 为 1/1 PASS。显示消费者仍读取同一共享 registry；未匹配名称只走既有展示 fallback/诊断，不成为策略或发送 Gate。没有生产代码、正式账本或交易字段变更。
+- 历史 Telegram 没有新的可编辑目标，故本轮实际编辑 0、重发 0。既有真实修复回执仍是：M1 run `38679318371` edited 0（41 already matching、99缺少账本原文、100 unmapped）；MR1 AH run `38679322906` edited 0（125 already processed/skipped）；MR1 AI run `38678553590` edited 0，9次 Telegram API 返回 `400 message to edit not found`、192 unresolved；M1 OU-R1没有可确认的独立历史 message-ID 修复链。不得把工作流 PASS 当成 Telegram 消息编辑成功，也不要重复调用已失败的同一批 edit。
+- 本轮未触发任何生产 scan、TG 发送/编辑或 GitHub Actions；没有发现可依据现有凭据安全修复历史 TG 的新证据。未改 M1、M1 OU-R1、MR1 AH、MR1 AI 模型/策略/盘口源/范围/账本/结算/通知规则。后续只有出现新的、可核验简体名称来源，或历史消息账本补齐原文与有效可编辑 Telegram message ID 时，才能继续减少这 88 项/修复旧消息。
+
 ## 2026-10-15 新增7M简中队名 Shturmi
 - 已确认并入共享 master `0898fcb7`：TotalCorner `team_id=143652`, provider `Shturmi`, `league_id=702`；7M中文球队页对应该格鲁吉亚俱乐部并显示繁体“什圖爾米”，统一库 canonical 简体记为“什图尔米”，繁体保留为alias。来源及身份交叉证据见 `data/football_display_names/curated_batch_report_20261015_shturmi.json` 与 [7M profile](https://team.7m.com.cn/648426/index.shtml)、[TotalCorner team 143652](https://www.totalcorner.com/team/view/143652)。
 - 正式范围最新：2,468 IDs，2,380 canonical，88 unresolved，96.43%；MR1 AH 1,858/1,921（96.72%）；M1 1,553/1,553、M1 OU-R1 52/52、MR1 AI declared M1 mirror 1,553/1,553保持不变。共享库PR [#62](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/62) 已合并。
