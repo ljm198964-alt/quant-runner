@@ -1,5 +1,12 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 正式范围来源复核 batch 146 与 Telegram 回执核验
+- 以共享 master `5705768f93232696f0bb3e2edd4d9b5e711c5ec8` 的 `formal_scope_coverage.json` 为唯一当前快照；没有复扫全历史身份。正式并集为2,468个team ID，其中2,378有canonical简体中文名、90未匹配（96.35%）；89项为缺少经核验的中文标准名，team_id 4931 provider原名为`0`、身份无效。分系统：M1 1,553/1,553；M1 OU-R1 52/52；MR1 AH 1,856/1,921（96.62%）；MR1 AI声明镜像M1 1,553/1,553；MR1 AI历史confidence≥50 cohort 181/182（99.45%）。这些是共享快照值，不把未匹配项作为策略Gate。
+- 新增来源审查 `data/football_display_names/source_review_20261015_batch146.json`，覆盖最后27个尚未审查的unresolved ID；至此90个正式范围未匹配项均已有来源审查记录。核查覆盖塞尔维亚、科索沃、埃及、北马其顿、拉脱维亚、立陶宛、阿塞拜疆、安道尔、罗马尼亚、威尔士等身份/俱乐部/足协或赛事记录。英文/地方语身份确认不等同于成熟简体中文队名；对同名和ID上下文冲突保留 unresolved。canonical additions=0，未添加机器音译、地名直译或未经证实别名。
+- 已对照三条既有 Telegram name-only 修复 workflow 的真实执行报告：M1 [`38679318371`](https://github.com/ljm198964-alt/quant-runner/actions/runs/38679318371)：41 eligible、0 edited、41 already matching、99缺少账本原消息文本、100 unmapped、0 failed；MR1 AH [`38679322906`](https://github.com/ljm198964-alt/quant-runner/actions/runs/38679322906)：0 edited、125 already processed/skipped、0 unresolved/failed；MR1 AI [`38678553590`](https://github.com/ljm198964-alt/quant-runner/actions/runs/38678553590)：9次历史编辑因Telegram `400 message to edit not found`失败，192条unresolved。M1 OU-R1当前52/52有canonical覆盖，但没有可确认的独立历史编辑消息ID/修复流程。没有重发消息、重试相同编辑、修改交易字段或账本。
+- M1 formatter与repair回归22/22 PASS；MR1 shared display/V7 AH/V6 display repair 4/4 PASS；MR1 AI教师解析5/5 PASS。隔离渲染确认四条消费者链通过同一共享resolver取中文名；本轮未触发生产扫描或TG发送/编辑。历史消息仍有英文的唯一可诚实处理方式是等待来源提供可信中文canonical、准确原文及可编辑的原message ID；不能为追求全中文覆盖编造名称。
+- 共享来源审查PR [#56](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/56)已合并，merge SHA `1b8fd0dabf4f0c4e0350684d3ea5564959f062b8`；formal coverage/canonical mapping不变。此handoff由本commit记录复核结论。
+
 ## 2026-10-15 正式范围剩余项来源复核 batch 145
 - 对14个 team_id（43945、49843、51504、51602、52385、56852、50576、113675、113979、117487、154158、154224、154225、154405）做定点身份/简体名称来源核验。覆盖 Kosovo、Lithuania、Latvia、North Macedonia、Egypt；俱乐部身份可确认的条目仍无精确绑定到 provider ID 的成熟简体中文标准名，名称模糊项保持 unresolved。canonical 新增0。
 - 审查证据位于共享库 `data/football_display_names/source_review_20261015_batch145.json`；PR [#55](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/55) 已合并，merge SHA `5705768f93232696f0bb3e2edd4d9b5e711c5ec8`。formal coverage 数值保持不变。
