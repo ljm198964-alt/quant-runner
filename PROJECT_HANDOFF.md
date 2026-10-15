@@ -2387,3 +2387,8 @@
 - 流程只产生 `UNTRAINED_RESEARCH_OBSERVATION`，不产生投资建议、正式/影子订单或结算，也不修改现有 M1/MR1 策略与账本。Crown 原始数据保存在 Runner 临时目录，不作为公开 artifact/commit 上传；日志仅打印汇总。实际生产独立历史锁单、训练/时间前推验证、影子结算和长期持久化仍**未实现**，均不可宣称已经运行。
 - 公共 GitHub Actions 首次触发 [run 38730631560](https://github.com/ljm198964-alt/quant-runner/actions/runs/38730631560)，创建于 UTC 2026-10-15 11:53:59。测试、私有源权限检查已成功，最新核查时 checkout 源仍在进行中，最终运行状态须继续复核。原 M1 4个定时扫描之后45分钟触发 M2只读观测（UTC 04:50/10:50/16:50/22:50），若源超过6小时则工作流报 stale。
 - 下一步：确认首次运行日志及时间/数据校验；建立 M2 的真正独立双边市场概率基线、历史 walk-forward/OOS 与消融，之后经验证的 Crown 锁价影子账本、FT结算、ROI/回撤/CLV，再考虑独立TG是否需要用户另行授权。禁止未经验证的权重触发真实派单。
+
+## 2026-10-15 M2 首次公开 Runner 运行实测结论
+- 首次 [M2 Market Research Observer run 38730631560](https://github.com/ljm198964-alt/quant-runner/actions/runs/38730631560) 于 UTC 11:54 完成 **SUCCESS**；实际 GitHub workflow Job tests 4/4 PASS，源码 checkout 与只读生产源权限成功，研究特征提取步骤完成。job_id `116407231217`。
+- 运行日志实际结果：`source_run_id=M1_20261015T102804Z`、`observation_count=3`、`rejection_counts={OUT_OF_TIME_WINDOW:6, STALE_OR_FUTURE_QUOTE:57, NO_SIDE:14}`、`orders_locked=0`、`telegram_write=false`。这仅为完整 M1 扫描池的市场与基本面观察，**不是三条 M2 盈利交易信号**。旧皇冠报价大量被时间校验拒绝，后续优先研究准时采集与独立双边盘口输入。
+- 实测成功不代表 M2 预测模型已训练、已完成 walk-forward 或独立影子锁单/结算；暂不可报告 M2 ROI。生产 M1、M1 OU R1、MR1 AH/AI 未变更。
