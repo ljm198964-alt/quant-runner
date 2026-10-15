@@ -1857,3 +1857,10 @@
 - 显示接入核验：M1 AH 与 M1 OU-R1 共用 M1 formatter/registry；MR1 AH 与 MR1 AI 通过共享 registry resolver 读取同一文件。M1 formatter/repair 测试 18/18 PASS；MR1 shared-registry 测试 2/2 PASS。隔离 MR1 AI formatter 输出 `【MR1 AI】2026-10-20 22:00 埃及第二级联赛 阿尔加 vs 施伦斯 全场让球 阿尔加 0@0.92`；未发送测试 Telegram。只修复展示数据，不改模型、策略、阈值、盘口、账本、结算或通知格式。
 - 对本批新增 team ID 的 M1/MR1 AH/MR1 AI 已有发送账本作精确只读检查，未找到 6069、7619 的历史正式 TG 订单；故针对本批映射没有可编辑历史消息，实际编辑 0、失败 0（无目标），没有重发或修改结算。更广的旧消息修复仍受账本缺少原始消息文本、无映射以及 Telegram `message to edit not found` 限制；本机也无可用 Telegram 凭据，未尝试 API 编辑。新 canonical 已进入共享 master，后续 formatter 可使用；历史消息未宣称已修复。
 - 本轮未触发 GitHub Actions；本地 M1/MR1 显示测试通过不等于云端 workflow 验证。未来扫描池的现存快照记录为 88 场、176 个队伍位置、175 resolved、1 unresolved（99.43%）；这是该快照自身的时点数据，不把它冒充为合并后三队伍的重新扫描结果。未修改任何生产策略、比赛范围或正式账本。
+
+## 2026-10-15 正式范围中文名补齐（第127批）
+- 以共享 master 合并后的 PR [#38](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/38) 为准，merge commit `e2c4eda340bdf4a1babb8926f3f49493279d1a26`。新增 TC team_id `111435`（FSC Mariupol）canonical `FSC马里乌波尔`；source review 同时记录与 team_id `185790`（FSC Feniks-Mariupol → 马里乌波尔凤凰）及 `42456`（FC Mariupol → 马里乌波）的身份区分，不合并球队。
+- 来源核验：[Tips.GG 简体中文对阵档案](https://tips.gg/cn/archive/dinaz-vyshgorod-football-vs-fk-yarud-mariupol-football/)明确使用“FSC马里乌波尔”；[TotalCorner team 111435](https://www.totalcorner.com/team/view/111435)核对 provider 身份及乌克兰甲级联赛；乌克兰职业联赛俱乐部页 [FSC Mariupol](https://upl.ua/en/clubs/view/1841?id=1841&sort=fname)作独立身份交叉核验。
+- 合并后正式范围：2,468 IDs / 2,371 canonical / 97 unresolved，96.07%。M1 1,552/1,553（99.94%，1 unresolved）；M1 OU-R1 52/52（100%）；MR1 AH 1,850/1,921（96.30%，71 unresolved）；MR1 AI 声明镜像 M1 为1,552/1,553（99.94%）；MR1 AI confidence≥50历史 cohort 181/182（99.45%）。完整97项由共享 `formal_scope_coverage.json#unresolved_records` 维护。
+- M1 formatter/repair 测试18/18 PASS；MR1共享 resolver 测试2/2 PASS。resolver 隔离核验三个近似身份分别输出 `FSC马里乌波尔`、`马里乌波尔凤凰`、`马里乌波`。本次不涉及任何 Telegram 发送/编辑，历史消息实际编辑0；也未运行生产 Actions 或扫描。本地映射合并不等于 MR1 外部 registry checkout 已自动快进，部署状态应以各 runtime 实际检出的共享库 revision 为准。
+- 仅增加展示映射、正式范围快照、curation 审计和回归测试；未修改模型、策略、阈值、赛事范围、盘口、账本、结算及 Telegram 发送规则。
