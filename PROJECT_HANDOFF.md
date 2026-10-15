@@ -1,5 +1,24 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 正式中文库续补与生产映射确认（PR #71、#72 已合并）
+- 共享库 PR [#72](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/72) 合并到 master，merge SHA `5f7b000c9903fe5f4103299c6b2743ed27d3f17c`：TotalCorner team `170762` / Khankendi FK / Azerbaijan Division 1 → “卡拉巴格汉肯迪”。以 FootballAnt 简中赛程与 TotalCorner 同 ID 赛程及 Sofascore Xankəndi FK 档案交叉核验；只限精确 ID。
+- 随后共享库 PR [#71](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/71) 更新到最新 master 后合并，最终 merge SHA `78b29e923d6630762a698cc1b4848f20538d8542`：TotalCorner team `151147` / FK Jedinstvo Franca → “耶丁斯特沃”。Tips.GG 简中赛程、TotalCorner 同 ID/联赛赛程与黑山足协俱乐部身份交叉核验；不向其他同名 Jedinstvo 扩散。最终名称及源证据均保存在唯一共享 `data/football_display_names/display_names.json`，没有建立第二套名称库。
+- 按最终 master `formal_scope_coverage.json` 实数：正式范围并集 2,468 IDs / 2,390 canonical / 78 unresolved（96.84%）；M1 1,553/1,553、M1 OU-R1 52/52、MR1 AH 1,865/1,921（56 unresolved）、MR1 AI 声明镜像范围 1,553/1,553。共享库 master SHA 为上述 `78b29e92…`；历史 handoff 中“740 缺名”是过时快照。
+- 展示验证：M1 `python3 -m unittest test_m1_telegram_display.py -v` 25/25 PASS，包含两个精确 team-ID 方向渲染用例；MR1 shared resolver 2/2、MR1 AI formatter 3/3、MR1 history-repair/browser-forward notifier 2/2 PASS。隔离渲染会读取同一 registry；没有触发生产 workflow 或发送 TG。
+- 被动检查本轮两条新增映射的历史送达记录：M1 正式通知账本、MR1 AH `data/mr1-v6-cross-market/formal/sent.jsonl`（125条）及 MR1 AI `data/mr1-v7-ai-picks/telegram-ah-sent.jsonl`（201条）均未找到 team 170762 或 151147，因此这两队历史 Telegram 实际编辑数为 0、重发数为 0；不是把名称“伪修复”到没有对应消息的记录。更早的历史修复回执见下方 batch 153/68 交接段落。未确认的其他名称不做猜译。
+- 本轮只变更共享展示映射、coverage/source evidence 和隔离展示测试；未改 M1 / M1 OU-R1 / MR1 AH / MR1 AI 模型、策略、范围、盘源、正式账本、结算或发送格式。
+
+## 2026-10-15 正式中文库续补：Khankendi FK（PR #72 待合并）
+- 在共享 master `0476223047547874e49c824520ec10c522daaeb5` 的正式 unresolved 清单中核对 TotalCorner `team_id=170762` / `Khankendi FK` / Azerbaijan Division 1 `league_id=227`。FootballAnt 简中比赛页将相同 2026 联赛赛程中的 Qarabag Khankendi 显示为“卡拉巴格汉肯迪”；其 2026 对阵顺序、比分与 TotalCorner 同 ID 球队页吻合，Sofascore 的 Xankəndi FK 档案提供俱乐部身份交叉核验。名称严格绑定 170762，不映射至其他 Qarabağ 历史球队。证据及幂等 curator：共享库 `curated_batch_report_20261015_khankendi_170762.json`、`ops/curate_formal_scope_khankendi_170762_20261015.py`。
+- 共享库 PR [#72](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/72) 已推送，commit `7edfaf36`，等待合并。它从 master 单独分支；PR #71 的 Jedinstvo 映射也仍未合并，两个 PR 不互相包含。以本 PR 分支单独计算：正式并集 2,468 IDs / 2,389 canonical / 79 unresolved（96.80%）；M1 1,553/1,553、M1 OU-R1 52/52、MR1 AH 1,864/1,921（57 unresolved）、MR1 AI 声明范围 1,553/1,553。若 #71 与 #72 都合并，最终须从最新 master 重新计算，不能简单拿单 PR 统计冒充正式值。
+- 验证：M1 Telegram formatter 单测 24/24 PASS，按 ID 隔离渲染为“阿塞拜疆甲级联赛 卡拉巴格汉肯迪 vs … / 全场让球 卡拉巴格汉肯迪 +0.5@0.93”。仅作隔离测试；没有发送或编辑历史 Telegram，也没有运行正式模型/账本。
+- 本轮仅共享名称数据及展示回归测试变更；M1、MR1 AH、MR1 AI 模型/策略、赛事范围、赔率、订单、结算均未改。历史 TG 编辑数 0；PR 合并和拥有可用的历史消息编辑凭据/原消息正文后，才可执行对应正式历史修复。
+
+## 2026-10-15 正式中文库续补：FK Jedinstvo Franca（PR #71 待合并）
+- 在共享 master `0476223047547874e49c824520ec10c522daaeb5` 的正式 unresolved 清单中确认 TotalCorner `team_id=151147` / `FK Jedinstvo Franca` / league IDs `47, 280`。Tips.GG 简中赛程页在黑山乙级联赛将同一支 Bijelo Polje 的 Jedinstvo 标为“耶丁斯特沃队”；TotalCorner 同 ID 页面显示 FK Jedinstvo Franca 与 Montenegro Prva Liga 赛程，黑山足协俱乐部页确认 Jedinstvo Franca 为该俱乐部官方名称。按精确 ID 新增 canonical“耶丁斯特沃”，别名保留“耶丁斯特沃队”；不向其他同名 Jedinstvo 传播。来源与幂等 curator 见共享库 `curated_batch_report_20261015_jedinstvo_franca_151147.json`、`ops/curate_formal_scope_jedinstvo_franca_151147_20261015.py`。
+- 共享库 PR [#71](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/71) 已创建，分支 commit `ae2ad651`，等待合并；合并前权威 master 仍为上面的 SHA。该 PR 分支覆盖预览：正式并集 2,468 IDs / 2,389 canonical / 79 unresolved（96.80%）；M1 1,553/1,553、M1 OU-R1 52/52、MR1 AH 1,864/1,921（57 unresolved）、MR1 AI 声明范围 1,553/1,553。PR 合并后再以 master 文件核对最终数字。
+- 验证：M1 display 单测 24/24 PASS；M1 和 MR1 均使用该分支同一共享 registry 做按 team ID 隔离渲染，结果为“黑山甲级联赛 耶丁斯特沃 vs 波德戈里察未来”。MR1 shared-registry 测试 2/2 PASS。没有触发生产 runtime，也没有发送或编辑 TG 消息；策略、模型和账本不变。
+
 ## 2026-10-15 正式中文库续补：UCSA Tarasivka（PR #70）
 - 对 TotalCorner `team_id=146029` / provider `UCSA` / `league_id=63` 补入中文赛事数据站明确使用的“UCSA塔拉西夫卡”。体球网比赛页同时列出中文名与英文 `UCSA Tarasivka`；TotalCorner 同 ID 球队页确认 UCSA 及 Ukraine Persha Liga 赛程。Exact-ID curator/report：共享库 `curated_batch_report_20261015_ucsa_146029.json`、`ops/curate_formal_scope_ucsa_146029_20261015.py`。
 - PR [#70](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/70) 已合并，master merge `0476223047547874e49c824520ec10c522daaeb5`。正式并集 2,468 IDs / 2,388 canonical / 80 unresolved（96.76%）；M1 1,553/1,553、M1 OU-R1 52/52、MR1 AH 1,863/1,921（58 unresolved）、MR1 AI 声明范围 1,553/1,553。剩余逐项见共享 master `formal_scope_coverage.json#unresolved_records`。
