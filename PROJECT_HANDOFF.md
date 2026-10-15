@@ -6,6 +6,10 @@
 - 统计仍以共享文件为准：formal union 2,468 IDs、canonical 2,375、unresolved 93（96.23%）。这是来源核验补记，不是重新生成 coverage 快照；未改共享 registry、模型、策略、正式账本、结算或 Telegram。
 - 证据入口：[Sofascore Kosovo 对阵页](https://www.sofascore.com/football/match/kf-vjosa-shtime-kf-dukagjini-gjakove/HQadsQQad)、[波黑足协俱乐部资料](https://www.nsfbih.ba/klubovi/wwin-prva-liga-fbih/390)、[NK Jedinstvo Bihac](https://nkj.ba/)、[黑山足协 Jedinstvo Franca](https://fscg.me/en/clubs/jedinstvo-franca-40053/)、[FootyStats 中文 Romanija Pale 对阵页](https://footystats.org/cn/bosnia-and-herzegovina/fk-sutjeska-foca-vs-fk-romanija-pale-h2h-stats)。
 
+## 2026-10-15 北马其顿/安道尔候选名称补查
+- 对 formal unresolved 中 `KF Aresimi 1973`（114061）、`Detonit Plackovica`（113061）、`GFK Ohrid Lichnidos`（56852）和 `FC La Massana`（50476）进行中文精确检索，并用北马其顿足协/UEFA及球队赛事资料检查身份。Aresimi 的中文 FootyStats 页面标题仍保留英文队名；其他可见材料亦未给出可核验的简体中文惯用队名。故没有把站点中文 UI、外文转写或地名译名当作 canonical。
+- 本补查新增 canonical 0；正式统计仍为 2,468 / 2,375 / 93。参考：[FootyStats KF Aresimi 中文入口](https://footystats.org/cn/clubs/kf-aresimi-1973-931398)、[北马其顿足协 Aresimi 资料](https://www.ffm.mk/en/najava/11940053/)、[UEFA KF Aresimi](https://es.uefa.com/nationalassociations/teams/2614400--kf-aresimi/)。
+
 ## 2026-10-15 正式范围剩余名称来源复核（本轮无新增映射）
 - 从共享库最新 master `fe86a5fbc8acf1d4263f7b9af8593777b623deb8` 和既有交接继续；没有重扫历史身份，也没有覆盖/重建共享库。当前权威 `formal_scope_coverage.json` 仍为 2,468 个正式范围 team ID、2,375 个 canonical、93 个 unresolved（96.23%）：92 条 `NO_VERIFIED_CANONICAL_ZH`，1 条 team ID 4931 provider identity 为字面值 `0`（`PROVIDER_IDENTITY_INVALID`）。此前提出的“740”是旧快照，不是当前清单数量。
 - 检查了 M1/MR1 已保存身份与译名 evidence、共享 aliases 及英文身份。对埃及低级别队（含 El Mahalla El Kobra、MS Naser Malawy、Dikernis、Belbeis、Mallawi、Al Badari、Asyut Cement、Mostaqbal Watan 等）检索 7M/500/中文足球资料、Sofascore 与俱乐部来源；公开资料能确认部分英文/阿拉伯文俱乐部身份，例如 [Dikernis 官方站](https://dekernessc.com/) 和 [Sofascore Belbeis 页面](https://www.sofascore.com/football/team/belbeis-fc/403001)，但本轮未发现可核验的成熟中文队名。另查巴尔干、威尔士、乌克兰、波罗的海球队（如 Jedinstvo Bihać、Besa Peja、Ynyshir Albions、UCSA Tarasivka、FK Atmosfera 等），结果为当地足协/俱乐部或英文身份资料，未找到成熟中文足球名源。
