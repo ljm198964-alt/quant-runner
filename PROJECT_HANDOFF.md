@@ -1,5 +1,11 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 科索沃/波黑/黑山低级别队来源核验补记
+- 以共享 registry `master=fe86a5fbc8acf1d4263f7b9af8593777b623deb8` 的 formal unresolved 清单为准，抽查 KF Hajvalia、KF Vllaznia/Vllazina、Besa、KF Vitia、KF Bashkimi Koretin、KF Drenasi、Onix Banje、KF Dardana、A&N、KF Vjosa、KF FC Mitrovica、KF Dukagjini Gjakove、Romanija Pale、Jedinstvo Bihac、Majevica Lopare 等 26 个 TotalCorner 身份；对照查询中文比分/7M/500、Sofascore 中文入口及当地足协/俱乐部资料。
+- 公开来源可核实若干球队英文/本地语身份，但未找到足以证明具体简体中文惯用队名的中文资料。特别是 `Jedinstvo Bihac`（波黑）与 `FK Jedinstvo Franca`（黑山）是不同俱乐部；`Vllaznia` 的常见中文名“维拉斯尼亚”对应阿尔巴尼亚 Shkodër 俱乐部，不能移植给 Kosovo 联赛中的相近 provider 名。`Romanija Pale` 中文赛程页面仍使用英文队名，也不构成中文 canonical 证据。因此本批新增映射 0，未写机器音译或近似队名。
+- 统计仍以共享文件为准：formal union 2,468 IDs、canonical 2,375、unresolved 93（96.23%）。这是来源核验补记，不是重新生成 coverage 快照；未改共享 registry、模型、策略、正式账本、结算或 Telegram。
+- 证据入口：[Sofascore Kosovo 对阵页](https://www.sofascore.com/football/match/kf-vjosa-shtime-kf-dukagjini-gjakove/HQadsQQad)、[波黑足协俱乐部资料](https://www.nsfbih.ba/klubovi/wwin-prva-liga-fbih/390)、[NK Jedinstvo Bihac](https://nkj.ba/)、[黑山足协 Jedinstvo Franca](https://fscg.me/en/clubs/jedinstvo-franca-40053/)、[FootyStats 中文 Romanija Pale 对阵页](https://footystats.org/cn/bosnia-and-herzegovina/fk-sutjeska-foca-vs-fk-romanija-pale-h2h-stats)。
+
 ## 2026-10-15 正式范围剩余名称来源复核（本轮无新增映射）
 - 从共享库最新 master `fe86a5fbc8acf1d4263f7b9af8593777b623deb8` 和既有交接继续；没有重扫历史身份，也没有覆盖/重建共享库。当前权威 `formal_scope_coverage.json` 仍为 2,468 个正式范围 team ID、2,375 个 canonical、93 个 unresolved（96.23%）：92 条 `NO_VERIFIED_CANONICAL_ZH`，1 条 team ID 4931 provider identity 为字面值 `0`（`PROVIDER_IDENTITY_INVALID`）。此前提出的“740”是旧快照，不是当前清单数量。
 - 检查了 M1/MR1 已保存身份与译名 evidence、共享 aliases 及英文身份。对埃及低级别队（含 El Mahalla El Kobra、MS Naser Malawy、Dikernis、Belbeis、Mallawi、Al Badari、Asyut Cement、Mostaqbal Watan 等）检索 7M/500/中文足球资料、Sofascore 与俱乐部来源；公开资料能确认部分英文/阿拉伯文俱乐部身份，例如 [Dikernis 官方站](https://dekernessc.com/) 和 [Sofascore Belbeis 页面](https://www.sofascore.com/football/team/belbeis-fc/403001)，但本轮未发现可核验的成熟中文队名。另查巴尔干、威尔士、乌克兰、波罗的海球队（如 Jedinstvo Bihać、Besa Peja、Ynyshir Albions、UCSA Tarasivka、FK Atmosfera 等），结果为当地足协/俱乐部或英文身份资料，未找到成熟中文足球名源。
