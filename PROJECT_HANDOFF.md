@@ -1,5 +1,11 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 新增7M简中队名 Shturmi
+- 已确认并入共享 master `0898fcb7`：TotalCorner `team_id=143652`, provider `Shturmi`, `league_id=702`；7M中文球队页对应该格鲁吉亚俱乐部并显示繁体“什圖爾米”，统一库 canonical 简体记为“什图尔米”，繁体保留为alias。来源及身份交叉证据见 `data/football_display_names/curated_batch_report_20261015_shturmi.json` 与 [7M profile](https://team.7m.com.cn/648426/index.shtml)、[TotalCorner team 143652](https://www.totalcorner.com/team/view/143652)。
+- 正式范围最新：2,468 IDs，2,380 canonical，88 unresolved，96.43%；MR1 AH 1,858/1,921（96.72%）；M1 1,553/1,553、M1 OU-R1 52/52、MR1 AI declared M1 mirror 1,553/1,553保持不变。共享库PR [#62](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/62) 已合并。
+- 本地隔离验证：M1 display + repair 23/23 PASS；MR1 shared-registry + AI formatter 4/4 PASS。M1 与 MR1 AI formatter 都渲染为“格鲁吉亚足球甲级联赛 什图尔米 vs 克尔赫提 … 什图尔米 -0.25@0.92”；未发送 Telegram，也未触发生产扫描，等待后续自然 runtime 读取 master。
+- 无模型、策略、阈值、provider、账本、结算或通知规则变更；本次canonical additions=1，正式范围unresolved减少1。全量剩余项仍见 `data/football_display_names/formal_scope_coverage.json#unresolved_records`。
+
 ## 2026-10-15 近似队名冲突复核 batch 151
 - 快进确认共享 master `23321a50`；正式范围仍为2,468个team ID / 2,379 canonical / 89 unresolved（96.39%）。本批canonical新增0，不把相似拼写当作精确身份匹配。
 - 复核 `KF Dardana` (TC 52837, Kosovo Division 1) 与已映射 `KF Dardania` (TC 167867, Kosovo Division 2)：俱乐部所在地点、联赛和球队ID不同，前者为Kamenicë俱乐部并于2021年与Vushtrria合并，后者为Qyshk俱乐部；不得移植“达尔达尼亚”。`Al Raya SC` 与卡塔尔 `Al-Rayyan SC` 也因provider ID和联赛国家不同而拒绝同名迁移。St. James Swifts的简中页面仍保留英文俱乐部名。
