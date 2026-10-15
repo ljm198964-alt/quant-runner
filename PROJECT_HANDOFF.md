@@ -1,5 +1,11 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-15 formal unresolved 中文队名续核（source review PR #104）
+- 基于共享库 master `5f0c3d4bfc3ecf37b28469a3d493affb3f089815` 继续定点核查7支：KF Hajvalia（39889）、KF Vjosa（117487）、GFK Ohrid Lichnidos（56852）、Mladost Carev Dvor（4607）、Cetatea 1932 Suceava（179353）、Ynyshir Albions（56033）、Trethomas Bluebirds（149178）。精确中文足球检索没有找到可绑定到相应 TotalCorner ID 的主流简体中文 canonical；部分中文地区页面仍保留拉丁队名，俱乐部/足协来源只证明外文身份。未做音译或字面翻译，新增 canonical 0。逐队证据在共享 `data/football_display_names/source_review_20261015_batch178.json`，PR [#104](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/104) 已合并，merge SHA `39b4eca5c8c2264336b4685f931035a982ae7f90`。
+- 共享正式覆盖未变：并集 2,468 IDs / 2,404 canonical / 64 unresolved（97.41%）；M1 1,492/1,553，M1 OU R1 52/52，MR1 AH 1,864/1,921，MR1 AI declared M1 mirror 1,492/1,553。64条权威明细仍以共享 `formal_scope_coverage.json#unresolved_records` 为准；其中63条缺可验证简中名，ID 4931 的 provider_name=`0` 是无效上游身份。
+- 本地展示回归重新执行：M1 AH/OU-R1共享formatter与repair 37/37 PASS；MR1 shared resolver/browser-forward 4/4、MR1 AH evaluator 4/4、MR1 AI formatter 3/3，合计11/11 PASS。验证的是代码解析/格式化，不是线上派单或真实TG回执。本轮未执行 Telegram send/edit，也未修改生产通知；历史修复仍受M1缺原消息文本/映射和MR1 AI Telegram返回 `message to edit not found` 等既有障碍限制。无新名称意味着无安全的新历史编辑目标。
+- 未改 M1、MR1 AH、MR1 AI 或 M1 OU R1 的模型、策略、阈值、盘口、账本、结算、派单条件及TG格式。下一步仅在取得新的可靠简中名称来源或上游修正ID 4931 后更新共享唯一库；不为了覆盖率补造名称。
+
 ## 2026-10-15 埃及低级别正式范围球队核名（source review PR #103）
 - 继续按当前 formal unresolved 清单审查11支埃及队：El Mahalla El Kobra、MS Naser Malawy、Al Hamman、Mostaqbal Watan Club、Belbeis FC、Al Masry Salloum、Al Magd、Al Hilal El Dabaa、Al Raya SC、Goldi SC、MS Tala。对照 TotalCorner 队伍页、赛程和公开足球资料检索简体中文名称，没有找到能以常用中文队名可靠绑定到相应 ID 的证据，因此新增 canonical 0。逐条来源及决定在共享 `data/football_display_names/source_review_20261015_batch177.json`，PR [#103](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/103) 已合并，merge SHA `5f0c3d4bfc3ecf37b28469a3d493affb3f089815`。
 - 重点记录三组不可跨队借名的冲突：TotalCorner 10782 El Mahalla El Kobra 与 Sed Elmahla 是对阵方，聚合站别名又出现 Said El Mahalla，不能因此映射成 Ghazl/Baladeyet 或 Said El Mahalla；94863 Al Magd 不得从 7705 Al Majd 移植名称；135353 Al Raya 不得与 Al-Rayyan 合并。共享库及 coverage 未变；formal union 仍 2,468 IDs / 2,404 canonical / 64 unresolved（97.41%）。
