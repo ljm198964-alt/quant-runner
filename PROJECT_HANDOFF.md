@@ -2417,6 +2417,10 @@
 - 仅修改展示名称/来源/覆盖审计和回归测试；M1、M1 OU R1、MR1 AH/AI 策略、盘口源、范围、锁单、结算与消息格式未改。
 - 来源：[FootballAnt 简中球队档案](https://www.footballant.com/zh-CN/football-data/team/67566)、[TotalCorner team 185424](https://www.totalcorner.com/team/view/185424)、[Prva Liga 官方球队页](https://www.prvaliga.rs/en/tim/proleter-023/)。
 
+## 2026-10-15 正式范围未匹配队名来源续审（批次183）
+- 共享库 PR [#113](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/113) 已合并，master SHA `b234c9c0acc915205d7991ff4cda4785ba7d6fcc`。来源证据位于 `data/football_display_names/source_review_20261015_batch183.json`，复核 team IDs 4607（Mladost Carev Dvor）、10782（El Mahalla El Kobra）、50576（MS Naser Malawy）、79335（Mostaqbal Watan Club）；未发现可绑定准确 provider identity 的成熟简体中文足球标准名，故新增 canonical=0，原名与 unresolved 状态保留。
+- 最新 formal union 仍是2,468 IDs / 2,407 canonical / 61 unresolved（97.53%）；本批只增加证据，不影响映射覆盖、模型/策略、生产代码或 Telegram。Egypt 项中 El Mahalla 名称与城市及其他同城俱乐部易混，未借用其他实体译名；历史俱乐部 Mladost 也未臆造音译。
+
 ## 2026-10-15 正式范围未匹配队名来源续审（批次180–182）
 - 共享库 PR [#110](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/110)、[#111](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/111)、[#112](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/112) 已合并；最新共享 master `0b664ef5959907770c67fd75588bb8bc5aeac193`。三批均只增加按球队 ID/身份核实的公开来源审查证据，未找到可安全写入的新 canonical，未改变 `display_names.json`。
 - 三批检查包括 APEA Akrotiriou、Asil Lysis、Al Hilal El Dabaa、Goldi SC、KF Dukagjini Gjakove、KF Vllaznia、Jedinstvo Bihać、Ynyshir Albions、Cetatea 1932 Suceava、KF Tefik Canga、Aresimi 1973、Ganjabasar FK。需防止将 Kosovo Superliga 的 KF Dukagjini（Klinë）中文名错配到不同身份的 Gjakovë 球队；Aresimi 的简中 FootyStats 页面仍保留英文队名；其余本批来源未能提供可核验的主流简体中文名称或无法排除别名/身份冲突，因此保留 unresolved，不临时音译。
