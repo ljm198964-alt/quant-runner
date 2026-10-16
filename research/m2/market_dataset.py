@@ -24,7 +24,7 @@ def val(x):
         return y if math.isfinite(y) else None
     except (ValueError,TypeError): return None
 
-def two_sided(match,market,asof,max_quote_minutes=45):
+def two_sided(match,market,asof,max_quote_minutes=None):
     raw=match.get("market_raw_evidence") or {}
     if not isinstance(raw,dict):
         return None,"UNSUPPORTED_LEGACY_RAW_EVIDENCE"
@@ -38,7 +38,7 @@ def two_sided(match,market,asof,max_quote_minutes=45):
         observed=utc(q[4])
         if line is None or p1 is None or p2 is None or p1<=1 or p2<=1 or not observed: continue
         age=(asof-observed).total_seconds()/60
-        if age < -1 or age > max_quote_minutes:continue
+        if age < 0:continue
         if best is None or observed>best["observed"]:
             best={"line":line,"p1":p1,"p2":p2,"observed":observed,"quote_age_min":age}
     if not best:return None,"NO_FRESH_TWO_SIDED_CROWN"
@@ -107,6 +107,11 @@ def build(saved,formal):
                   "crown_no_vig_first":quote["no_vig_first"],
                   "crown_overround":quote["overround"],
                   "quote_age_minutes":quote["quote_age_min"],
+                  "quote_timestamp":quote["observed"].isoformat(),
+                  "scan_completed_at":asof.isoformat(),
+                  "last_successful_fetch_at":None,
+                  "last_price_change_at":None,
+                  "timestamp_semantics":"SOURCE_TIMESTAMP_UNVERIFIED_FETCH_OR_CHANGE",
                   "ft_home":final[0],"ft_away":final[1],
                   "m1_goal_total":val(features.get("model_expected_total")),
                   "m1_goal_diff":val(features.get("model_expected_goal_difference")),
