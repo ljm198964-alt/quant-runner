@@ -35,8 +35,9 @@ jobs:
       - name: Summarize prior Beijing week and all history
         shell: bash
         run: |
-          WEEK=$(TZ=Asia/Shanghai python -c 'from datetime import datetime,timedelta; from zoneinfo import ZoneInfo; d=datetime.now(ZoneInfo("Asia/Shanghai")).date(); print((d-timedelta(days=d.weekday()+7)).isoformat())')
+          WEEK=$(TZ=Asia/Shanghai python -c 'from datetime import datetime,timedelta; from zoneinfo import ZoneInfo; d=datetime.now(ZoneInfo("Asia/Shanghai")).date(); print((d-timedelta(days=d.weekday()+7 if d.weekday()==0 else d.weekday())).isoformat())')
           python research/m1_weekly_account.py --ledger source/results/m1_formal_ledger.json --week-start "$WEEK" > "$RUNNER_TEMP/m1-weekly.json"
+          cat "$RUNNER_TEMP/m1-weekly.json"
           python - <<'PY'
           import json,os
           from pathlib import Path
