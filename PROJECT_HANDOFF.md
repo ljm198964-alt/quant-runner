@@ -1,5 +1,11 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-16 M2补充独立FT证据覆盖研究
+- 用户要求继续M2，原有正式模型及对手研究暂不改变。本轮读取源仓库 `research/m1-ou-crown-market-challenger-v23/forward/verified_ft.json`，发现一套不同于M1正式下注账本的已保存TotalCorner核验FT记录；是否可用作M2训练尚需核对fixture ID、球队/联赛身份、原始结果hash及核验时间，不可擅自混入。
+- 已提交公开Runner独立只读检查程序 `research/m2/ft_coverage_audit.py` commit 56460c0，审计历史M1扫描fixture与备用FT的重合、身份字段和证明覆盖；该检查不会修改M2正式训练样本或TG。工作流接线 commit 7ecaf221，自动run [38879309716](https://github.com/ljm198964-alt/quant-runner/actions/runs/38879309716) 初次检查queued，须核对真实运行结果才可报告可补样本。
+- 上一轮M2历史样本282条/141场是UTC 2026-10-16 08:05附近成功运行的旧快照。本轮没有新训练、没有独立样本外ROI、也没有M2正式TG信号。原先160/80/150为现有代码预设研究门槛，不冒充用户确认门槛。
+
+
 ## 2026-10-16 对手全部可读AH/OU历史：熟悉球队与收益验证
 - 四个对手历史picks文件按Gmail ID去重469单；`results/opponent_settlement_latest.json`旧正式结算（截至UTC 2026-10-10 06:28）匹配179单、未获结算290单。邮件快照另36封角球/罚牌不得混入AH/OU。
 - 按每条邮件发出前是否曾在**其他比赛**选择同一主/客球队分组：重复175单/已结77/+2.330U ROI+3.03%，未重复294单/已结102/-2.145U ROI-2.10%；AH重复46已结+1.275U，AH首次52已结+1.050U；OU重复31已结+1.055U，OU首次50已结-3.195U。
