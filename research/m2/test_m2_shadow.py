@@ -32,12 +32,12 @@ class M2Test(unittest.TestCase):
         m["asian"]["source_bookmaker"] = "bet365"
         self.assertEqual(evaluate(m, "AH", BASE)[1], "NO_VERIFIED_MARKET")
 
-    def test_stale_and_future_rejected(self):
+    def test_old_quote_retained_and_future_rejected(self):
         m = match()
         m["asian"]["observed_at"] = (BASE - timedelta(hours=3)).isoformat()
-        self.assertEqual(evaluate(m, "AH", BASE)[1], "STALE_OR_FUTURE_QUOTE")
+        self.assertIsNone(evaluate(m, "AH", BASE)[1])
         m["asian"]["observed_at"] = (BASE + timedelta(minutes=3)).isoformat()
-        self.assertEqual(evaluate(m, "AH", BASE)[1], "STALE_OR_FUTURE_QUOTE")
+        self.assertEqual(evaluate(m, "AH", BASE)[1], "FUTURE_QUOTE")
 
     def test_incomplete_scan_rejected(self):
         with self.assertRaises(ValueError):
