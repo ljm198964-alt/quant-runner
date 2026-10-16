@@ -1,5 +1,11 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-16 M2 赛前双边 Crown / verified FT 覆盖分市场审计增强
+- 应用户要求继续扩大 M2 赛前 Crown 双边快照与严格核验 FT 覆盖，并将来做基本面融合及时间前推 ROI 检验。先从当前真实缺口调查：上轮已成功审计 run 38857709828 的历史观测机会 9,046、经严格核验 64 个市场样本/40 场（AH 35，OU 29），不足以训练或声称 ROI；这一数值是历史审计快照，不是实时已可训练数据。
+- 本轮提交 [eaac2f4](https://github.com/ljm198964-alt/quant-runner/commit/eaac2f4defb2c2c793a942defcc67fbdf069069e) 仅修改 `research/m2/market_dataset.py` 的统计计数：按 AH/OU 分别输出皇冠有效双边报价数、各项报价拒绝原因、缺核验 FT 数及最终通过样本数。旧总计数和所有输入/时间/市场/赛果规则保持不变；没有新增 Gate、改变 M1/MR1、发送 TG 或训练 M2。
+- 该提交自动触发公开 Runner [M2 run 38859250449](https://github.com/ljm198964-alt/quant-runner/actions/runs/38859250449)，在核查 UTC 2026-10-16 06:05 左右为 in_progress，**尚未确认成功**。下一步必须核验该 run 最终结果/日志计数，再据 AH/OU 的报价缺失与 FT 缺失占比决定采集或核验补齐的具体实现；参数训练与时间前推 ROI 仍未发生，不能提前报告成绩。
+
+
 ## 2026-10-15 正式赛事中文库续补（Al Hamman / team 73121）
 - 共享名称库 PR [#122](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/122) 已合并，merge SHA `550a056304c14627166f3a23018d3dac94d36505`。TotalCorner team `73121` / `Al Hamman` 新增 canonical `哈马姆`，别名保留来源中文标签“艾尔哈马姆”；仍为独立 TotalCorner ID，不与 `5988` 合并。身份交叉证据是 TotalCorner 73121 与 FootyStats El Hamam 赛程存在 11/19 对 El Mansoura 1-1、11/30 对 Al Masry Salloum 0-0 的匹配对手、日期和比分；名称采用 FootyStats/FootballAnt 已使用的简中固定译名，并与共享库既有 ID 5988 canonical 统一。curator、逐项 source review 与报告均保存在共享库 `ops/curate_formal_scope_al_hamman_73121_20261015.py`、`data/football_display_names/source_review_20261015_batch192.json`、`curated_batch_report_20261015_al_hamman_73121.json`。
 - 合并后 formal union 为 2,468 IDs / 2,408 canonical / 60 unresolved（97.57%）；M1 1,496/1,553（96.33%），M1 OU R1 52/52，MR1 AH 1,868/1,921（97.24%），MR1 AI declared mirror of M1 1,496/1,553（96.33%）。共享总库 12,276 IDs / 4,424 canonical。完整未匹配 ID/name/reason 以共享 master `data/football_display_names/formal_scope_coverage.json#unresolved_records` 为准；旧的“718/740”均不是当前状态。
