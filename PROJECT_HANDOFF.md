@@ -3,7 +3,7 @@
 ## 2026-10-16 M2 赛前双边 Crown / verified FT 覆盖分市场审计增强
 - 应用户要求继续扩大 M2 赛前 Crown 双边快照与严格核验 FT 覆盖，并将来做基本面融合及时间前推 ROI 检验。先从当前真实缺口调查：上轮已成功审计 run 38857709828 的历史观测机会 9,046、经严格核验 64 个市场样本/40 场（AH 35，OU 29），不足以训练或声称 ROI；这一数值是历史审计快照，不是实时已可训练数据。
 - 本轮提交 [eaac2f4](https://github.com/ljm198964-alt/quant-runner/commit/eaac2f4defb2c2c793a942defcc67fbdf069069e) 仅修改 `research/m2/market_dataset.py` 的统计计数：按 AH/OU 分别输出皇冠有效双边报价数、各项报价拒绝原因、缺核验 FT 数及最终通过样本数。旧总计数和所有输入/时间/市场/赛果规则保持不变；没有新增 Gate、改变 M1/MR1、发送 TG 或训练 M2。
-- 该提交自动触发公开 Runner [M2 run 38859250449](https://github.com/ljm198964-alt/quant-runner/actions/runs/38859250449)，在核查 UTC 2026-10-16 06:05 左右为 in_progress，**尚未确认成功**。下一步必须核验该 run 最终结果/日志计数，再据 AH/OU 的报价缺失与 FT 缺失占比决定采集或核验补齐的具体实现；参数训练与时间前推 ROI 仍未发生，不能提前报告成绩。
+- 该提交自动触发公开 Runner [M2 run 38859250449](https://github.com/ljm198964-alt/quant-runner/actions/runs/38859250449)，最终 completed SUCCESS（UTC 2026-10-16 06:05:58），job 116837544483 的16项测试、源checkout、审计及加密持久化步骤成功。日志实测：AH及时双边97、缺核验FT62、严格核验35；OU及时双边85、缺核验FT56、严格核验29。双边不足4502次（AH2228/OU2274）、旧schema2426、非Crown1752；当轮新增前瞻锁单0、既有61、TG 0、M2训练交易0、ROI null。下一步根据该实际日志计数，再据 AH/OU 的报价缺失与 FT 缺失占比决定采集或核验补齐的具体实现；参数训练与时间前推 ROI 仍未发生，不能提前报告成绩。
 
 
 ## 2026-10-15 正式赛事中文库续补（Al Hamman / team 73121）
