@@ -36,21 +36,6 @@ jobs:
         shell: bash
         run: |
           WEEK=$(TZ=Asia/Shanghai python -c 'from datetime import datetime,timedelta; from zoneinfo import ZoneInfo; d=datetime.now(ZoneInfo("Asia/Shanghai")).date(); print((d-timedelta(days=d.weekday()+7 if d.weekday()==0 else d.weekday())).isoformat())')
-          python - <<'PY'
-          import json
-          d=json.load(open("source/results/m1_formal_ledger.json"))
-          print("SCHEMA keys", list(d.keys()))
-          for k in ("picks","notifications","settlements","account_events"):
-              v=d.get(k)
-              print("SCHEMA",k,type(v).__name__,len(v) if hasattr(v,"__len__") else "na")
-              if isinstance(v,dict) and v:
-                  first_key=next(iter(v))
-                  x=v[first_key]
-                  print("SCHEMA",k,"first key type",type(first_key).__name__,"first value",type(x).__name__,
-                        "value fields",list(x.keys())[:18] if isinstance(x,dict) else [])
-                  if isinstance(x,dict) and k=="notifications":
-                      print("SCHEMA notification telegram fields",list((x.get("telegram") or {}).keys())[:20])
-          PY
           python research/m1_weekly_account.py --ledger source/results/m1_formal_ledger.json --reference-report source/results/m1_formal_report.json --week-start "$WEEK" > "$RUNNER_TEMP/m1-weekly.json"
           cat "$RUNNER_TEMP/m1-weekly.json"
           python - <<'PY'
@@ -65,7 +50,13 @@ jobs:
                   f.write("| Model | Sent | Settled | Pending | PnL U | ROI |\n|---|---:|---:|---:|---:|---:|\n")
                   for name,s in j[key].items():
                       f.write(f"| {name} | {s['sent']} | {s['settled']} | {s['pending']} | {s['net_u']} | {s['roi'] or '—'} |\n")
-                  f.write("\n")
+                  sums=list(j[key].values())
+                  sent=sum(v["sent"] for v in sums)
+                  settled=sum(v["settled"] for v in sums)
+                  pending=sum(v["pending"] for v in sums)
+                  pnl=sum(__import__("decimal").Decimal(v["net_u"]) for v in sums)
+                  roi=f"{(pnl/settled*100):.2f}%" if settled else "—"
+                  f.write(f"| **TOTAL** | **{sent}** | **{settled}** | **{pending}** | **{pnl:.3f}** | **{roi}** |\n\n")
               f.write("SENT receipts only. UNKNOWN, paper, research and unconfirmed excluded.\n")
           PY
       # Never publish raw Crown VIP orders or market data.
