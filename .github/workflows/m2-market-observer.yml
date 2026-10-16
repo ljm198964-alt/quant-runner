@@ -81,6 +81,7 @@ jobs:
           python -m research.m2.change_intervals --runs source/results/runs
           python research/m2/opponent_opportunity_control.py --source source
           python research/m2/ft_coverage_audit.py --runs source/results/runs --evidence source/research/m1-ou-crown-market-challenger-v23/forward/verified_ft.json
+          python research/m2/ft_overlap_comparison.py --runs source/results/runs --formal source/results/m1_formal_ledger.json --alternate source/research/m1-ou-crown-market-challenger-v23/forward/verified_ft.json
           python - <<'PY'
           import json,os
           from pathlib import Path
