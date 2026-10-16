@@ -1,5 +1,11 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-16 Crown真实抓取完成时间采集接线
+- 在现有生产源仓库 `totalcorner-research-bridge` 提交 [0ff601e](https://github.com/ljm198964-alt/totalcorner-research-bridge/commit/0ff601ef94e3304937bb5a7a93de81be606c23b9)：M1每场Crown API实际返回后记录 `market_capture_evidence.last_successful_fetch_at`（UTC），并明确 `last_price_change_at=null`，provider历史行时间仅标记为 `PROVIDER_HISTORY_EVENT_TIME`；新增的是附属审计字段，没有改变M1决策/正式TG/盘口选择。由于跨扫描盘口指纹尚未有可靠持久化，不能推断真实价格变化时间。
+- M2独立只读研究接线提交 [67ee92a](https://github.com/ljm198964-alt/quant-runner/commit/67ee92a2b9e521636820c17ad51a119a65d88a94)、[fe2887f](https://github.com/ljm198964-alt/quant-runner/commit/fe2887fb0767b44f1cfc8471960b694d09ab29d9)，从新扫描读取实际抓取元数据；旧扫描该字段继续null，严禁回填为猜测时间。
+- M2 CI runs 38870747738 / 38870752037 已由提交自动触发，初次检查仍执行/排队。生产M1使用公开Runner checkout该源master，新的真实抓取时间需等下一次实际M1扫描产生并核对文件才能称为生产落地；尚未验证。源仓库自身Actions近期失败，不能用它们代替公开Runner验收。此前M2样本280/140场仍是旧时间语义研究快照，未训练M2、无ROI。
+
+
 ## 2026-10-16 M2 Crown报价时间语义与45分钟限制修订
 - 用户明确同意：区分最后成功抓取时间、盘口实际变化时间，不能仅凭固定45分钟认定报价不可用。
 - 修改M2只读研究代码 `research/m2/market_dataset.py` (0cd9a1a)、`research/m2/m2_shadow.py` (fd0a364)：删除报价年龄>45分钟直接排除，保留历史报价至扫描时间的分钟差用于描述；报价晚于研究as-of的未来记录仍不作为当时已知盘口。相应测试同步修改 (5c71ab4, c60c797)。旧扫描数据只有原始报价时间，无法证明它是抓取时间还是盘口变动时间，新增字段 `last_successful_fetch_at`、`last_price_change_at` 均显式为null，`timestamp_semantics=SOURCE_TIMESTAMP_UNVERIFIED_FETCH_OR_CHANGE`；不能冒充两个字段已经被真实采集。盘口来源继续严格Crown。
