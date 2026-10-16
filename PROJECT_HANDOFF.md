@@ -1,5 +1,11 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-16 M2 备用FT与正式数据交叉去重
+- 新增只读研究 `research/m2/ft_overlap_comparison.py` commit 24cf2f3，用现有 `market_dataset.build` 原样本及独立 FT 来源模拟增量，不修改正式FT账本、训练数据或策略。workflow接线3d6c0a2首次run38880782033因Python import执行方式失败，修复为模块执行1044338。
+- 最终 [M2 run 38880912474](https://github.com/ljm198964-alt/quant-runner/actions/runs/38880912474) completed SUCCESS。实际日志：历史已核验Crown样本282/141场（AH141/OU141）；备用FT9场全部独立于原正式FT记录，无冲突；只读模拟合并增加18条市场样本/9场，候选总300条/150场（AH+9/OU+9）。**尚未写入正式训练集**。备用来源 `result_hash` 尚未独立证实是否严格等价原始API响应wire SHA，不能冒充最终已核验标准；仍需审计原始身份及证明hash的计算来源。
+- 现有fusion_gate.py的160/80/150预设来自之前工程，未核实为用户确认，不因候选样本数而自动触发训练放行。融合训练/时间前推ROI尚未完成，前瞻M2订单为0，TG未修改。
+
+
 ## 2026-10-16 M2补充独立FT证据覆盖研究
 - 用户要求继续M2，原有正式模型及对手研究暂不改变。本轮读取源仓库 `research/m1-ou-crown-market-challenger-v23/forward/verified_ft.json`，发现一套不同于M1正式下注账本的已保存TotalCorner核验FT记录；是否可用作M2训练尚需核对fixture ID、球队/联赛身份、原始结果hash及核验时间，不可擅自混入。
 - 已提交公开Runner独立只读检查程序 `research/m2/ft_coverage_audit.py` commit 56460c0，审计历史M1扫描fixture与备用FT的重合、身份字段和证明覆盖；该检查不会修改M2正式训练样本或TG。工作流接线 commit 7ecaf221，自动run [38879309716](https://github.com/ljm198964-alt/quant-runner/actions/runs/38879309716) 最终completed SUCCESS（UTC 2026-10-16 09:17:16），18/18 tests PASS；替代FT证据9条，9条fixture ID均能在已存扫描中找到，9条均通过本审计的球队/联赛ID与proof字段存在性检查。**尚未核对它们是否已在正式FT账本覆盖的141场里，新增可训练样本数未知且当前未合并。**
