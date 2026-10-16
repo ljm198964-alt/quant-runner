@@ -14,8 +14,8 @@ from pathlib import Path
 
 VERSION = "M2_MARKET_RESIDUAL_OBSERVER_V0_1"
 MAX_QUOTE_AGE_MIN = 45.0
-MIN_LEAD_H = 4.0
-MAX_LEAD_H = 36.0
+MIN_LEAD_H = 8.0
+MAX_LEAD_H = 24.0
 
 def moment(s):
     return datetime.fromisoformat(str(s).replace("Z", "+00:00")).astimezone(timezone.utc)
