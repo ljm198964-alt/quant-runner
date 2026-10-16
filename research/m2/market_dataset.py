@@ -26,6 +26,8 @@ def val(x):
 
 def two_sided(match,market,asof,max_quote_minutes=45):
     raw=match.get("market_raw_evidence") or {}
+    if not isinstance(raw,dict):
+        return None,"UNSUPPORTED_LEGACY_RAW_EVIDENCE"
     if raw.get("source_bookmaker")!="crown" or raw.get("source_bookmaker_verified") is not True:
         return None,"NOT_CROWN"
     quotes=raw.get("asian_list" if market=="AH" else "goal_list") or []
@@ -72,6 +74,8 @@ def build(saved,formal):
         asof=utc(scan.get("finished_at"))
         if asof is None:continue
         for m in scan.get("matches") or []:
+            if not isinstance(m,dict):
+                counts["UNSUPPORTED_LEGACY_MATCH"]+=1;continue
             fid=str(m.get("fixture_id") or "")
             if not fid or m.get("scope",{}).get("status")!="IN":continue
             kickoff=utc(m.get("kickoff_bj"))
