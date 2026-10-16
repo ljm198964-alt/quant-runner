@@ -1,5 +1,10 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-16 M2加密前瞻账本实际开赛核验
+- 用户要求立即核查89条前瞻基准为何全部NOT_STARTED。已在公开Runner增加仅输出聚合数的隐私保护核查 `research/m2/kickoff_status_audit.py` commit 86cf130，使用现有M2_LEDGER_SECRET仅于Runner进程内解密，不打印具体比赛、盘口、球队或密钥。workflow接线提交 e40829b。
+- [M2 run 38882491884](https://github.com/ljm198964-alt/quant-runner/actions/runs/38882491884) completed SUCCESS，实际日志生成UTC 2026-10-16T09:44:50.011274：locked_market_records=89，distinct_fixtures=45，started_distinct_fixtures=0，not_started=89；结算程序也核对baseline_settled=0/pending=89/NOT_STARTED=89。故该时点**全部未开赛被真实逐条核实，非结算卡住**。无M2独立训练模型交易、TG发送0、ROI null。M1/MR1正式不变。
+
+
 ## 2026-10-16 M2补充FT哈希语义校验最终结果
 - 对 `m1_formal_runtime.validate_final` 与 V23结算实现追溯，备用FT的result_hash来自 `digest(row)`：源比赛记录规范化JSON的SHA256，**不是HTTP原始wire响应SHA**。
 - M2脚本 `research/m2/ft_overlap_comparison.py` 新增对保存raw比赛行的SHA256实际重新计算校验，提交 [bff6d95](https://github.com/ljm198964-alt/quant-runner/commit/bff6d955c2a6f7030d98d7539bc4872d260e9839)。云端 [run 38881141689](https://github.com/ljm198964-alt/quant-runner/actions/runs/38881141689) SUCCESS，18/18测试通过：9条备用FT均通过身份、比分、保存行哈希的一致性验证，正式原282条，候选增量18条/9场，研究候选300条/150场。**尚未把备用FT写入真实M2训练数据，也未做时间前推ROI或正式TG。**
