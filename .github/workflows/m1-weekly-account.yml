@@ -36,6 +36,21 @@ jobs:
         shell: bash
         run: |
           WEEK=$(TZ=Asia/Shanghai python -c 'from datetime import datetime,timedelta; from zoneinfo import ZoneInfo; d=datetime.now(ZoneInfo("Asia/Shanghai")).date(); print((d-timedelta(days=d.weekday()+7 if d.weekday()==0 else d.weekday())).isoformat())')
+          python - <<'PY'
+          import json
+          d=json.load(open("source/results/m1_formal_ledger.json"))
+          print("SCHEMA keys", list(d.keys()))
+          for k in ("picks","notifications","settlements","account_events"):
+              v=d.get(k)
+              print("SCHEMA",k,type(v).__name__,len(v) if hasattr(v,"__len__") else "na")
+              if isinstance(v,dict) and v:
+                  first_key=next(iter(v))
+                  x=v[first_key]
+                  print("SCHEMA",k,"first key type",type(first_key).__name__,"first value",type(x).__name__,
+                        "value fields",list(x.keys())[:18] if isinstance(x,dict) else [])
+                  if isinstance(x,dict) and k=="notifications":
+                      print("SCHEMA notification telegram fields",list((x.get("telegram") or {}).keys())[:20])
+          PY
           python research/m1_weekly_account.py --ledger source/results/m1_formal_ledger.json --reference-report source/results/m1_formal_report.json --week-start "$WEEK" > "$RUNNER_TEMP/m1-weekly.json"
           cat "$RUNNER_TEMP/m1-weekly.json"
           python - <<'PY'
