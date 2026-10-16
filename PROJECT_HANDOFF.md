@@ -2471,3 +2471,11 @@
 - 共享仓库 PR [#121](https://github.com/ljm198964-alt/totalcorner-research-bridge/pull/121) 已合并，master SHA `0c7f3e00`。针对埃及队伍 El Mahalla El Kobra、MS Naser Malawy、Al Hilal El Dabaa、Mostaqbal Watan Club 做了精确身份与中文足球来源（含7M/500定向检索）复核；没有找到可绑定该 team ID 的主流固定简中队名，新增 canonical 0。
 - 正式范围维持 union 2,468 / 2,407 / 61（97.53%）；分项仍是 M1 1,495/1,553、M1 OU-R1 52/52、MR1 AH 1,867/1,921、MR1 AI 声明镜像 M1。证据见 `source_review_20261015_batch191.json`。
 - 仅追加来源审查证据；未改映射、代码、模型、策略、赛事范围、订单、结算或 Telegram，也未触发生产运行或消息编辑/发送。
+
+## 2026-10-16 M1 正式周账生产落地、实账拆分验收
+- 根据用户确认的北京时间周一至周日、按首次 TG SENT 发单时间归属、跨周赛果回写原周、AH / OU旧线 / OU R1 身份独立的规则，在**公开** `quant-runner` 加入 `research/m1_weekly_account.py`、`research/test_m1_weekly_account.py`、`.github/workflows/m1-weekly-account.yml`。周一北京时间约08:15自动运行，可手动 dispatch；只读现有 `totalcorner-research-bridge/results/m1_formal_ledger.json` 和 `results/m1_formal_report.json`，输出 Actions summary 和聚合日志，不修改正式订单、赛果、盘口、TG。新代码仅在公开 Runner；仍使用既有私有源账本只读依赖，未迁移源账本。
+- 调试发现初次 workflow 虽成功但误报0单；查明 `notifications` 以盘口组合键与 `picks` 关联而非独立 pick_id，已改为通过同键关联。随后添加与生产报告的**硬一致性校验**：TG确认总数、AH/OU数量、结算/未结算、五种结算状态、实际累计盈亏任何不一致则 workflow failure，不能将绿色工作流误报为账本正确。中间失败 run `38843591347` 原因0!=285，已修复。源码关键提交 `bb1618b`、一致性增强 `adcefbb`、工作流最终 `48cb968`。测试按北京时间周界、TG UNKNOWN排除、OU-R1策略独立。
+- **实际运行验收**：生产账本重建首次正确 run [38843795903](https://github.com/ljm198964-alt/quant-runner/actions/runs/38843795903) SUCCESS，真实正式账单285已确认 TG / 已结225 / 未结60 / 净 -0.05U，与原生产总账一致；最终增补五状态和盈亏硬核对、去除临时诊断、添加总计行之后的最新 run [38843946090](https://github.com/ljm198964-alt/quant-runner/actions/runs/38843946090) SUCCESS。
+- 截至该次账本快照的本周 2026-10-12（北京时间）：M1 AH 发39结15待24，4全赢/2半赢/0走水/1半输/8全输，-3.67U，已结ROI -24.47%；M1 OU R1 发41结13待28，5全赢/2半赢/0走水/3半输/3全输，+0.88U，已结ROI +6.77%；周合计发80结28待52，-2.79U，ROI -9.96%。本周仍在进行中，后续回写可能变更。
+- 同快照全历史独立：M1 AH 发144结117待27，+0.295U，ROI+0.25%；M1 OU R1 发107结76待31，+7.6425U，ROI+10.06%；M1 OU old/other 发34结32待2，-7.9875U，ROI-24.96%；合计285发、225结、60待，-0.05U，ROI-0.02%。`old/other` 属于不符合 R1 版本映射的历史OU分组，不应强称所有旧单都属于同一旧策略；如需进一步拆分须核对历史策略 ID。
+- M2 新模型仍只在公开 Runner 运行 read-only Observer，未形成可长期结算的独立持久化影子账本，不能把研究观察当作独立策略 ROI。此前尝试将未保护的 Crown 原始价格写入公开仓库被工具检查阻断；不能靠公开明文保存 VIP Crown 完整快照。后续需先明确保护访问和长期持久化机制，再建立 M2 前瞻影子结算。保留原 M1/MR1 策略与 TG。
