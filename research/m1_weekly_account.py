@@ -51,7 +51,7 @@ def records(ledger):
     tg = {}
     for key, note in notifications.items():
         if not isinstance(note, dict): continue
-        p = note.get("pick_id") or (by_pick.get(key) or (None, None, {}))[2].get("pick_id")
+        p = note.get("pick_id") or (picks.get(key) or {}).get("pick_id")
         receipt = note.get("telegram") or {}
         if p not in by_pick or receipt.get("status") != "SENT":
             continue
