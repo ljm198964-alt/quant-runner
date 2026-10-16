@@ -29,7 +29,7 @@ jobs:
       - name: M2 strict time, Crown and encrypted-ledger unit tests
         run: |
           python -m pip install cryptography
-          python -m unittest -v research.m2.test_m2_shadow research.m2.test_encrypted_ledger research.m2.test_settle_forward research.m2.test_market_dataset
+          python -m unittest -v research.m2.test_m2_shadow research.m2.test_encrypted_ledger research.m2.test_settle_forward research.m2.test_market_dataset research.m2.test_fusion_gate
       - name: Validate existing source access
         shell: bash
         env:
@@ -77,6 +77,7 @@ jobs:
         shell: bash
         run: |
           python research/m2/market_dataset.py --runs source/results/runs --ledger source/results/m1_formal_ledger.json --out "$RUNNER_TEMP/m2-training-audit.json"
+          python research/m2/fusion_gate.py --audited-dataset "$RUNNER_TEMP/m2-training-audit.json"
           python - <<'PY'
           import json,os
           from pathlib import Path
