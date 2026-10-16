@@ -79,7 +79,7 @@ def build(saved,formal):
             fid=str(m.get("fixture_id") or "")
             if not fid or m.get("scope",{}).get("status")!="IN":continue
             kickoff=utc(m.get("kickoff_bj"))
-            if not kickoff or not 4 <= (kickoff-asof).total_seconds()/3600 <=36:
+            if not kickoff or not 8 <= (kickoff-asof).total_seconds()/3600 <=24:
                 counts["OUTSIDE_PREMATCH_WINDOW"]+=1;continue
             for market in ("AH","OU"):
                 counts["SCOPED_MARKET_OBSERVATIONS"]+=1
