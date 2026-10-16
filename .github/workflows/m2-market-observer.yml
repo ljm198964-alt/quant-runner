@@ -106,6 +106,7 @@ jobs:
           set -euo pipefail
           python research/m2/encrypted_ledger.py --observations "$OUTPUT_PATH" --ledger-folder research/m2/encrypted_forward
           python -m research.m2.settle_forward --ledger-folder research/m2/encrypted_forward --verified-formal-ledger source/results/m1_formal_ledger.json
+          python -m research.m2.kickoff_status_audit --ledger-folder research/m2/encrypted_forward --formal source/results/m1_formal_ledger.json
           if [ -n "$(git status --porcelain -- research/m2/encrypted_forward)" ]; then
             git config user.name "quant-runner-m2"
             git config user.email "github-actions[bot]@users.noreply.github.com"
