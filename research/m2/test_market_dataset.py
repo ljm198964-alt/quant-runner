@@ -15,13 +15,13 @@ class MarketDatasetTests(unittest.TestCase):
         self.assertAlmostEqual(x["no_vig_first"],(1/1.9)/(1/1.9+1/2.0))
         self.assertAlmostEqual(x["no_vig_first"]+x["no_vig_second"],1)
         self.assertGreater(x["overround"],1)
-    def test_reject_non_crown_and_stale(self):
+    def test_non_crown_rejected_and_old_crown_retained(self):
         m=match()
         m["market_raw_evidence"]["source_bookmaker"]="other"
         self.assertEqual(two_sided(m,"AH",NOW)[1],"NOT_CROWN")
         m=match()
         m["market_raw_evidence"]["asian_list"][0][4]="2026-10-16 12:00:00"
-        self.assertEqual(two_sided(m,"AH",NOW)[1],"NO_FRESH_TWO_SIDED_CROWN")
+        self.assertIsNone(two_sided(m,"AH",NOW)[1])
     def test_no_future_quote(self):
         m=match()
         m["market_raw_evidence"]["asian_list"][0][4]="2026-10-16 19:00:00"
