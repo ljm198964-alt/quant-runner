@@ -10,7 +10,7 @@ def match():
         "league": "Test Premier", "scope": {"status": "IN"},
         "time_bucket": "FORMAL_DECISION_WINDOW",
         "source_bookmaker": "crown", "source_bookmaker_verified": True,
-        "lead_hours": 5.0, "team_state": {"home_history_n": 30},
+        "lead_hours": 15.0, "team_state": {"home_history_n": 30},
         "distilled_teacher_concept_proxies": {"home_form_goal_diff_5": 0.4},
         "asian": {
             "source_bookmaker": "crown", "source_bookmaker_verified": True,
