@@ -13,7 +13,6 @@ import json
 from pathlib import Path
 
 VERSION = "M2_MARKET_RESIDUAL_OBSERVER_V0_1"
-MAX_QUOTE_AGE_MIN = 45.0
 MIN_LEAD_H = 8.0
 MAX_LEAD_H = 24.0
 
@@ -49,8 +48,8 @@ def evaluate(match, market, scan_time):
     if not observed:
         return None, "NO_QUOTE_TIMESTAMP"
     age = (scan_time - moment(observed)).total_seconds() / 60
-    if age < -1 or age > MAX_QUOTE_AGE_MIN:
-        return None, "STALE_OR_FUTURE_QUOTE"
+    if age < 0:
+        return None, "FUTURE_QUOTE"
     lead = number(match.get("lead_hours"))
     if lead is None or not (MIN_LEAD_H <= lead <= MAX_LEAD_H):
         return None, "INVALID_LEAD"
@@ -85,6 +84,9 @@ def evaluate(match, market, scan_time):
         "crown_decimal_price": price,
         "observed_at": observed,
         "quote_age_minutes": round(age, 2),
+        "last_successful_fetch_at": None,
+        "last_price_change_at": None,
+        "timestamp_semantics": "SOURCE_TIMESTAMP_UNVERIFIED_FETCH_OR_CHANGE",
         "lead_hours": lead,
         "market_novig_probability": novig,
         "m1_ev_comparator_only": m1ev,
