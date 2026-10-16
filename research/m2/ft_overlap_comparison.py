@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Compare archived verified FT to existing M2 evidence, read-only."""
-import argparse,json
+import argparse,json,hashlib
 from pathlib import Path
 from research.m2.market_dataset import build,utc
 from research.m2.ft_coverage_audit import audit
@@ -44,7 +44,7 @@ def compare(runs,formal_path,alternate_path):
       "potential_samples_with_alternate":len(updated),
       "new_market_samples":len(added),"new_unique_fixtures":len({f for f,m in added}),
       "excluded":excluded,"merged_into_training":False,
-      "caveat":"Research-only provisional overlap; not independently established that every auxiliary source hash is a raw wire digest."}
+      "caveat":"Research-only overlap; result_hash verified as canonical JSON SHA256 of saved provider fixture row, not HTTP wire-response digest. No actual training data merged."}
 if __name__=="__main__":
     p=argparse.ArgumentParser()
     p.add_argument("--runs",required=True);p.add_argument("--formal",required=True);p.add_argument("--alternate",required=True)
