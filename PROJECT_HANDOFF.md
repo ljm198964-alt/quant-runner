@@ -1,5 +1,12 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-16 M2 Crown逐日二元基准诊断新增
+- 用户要求继续M2。最新已确认M2样本仍为正式282条/141场，备用FT候选增加18条/9场，候选合计300条/150场；尚未把备用FT正式合并。
+- 在 research/m2/fusion_gate.py 新增 chronological_daily_baseline，只读按UTC as-of自然日、AH/OU分别报告二元非走水样本数、第一侧胜出数、纯Crown去水概率log loss；不拟合M2、不计算ROI、不设新Gate。提交 https://github.com/ljm198964-alt/quant-runner/commit/631b42914af371ed780373d5c154b75a78c4b070，已重新读取主分支确认文件更新。
+- 本轮未获得新GitHub Actions执行成功或真实逐日统计输出的证明，不能宣称新诊断完成生产验证。M1/MR1正式策略/TG/账本未修改；M2正式TG仍0、独立时间前推ROI仍null。
+- fusion_gate.py现存160/80/150等是旧工程预设，非用户确认新规则；本轮未改。下一步核实M2工作流是否调用该代码并获取逐日结果，再研究亚洲盘完整盈亏评价。
+
+
 ## 2026-10-16 M2加密前瞻账本实际开赛核验
 - 用户要求立即核查89条前瞻基准为何全部NOT_STARTED。已在公开Runner增加仅输出聚合数的隐私保护核查 `research/m2/kickoff_status_audit.py` commit 86cf130，使用现有M2_LEDGER_SECRET仅于Runner进程内解密，不打印具体比赛、盘口、球队或密钥。workflow接线提交 e40829b。
 - [M2 run 38882491884](https://github.com/ljm198964-alt/quant-runner/actions/runs/38882491884) completed SUCCESS，实际日志生成UTC 2026-10-16T09:44:50.011274：locked_market_records=89，distinct_fixtures=45，started_distinct_fixtures=0，not_started=89；结算程序也核对baseline_settled=0/pending=89/NOT_STARTED=89。故该时点**全部未开赛被真实逐条核实，非结算卡住**。无M2独立训练模型交易、TG发送0、ROI null。M1/MR1正式不变。
