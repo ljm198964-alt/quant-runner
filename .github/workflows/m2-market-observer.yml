@@ -79,6 +79,7 @@ jobs:
           python research/m2/market_dataset.py --runs source/results/runs --ledger source/results/m1_formal_ledger.json --out "$RUNNER_TEMP/m2-training-audit.json"
           python research/m2/fusion_gate.py --audited-dataset "$RUNNER_TEMP/m2-training-audit.json"
           python -m research.m2.change_intervals --runs source/results/runs
+          python research/m2/opponent_opportunity_control.py --source source
           python - <<'PY'
           import json,os
           from pathlib import Path
