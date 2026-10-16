@@ -145,6 +145,17 @@ def main():
         expected=int(ref["total"]["picks"])
         if result["tg_confirmed_unique"] != expected:
             raise ValueError(f"TG confirmed mismatch: weekly reconstruction {result['tg_confirmed_unique']} != production {expected}")
+        completed=sum(v["settled"] for v in result["all_time"].values())
+        pending=sum(v["pending"] for v in result["all_time"].values())
+        realized=sum((Decimal(v["net_u"]) for v in result["all_time"].values()), Decimal("0"))
+        if completed != int(ref["total"]["settled"]) or pending != int(ref["total"]["pending"]):
+            raise ValueError("Weekly reconstructed settlement counts disagree with formal report")
+        if abs(realized-Decimal(str(ref["total"]["pnl_u"]))) > Decimal("0.0001"):
+            raise ValueError("Weekly reconstructed PnL differs from formal ledger report")
+        for state in STATES:
+            actual=sum(v["states"][state] for v in result["all_time"].values())
+            if actual != int(ref["total"]["states"][state]):
+                raise ValueError(f"Settlement state {state} mismatches formal report")
         for name,stat in (("AH",ref["markets"]["AH"]),("OU",ref["markets"]["OU"])):
             reported=sum(int(v["sent"]) for k,v in result["all_time"].items() if (k=="M1 AH" if name=="AH" else k.startswith("M1 OU")))
             if reported != stat["picks"]:
