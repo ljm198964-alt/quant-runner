@@ -1,0 +1,50 @@
+name: M1 Weekly Accounting
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '15 0 * * 1'
+
+permissions:
+  contents: read
+
+jobs:
+  weekly:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify week-assignment and model separation
+        run: python -m unittest -v research.test_m1_weekly_account
+      - name: Checkout established production ledger read-only
+        uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/totalcorner-research-bridge
+          ref: master
+          path: source
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          persist-credentials: false
+      - name: Summarize prior Beijing week and all history
+        shell: bash
+        run: |
+          WEEK=$(TZ=Asia/Shanghai date -d 'last monday -7 days' +%F)
+          python research/m1_weekly_account.py --ledger source/results/m1_formal_ledger.json --week-start "$WEEK" > "$RUNNER_TEMP/m1-weekly.json"
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          j=json.loads(Path(os.environ["RUNNER_TEMP"],"m1-weekly.json").read_text())
+          with open(os.environ["GITHUB_STEP_SUMMARY"],"a") as f:
+              f.write("# M1 TG-confirmed weekly accounting\n\n")
+              f.write(f"Beijing week starting {j['week_start']}.\n\n")
+              for title,key in (("Previous week","requested_week"),("All history","all_time")):
+                  f.write(f"## {title}\n\n")
+                  f.write("| Model | Sent | Settled | Pending | PnL U | ROI |\n|---|---:|---:|---:|---:|---:|\n")
+                  for name,s in j[key].items():
+                      f.write(f"| {name} | {s['sent']} | {s['settled']} | {s['pending']} | {s['net_u']} | {s['roi'] or '—'} |\n")
+                  f.write("\n")
+              f.write("SENT receipts only. UNKNOWN, paper, research and unconfirmed excluded.\n")
+          PY
+      # Never publish raw Crown VIP orders or market data.
