@@ -110,8 +110,9 @@ def aggregate(rows):
             bucket["pnl"] += row["pnl"]
     out = {}
     for name,v in sorted(groups.items()):
-        out[name] = {**v, "net_u": str(v.pop("pnl")),
-                     "roi": str(Decimal(v["net_u"])/v["settled"]) if v["settled"] else None}
+        pnl = v.pop("pnl")
+        out[name] = {**v, "net_u": str(pnl),
+                     "roi": str(pnl/Decimal(v["settled"])) if v["settled"] else None}
     return out
 
 def report(ledger, requested_week=None):
