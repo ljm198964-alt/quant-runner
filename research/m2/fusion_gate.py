@@ -78,6 +78,33 @@ def diagnostics(rows):
         }
     return by_market
 
+def chronological_daily_baseline(rows):
+    """Descriptive Crown-only daily log loss; no fitted M2, promotion rule, or ROI claim."""
+    buckets = {}
+    for row in rows:
+        market = row.get("market")
+        y = target(row) if market in ("AH", "OU") else None
+        if y is None:
+            continue
+        p = row.get("crown_no_vig_first")
+        if not isinstance(p, (int, float)) or not math.isfinite(p):
+            continue
+        day = str(row.get("asof") or "")[:10]
+        if not day:
+            continue
+        key = (market, day)
+        bucket = buckets.setdefault(key, {"observations": 0, "loss_sum": 0.0, "first_side_wins": 0})
+        bucket["observations"] += 1
+        bucket["loss_sum"] += bce(p, y)
+        bucket["first_side_wins"] += y
+    return [
+        {"market": market, "asof_utc_date": day,
+         "binary_observations": v["observations"],
+         "first_side_wins": v["first_side_wins"],
+         "crown_binary_log_loss": v["loss_sum"] / v["observations"]}
+        for (market, day), v in sorted(buckets.items(), key=lambda item: (item[0][0], item[0][1]))
+    ]
+
 def main():
     p=argparse.ArgumentParser()
     p.add_argument("--audited-dataset",required=True)
@@ -87,6 +114,7 @@ def main():
         raise ValueError("Unsupported audited dataset")
     result={"protocol":"M2_FUSION_RESEARCH_GATE_V1",
       "dataset_rows":len(d["rows"]),"market_diagnostics":diagnostics(d["rows"]),
+      "crown_daily_binary_descriptive":chronological_daily_baseline(d["rows"]),
       "trained_model_saved":False,"forward_m2_orders":0,
       "roi_claim":None,
       "limitations":["No threshold optimization on holdout",
