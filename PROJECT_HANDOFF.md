@@ -1,5 +1,12 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-16 M2 Crown跨扫描盘口变化区间审计
+- 用户指示继续原计划，明确无需将正负0.01水位容差设为新规则。本轮保持原始盘口线及双边水位精确值，未增加价格容差或新的训练/派单Gate。
+- 新增公开研究模块 `research/m2/change_intervals.py` commit bbca0417：对同一fixture×AH/OU在相邻已完成扫描中的Crown双边价格三元组进行只读比较，分别计数记录、未变化对、检测到变化对、两次均有真实fetch时间可定位的变化区间，以及抓取时间不明者。**变化检测区间不是交易所或盘口真正更新的精确瞬时。** 不上传原始VIP赔率。
+- 新增单测 `research/m2/test_change_intervals.py` commit 2d6fafe6；工作流加入单测及只读市场变化审计 commit d9591071。[run 38871291883](https://github.com/ljm198964-alt/quant-runner/actions/runs/38871291883) 初次检查in_progress，必须核对最终状态与真实统计。正式M1/MR1策略、账本、TG未修改。
+- 源仓库最近一次本轮新增真实fetch字段 commit 0ff601e，M2接线运行 38870747738、38870752037均success；但尚无明确证据证明生产新扫描文件已经包含这些字段。对旧存档不能推断抓取时间和精确盘口变更时间。
+
+
 ## 2026-10-16 Crown真实抓取完成时间采集接线
 - 在现有生产源仓库 `totalcorner-research-bridge` 提交 [0ff601e](https://github.com/ljm198964-alt/totalcorner-research-bridge/commit/0ff601ef94e3304937bb5a7a93de81be606c23b9)：M1每场Crown API实际返回后记录 `market_capture_evidence.last_successful_fetch_at`（UTC），并明确 `last_price_change_at=null`，provider历史行时间仅标记为 `PROVIDER_HISTORY_EVENT_TIME`；新增的是附属审计字段，没有改变M1决策/正式TG/盘口选择。由于跨扫描盘口指纹尚未有可靠持久化，不能推断真实价格变化时间。
 - M2独立只读研究接线提交 [67ee92a](https://github.com/ljm198964-alt/quant-runner/commit/67ee92a2b9e521636820c17ad51a119a65d88a94)、[fe2887f](https://github.com/ljm198964-alt/quant-runner/commit/fe2887fb0767b44f1cfc8471960b694d09ab29d9)，从新扫描读取实际抓取元数据；旧扫描该字段继续null，严禁回填为猜测时间。
