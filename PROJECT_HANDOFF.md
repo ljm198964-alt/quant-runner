@@ -1,5 +1,10 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-16 M2补充FT哈希语义校验最终结果
+- 对 `m1_formal_runtime.validate_final` 与 V23结算实现追溯，备用FT的result_hash来自 `digest(row)`：源比赛记录规范化JSON的SHA256，**不是HTTP原始wire响应SHA**。
+- M2脚本 `research/m2/ft_overlap_comparison.py` 新增对保存raw比赛行的SHA256实际重新计算校验，提交 [bff6d95](https://github.com/ljm198964-alt/quant-runner/commit/bff6d955c2a6f7030d98d7539bc4872d260e9839)。云端 [run 38881141689](https://github.com/ljm198964-alt/quant-runner/actions/runs/38881141689) SUCCESS，18/18测试通过：9条备用FT均通过身份、比分、保存行哈希的一致性验证，正式原282条，候选增量18条/9场，研究候选300条/150场。**尚未把备用FT写入真实M2训练数据，也未做时间前推ROI或正式TG。**
+
+
 ## 2026-10-16 M2 备用FT与正式数据交叉去重
 - 新增只读研究 `research/m2/ft_overlap_comparison.py` commit 24cf2f3，用现有 `market_dataset.build` 原样本及独立 FT 来源模拟增量，不修改正式FT账本、训练数据或策略。workflow接线3d6c0a2首次run38880782033因Python import执行方式失败，修复为模块执行1044338。
 - 最终 [M2 run 38880912474](https://github.com/ljm198964-alt/quant-runner/actions/runs/38880912474) completed SUCCESS。实际日志：历史已核验Crown样本282/141场（AH141/OU141）；备用FT9场全部独立于原正式FT记录，无冲突；只读模拟合并增加18条市场样本/9场，候选总300条/150场（AH+9/OU+9）。**尚未写入正式训练集**。备用来源 `result_hash` 尚未独立证实是否严格等价原始API响应wire SHA，不能冒充最终已核验标准；仍需审计原始身份及证明hash的计算来源。
