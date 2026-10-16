@@ -62,6 +62,7 @@ def verified_finals(ledger):
             if not ev.get("observed_at") or not ev.get("locked_kickoff"): continue
             current=by_fixture.get(fid)
             if current is not None:
+                if current.get("conflict"): continue
                 if (current["h"],current["a"])!=(h,a):
                     # Do not settle contested result revisions.
                     by_fixture[fid]={"conflict":True}
