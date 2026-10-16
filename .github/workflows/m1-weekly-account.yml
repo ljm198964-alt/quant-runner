@@ -2,6 +2,11 @@ name: M1 Weekly Accounting
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/m1-weekly-account.yml'
+      - 'research/m1_weekly_account.py'
+      - 'research/test_m1_weekly_account.py'
   schedule:
     - cron: '15 0 * * 1'
 
@@ -30,7 +35,7 @@ jobs:
       - name: Summarize prior Beijing week and all history
         shell: bash
         run: |
-          WEEK=$(TZ=Asia/Shanghai date -d 'last monday -7 days' +%F)
+          WEEK=$(TZ=Asia/Shanghai python -c 'from datetime import datetime,timedelta; from zoneinfo import ZoneInfo; d=datetime.now(ZoneInfo("Asia/Shanghai")).date(); print((d-timedelta(days=d.weekday()+7)).isoformat())')
           python research/m1_weekly_account.py --ledger source/results/m1_formal_ledger.json --week-start "$WEEK" > "$RUNNER_TEMP/m1-weekly.json"
           python - <<'PY'
           import json,os
