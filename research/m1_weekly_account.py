@@ -49,9 +49,9 @@ def records(ledger):
         if not group: continue
         by_pick[pick.get("pick_id") or key] = (key, group, pick)
     tg = {}
-    for note in notifications.values():
+    for key, note in notifications.items():
         if not isinstance(note, dict): continue
-        p = note.get("pick_id")
+        p = note.get("pick_id") or (by_pick.get(key) or (None, None, {}))[2].get("pick_id")
         receipt = note.get("telegram") or {}
         if p not in by_pick or receipt.get("status") != "SENT":
             continue
@@ -134,11 +134,21 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--ledger", required=True)
     parser.add_argument("--week-start", help="Beijing Monday YYYY-MM-DD")
+    parser.add_argument("--reference-report", help="Required TG-confirmed production report for reconciliation")
     args=parser.parse_args()
     if args.week_start:
         d=datetime.fromisoformat(args.week_start).date()
         if d.weekday()!=0: raise ValueError("--week-start must be Monday")
     result=report(json.loads(Path(args.ledger).read_text(encoding="utf8")),args.week_start)
+    if args.reference_report:
+        ref=json.loads(Path(args.reference_report).read_text(encoding="utf8"))
+        expected=int(ref["total"]["picks"])
+        if result["tg_confirmed_unique"] != expected:
+            raise ValueError(f"TG confirmed mismatch: weekly reconstruction {result['tg_confirmed_unique']} != production {expected}")
+        for name,stat in (("AH",ref["markets"]["AH"]),("OU",ref["markets"]["OU"])):
+            reported=sum(int(v["sent"]) for k,v in result["all_time"].items() if (k=="M1 AH" if name=="AH" else k.startswith("M1 OU")))
+            if reported != stat["picks"]:
+                raise ValueError(f"{name} reconciliation mismatch: {reported} != {stat['picks']}")
     print(json.dumps(result,ensure_ascii=False,indent=2))
 
 if __name__=="__main__":
