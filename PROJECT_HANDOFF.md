@@ -2,7 +2,7 @@
 
 ## 2026-10-16 M2补充独立FT证据覆盖研究
 - 用户要求继续M2，原有正式模型及对手研究暂不改变。本轮读取源仓库 `research/m1-ou-crown-market-challenger-v23/forward/verified_ft.json`，发现一套不同于M1正式下注账本的已保存TotalCorner核验FT记录；是否可用作M2训练尚需核对fixture ID、球队/联赛身份、原始结果hash及核验时间，不可擅自混入。
-- 已提交公开Runner独立只读检查程序 `research/m2/ft_coverage_audit.py` commit 56460c0，审计历史M1扫描fixture与备用FT的重合、身份字段和证明覆盖；该检查不会修改M2正式训练样本或TG。工作流接线 commit 7ecaf221，自动run [38879309716](https://github.com/ljm198964-alt/quant-runner/actions/runs/38879309716) 初次检查queued，须核对真实运行结果才可报告可补样本。
+- 已提交公开Runner独立只读检查程序 `research/m2/ft_coverage_audit.py` commit 56460c0，审计历史M1扫描fixture与备用FT的重合、身份字段和证明覆盖；该检查不会修改M2正式训练样本或TG。工作流接线 commit 7ecaf221，自动run [38879309716](https://github.com/ljm198964-alt/quant-runner/actions/runs/38879309716) 最终completed SUCCESS（UTC 2026-10-16 09:17:16），18/18 tests PASS；替代FT证据9条，9条fixture ID均能在已存扫描中找到，9条均通过本审计的球队/联赛ID与proof字段存在性检查。**尚未核对它们是否已在正式FT账本覆盖的141场里，新增可训练样本数未知且当前未合并。**
 - 上一轮M2历史样本282条/141场是UTC 2026-10-16 08:05附近成功运行的旧快照。本轮没有新训练、没有独立样本外ROI、也没有M2正式TG信号。原先160/80/150为现有代码预设研究门槛，不冒充用户确认门槛。
 
 
