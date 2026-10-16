@@ -45,11 +45,12 @@ jobs:
           with open(os.environ["GITHUB_STEP_SUMMARY"],"a") as f:
               f.write("# M1 TG-confirmed weekly accounting\n\n")
               f.write(f"Beijing week starting {j['week_start']}.\n\n")
-              for title,key in (("Previous week","requested_week"),("All history","all_time")):
+              for title,key in (("Selected Beijing week","requested_week"),("All history","all_time")):
                   f.write(f"## {title}\n\n")
                   f.write("| Model | Sent | Settled | Pending | PnL U | ROI |\n|---|---:|---:|---:|---:|---:|\n")
                   for name,s in j[key].items():
-                      f.write(f"| {name} | {s['sent']} | {s['settled']} | {s['pending']} | {s['net_u']} | {s['roi'] or '—'} |\n")
+                      pct=f"{(__import__('decimal').Decimal(s['roi'])*100):.2f}%" if s["roi"] is not None else "—"
+                      f.write(f"| {name} | {s['sent']} | {s['settled']} | {s['pending']} | {s['net_u']} | {pct} |\n")
                   sums=list(j[key].values())
                   sent=sum(v["sent"] for v in sums)
                   settled=sum(v["settled"] for v in sums)
