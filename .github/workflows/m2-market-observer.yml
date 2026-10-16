@@ -29,7 +29,7 @@ jobs:
       - name: M2 strict time, Crown and encrypted-ledger unit tests
         run: |
           python -m pip install cryptography
-          python -m unittest -v research.m2.test_m2_shadow research.m2.test_encrypted_ledger research.m2.test_settle_forward
+          python -m unittest -v research.m2.test_m2_shadow research.m2.test_encrypted_ledger research.m2.test_settle_forward research.m2.test_market_dataset
       - name: Validate existing source access
         shell: bash
         env:
@@ -72,6 +72,24 @@ jobs:
           if age < -0.1 or age > 6:
               raise SystemExit("Source scan stale: cannot call this a fresh forward observation")
           PY
+
+      - name: Audit independent two-sided Crown samples and strictly verified FT
+        shell: bash
+        run: |
+          python research/m2/market_dataset.py --runs source/results/runs --ledger source/results/m1_formal_ledger.json --out "$RUNNER_TEMP/m2-training-audit.json"
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          p=Path(os.environ["RUNNER_TEMP"],"m2-training-audit.json")
+          audit=json.loads(p.read_text(encoding="utf-8"))
+          c=audit["counts"]
+          with open(os.environ["GITHUB_STEP_SUMMARY"],"a") as f:
+              f.write("\n## M2 independent two-sided Crown data audit\n\n")
+              f.write(f"- Verified time-safe samples: {c.get('AUDITED_VERIFIED_SAMPLES',0)}\n")
+              f.write(f"- Distinct verified fixtures: {c.get('AUDITED_UNIQUE_MATCHES',0)}\n")
+              f.write("- No training metrics claimed until sufficient independent results.\n")
+          PY
+      # No raw market sample dataset or premium odds uploaded to public artifacts.
       # Protected Crown snapshots stay in runner.temp, never public artifacts.
 
       - name: Encrypt and persist prospective observations without public plaintext
