@@ -87,11 +87,15 @@ def build(saved,formal):
                 if key in first_seen:continue
                 quote,reason=two_sided(m,market,asof)
                 if reason:
-                    counts[reason]+=1;continue
+                    counts[reason]+=1
+                    counts[f"{market}_{reason}"]+=1
+                    continue
+                counts[f"{market}_FRESH_TWO_SIDED_CROWN"]+=1
                 first_seen.add(key)
                 final=evidence.get(fid)
                 if not final or final[2] is None or final[2]<=asof:
                     counts["NOT_YET_VERIFIED_FT"]+=1
+                    counts[f"{market}_NOT_YET_VERIFIED_FT"]+=1
                     continue
                 features=m.get("distilled_teacher_concept_proxies") or {}
                 row={
@@ -112,6 +116,7 @@ def build(saved,formal):
                   "form_diff_away20":val(features.get("away_form_goal_diff_20")),
                 }
                 output.append(row)
+                counts[f"{market}_AUDITED_VERIFIED_SAMPLES"]+=1
     # Ensure one market per fixture and no after-result samples; do not output raw rows in public CI.
     assert len({(r["fixture_id"],r["market"]) for r in output})==len(output)
     for row in output:
