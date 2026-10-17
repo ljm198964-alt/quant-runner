@@ -126,7 +126,9 @@ jobs:
             git fetch origin main
             git reset --hard FETCH_HEAD
             while IFS= read -r p; do
-              if [ -e "$p" ]; then
+              # reset --hard does not remove untracked files from this checkout.
+              # Only a path tracked on refreshed main counts as persisted.
+              if git ls-files --error-unmatch -- "$p" >/dev/null 2>&1; then
                 echo "M2_ENCRYPTED_BATCH_ALREADY_PRESENT"
                 continue
               fi
