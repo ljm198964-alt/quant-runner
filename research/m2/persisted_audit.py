@@ -13,13 +13,13 @@ from datetime import datetime, timezone
 from decimal import Decimal
 from pathlib import Path
 from research.m2.encrypted_ledger import decode, load_locks, kickoff_utc
-from research.m2.settle_forward import STATES, summarize, verified_finals
+from research.m2.settle_forward import STATES, summarize, verified_finals, source_with_private_verified_finals
 
 
-def extra_diagnostics(locks, confirmed, formal, alternate, now):
+def extra_diagnostics(locks, confirmed, formal, alternate, now, combined_source=None):
     """Read-only privacy-safe cohorts; neither selects bets nor settles additional FT."""
     settled_keys = {(str(r["fixture_id"]), r["market"]) for r in confirmed}
-    final_map = verified_finals(formal)
+    final_map = verified_finals(combined_source or formal)
     formal_pick_ids = {str(k).split("|")[0] for k in (formal.get("picks") or {})}
     formal_result_ids = {str(k).split("|")[0] for k in (formal.get("results") or {})}
     alternate_results = (alternate or {}).get("results") or {}
@@ -113,8 +113,9 @@ def audit(folder: Path, formal: dict, secret: str, alternate: dict | None = None
             "states": {state: sum(r["state"] == state for r in rs) for state in STATES},
         }
 
+    combined_source, private_ft_count = source_with_private_verified_finals(formal, folder, secret)
     potential, pending_reasons = summarize(
-        locks, confirmed, formal, datetime.now(timezone.utc)
+        locks, confirmed, combined_source, datetime.now(timezone.utc)
     )
     pending_by_market = Counter(r["market"] for r in locks)
     for row in confirmed:
@@ -134,8 +135,9 @@ def audit(folder: Path, formal: dict, secret: str, alternate: dict | None = None
         "persisted_by_market": by_market,
         "pending_by_market": dict(pending_by_market),
         "new_verified_ft_available_but_not_persisted": len(potential),
+        "independent_private_verified_ft_fixtures": private_ft_count,
         "other_pending_reasons": pending_reasons,
-        "ft_and_side_diagnostics": extra_diagnostics(locks, confirmed, formal, alternate, datetime.now(timezone.utc)),
+        "ft_and_side_diagnostics": extra_diagnostics(locks, confirmed, formal, alternate, datetime.now(timezone.utc), combined_source),
         "private_payload_disclosed": False,
     }
 
