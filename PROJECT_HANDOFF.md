@@ -1,5 +1,13 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-17 M2独立严格FT回填已实战运行并持久化结算196条
+- 本轮接续M2结算，发现最新既有受保护聚合在UTC2026-10-17 16:00-16:08为432基准锁单/216场、82已结（AH41/OU41）、166已开赛缺FT、184未开赛、净-19.545U、ROI-23.84%；只读新诊断证实166条中112无M1正式Pick、54有Pick但**全部166条均无M1正式FT结果修订**，单靠M1正式订单赛果无法覆盖独立M2前瞻。
+- 代码已于公开Runner提交：research/m2/verified_ft_backfill.py 676707ba，复用既有TOTALCORNER_TOKEN及M1 validate_final的比赛ID、球队、联赛、开球/完赛验证，仅把独立核验证据存到AES-GCM加密文件、不公开原始FT身份；research/m2/settle_forward.py feb680c合并私有加密FT和M1 FT结算、不覆盖老账；research/m2/persisted_audit.py f281670同步聚合；新增 FT 回填工作流 .github/workflows/m2-ft-backfill.yml c093557，依赖6a2fc61、隐私安全运行回执增强ccf30ca。盘口仍严格Crown，未新增任何策略筛选、门槛、TG发送。
+- 真正远端写回 [commit dfac74a](https://github.com/ljm198964-alt/quant-runner/commit/dfac74a91c19f7fc34af499b8fff9fd99e9dc660)（UTC2026-10-17T16:16:35）：58份独立核验FT AES-GCM密文和1份新结算批次已持久化。按工作流触发只读聚合提交 [3159008](https://github.com/ljm198964-alt/quant-runner/commit/31590085ef380c86735a0817090d1119db91fad5)，正式聚合results/m2_persisted_aggregate_summary.json于UTC2026-10-17T16:17:59.871509产生：锁单432，**已结196（AH98、OU98）**、待结236、净-22.420U、ROI-11.4388%。AH -6.435U/ROI-6.5663%，OU -15.985U/ROI-16.3112%。与前82已结比较增加114条。新确认独立FT 58场，额外有2条开球身份不一致不得结算；待结原因：NOT_STARTED 180、NO_UNCONTESTED_VERIFIED_FT 54、KICKOFF_IDENTITY_MISMATCH 2。持续区分已开赛但缺FT和实际已完赛，不能把全部缺FT说成完赛未结。
+- 独立加密FT回填正式落库、结算批次落库、聚合报告读取均已分别核实，早先结算写回故障确已越过本轮的持久化难点。全局M2尚未有独立训练模型交易，正式TG 0；这些结果始终是M2_V0_M1_SIDE_BASELINE_ONLY前瞻基准，不得冒充M2模型ROI。新FT工作流完整GitHub Actions conclusion尚未从现有connector单独获取，但已看到工作流输出的加密持久化提交和随后聚合验算。
+- 仍需接续：在有新provider FT时处理54条缺严格赛果，并追踪180条尚未开赛；两条开球身份不一致保持审计状态。OU基准196条整体-11.44%，其中OU98条-16.31%，对手及正式模型的ROI不得混入或直接借用。若考虑新增定时FT工作，需用户明确确认，不擅自增加调度规则。
+
+
 ## 2026-10-17 M2 FT缺口归因、OU方向研究及独立赛果回填接线
 - 最新从正式持久化聚合报告 results/m2_persisted_aggregate_summary.json 读取：生成UTC2026-10-17T16:08:56，M2 V0基准锁单432/216场，已结82（AH41、OU41），待结350，净-19.545U、ROI-23.8354%；新可核验未落库0。当前已开赛未结166条/83场、未开赛184条，随时间前移变化而非先前126/224的旧快照。
 - 新增只读隐私保护原因与方向诊断，研究代码 research/m2/persisted_audit.py 提交c3e94a4及UTC时刻校验修订cd8d199；聚合工作流接线35bbf06。已由GitHub自动写回新聚合数据：166条已开赛未结中112条无任何M1正式Pick、54条有M1 Pick，但**166条均无M1正式结果修订**；另6条与备用FT历史候选ID重合，不直接等同可结。说明仅以M1正式订单赛果作为M2全部前瞻的FT来源存在范围覆盖不足。
