@@ -74,6 +74,22 @@ def verified_finals(ledger):
                               "observed_at":ev["observed_at"]}
     return by_fixture
 
+def source_with_private_verified_finals(formal, folder, secret):
+    """Merge independently verified, encrypted TotalCorner FT into research settlement.
+    M1 formal FT and M2 independently checked FT keep their provenance.
+    Conflicting scores remain contested under verified_finals().
+    """
+    from research.m2.verified_ft_backfill import stored_finals
+    private = stored_finals(folder, secret)
+    combined = {"results": dict(formal.get("results") or {})}
+    for fid, proof in private.items():
+        key = fid + "|M2_VERIFIED_FT"
+        if key in combined["results"]:
+            raise ValueError("Private FT result key collision")
+        combined["results"][key] = [proof]
+    return combined, len(private)
+
+
 def summarize(locks,existing,source,now=None):
     now=now or datetime.now(timezone.utc)
     if now.tzinfo is None: raise ValueError("Time requires timezone")
@@ -121,7 +137,8 @@ def main():
         if record.get("protocol")!="M2_V0_VERIFIED_SETTLEMENT_V1":
             raise ValueError("Unrecognized settlement record")
         existing.extend(record["settlements"])
-    verified=json.loads(Path(opts.verified_formal_ledger).read_text(encoding="utf-8"))
+    formal=json.loads(Path(opts.verified_formal_ledger).read_text(encoding="utf-8"))
+    verified, private_ft_count = source_with_private_verified_finals(formal, folder, secret)
     new,reasons=summarize(locks,existing,verified)
     if new:
         settle_dir.mkdir(parents=True,exist_ok=True)
@@ -134,6 +151,7 @@ def main():
     pnl=sum((Decimal(x["pnl_u"]) for x in all_settled),Decimal(0))
     print(json.dumps({
         "protocol":"M2_V0_BASELINE_SETTLEMENT_SUMMARY_V1",
+        "independent_private_verified_ft_fixtures":private_ft_count,
         "baseline_locks":len(locks),"baseline_settled":len(all_settled),
         "baseline_pending":len(locks)-len(all_settled),
         "new_verified_settlements":len(new),
