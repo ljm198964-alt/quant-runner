@@ -1,0 +1,89 @@
+name: M2 Independent Verified FT Recovery
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'research/m2/verified_ft_backfill.py'
+      - '.github/workflows/m2-ft-backfill.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: m2-verified-ft-recovery
+  cancel-in-progress: false
+
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout public Runner
+        uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install existing data and encryption dependencies
+        run: python -m pip install cryptography requests
+      - name: Checkout original source and frozen M1 scan identities
+        uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/totalcorner-research-bridge
+          ref: master
+          path: source
+          persist-credentials: false
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+      - name: Recover independently verified TotalCorner FT and settle immutable M2 baselines
+        env:
+          M2_LEDGER_SECRET: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+          TOTALCORNER_TZ_OFFSET: '8'
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m research.m2.verified_ft_backfill --ledger-folder research/m2/encrypted_forward --runs source/results/runs --formal source/results/m1_formal_ledger.json --source-code-dir source
+          python -m research.m2.settle_forward --ledger-folder research/m2/encrypted_forward --verified-formal-ledger source/results/m1_formal_ledger.json
+          python -m research.m2.kickoff_status_audit --ledger-folder research/m2/encrypted_forward --formal source/results/m1_formal_ledger.json
+      - name: Persist only AES-GCM proofs and settlement batches to public Runner
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! git diff --quiet -- research/m2/encrypted_forward || ! git diff --cached --quiet -- research/m2/encrypted_forward; then
+            echo "::error::Previously tracked M2 encrypted ledger files changed"
+            exit 1
+          fi
+          batch_dir="$RUNNER_TEMP/m2-ft-persist"
+          mkdir -p "$batch_dir"
+          git ls-files --others --exclude-standard research/m2/encrypted_forward > "$batch_dir/paths"
+          while IFS= read -r p; do
+            mkdir -p "$batch_dir/$(dirname "$p")"
+            cp -- "$p" "$batch_dir/$p"
+          done < "$batch_dir/paths"
+          git config user.name "quant-runner-m2-ft"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          for i in 1 2 3; do
+            git fetch origin main
+            git reset --hard FETCH_HEAD
+            while IFS= read -r p; do
+              if git ls-files --error-unmatch -- "$p" >/dev/null 2>&1; then
+                echo "M2_PRIVATE_EVIDENCE_ALREADY_TRACKED"
+                continue
+              fi
+              mkdir -p "$(dirname "$p")"
+              cp -- "$batch_dir/$p" "$p"
+              git add -- "$p"
+            done < "$batch_dir/paths"
+            if git diff --cached --quiet; then
+              echo "M2_NO_NEW_PRIVATE_EVIDENCE"
+              exit 0
+            fi
+            git commit -m "Record encrypted M2 independently verified FT and settlement [skip ci]"
+            if git push origin HEAD:main; then
+              echo "M2_PRIVATE_FT_AND_SETTLEMENT_PERSISTED"
+              exit 0
+            fi
+            sleep $((i*4))
+          done
+          echo "::error::M2 private FT and settlement batches were not persisted"
+          exit 1
