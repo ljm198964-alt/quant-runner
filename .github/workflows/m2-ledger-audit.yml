@@ -34,7 +34,7 @@ jobs:
         env:
           M2_LEDGER_SECRET: ${{ secrets.PRIVATE_REPO_TOKEN }}
         run: |
-          python -m research.m2.persisted_audit --ledger-folder research/m2/encrypted_forward --verified-formal-ledger source/results/m1_formal_ledger.json | tee "$RUNNER_TEMP/m2-persisted-aggregate.json"
+          python -m research.m2.persisted_audit --ledger-folder research/m2/encrypted_forward --verified-formal-ledger source/results/m1_formal_ledger.json --alternate-saved-ft source/research/m1-ou-crown-market-challenger-v23/forward/verified_ft.json | tee "$RUNNER_TEMP/m2-persisted-aggregate.json"
       - name: Persist privacy-safe aggregate report
         shell: bash
         run: |
