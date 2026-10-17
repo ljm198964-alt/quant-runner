@@ -107,20 +107,43 @@ jobs:
           python research/m2/encrypted_ledger.py --observations "$OUTPUT_PATH" --ledger-folder research/m2/encrypted_forward
           python -m research.m2.settle_forward --ledger-folder research/m2/encrypted_forward --verified-formal-ledger source/results/m1_formal_ledger.json
           python -m research.m2.kickoff_status_audit --ledger-folder research/m2/encrypted_forward --formal source/results/m1_formal_ledger.json
-          if [ -n "$(git status --porcelain -- research/m2/encrypted_forward)" ]; then
-            git config user.name "quant-runner-m2"
-            git config user.email "github-actions[bot]@users.noreply.github.com"
-            git add research/m2/encrypted_forward/
-            git commit -m "Record encrypted M2 prospective observations [skip ci]"
-            for i in 1 2 3; do
-              if git pull --rebase origin main && git push origin HEAD:main; then
-                echo "M2_ENCRYPTED_LEDGER_COMMITTED"
-                exit 0
-              fi
-              sleep $((i*4))
-            done
-            echo "::error::M2 encrypted ledger write failed; do not report durability"
+          # Reconcile encrypted batches against fresh main; AES-GCM creates different
+          # ciphertext for the same logical batch, so never overwrite an existing path.
+          if ! git diff --quiet -- research/m2/encrypted_forward || ! git diff --cached --quiet -- research/m2/encrypted_forward; then
+            echo "::error::Existing encrypted ledger files were modified unexpectedly"
             exit 1
-          else
-            echo "M2_NO_NEW_ENCRYPTED_BATCH"
           fi
+          batch_dir="$RUNNER_TEMP/m2-persist-batch"
+          mkdir -p "$batch_dir"
+          git ls-files --others --exclude-standard research/m2/encrypted_forward > "$batch_dir/paths"
+          while IFS= read -r p; do
+            mkdir -p "$batch_dir/$(dirname "$p")"
+            cp -- "$p" "$batch_dir/$p"
+          done < "$batch_dir/paths"
+          git config user.name "quant-runner-m2"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          for i in 1 2 3; do
+            git fetch origin main
+            git reset --hard FETCH_HEAD
+            while IFS= read -r p; do
+              if [ -e "$p" ]; then
+                echo "M2_ENCRYPTED_BATCH_ALREADY_PRESENT"
+                continue
+              fi
+              mkdir -p "$(dirname "$p")"
+              cp -- "$batch_dir/$p" "$p"
+              git add -- "$p"
+            done < "$batch_dir/paths"
+            if git diff --cached --quiet; then
+              echo "M2_NO_NEW_ENCRYPTED_BATCH"
+              exit 0
+            fi
+            git commit -m "Record encrypted M2 prospective observations [skip ci]"
+            if git push origin HEAD:main; then
+              echo "M2_ENCRYPTED_LEDGER_COMMITTED"
+              exit 0
+            fi
+            sleep $((i*4))
+          done
+          echo "::error::M2 encrypted ledger write failed; do not report durability"
+          exit 1
