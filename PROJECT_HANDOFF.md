@@ -1,5 +1,13 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-17 M2正式加密账本独立聚合核查结果
+- 新增无需依赖新M1扫描时效的只读核查脚本 research/m2/persisted_audit.py，提交1162e07；新增独立工作流 .github/workflows/m2-ledger-audit.yml 提交 bdb76c9，之后接线为把仅聚合结果保存 results/m2_persisted_aggregate_summary.json，提交068d2c4。不输出私有赛程、比赛ID、VIP赔率、明文订单或密钥。
+- 云端实际在UTC 2026-10-17T14:44:54.515230产生聚合报告并写回GitHub：提交 https://github.com/ljm198964-alt/quant-runner/commit/a617a3b36c22f80f7cefb7ec9b74a173a4102952；已重新从远端读取文件 results/m2_persisted_aggregate_summary.json SHA1b8766c。证实已持久化M2 V0基准锁单432笔/216场、已结82（AH41、OU41）、待结350（未开赛224、开赛后无无争议FT126），新增可核验却尚未持久化为0，重复结算0。净-19.545U、按82笔已结ROI -23.8354%。AH -2.385U/ROI -5.8171%；OU -17.160U/ROI -41.8537%。详细全赢半赢走水半输全输已在该公开聚合报告。
+- 报告是基于加密正式持久账本在Runner内解密后的聚合，证明了落库结算82笔；独立M2训练模型仍未建成，TG正式派单0，不能当独立M2模型ROI。核验时刻和账本生成时间需保留，不可永远沿用该快照。
+- 目前没有从可用GitHub工具取得此次新Actions job的完整conclusion；可确认的是工作流成功将聚合报告真实写入公开main。下一步对126笔缺FT做只读来源缺口诊断，并专门审计OU基准大幅负收益，勿擅自修改正式M1/MR1及任何交易筛选规则。
+
+
+
 ## 2026-10-17 M2前瞻结算密文真实持久化
 - 在进一步复核工作流时发现上轮394738b修复遗漏：git reset --hard 不删除 untracked 本地文件，单凭 [ -e "$p" ] 会把未被远端跟踪的密文误判为“已存在”。修正为 git ls-files --error-unmatch 判断同步main后的真实跟踪状态，提交 [fdeb266](https://github.com/ljm198964-alt/quant-runner/commit/fdeb2660cec1e65cff8c64c7be60583cbc619a31)，已从远端重新读取验证生效。
 - 真实生产持久化证据：随后 GitHub 自动生成 [commit 8a57ecf](https://github.com/ljm198964-alt/quant-runner/commit/8a57ecf6c3a0d9da91ed95970ee8257ff52c43ec) (UTC 2026-10-17 14:29:10)，消息“Record encrypted M2 prospective observations [skip ci]”；新增 research/m2/encrypted_forward/6fa19b7b92ced4b838f51a88.enc.json 与 research/m2/encrypted_forward/settlements/0ae05d509e81d64764644870.enc.json。二者均已通过 GitHub fetch_file 真正从主分支重新读取，协议为 M2_ENCRYPTED_OBSERVATION_V1；故**加密前瞻及结算批次写入生产仓库已验证**，不是旧run的内存结果。
