@@ -1,5 +1,12 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-17 M2前瞻结算密文真实持久化
+- 在进一步复核工作流时发现上轮394738b修复遗漏：git reset --hard 不删除 untracked 本地文件，单凭 [ -e "$p" ] 会把未被远端跟踪的密文误判为“已存在”。修正为 git ls-files --error-unmatch 判断同步main后的真实跟踪状态，提交 [fdeb266](https://github.com/ljm198964-alt/quant-runner/commit/fdeb2660cec1e65cff8c64c7be60583cbc619a31)，已从远端重新读取验证生效。
+- 真实生产持久化证据：随后 GitHub 自动生成 [commit 8a57ecf](https://github.com/ljm198964-alt/quant-runner/commit/8a57ecf6c3a0d9da91ed95970ee8257ff52c43ec) (UTC 2026-10-17 14:29:10)，消息“Record encrypted M2 prospective observations [skip ci]”；新增 research/m2/encrypted_forward/6fa19b7b92ced4b838f51a88.enc.json 与 research/m2/encrypted_forward/settlements/0ae05d509e81d64764644870.enc.json。二者均已通过 GitHub fetch_file 真正从主分支重新读取，协议为 M2_ENCRYPTED_OBSERVATION_V1；故**加密前瞻及结算批次写入生产仓库已验证**，不是旧run的内存结果。
+- 之前的旧run(38882491884)日志在UTC14:03计算183 locks / 56可结算 / 33缺严格FT / 94未开赛，净-13.920U、ROI-24.86%，但该旧run写回失败。**新落库密文尚未解密做独立聚合核验，不能断言新文件中的结算数与旧run完全一致**；未取得新workflow完整success状态/日志。M2 V0是M1方向研究基准，独立训练M2订单及TG仍0。
+- 待继续：通过现有Runner秘密钥匙在受控环境内对新正式加密结算账本生成仅聚合的已结/未结/PnL/ROI和未核验原因，核对最新workflow完成状态；对已开赛缺严格FT做源账本核验，不根据历史快照推测赛果。未新增策略Gate、未改M1/MR1正式模型或Telegram。
+
+
 ## 2026-10-17 M2加密结算写回并发修复（尚待云端验收）
 - 修改现有公开Runner `.github/workflows/m2-market-observer.yml`，commit [394738b](https://github.com/ljm198964-alt/quant-runner/commit/394738bae8986fd444b22c9a0f57294ec835c97c)：保存新生成密文副本后，逐次fetch远端最新main、reset本地临时checkout、仅复制远端尚不存在的密文路径并提交/推送；同名已存在记录不覆盖，push被并发更新拒绝则重新同步重试。修复前旧历史run重试两次均因相同批次AES-GCM密文 add/add 冲突而失败。
 - 已复读GitHub新workflow文件确认变更实际提交到主分支。尚未取得修复提交的新Actions执行成功回执；`fetch_commit_workflow_runs`只检索PR触发运行，返回空不代表没有自动触发。核查目标settlements/ffd31d32d6a110aac764295a.enc.json暂不存在，**不能宣称56条已永久保存或结算故障已修复上线验收**。
