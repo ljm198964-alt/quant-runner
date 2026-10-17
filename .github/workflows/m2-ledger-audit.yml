@@ -8,7 +8,7 @@ on:
       - '.github/workflows/m2-ledger-audit.yml'
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   audit:
@@ -34,4 +34,29 @@ jobs:
         env:
           M2_LEDGER_SECRET: ${{ secrets.PRIVATE_REPO_TOKEN }}
         run: |
-          python -m research.m2.persisted_audit --ledger-folder research/m2/encrypted_forward --verified-formal-ledger source/results/m1_formal_ledger.json
+          python -m research.m2.persisted_audit --ledger-folder research/m2/encrypted_forward --verified-formal-ledger source/results/m1_formal_ledger.json | tee "$RUNNER_TEMP/m2-persisted-aggregate.json"
+      - name: Persist privacy-safe aggregate report
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "quant-runner-m2-audit"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          for i in 1 2 3; do
+            git fetch origin main
+            git reset --hard FETCH_HEAD
+            mkdir -p results
+            cp "$RUNNER_TEMP/m2-persisted-aggregate.json" results/m2_persisted_aggregate_summary.json
+            git add results/m2_persisted_aggregate_summary.json
+            if git diff --cached --quiet; then
+              echo "M2_AGGREGATE_ALREADY_CURRENT"
+              exit 0
+            fi
+            git commit -m "Record M2 encrypted-ledger aggregate [skip ci]"
+            if git push origin HEAD:main; then
+              echo "M2_AGGREGATE_REPORT_COMMITTED"
+              exit 0
+            fi
+            sleep $((i*4))
+          done
+          echo "::error::Aggregate report was computed but not persisted"
+          exit 1
