@@ -1,5 +1,13 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-17 M2 FT缺口归因、OU方向研究及独立赛果回填接线
+- 最新从正式持久化聚合报告 results/m2_persisted_aggregate_summary.json 读取：生成UTC2026-10-17T16:08:56，M2 V0基准锁单432/216场，已结82（AH41、OU41），待结350，净-19.545U、ROI-23.8354%；新可核验未落库0。当前已开赛未结166条/83场、未开赛184条，随时间前移变化而非先前126/224的旧快照。
+- 新增只读隐私保护原因与方向诊断，研究代码 research/m2/persisted_audit.py 提交c3e94a4及UTC时刻校验修订cd8d199；聚合工作流接线35bbf06。已由GitHub自动写回新聚合数据：166条已开赛未结中112条无任何M1正式Pick、54条有M1 Pick，但**166条均无M1正式结果修订**；另6条与备用FT历史候选ID重合，不直接等同可结。说明仅以M1正式订单赛果作为M2全部前瞻的FT来源存在范围覆盖不足。
+- OU已结41条：OVER27条-13.715U/ROI-50.80%，UNDER14条-3.445U/ROI-24.61%；AH HOME25条+0.680U，AWAY16条-3.065U。仅归因描述，样本少，不据此添加方向/赔率/联赛筛选Gate，未修改模型。
+- 使用同一现有TotalCorner API /match/view和M1既有validate_final身份、联赛、球队及FT校验，在research/m2/verified_ft_backfill.py新增**加密独立FT证据回填**（commit676707b），保存独立proof到M2现有AES-GCM受保护目录，不输出盘口赔率、球队、比赛ID或密钥；研究结算在settle_forward.py合并此类已验证FT而不删除/覆盖M1证据（commitfeb680c），持久聚合审计同步支持新来源（commitf281670）。新工作流 .github/workflows/m2-ft-backfill.yml commitc093557，后续依赖接线6a2fc61复用M1原有numpy/scipy等包和Runner现有TOTALCORNER_TOKEN/M2_LEDGER_SECRET。当前没有获得该新工作流完成成功日志或独立FT真正加密落库的证据，**不得声称83场已获取赛果或结算数已上升**；首次完整验收需检查新加密FT目录、结算密文、成功运行、最新聚合报告。
+- 不改变正式M1/MR1策略、TG、盘口选择、已锁M2基准参数、收费数据明文；新研究结果继续标记M2 V0未训练基准而非独立M2模型ROI。工作流仅支持现有手动/push触发，没有新增用户未授权的调度门槛或发布条件。
+
+
 ## 2026-10-17 M2正式加密账本独立聚合核查结果
 - 新增无需依赖新M1扫描时效的只读核查脚本 research/m2/persisted_audit.py，提交1162e07；新增独立工作流 .github/workflows/m2-ledger-audit.yml 提交 bdb76c9，之后接线为把仅聚合结果保存 results/m2_persisted_aggregate_summary.json，提交068d2c4。不输出私有赛程、比赛ID、VIP赔率、明文订单或密钥。
 - 云端实际在UTC 2026-10-17T14:44:54.515230产生聚合报告并写回GitHub：提交 https://github.com/ljm198964-alt/quant-runner/commit/a617a3b36c22f80f7cefb7ec9b74a173a4102952；已重新从远端读取文件 results/m2_persisted_aggregate_summary.json SHA1b8766c。证实已持久化M2 V0基准锁单432笔/216场、已结82（AH41、OU41）、待结350（未开赛224、开赛后无无争议FT126），新增可核验却尚未持久化为0，重复结算0。净-19.545U、按82笔已结ROI -23.8354%。AH -2.385U/ROI -5.8171%；OU -17.160U/ROI -41.8537%。详细全赢半赢走水半输全输已在该公开聚合报告。
