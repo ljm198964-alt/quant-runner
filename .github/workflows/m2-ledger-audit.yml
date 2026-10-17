@@ -60,3 +60,5 @@ jobs:
           done
           echo "::error::Aggregate report was computed but not persisted"
           exit 1
+
+# Recompute privacy-safe aggregate against persisted independent TotalCorner FT.
