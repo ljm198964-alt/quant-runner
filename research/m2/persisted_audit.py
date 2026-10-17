@@ -33,7 +33,7 @@ def extra_diagnostics(locks, confirmed, formal, alternate, now):
             reason = "NO_STRICT_VERIFIED_FT"
         elif proof.get("conflict"):
             reason = "CONTESTED_FT"
-        elif proof.get("kickoff_changed") or proof.get("locked_kickoff") != kickoff_utc(lock["kickoff_bj"]).isoformat():
+        elif proof.get("kickoff_changed") or datetime.fromisoformat(str(proof["locked_kickoff"]).replace("Z", "+00:00")).astimezone(timezone.utc) != kickoff_utc(lock["kickoff_bj"]):
             reason = "KICKOFF_EVIDENCE_MISMATCH"
         else:
             reason = "VERIFIED_FT_AVAILABLE_NOT_PERSISTED"
