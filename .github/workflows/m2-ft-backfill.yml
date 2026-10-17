@@ -25,7 +25,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install existing data and encryption dependencies
-        run: python -m pip install cryptography requests
+        run: python -m pip install cryptography requests numpy scipy
       - name: Checkout original source and frozen M1 scan identities
         uses: actions/checkout@v4
         with:
