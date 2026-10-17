@@ -42,9 +42,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python -m research.m2.verified_ft_backfill --ledger-folder research/m2/encrypted_forward --runs source/results/runs --formal source/results/m1_formal_ledger.json --source-code-dir source
-          python -m research.m2.settle_forward --ledger-folder research/m2/encrypted_forward --verified-formal-ledger source/results/m1_formal_ledger.json
-          python -m research.m2.kickoff_status_audit --ledger-folder research/m2/encrypted_forward --formal source/results/m1_formal_ledger.json
+          python -m research.m2.verified_ft_backfill --ledger-folder research/m2/encrypted_forward --runs source/results/runs --formal source/results/m1_formal_ledger.json --source-code-dir source | tee "$RUNNER_TEMP/m2-ft-backfill.json"
+          python -m research.m2.settle_forward --ledger-folder research/m2/encrypted_forward --verified-formal-ledger source/results/m1_formal_ledger.json | tee "$RUNNER_TEMP/m2-ft-settlement.json"
+          python -m research.m2.kickoff_status_audit --ledger-folder research/m2/encrypted_forward --formal source/results/m1_formal_ledger.json | tee "$RUNNER_TEMP/m2-ft-kickoff.json"
       - name: Persist only AES-GCM proofs and settlement batches to public Runner
         shell: bash
         run: |
@@ -53,6 +53,21 @@ jobs:
             echo "::error::Previously tracked M2 encrypted ledger files changed"
             exit 1
           fi
+          python - <<'PY'
+          import json, os
+          from datetime import datetime, timezone
+          from pathlib import Path
+          temp = Path(os.environ["RUNNER_TEMP"])
+          report = {
+              "protocol": "M2_PRIVATE_FT_RECOVERY_AGGREGATE_V1",
+              "asof_utc": datetime.now(timezone.utc).isoformat(),
+              "ft": json.loads((temp / "m2-ft-backfill.json").read_text()),
+              "settlement": json.loads((temp / "m2-ft-settlement.json").read_text()),
+              "kickoff": json.loads((temp / "m2-ft-kickoff.json").read_text()),
+              "private_payload_disclosed": False,
+          }
+          (temp / "m2-ft-recovery-status.json").write_text(json.dumps(report, ensure_ascii=False, sort_keys=True))
+          PY
           batch_dir="$RUNNER_TEMP/m2-ft-persist"
           mkdir -p "$batch_dir"
           git ls-files --others --exclude-standard research/m2/encrypted_forward > "$batch_dir/paths"
@@ -74,6 +89,9 @@ jobs:
               cp -- "$batch_dir/$p" "$p"
               git add -- "$p"
             done < "$batch_dir/paths"
+            mkdir -p results
+            cp "$RUNNER_TEMP/m2-ft-recovery-status.json" results/m2_ft_recovery_status.json
+            git add results/m2_ft_recovery_status.json
             if git diff --cached --quiet; then
               echo "M2_NO_NEW_PRIVATE_EVIDENCE"
               exit 0
