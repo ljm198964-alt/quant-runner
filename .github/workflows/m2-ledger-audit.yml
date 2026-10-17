@@ -1,0 +1,37 @@
+name: M2 Encrypted Ledger Aggregate Audit
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'research/m2/persisted_audit.py'
+      - '.github/workflows/m2-ledger-audit.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Checkout latest public Runner
+        uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install existing M2 encryption dependency
+        run: python -m pip install cryptography
+      - name: Checkout existing verified FT source
+        uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/totalcorner-research-bridge
+          ref: master
+          path: source
+          persist-credentials: false
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+      - name: Audit persisted M2 aggregate (no plaintext)
+        env:
+          M2_LEDGER_SECRET: ${{ secrets.PRIVATE_REPO_TOKEN }}
+        run: |
+          python -m research.m2.persisted_audit --ledger-folder research/m2/encrypted_forward --verified-formal-ledger source/results/m1_formal_ledger.json
