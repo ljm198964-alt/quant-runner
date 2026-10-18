@@ -1,5 +1,17 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-18 M1 OU R1 皇冠报价历史事件与取数时效研究（只读）
+
+- 用户要求查明为何45分钟限制导致OU R1可用信号大幅减少；**不修改**此前确认的45分钟派单规则、Crown独占盘口来源、TG/账本/模型。
+- 已直接读取源代码 `m1_live_scan.py`、`m1_crown_market.py` 与TotalCorner官方文档 https://www.totalcorner.com/page/api ，确认 `goals.observed_at` 来自盘口movement历史事件时间，而 `market_capture_evidence.last_successful_fetch_at` 是本次抓取完成时间。45分钟规则当前约束的是前者事件年龄，并非“HTTP抓取完成后45分钟”。最新movement行的closed字段用于标记暂停，不代表真实投注端有成交回执。
+- 直接读取正式账本blob SHA `9d81b9bef461dd5b2934d037acc7502b34d2eee2`，OU R1策略身份独立且TG SENT 171单，历史按决策UTC-报价事件UTC回溯：45分钟内12单（已结9、未结3、+0.350U）；超45分钟159单（已结96、未结63、-18.945U）。**这些是45分钟补丁前的171单历史订单回溯，不能误报成补丁后的派单量**。
+- 配对2026-10-17到18共8个保存扫描的7组相邻批次，得到1,111个可配对的重复fixture扫描记录；701次（63.1%）后次仍返回相同历史事件时刻和模型所选line/price/side，且后次历史事件年龄>45分钟。701是重复配对次数，不是701场独立比赛；证明历史事件时间不随每次成功取价刷新，**不证明皇冠真实下注可成交**。
+- 三个补丁前完整扫描中OU正式候选分别49/69/40（可能跨批次重复）；以每条实际 `signal_registered_at` 的UTC时刻模拟事件45分钟限制，分别只剩2/23/22条，总计158个候选记录中47条。扫描开始时简单比较则是4/26/23：较长扫描进一步推高注册时事件年龄。
+- 潜在时序错误：`crown_scan_data(..., started)` 和 `quote_summary(..., started)` 使用扫描开始而非每场实际fetch时刻作为盘口事件上界，可能忽略扫描过程中更新的价格或暂停事件；尚无完整原始响应回放证明具体历史订单受影响。部分早期run不保存逐场fetch时间，不能臆造171单全部抓取延迟。
+- 保存的最新完整M1扫描run `M1_20261018T042941Z` 完成UTC04:46，早于45分钟代码提交 `a2c2ad445...` UTC06:17；本轮**仍未取得该补丁后的生产扫描成功、Telegram真实发送或正式账本回写证据**，不可声称上线验收完成。
+- 已在公开源仓库提交研究报告 [64b1d50](https://github.com/ljm198964-alt/totalcorner-research-bridge/commit/64b1d5086fdf91a0acbff3e66ea8e3a97afbc4f0)，路径 `research/m1_ou_r1_crown_timestamp_audit_20261018.md`。仅研究文档，未改策略源代码和测试/正式通知。
+- 后续**建议而非新规则**：在隔离只读证据中比较完整盘口响应、最后事件时间、closed状态、每场实际fetch时刻，并核对报价是否仍可用；研究使用实际fetch时刻替代batch started的历史回放，核查GitHub Actions/TG/账本。不擅自把HTTP抓取新鲜度等同Crown可成交，也不擅自重新定义用户已确认的45分钟限制。
+
 ## 2026-10-18 OU R1正式订单概率校准只读审计
 - 读取 `ljm198964-alt/totalcorner-research-bridge/results/m1_formal_ledger.json` SHA `9d81b9bef461dd5b2934d037acc7502b34d2eee2`，仅计实际TG SENT且策略标识 `M1-OU-R1|M1_SELECTION_20260924_EARLY_ROBUST` 的171条，已结105/未结66、净-18.595U、ROI-17.71%。源生产报告生成UTC2026-10-18T04:46:26；不可当作更新后的实时结算。
 - 只读按决策时刻与Crown `source_observation` 比较：已结45分钟内9条+0.350U/ROI+3.89%；超过45分钟96条-18.945U/ROI-19.73%。这是历史分组相关性，并非证明新45分钟规则未来盈利，亦不证明历史报价实际不可成交。
