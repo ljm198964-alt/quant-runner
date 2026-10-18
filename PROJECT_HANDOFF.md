@@ -1,5 +1,11 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-18 M1 OU R1 Crown报价45分钟时效约束（用户确认）
+- 用户明确要求先将M1 OU R1皇冠报价限制为45分钟内，不扩展到M1 AH或其他模型。源仓库 `ljm198964-alt/totalcorner-research-bridge` 的 `m1_live_scan.py` 已提交 [a2c2ad4](https://github.com/ljm198964-alt/totalcorner-research-bridge/commit/a2c2ad44529476d00852970fe2f32e13bf419e94)：只对准备正式注册的OU R1信号，以实际注册前当前UTC时间减去已解析的Crown历史报价 `observed_at`，仅0–2700秒允许进入正式候选/Telegram链；缺失、未来或超过45分钟的报价保持为watchlist诊断 `R1_CROWN_QUOTE_OUTSIDE_45_MINUTES`，不产生正式单。AH、MR1、M2、旧账、已有结算均未修改；不新增其他规则。
+- 源文件已在远端main重新读取确认修改存在。此项仅证明代码提交及远端内容，尚未取得下一次正式M1运行和TG链路验收结果；不能声称已有实时派单按新限制成功完成。Crown历史事件时间不必然等于最后可成交时刻，后续仍可研究准确报价含义，不擅自改变现已确认的45分钟限制。
+- 本次变更原因：此前正式R1中10月15日23单和10月16日58单，共80单对应Crown `source_observation` 较决策早于45分钟；这属于时效风险线索，不可断言是亏损的唯一因果原因。
+
+
 ## 2026-10-17 M2独立严格FT回填已实战运行并持久化结算196条
 - 本轮接续M2结算，发现最新既有受保护聚合在UTC2026-10-17 16:00-16:08为432基准锁单/216场、82已结（AH41/OU41）、166已开赛缺FT、184未开赛、净-19.545U、ROI-23.84%；只读新诊断证实166条中112无M1正式Pick、54有Pick但**全部166条均无M1正式FT结果修订**，单靠M1正式订单赛果无法覆盖独立M2前瞻。
 - 代码已于公开Runner提交：research/m2/verified_ft_backfill.py 676707ba，复用既有TOTALCORNER_TOKEN及M1 validate_final的比赛ID、球队、联赛、开球/完赛验证，仅把独立核验证据存到AES-GCM加密文件、不公开原始FT身份；research/m2/settle_forward.py feb680c合并私有加密FT和M1 FT结算、不覆盖老账；research/m2/persisted_audit.py f281670同步聚合；新增 FT 回填工作流 .github/workflows/m2-ft-backfill.yml c093557，依赖6a2fc61、隐私安全运行回执增强ccf30ca。盘口仍严格Crown，未新增任何策略筛选、门槛、TG发送。
