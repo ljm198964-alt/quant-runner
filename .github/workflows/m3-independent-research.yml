@@ -45,5 +45,24 @@ jobs:
           source /tmp/m3-penaltyblog-venv/bin/activate
           pip install penaltyblog
           python -c 'import penaltyblog; print("penaltyblog import ok")'
+      - name: Save original V4 research outputs and source revision
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p m3-run-metadata
+          git -C upstream/football-predictor rev-parse HEAD > m3-run-metadata/football-predictor-commit.txt
+          git rev-parse HEAD > m3-run-metadata/quant-runner-commit.txt
+          date -u +%Y-%m-%dT%H:%M:%SZ > m3-run-metadata/recorded-utc.txt
+      - name: Preserve original V4 reports for future version comparisons
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: m3-upstream-v4-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            upstream/football-predictor/reports/walk_forward_metrics.csv
+            upstream/football-predictor/reports/walk_forward_predictions.csv
+            upstream/football-predictor/reports/v4_subgroup_metrics.csv
+            m3-run-metadata/
+          if-no-files-found: warn
       - name: M3 isolation statement
         run: echo 'Upstream OU V4 and penaltyblog install only; no M1/M2/MR1 ledgers, no Crown price substitution, no AH model trained, no TG sent.'
