@@ -1,5 +1,13 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-20 用户确认新M3独立AH+OU研究，禁止连接M1
+- 用户纠正此前讨论的OU开源模型接M1计划：**不要接M1，独立建立M3，覆盖AH与OU**。因此没有修改M1、M2、MR1的生产运行、现有正式/影子账本、策略或TG。
+- 已在公开`quant-runner`独立建立`research/m3/`。README（commit `2cc59ccad26a86cdef053c41756b3cf9770a0813`）明确M3身份、自己的数据和结果目录，以及Crown是交易盘口唯一来源，不读M1/M2/MR1原数据或订单。
+- 研究能力提交`research/m3/probabilities.py`（`630665c70f1726fc65245d496999e873dbb1eec4`）：读取M3独立输入的主客进球强度及AH/OU双边盘线水位，输出两市场五状态概率与亚洲盘每单位预期收益。这里的强度是外部传入，**尚未训练penaltyblog或LightGBM模型，不能称M3有实际成绩**。程序默认不读取Crown、其他模型账本，也没有TG。
+- 新增测试`research/m3/test_probabilities.py`（`0f8e7968fa67e72ce126efde7cf1c98ccf2fdb9c`，更正`567c0f50c31666fe6b3f830fe0ee03b17d2f6ff3`）；未取得GitHub CI成功执行证据，**不能宣称测试已通过**。未增加任何交易Gate、最低样本数、发布条件、数量限制或自动运行规则。
+- 已验证候选开源`martineastwood/penaltyblog` MIT许可证、pyproject 1.13.1及建模能力；`pkotengpoku/football-predictor` README对LightGBM与大2.5时间前推流程的描述、requirements。尚未将开源训练算法实际安装运行在M3上、未取得M3专用独立历史数据与可复现样本外结果。下一步独立引入/运行两者，与Crown行情及严格FT证据接线时不得复用M1账本，模型不混身份。
+
+
 ## 2026-10-19 TotalCorner免费大2.5研究正式启动（只读，无TG）
 - 用户提供 https://www.totalcorner.com/zh-tw/prediction/football-predictions-over-25-goals 并要求开始研究。已经实际访问主页及第二页；公开网页包含“Over 2.5”提示、部分FT赛果与Win/Loss、并显示经常与2.5不同的大小球市场线（例如3.25/3.5/4.0），页脚注明只显示最近15天。
 - 已在公开Runner提交手动只读抓取脚本`research/totalcorner_free_over25_capture.py`（commit `f12619d579f7c31f4a0b3720a4d31d8ff7b9eb1e`），抓取来源页面表格原行并保留UTC抓取时间、HTML SHA256、赛后状态；未自动定时、未发TG、未改M1 OU暂停或M1/MR1策略。**脚本仅已提交，尚无云端执行/持久化首份实际抓取记录验收**。
