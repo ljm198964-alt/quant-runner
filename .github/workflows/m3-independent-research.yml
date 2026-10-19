@@ -21,6 +21,18 @@ jobs:
           repository: pkotengpoku/football-predictor
           path: upstream/football-predictor
           persist-credentials: false
+      - name: Fix upstream requirements trailing escaped newline in checkout only
+        working-directory: upstream/football-predictor
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path("requirements.txt")
+          old = p.read_text()
+          if old.endswith(chr(92) + "n"):
+              p.write_text(old[:-2] + chr(10))
+              print("M3_UPSTREAM_REQUIREMENTS_EOF_FORMAT_REPAIRED")
+          PY
       - name: Run V4 per original README
         working-directory: upstream/football-predictor
         shell: bash
