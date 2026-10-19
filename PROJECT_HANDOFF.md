@@ -1,5 +1,12 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-20 M3独立训练执行接线：AH+OU LightGBM历史基准
+- 用户要求直接开始M3独立数据与真实模型训练。M3与M1/M2/MR1身份隔离，不读取其扫描、模型、订单或结果账本；M1 OU仍暂停。
+- 已在公开Runner增加`research/m3/public_ft_baseline.py` commit `f389f5ec8d40707097f65bf434478c5ed3dfffc6`：从M3单独提供的Football-Data.co.uk历史完整比赛CSV生成按日期先预测后更新的主客队10场历史进球/失球特征，LightGBM独立估计主客进球；计算大2.5预测log loss及AH主胜诊断log loss。**AH主胜仅是诊断，非让球盘概率或Crown AH收益；OU大2.5也非Crown盘口ROI**。没有添加交易门槛。
+- 新建`.github/workflows/m3-independent-research.yml` commit `e7cbdeba26bbcb414f2a98e4182fed2dd49fda82`：公开Runner手动及工作流文件首次push触发，下载2022-2026欧洲五大联赛公开历史赛果CSV，运行M3训练/时间切分、结果仅在Actions summary输出。无定时调度、无正式TG、无Crown替代、无私有盘口泄露、无写其他模型账本。
+- 当前执行环境已确认LightGBM 4.6.0、pandas及scikit-learn可用；对同一算法流程使用合成500场5年数据做过本地smoke（训练400/测试100，OU logloss 0.6811、AH主胜诊断0.7106），**合成结果绝对不是实战、历史模型ROI或模型优势证据**。本地直接拉公开CSV因DNS失败。未取得云端工作流实际运行完成回执、真实训练指标或penaltyblog已安装运行证明；不得宣称M3正式模型训练已经在真实数据上成功。下阶段以实际Actions日志确认下载/训练结果，再接入penaltyblog和独立赛前Crown AH/OU盘口五状态验证；对M3用户未确认的策略/数量/Gate不生效。
+
+
 ## 2026-10-20 用户确认新M3独立AH+OU研究，禁止连接M1
 - 用户纠正此前讨论的OU开源模型接M1计划：**不要接M1，独立建立M3，覆盖AH与OU**。因此没有修改M1、M2、MR1的生产运行、现有正式/影子账本、策略或TG。
 - 已在公开`quant-runner`独立建立`research/m3/`。README（commit `2cc59ccad26a86cdef053c41756b3cf9770a0813`）明确M3身份、自己的数据和结果目录，以及Crown是交易盘口唯一来源，不读M1/M2/MR1原数据或订单。
