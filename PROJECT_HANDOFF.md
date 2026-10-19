@@ -1,5 +1,14 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-19 用户授权MR1 AH从影子转回正式TG，独立自然周账
+- 最新用户指令：保持MR1 AH V6当前战法不变，停止新增影子派单，恢复MR1 AH直接Telegram正式派单；像M1一样建立详细记录与北京时间周一至周日周账。MR1 AI没有被授权恢复TG。
+- 仅在公开仓库 `quant-runner` 修改 `.github/workflows/mr1-free-runtime.yml`，commit `4073bb5e5555b8939d9f64abce4b609bbf6f8304` 与 `297733120925ce9094db81b24bb2f924d44ca4bd`：调用MR1现有 `notifyV6AhFormal({shadowOnly:false})` 和现有MR1 TG secrets。将正式流程临时读取的 `activated_at` 设置为恢复UTC2026-10-19T09:17:21.033Z，仅处理此后生成的前瞻记录，调用结束恢复原始state文件，避免把旧影子候选补发；既有模型/EV/盘口/赛事/CLV等规则未调整。移除新增影子冻结步骤，但继续历史影子结算和正式历史结算，仍依赖既有 `mr1-shadow` 生产代码和源账本checkout，**没有迁移私有历史生产状态**。
+- 公开Runner新建 `research/mr1_weekly_account.py` commit `c6f48462302781ccc8176634a01f39c78a316011`，只读MR1 AH独立 `formal/sent.jsonl` TG回执和 `formal/settled.json`；按Asia/Shanghai周一00:00归属首次TG SENT，展示已发/已结/待结/五状态/净U/已结ROI，另展示全历史，并对重复sent ID或无SENT的结算拒绝统计；影子及MR1 AI严格排除。
+- 公开Runner新建 `.github/workflows/mr1-ah-weekly-account.yml` commit `668e7c0792dee6189ffccf01c91284ac53fb2eaf`，周一北京时间08:25定时和手动运行，读取源仓库master并在Actions summary输出上周与全历史；不修改TG/ledger。
+- **目前仅证实代码已提交，尚未取得恢复后云端Actions成功、MR1 Telegram新SENT回执、正式账本持久写回或每周工作流首次执行通过的证据。不得称生产恢复验收完成**。恢复时点、已存在影子订单隔离必须在首次运行日志中验证。MR1 TG凭据若不在公开Runner存在，工作流将以明确缺凭据失败而非悄然宣称发单成功。下一步核对运行id、日志、实际Telegram发送、结算及周报生成。
+- 暂停前现存MR1 AH正式账本125条，最新正式结算 `formal/performance.json` 2026-10-19T09:15:32.125Z：124已结、1未结、-7.815U、ROI-6.30%；影子独立绩效截至09:05Z锁226/结210/待16/+1.920U/ROI+0.91%；**不得把过去影子盈利写成正式TG ROI**。
+
+
 ## 2026-10-19 MR1停止新增正式单根因复核（只读）
 - 公开 `.github/workflows/mr1-free-runtime.yml` 当前明确在 V6 AH 步骤使用 `node src/v6-ah-formal-notify.js --shadow`；既有MR1源代码 `src/v6-ah-formal-notify.js` 直接CLI亦固定 `shadowOnly:true`。因此MR1 AH最新TG正式发送停止增长是生产派单暂停设计，不可直接归因为模型无信号或GitHub全链故障；未授权恢复正式TG。
 - 已从 MR1 远端实际读取 `data/mr1-v6-cross-market/formal/sent.jsonl`，125条、最后TG发送UTC 2026-10-12T06:17:49.535Z；AI `data/mr1-v7-ai-picks/telegram-ah-sent.jsonl` 共201条、最后发送UTC 2026-10-08T02:21:04.912Z。
