@@ -1,5 +1,11 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-20 M3 启动持续训练与版本记录（不自动替换）
+- 用户要求先开始M3持续学习工作。遵照最近用户确认，只按原开源README执行OU V4训练与时间前推回测；penaltyblog仍仅按README安装，未自行定义AH模型训练行为。无新增EV/信心/时间/样本交易Gate，未开启TG，M3不接M1/M2/MR1数据及订单。
+- 公开Runner M3工作流 `.github/workflows/m3-independent-research.yml` 新提交 `c2ed9d5651bf25a13c1caf60b74ef26191f0a1f5`：不改变原版`download → features → backtest`命令，追加保存上游原报告`walk_forward_metrics.csv`、`walk_forward_predictions.csv`、`v4_subgroup_metrics.csv`和上游代码、Runner代码SHA及运行UTC至GitHub Actions artifact。为后续重复训练及版本差异对照保存证据。没有自动替换模型或自动发布。
+- 当前提交将触发已有workflow的push触发条件，但尚未取得对应Actions运行、模型训练成功日志或真实回测指标。**只能认定记录能力代码已部署；不能声称模型已经自行学习升级**。执行环境无法直接联网克隆公开仓库（DNS解析失败），此次未在本机运行原版训练。下一轮需核对运行回执、artifact及upstream报告，再讨论AH原版建模与持续刷新机制。
+
+
 ## 2026-10-20 用户要求严格照开源原项目说明执行M3
 - 用户明确纠正：不要自行增加规则，先严格按照开源项目原说明做。已重新直接读取`pkotengpoku/football-predictor` README/requirements与`martineastwood/penaltyblog` README/pyproject。原Football Predictor V4专为Over/Under 2.5设计，README流程为`pip install -r requirements.txt`、`python run.py download`、`python run.py features`、`python run.py backtest`，输出`reports/walk_forward_metrics.csv`；并没有正式AH让球模型。penaltyblog原README安装命令为`pip install penaltyblog`，可用于以后AH研究，但不是这次已训练的AH。
 - 已把之前自编数据/自编LightGBM的M3工作流改为先checkout **原版**Football Predictor V4并原样执行其下载、特征、回测命令，再按penaltyblog原README安装/import。公开Runner commit `9c6853a2415a91bc741c89d82857a3b6c4b2ab47`，路径`.github/workflows/m3-independent-research.yml`。不调用自编的`public_ft_baseline.py`，此旧文件保留供审计，不视为当前原版模型。
