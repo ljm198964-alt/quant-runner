@@ -1,5 +1,12 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-19 TotalCorner免费大2.5研究正式启动（只读，无TG）
+- 用户提供 https://www.totalcorner.com/zh-tw/prediction/football-predictions-over-25-goals 并要求开始研究。已经实际访问主页及第二页；公开网页包含“Over 2.5”提示、部分FT赛果与Win/Loss、并显示经常与2.5不同的大小球市场线（例如3.25/3.5/4.0），页脚注明只显示最近15天。
+- 已在公开Runner提交手动只读抓取脚本`research/totalcorner_free_over25_capture.py`（commit `f12619d579f7c31f4a0b3720a4d31d8ff7b9eb1e`），抓取来源页面表格原行并保留UTC抓取时间、HTML SHA256、赛后状态；未自动定时、未发TG、未改M1 OU暂停或M1/MR1策略。**脚本仅已提交，尚无云端执行/持久化首份实际抓取记录验收**。
+- 初始只读来源及交易一致性报告`research/totalcorner_free_over25_initial_audit_20261019.md`（commit `68957c4cd4f6be2811f541c557ef8d13ff39064b`）。网页提供的免费2.5命中率不可当作Crown同期盘口（例如3.5或4.0）ROI；事后可见页面不能证明推荐在赛前已发布。尚未逐场配对皇冠实时报价和严格FT，**没有可确认的Crown回测ROI结论**。
+- 下一步实际运行抓取器并保存只读推荐快照、精确比赛ID映射到既有Crown档案，审计赛前证据后进行五状态OU结算与M1 OU R1对照。建议方向不自动生效为正式模型/筛选Gate。
+
+
 ## 2026-10-19 M1 OU R1 停发后用户报告仍收到TG的再次排查
 - 用户报告暂停之后仍收到M1 OU R1消息；必须以实际Telegram消息回执为准，不能反过来用总账不增长否认收到。
 - 读取源仓库最新M1 report（UTC2026-10-19T10:35:57），OU TG confirmed仍为253、AH为232，`formal_markets_paused=["OU"]`；完整扫描 `M1_20261019T103010Z` new_signal_count=0，watchlist中3条`FORMAL_MARKET_PAUSED`。现有主M1源代码注册、prepare及dispatch三级均拦截OU；**不能仅据此确认实际TG消息来源或另一路Runner情况**。
