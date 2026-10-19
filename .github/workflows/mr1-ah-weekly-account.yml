@@ -1,0 +1,45 @@
+name: MR1 AH Weekly Accounting
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '25 0 * * 1'
+permissions:
+  contents: read
+jobs:
+  weekly:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Read MR1 formal records
+        uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/mr1-shadow
+          ref: master
+          path: source
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          persist-credentials: false
+      - name: Calculate previous Beijing calendar week and all-time MR1 AH
+        shell: bash
+        run: |
+          WEEK=$(TZ=Asia/Shanghai python -c 'from datetime import datetime,timedelta;from zoneinfo import ZoneInfo;d=datetime.now(ZoneInfo("Asia/Shanghai")).date();print((d-timedelta(days=d.weekday()+7 if d.weekday()==0 else d.weekday())).isoformat())')
+          python research/mr1_weekly_account.py --source source --week-start "$WEEK" | tee "$RUNNER_TEMP/mr1-ah-weekly.json"
+          python - <<'PY'
+          import json,os
+          from decimal import Decimal
+          from pathlib import Path
+          d=json.loads(Path(os.environ["RUNNER_TEMP"],"mr1-ah-weekly.json").read_text())
+          with open(os.environ["GITHUB_STEP_SUMMARY"],"a") as f:
+              f.write("# MR1 AH formal Telegram weekly accounting\n\n")
+              f.write(f"Beijing week beginning {d['week_start']} (first TG SENT).\n\n")
+              f.write("| Scope | Sent | Settled | Pending | Full Win | Half Win | Push | Half Loss | Full Loss | PnL U | ROI |\n")
+              f.write("|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|\n")
+              for k in ("requested_week","all_time"):
+                  x=d[k];st=x["states"]
+                  roi=f'{Decimal(x["roi"])*100:.2f}%' if x["roi"] is not None else "—"
+                  f.write(f'| {k} | {x["sent"]} | {x["settled"]} | {x["pending"]} | {st["FULL_WIN"]} | {st["HALF_WIN"]} | {st["PUSH"]} | {st["HALF_LOSS"]} | {st["FULL_LOSS"]} | {x["net_u"]} | {roi} |\n')
+              f.write("\nTG-confirmed MR1 AH only; shadow and MR1 AI excluded.\n")
+          PY
