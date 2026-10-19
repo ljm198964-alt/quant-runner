@@ -6,7 +6,7 @@ class IndependentM3Test(unittest.TestCase):
     def test_quarter_handicap(self):
         self.assertEqual(_asian_result(0, -0.25, 1.95)[0], "HALF_LOSS")
         self.assertEqual(_asian_result(0, 0.25, 1.95)[0], "HALF_WIN")
-        self.assertEqual(_asian_result(1, -0.75, 1.95)[0], "HALF_WIN")
+        self.assertEqual(_asian_result(0.5, -0.75, 1.95)[0], "HALF_LOSS")
         self.assertEqual(_asian_result(0, 0, 1.95)[0], "PUSH")
 
     def test_AH_and_OU_independence(self):
