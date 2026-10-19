@@ -1,5 +1,13 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-19 MR1 AH 正式历史清零与影子研究（用户明确要求）
+- 用户要求清空旧MR1 AH正式历史统计，保留影子全部历史，并继续此前提出的连赢/回撤、EV、报价/联赛研究。原先M1及MR1 AI不变。
+- 已在`ljm198964-alt/mr1-shadow` master把MR1 AH正式活跃账`data/mr1-v6-cross-market/formal/sent.jsonl`清为空、`settled.json`清为空entries、`performance.json`归零；对应提交`e751271fb2c429d655b8fd6a79c5857145237cb8`、`5322535120dce0cddfec05fc9142d5358afa6775`、`647b956461ae52ca4ff07a5872eb1ead26dd4f54`。旧正式125个TG发送记录/124条结算不会撤销Telegram消息；Git提交历史仍可追溯，**不得把账本清零当作Telegram原消息已删除**。新正式数据待下一次云端成功派送和持久写回验收。
+- 完全未修改`data/mr1-v6-cross-market/shadow/`中任一历史信号或结算记录。影子最近226锁/210结/16待、+1.920U/ROI+0.91%，源实际为2026-10-19 09:05 UTC左右。
+- 已读取影子逐单结算并发布只读研究报告 `research/mr1_ah_shadow_streak_drawdown_20261019.md`（公开Runner commit `a8cd95a6d5fe82e8b5bdd72b4d824b2156a1b5f7`）。结算时间最长13连续正收益(10全赢3半赢)+11.15U，11连赢+8.99U，最长7连全赢+6.58U；最大回撤14.61U覆盖76个连续结算条目（不是76连输），EV分箱及HOME/AWAY事后描述在研究报告。所有210条的`crown_quote_observed_at`缺可解析价格事件时刻，不能虚构报价新鲜度的因果归因。
+- 不改MR1 V6策略、Crown、模型EV、CLV和联赛条件；事后分箱不得变成新Gate。已提交的恢复TG工作流继续作用于恢复UTC2026-10-19T09:17:21.033Z后新形成的预测，防旧影子重发。尚未核实此后新TG实际派送成功，不宣称完全生产验收。
+
+
 ## 2026-10-19 用户授权MR1 AH从影子转回正式TG，独立自然周账
 - 最新用户指令：保持MR1 AH V6当前战法不变，停止新增影子派单，恢复MR1 AH直接Telegram正式派单；像M1一样建立详细记录与北京时间周一至周日周账。MR1 AI没有被授权恢复TG。
 - 仅在公开仓库 `quant-runner` 修改 `.github/workflows/mr1-free-runtime.yml`，commit `4073bb5e5555b8939d9f64abce4b609bbf6f8304` 与 `297733120925ce9094db81b24bb2f924d44ca4bd`：调用MR1现有 `notifyV6AhFormal({shadowOnly:false})` 和现有MR1 TG secrets。将正式流程临时读取的 `activated_at` 设置为恢复UTC2026-10-19T09:17:21.033Z，仅处理此后生成的前瞻记录，调用结束恢复原始state文件，避免把旧影子候选补发；既有模型/EV/盘口/赛事/CLV等规则未调整。移除新增影子冻结步骤，但继续历史影子结算和正式历史结算，仍依赖既有 `mr1-shadow` 生产代码和源账本checkout，**没有迁移私有历史生产状态**。
