@@ -1,5 +1,12 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-19 MR1停止新增正式单根因复核（只读）
+- 公开 `.github/workflows/mr1-free-runtime.yml` 当前明确在 V6 AH 步骤使用 `node src/v6-ah-formal-notify.js --shadow`；既有MR1源代码 `src/v6-ah-formal-notify.js` 直接CLI亦固定 `shadowOnly:true`。因此MR1 AH最新TG正式发送停止增长是生产派单暂停设计，不可直接归因为模型无信号或GitHub全链故障；未授权恢复正式TG。
+- 已从 MR1 远端实际读取 `data/mr1-v6-cross-market/formal/sent.jsonl`，125条、最后TG发送UTC 2026-10-12T06:17:49.535Z；AI `data/mr1-v7-ai-picks/telegram-ah-sent.jsonl` 共201条、最后发送UTC 2026-10-08T02:21:04.912Z。
+- MR1实时影子通知状态 `data/mr1-v6-cross-market/shadow/notify-status.json` 最新生成UTC 2026-10-19T09:05:32.908Z，eligible 23、shadow_existing 23、shadow_recorded 0、TG write false、sent 0；说明本批23条已有影子记录，不是23条新正式单。未取得完整GitHub Actions成功结论与独立结算统计，不能声称整条链所有步骤成功或有ROI。
+- AI Runner工作流仅workflow_dispatch触发真正源运行；push只做no-TG诊断，缺TotalCorner网站会话时可能无法采集；无当前AI源成功与订单更新证明。保留MR1两路独立身份，未修改策略、Gate、TG或账本。
+
+
 ## 2026-10-19 用户确认暂停M1 OU正式派单，保留AH
 - 用户明确命令停止发送OU，继续发送AH。范围为M1正式OU（包括R1及旧OU），M1 AH维持正常正式派送；没有授权修改MR1/M2或其他独立模型策略。
 - 已在既有生产源仓库 `ljm198964-alt/totalcorner-research-bridge` master提交 `faabfb6c196a7b5387bf5d6613c350b670835e2b`，`m1_formal_runtime.py` 的 `PAUSED_FORMAL_MARKETS = ("OU",)`，阻止新的M1 OU正式锁单，AH不变；后续结算和历史订单保留。
