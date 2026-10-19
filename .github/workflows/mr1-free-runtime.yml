@@ -90,10 +90,6 @@ jobs:
         if: always()
         run: node --test test-v6-ah-shadow.js
 
-      - name: Freeze MR1 V6 AH shadow signals using original formal rules
-        if: always()
-        run: node src/v6-ah-formal-notify.js --shadow
-
       - name: Settle independent MR1 V6 AH shadow signals
         if: always()
         run: node src/v6-ah-shadow-settlement.js
