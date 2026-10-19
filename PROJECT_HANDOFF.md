@@ -1,5 +1,12 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-19 用户确认暂停M1 OU正式派单，保留AH
+- 用户明确命令停止发送OU，继续发送AH。范围为M1正式OU（包括R1及旧OU），M1 AH维持正常正式派送；没有授权修改MR1/M2或其他独立模型策略。
+- 已在既有生产源仓库 `ljm198964-alt/totalcorner-research-bridge` master提交 `faabfb6c196a7b5387bf5d6613c350b670835e2b`，`m1_formal_runtime.py` 的 `PAUSED_FORMAL_MARKETS = ("OU",)`，阻止新的M1 OU正式锁单，AH不变；后续结算和历史订单保留。
+- 提交 `0a1a2d45440320854e813aa1f42ec050f495d8cc` 修改 `m1_notification.py`，阻止已存量尚未正式派送的OU pending/not-configured及派单过程中in-flight通知进入Telegram发送；同时现有通知scope抑制逻辑处理OU等待状态；没有删除已发送订单或历史结算。
+- 真实状态：代码已提交。**尚无新M1 GitHub Actions成功扫描及OU未发、AH正常新发送的生产回执**，不能宣称TG链路已经完成运行验收。下一次自然执行核对新源码版本、report formal_markets_paused、telegram SENT及AH派送；不盲目触发重复派送或变更未经授权的门槛。
+
+
 ## 2026-10-18 M1 OU R1 皇冠报价历史事件与取数时效研究（只读）
 
 - 用户要求查明为何45分钟限制导致OU R1可用信号大幅减少；**不修改**此前确认的45分钟派单规则、Crown独占盘口来源、TG/账本/模型。
