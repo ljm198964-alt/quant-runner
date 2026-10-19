@@ -1,5 +1,12 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-19 M1 OU R1 停发后用户报告仍收到TG的再次排查
+- 用户报告暂停之后仍收到M1 OU R1消息；必须以实际Telegram消息回执为准，不能反过来用总账不增长否认收到。
+- 读取源仓库最新M1 report（UTC2026-10-19T10:35:57），OU TG confirmed仍为253、AH为232，`formal_markets_paused=["OU"]`；完整扫描 `M1_20261019T103010Z` new_signal_count=0，watchlist中3条`FORMAL_MARKET_PAUSED`。现有主M1源代码注册、prepare及dispatch三级均拦截OU；**不能仅据此确认实际TG消息来源或另一路Runner情况**。
+- 加固`m1_notification.telegram_send`的最后传输入口，OU停发时拒绝文本为“全场大小球/全场大小盘”的M1正式消息，不改变AH发送；源码提交 `a9ca341136ed04b303aafe6670e9fc598e18146c` 已在公开源仓库。加固仅覆盖调用此函数的代码；未证明所有独立Telegram bot/进程共享该入口。
+- **尚未取得用户所述具体OU消息ID、发送bot身份或对应Actions日志，根因未实锤。** 还需核对不同GitHub入口及Telegram发送回执；本轮仅代码已提交，尚无新运行和TG验收，不能称已彻底修复。
+
+
 ## 2026-10-19 MR1 AH 正式历史清零与影子研究（用户明确要求）
 - 用户要求清空旧MR1 AH正式历史统计，保留影子全部历史，并继续此前提出的连赢/回撤、EV、报价/联赛研究。原先M1及MR1 AI不变。
 - 已在`ljm198964-alt/mr1-shadow` master把MR1 AH正式活跃账`data/mr1-v6-cross-market/formal/sent.jsonl`清为空、`settled.json`清为空entries、`performance.json`归零；对应提交`e751271fb2c429d655b8fd6a79c5857145237cb8`、`5322535120dce0cddfec05fc9142d5358afa6775`、`647b956461ae52ca4ff07a5872eb1ead26dd4f54`。旧正式125个TG发送记录/124条结算不会撤销Telegram消息；Git提交历史仍可追溯，**不得把账本清零当作Telegram原消息已删除**。新正式数据待下一次云端成功派送和持久写回验收。
