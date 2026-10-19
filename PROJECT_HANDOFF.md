@@ -1,5 +1,12 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-20 用户要求严格照开源原项目说明执行M3
+- 用户明确纠正：不要自行增加规则，先严格按照开源项目原说明做。已重新直接读取`pkotengpoku/football-predictor` README/requirements与`martineastwood/penaltyblog` README/pyproject。原Football Predictor V4专为Over/Under 2.5设计，README流程为`pip install -r requirements.txt`、`python run.py download`、`python run.py features`、`python run.py backtest`，输出`reports/walk_forward_metrics.csv`；并没有正式AH让球模型。penaltyblog原README安装命令为`pip install penaltyblog`，可用于以后AH研究，但不是这次已训练的AH。
+- 已把之前自编数据/自编LightGBM的M3工作流改为先checkout **原版**Football Predictor V4并原样执行其下载、特征、回测命令，再按penaltyblog原README安装/import。公开Runner commit `9c6853a2415a91bc741c89d82857a3b6c4b2ab47`，路径`.github/workflows/m3-independent-research.yml`。不调用自编的`public_ft_baseline.py`，此旧文件保留供审计，不视为当前原版模型。
+- 工作流仅研究、无需M1/M2/MR1输入、无Crown盘口替代、无TG；本轮仅**提交了修改**，还没有实际取得GitHub Actions成功运行及真实预测指标。不得虚构开源模型训练已成功；AH在penaltyblog仅安装阶段，尚未依据官方教程实际训练。
+- 未来M3模型规则、训练细节先依赖上游项目实际说明，不擅加阈值、时间范围、策略Gate或假设。M3 AH/OU并行研究身份不变，后续按penaltyblog官方例子实现AH时也必须保持独立。
+
+
 ## 2026-10-20 M3独立训练执行接线：AH+OU LightGBM历史基准
 - 用户要求直接开始M3独立数据与真实模型训练。M3与M1/M2/MR1身份隔离，不读取其扫描、模型、订单或结果账本；M1 OU仍暂停。
 - 已在公开Runner增加`research/m3/public_ft_baseline.py` commit `f389f5ec8d40707097f65bf434478c5ed3dfffc6`：从M3单独提供的Football-Data.co.uk历史完整比赛CSV生成按日期先预测后更新的主客队10场历史进球/失球特征，LightGBM独立估计主客进球；计算大2.5预测log loss及AH主胜诊断log loss。**AH主胜仅是诊断，非让球盘概率或Crown AH收益；OU大2.5也非Crown盘口ROI**。没有添加交易门槛。
