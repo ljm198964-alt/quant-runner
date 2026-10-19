@@ -1,4 +1,4 @@
-name: M3 Independent AH OU Research
+name: M3 Upstream Open-Source Research
 on:
   workflow_dispatch:
   push:
@@ -7,40 +7,43 @@ on:
 permissions:
   contents: read
 jobs:
-  research:
+  upstream:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Install independent open research dependencies
-        run: python -m pip install 'numpy>=1.26' 'pandas>=2.2' 'scikit-learn>=1.5' 'lightgbm>=4.5' 'requests>=2.32'
-      - name: Download independent public completed matches
+      - name: Checkout original Football Predictor V4
+        uses: actions/checkout@v4
+        with:
+          repository: pkotengpoku/football-predictor
+          path: upstream/football-predictor
+          persist-credentials: false
+      - name: Run V4 per original README
+        working-directory: upstream/football-predictor
         shell: bash
         run: |
-          python - <<'PY'
-          import requests,pathlib
-          root=pathlib.Path('/tmp/m3-independent-matches');root.mkdir(exist_ok=True)
-          count=0
-          for season in ('2223','2324','2425','2526'):
-              for league in ('E0','D1','I1','SP1','F1'):
-                  url=f'https://www.football-data.co.uk/mmz4281/{season}/{league}.csv'
-                  try:
-                      r=requests.get(url,timeout=20)
-                      r.raise_for_status()
-                      if b'FTHG' not in r.content or b'FTAG' not in r.content:continue
-                      (root/f'{league}_{season}.csv').write_bytes(r.content)
-                      count+=1
-                  except requests.RequestException as e:
-                      print(f'M3_DATA_DOWNLOAD_UNAVAILABLE league={league} season={season} error={type(e).__name__}')
-          print(f'M3_INDEPENDENT_PUBLIC_CSV_COUNT={count}')
-          if not count:raise SystemExit('No independent source datasets')
-          PY
-      - name: Train M3 AH diagnostic and OU 2.5 benchmark
+          python -m venv .venv
+          source .venv/bin/activate
+          pip install -r requirements.txt
+          python run.py download
+          python run.py features
+          python run.py backtest
+          echo '## Original Football Predictor V4 walk-forward metrics' >> "$GITHUB_STEP_SUMMARY"
+          if [ -f reports/walk_forward_metrics.csv ]; then
+            cat reports/walk_forward_metrics.csv >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo 'Upstream reports/walk_forward_metrics.csv not produced' >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
+      - name: Install penaltyblog per original README
+        shell: bash
         run: |
-          python -m research.m3.public_ft_baseline --data-dir /tmp/m3-independent-matches --output /tmp/m3-results.json
-          cat /tmp/m3-results.json >> "$GITHUB_STEP_SUMMARY"
-      - name: Keep evaluation research-only
-        run: echo 'No Crown replacement, no trades, no Telegram, no other-model ledgers.'
+          python -m venv /tmp/m3-penaltyblog-venv
+          source /tmp/m3-penaltyblog-venv/bin/activate
+          pip install penaltyblog
+          python -c 'import penaltyblog; print("penaltyblog import ok")'
+      - name: M3 isolation statement
+        run: echo 'Upstream OU V4 and penaltyblog install only; no M1/M2/MR1 ledgers, no Crown price substitution, no AH model trained, no TG sent.'
