@@ -39,6 +39,8 @@ AH0 的胜/和/负与 DNB win/push/lose 三状态分数一致，但不是任意 
 
 最新 `latest_oos_stability.json` 的 `probability_bias` 从相同逐场 OOS 行计算 `(平均预测概率−实际发生率)`，按模型、赛季、联赛和联赛×赛季拆分；AH0 分别报告 win/push/lose，OU 仅固定 O2.5。它是边际频率误差描述，不是概率分箱检验、显著性检验或策略筛选；没有拟合修正器，也没有改预测。
 
+该扩展由 GitHub Actions [39420905826](https://github.com/ljm198964-alt/quant-runner/actions/runs/39420905826) 于 2026-10-20 12:15:36–12:16:20 UTC 实际运行，33/33 测试通过。输入 fingerprint 保持 `93e0b8b91722f9c967e608ad63ae88d4c8d8b4c466de92948673404697c8e`，source OOS report UTC 仍为 `2026-10-20T11:38:35.164608+00:00`；没有训练，只刷新误差拆分 JSON。Actions 结果由 commit `a28d0b0411d79f09709b2a0e58fe3104b98df053` 持久化。
+
 | O2.5 子样本 | n | Poisson 偏差 | Dixon-Coles 偏差 | Bivariate Poisson 偏差 |
 |---|---:|---:|---:|---:|
 | 全部 OOS | 11,254 | -2.09 pp | -2.09 pp | -2.40 pp |
