@@ -2966,3 +2966,10 @@
 - PR #58 的 OpenFootball shadow Actions [39438094506](https://github.com/ljm198964-alt/quant-runner/actions/runs/39438094506) 于 `2026-10-20T14:18:57Z`–`14:21:11Z` SUCCESS，job 内 M3 tests pass，receipt `generated_utc=2026-10-20T14:19:44.532038Z`。结果/赛程指纹均未改变；forecast/settlement/supersession 新增数均为0，canonical=4,215，账本 SHA 不变，故没有学习信息增量。
 - 同一 PR 的 Saved OOS Stability Actions [39438094549](https://github.com/ljm198964-alt/quant-runner/actions/runs/39438094549) 于 `2026-10-20T14:19:01Z`–`14:19:51Z` SUCCESS，60/60 tests；现存 OOS、账本 UTC 及结构检查通过，审计 JSON 只新增 score-grid count=0 字段并由 bot commit 落库。代码验证和实际运行收据已分开记录。
 - 仍无合法新 Crown 市场配对；OpenFootball 源不提供有文档证明的精确 kickoff UTC，TotalCorner API 的既有材料未证明授权覆盖 M3 自动采集、报价留存及公开派生结果。不得据比分网格推断 Crown EV/ROI。后续有新预测后由四小时影子流程追加网格；须另有合法、同期 Crown snapshot 和独立 UTC kickoff 证据才能线级估 EV，结算后才形成收益序列。
+
+## 2026-10-20 M3 score-grid merge 后默认分支验收
+- PR #58 已于 `2026-10-20T14:23:18Z` 合入 main，merge commit `a2c8c28aca832605b3ea695066baf3cbf253f094`。该 PR 只改 M3 研究脚本、测试、报告和 OOS stability push paths；没有改 M1/M2/MR1 的源文件、正式账本、预测或模型参数。
+- 合并后 main OpenFootball shadow [39438762203](https://github.com/ljm198964-alt/quant-runner/actions/runs/39438762203) 于 `2026-10-20T14:23:21Z`–`14:25:28Z` SUCCESS；M3 单测通过。receipt `generated_utc=2026-10-20T14:24:09.871521Z`，数据及赛程指纹仍分别为 `93e0b8b91722f9c967e608ad63ae88d4c8d8b4c466de92948673438704697c8e` 与 `2db32fe59ae637841be2d3ad7abc1d410e0aa5ea543bca2fe7af61096322f526`，预测/重复修订/结算新增 0，canonical=4,215，ledger SHA `0645da41b79bbec056081188ba6fb52b4b4a40b077f743eccc7e6645fefbc21e`；Crown quotes=0，EV/ROI=null。此次 pipeline 确认没有新增学习/赛果信息。
+- main Saved OOS Stability [39438762094](https://github.com/ljm198964-alt/quant-runner/actions/runs/39438762094) 同期 SUCCESS，60 tests、保存 OOS 和 append-only ledger 审计通过，稳定性报告无新指标变化。仓库现有 main merge run 不代表有实际市场数据。
+- main push 同时由仓库现有 trigger 自动启动 MR1 Free Runtime run [39438756798](https://github.com/ljm198964-alt/quant-runner/actions/runs/39438756798)，其结果 SUCCESS；PR diff 未触碰 MR1 代码或账本，记录该触发仅为运行事实。
+- 这次 merge 仅打通新 forecast 的完整比分概率分布存储与精确盘口 EV 计算接口；历史 forecast 不回填，当前 canonical grid count=0、Crown snapshot=0、settlement=0。阶段 A/B/C 的 Crown 真实配对、EV/ROI 与收益稳定性仍待合法同期数据和精确 UTC kickoff 证据，不能报告盈利结论。
