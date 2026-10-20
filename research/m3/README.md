@@ -5,6 +5,8 @@ M3 是独立研究模型，不读取 M1、M2、MR1 的预测、订单、参数�
 ## 研究入口与结果
 
 - [完整研究验收报告](M3_RESEARCH_REPORT.md)
+- [Crown 存档线级审计](M3_CROWN_STAGE_A_B_AUDIT.md)
+- [Crown 离线证据录入契约](crown_evidence_contract.md)
 - [最新 penaltyblog OOS 报告](results/latest_penaltyblog_oos_report.json)
 - [最新时间切分清单](results/latest_penaltyblog_oos_splits.json)
 - [最新 V4 原版指标](results/latest_v4_original_metrics.csv)

@@ -1,5 +1,11 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-20 M3 Crown 单场线级诊断与离线输入契约
+- 只读复核既有 Crown/Bet365 paired-research Actions artifact [37765506416](https://github.com/ljm198964-alt/quant-runner/actions/runs/37765506416)，16 场中 1 场与 M3 D1 2026/27 OOS 身份对应；artifact 匹配覆盖下限为1/17,027，对 AH、OU 各一条报价。此统计仅针对该存档，不能推广到 Crown 全部历史。其余15场超出 M3 六联赛范围。事件/2–2赛果由 Bundesliga 官方赛报交叉核验。
+- Dortmund–Werder 的 AH、OU 选中 observation 分别比 kickoff 早450.66与1,074.35分钟；两者均赛前但较早，报告时不建立新freshness门槛。该 M3 概率为使用截至 `2026-05-16T00:00:00Z`、2,754训练行得到的严格前推 hindcast，模型结果在10月批量重算；不是当时已记录的live forecast。以存档线价重建后12个模型×市场×side理论单单位EV诊断均负；单场、非预注册方向、无下注，实际ROI与最大回撤仍不可计算。具体quote线价未写入公开报告；摘要 response SHA `2b60bd3ff46828451f1d1b06514020bbf52531571155108f6a3749905bd46c52`，且上游 artifact 的 `bookmaker_execution_verified=false`。
+- 新增 `research/m3/crown_evidence.py` 离线结构校验器、`test_crown_evidence.py` 测试和 `crown_evidence_contract.md`。必须提供书面授权标记；仅处理操作者外部提供数据，不发 HTTP、不读取 M1/M2/MR1、不落库存价、不算ROI、不下单/发TG。验证精确身份、UTC cutoff/预测/quote/kickoff顺序、Crown来源、双边价格字段与来源hash；hindcast/实际前瞻预测明确区分。8项测试使用纯合成 test-only 数据。
+- 完整诊断见 `research/m3/M3_CROWN_STAGE_A_B_AUDIT.md`。本地 M3 单元测试22/22通过，新增契约相关 py_compile 与 `git diff --check` 通过。工作流 push path 增加这两个纯离线模块以在 Actions 复跑全 M3 测试；待记录真实 Actions run 与提交 SHA 后再补充云端验收状态。Crown授权及大样本历史报价仍是未解决阻塞，不进行任何自动采集。
+
 ## 2026-10-20 M3用户要求加速训练
 - 用户认为每天一次训练进度过慢，要求提高频率并加快研究出成果。已直接从在线设备`gh run view 39362692844`核实上一轮M3原版训练/penaltyblog接口smoke/指标落库及版本比较全部success，2026-10-20T03:08:18Z开始、03:16:56Z结束，约8分38秒。此轮证明基础自动流程可跑通，不等于预测盈利。
 - 已提交公开Runner`.github/workflows/m3-independent-research.yml` commit `084457156e981e9489225e414b16c0aff981c830`：M3训练调度由UTC每日00:20改为**UTC每4小时第20分钟**；上游原版CLI`python run.py download`改为其**官方已有**`python run.py download --include-current`，让2526之前历史季以外纳入当前2627赛季的数据更新尝试。原版模型算法、时间前推验证和输出保持原样；不新增EV、数量、信心或赛事Gate；正式 Crown 唯一盘口规则不变；不发TG，不自动升级。GitHub Actions可能延迟实际触发、单项下载失败会被上游捕获，必须以真实运行回执和赛季覆盖数验证当前赛季下载成功。

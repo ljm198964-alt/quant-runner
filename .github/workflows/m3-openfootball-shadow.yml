@@ -11,6 +11,8 @@ on:
       - '.github/workflows/m3-openfootball-shadow.yml'
       - 'research/m3/openfootball_shadow.py'
       - 'research/m3/test_openfootball_shadow.py'
+      - 'research/m3/crown_evidence.py'
+      - 'research/m3/test_crown_evidence.py'
 permissions:
   contents: write
 jobs:

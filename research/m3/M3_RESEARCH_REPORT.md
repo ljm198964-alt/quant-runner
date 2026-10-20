@@ -85,6 +85,8 @@ Football Predictor V4 检出版本未发现显式 LICENSE 文件；其源码未�
 
 ## Crown 缺口、限制与下一步
 
+本轮对已有 Crown artifact 的逐线复核与覆盖边界见 [M3 Crown Stage A/B audit](M3_CROWN_STAGE_A_B_AUDIT.md)。单场结果不提供 ROI；后续只有在取得书面许可并提供独立授权的数据后，才按 [离线 M3 Crown evidence contract](crown_evidence_contract.md) 校验时间和身份；该契约不执行抓取。
+
 M3 原始预测产物没有 Crown 盘口。但对已有公开 Actions 存档作只读身份审计后，在 `Crown Bet365 Paired Research` run [37765506416](https://github.com/ljm198964-alt/quant-runner/actions/runs/37765506416) 中发现 1 场与 D1 2026/27 M3 OOS 测试身份相符的 fixture；该场在 M3 测试表 17,027 场中占 1 场（0.0059%），并有 1 个 Crown AH 与 1 个 Crown OU 报价记录。Crown 来源响应摘要 SHA-256 为 `2b60bd3ff46828451f1d1b06514020bbf52531571155108f6a3749905bd46c52`；配对审计报告标记 `bookmaker_execution_verified=false`。该 run 的其他 15 场不属于 M3 的六联赛测试范围。匹配只代表留存 artifact 中找到的下限，不代表对 Crown 全部历史覆盖作了穷尽统计。
 
 该场模型在归档的 Crown 报价上完成了内存中的线级重算：三种 penaltyblog 模型在 AH / OU 的四个报价方向上，每单位期望收益均为负；但这是单场历史报价诊断，不是预先定义的下注策略。没有真实下单，因此 Crown 实现收益、ROI 和最大回撤均为 **N/A**；不得把单场赛后结算或期望收益叫作实际 ROI。具体盘口线、水位及逐场 quote 明细没有复制到本公开报告，也没有写入 M3 预测产物。
