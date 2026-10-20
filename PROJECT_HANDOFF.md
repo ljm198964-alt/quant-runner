@@ -2918,3 +2918,8 @@
 - 本机 Python 3.9 单独运行 Crown 接口专项测试通过；本机完整套件缺 penaltyblog。已由 Actions run `39432967398` 在提交 `c95377c` 上完整验收 46/46 测试通过；saved OOS/ledger audit 成功，报告未变化，未重新拟合。
 - 最新已确认 workflow: 原版+penaltyblog run `39430911396` success，OpenFootball shadow run `39430911655` success，稳定性 run `39430911610` success。数据输入未变化，shadow 无新预测/结算，没产生新学习信息。M3 未连接生产交易链路、未发 Telegram、未自动提升模型、未添加交易 Gate。
 - 下一步：PR #52 待审阅/合并；要启动自动 Crown 采集仍需先在既有授权材料中确认具体包含自动请求、M3 研究、留存与公开派生的范围，以及账户时区证据。当前仍没有合法可验证的 Crown EV/ROI。
+
+## 2026-10-20 M3 私有 Crown 影子账本工程（PR #52 后续）
+- 在 `research/m3/crown_shadow_ledger.py` 新增仓库外私有 JSONL 写入/核验：写入前调用严格 M3 Crown evidence validator；授权范围需明确 `m3_research` 和 `quote_retention`，如来源为 API 还需 `automated_api`。文件强制位于 repository root 以外、权限 0600、SHA-256 链完整、同一证据 hash 幂等；输出 audit 不含球队/价格/盘口线。
+- 专项 22 tests 本地 Python 3.9 pass。新增代码目前尚未提交，稍后推到 PR #52 并由 `m3-oos-stability` Actions 全量验收。
+- 写入器无 HTTP 客户端、无模型账本读取、无正式派单/TG；因为授权范围尚未在现存材料中证明，也没有真实合格 M3 Crown 记录，本轮没有调用它写真实报价。这是阶段 C 的安全隔离存储能力，不代表 Crown collector 或 shadow live run 已启用。

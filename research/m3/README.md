@@ -8,6 +8,7 @@ M3 是独立研究模型，不读取 M1、M2、MR1 的预测、订单、参数�
 - [Crown 存档线级审计](M3_CROWN_STAGE_A_B_AUDIT.md)
 - [Crown 离线证据录入契约](crown_evidence_contract.md)
 - [Crown TotalCorner 已授权响应离线导入规范](crown_totalcorner_import_contract.md)
+- [M3 Crown 私有影子账本写入器](crown_shadow_ledger.py)
 - [M3 Crown 覆盖及配对状态](results/crown/latest_pairing_status.json)
 - [最新 penaltyblog OOS 报告](results/latest_penaltyblog_oos_report.json)
 - [最新时间切分清单](results/latest_penaltyblog_oos_splits.json)
