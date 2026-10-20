@@ -7,6 +7,7 @@ M3 是独立研究模型，不读取 M1、M2、MR1 的预测、订单、参数�
 - [完整研究验收报告](M3_RESEARCH_REPORT.md)
 - [Crown 存档线级审计](M3_CROWN_STAGE_A_B_AUDIT.md)
 - [Crown 离线证据录入契约](crown_evidence_contract.md)
+- [Crown TotalCorner 已授权响应离线导入规范](crown_totalcorner_import_contract.md)
 - [最新 penaltyblog OOS 报告](results/latest_penaltyblog_oos_report.json)
 - [最新时间切分清单](results/latest_penaltyblog_oos_splits.json)
 - [最新 V4 原版指标](results/latest_v4_original_metrics.csv)
@@ -42,7 +43,9 @@ OpenFootball 评估的 AH 只报告 AH0/DNB 三状态概率，OU 报告固定 O2
 
 `openfootball_shadow_audit.py` 在不拟合、不结算的情况下校验逻辑 forecast 键唯一、supersession 引用、UTC 预测时间和日期 guard、概率归一化、无 Crown 时 EV/ROI 为空及无正式单/TG。当前 ledger 有 8,430 条原始 FORECAST 行，其中 4,215 条明确 superseded，折为 4,215 条有效逻辑预测；零结算、零 Crown 快照、零 EV/ROI。该审计随 Saved OOS Stability 工作流每四小时运行并持久化 `results/openfootball/latest_shadow_ledger_audit.json`，且验证 ledger SHA 与当时账本一致。Actions run [39420305676](https://github.com/ljm198964-alt/quant-runner/actions/runs/39420305676) 于 2026-10-20 SUCCESS，33 项测试通过，上传 artifact 与仓库审计 JSON 一致。该 workflow 只读既存 OOS 产物及 ledger，不重新训练。
 
-如获得书面授权，可用 `crown_totalcorner_import.py` 在本地离线读取既存 TotalCorner Crown API 响应；它要求 IANA 时区证据、精确队伍身份与独立 UTC kickoff、过滤所有不满足赛前条件的移动记录，并且拒绝 DST 歧义及未定义复合线。该 adapter 不联网、不打印或落库价格、不计算 EV/ROI；合成测试只验证转换逻辑，并不增加真实 Crown 覆盖。当前未提供书面授权，因此未执行任何新 Crown 请求。 本适配器提交 `feb6f4dfabb19653bbedaaba2a212644e86a85d0` 已由 Actions [39421816343](https://github.com/ljm198964-alt/quant-runner/actions/runs/39421816343) 真实验收，40 项 M3 tests 通过；该 workflow 是无重训审计，未新增数据或 Crown 覆盖。
+最新无盘口 shadow run [39421816230](https://github.com/ljm198964-alt/quant-runner/actions/runs/39421816230) 于 2026-10-20 UTC 成功，40 项测试通过。输入/赛程指纹均未变；日期保护范围内 1,405 个 fixture 全已有 canonical forecast，故新预测、结算和重复修正均为0，账本 SHA 不变。Crown quote=0，EV/ROI/最大回撤不可计算；本次没有新增学习信息。
+
+如获得书面授权，可用 `crown_totalcorner_import.py` 在本地离线读取既存 TotalCorner Crown API 响应；它要求 IANA 时区证据、精确队伍身份与独立 UTC kickoff、过滤所有不满足赛前条件的移动记录，并且拒绝 DST 歧义及未定义复合线。该 adapter 不联网、不打印或落库价格、不计算 EV/ROI；合成测试只验证转换逻辑，并不增加真实 Crown 覆盖。当前未提供书面授权，因此未执行任何新 Crown 请求。该适配器提交 `feb6f4dfabb19653bbedaaba2a212644e86a85d0` 已由 Actions [39421816343](https://github.com/ljm198964-alt/quant-runner/actions/runs/39421816343) 真实验收，40 项 M3 tests 通过；该 workflow 是无重训审计，未新增数据或 Crown 覆盖。
 
 运行单元测试：
 

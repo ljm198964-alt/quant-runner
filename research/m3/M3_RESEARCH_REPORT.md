@@ -58,6 +58,8 @@ AH0 的胜/和/负与 DNB win/push/lose 三状态分数一致，但不是任意 
 
 `openfootball_shadow_audit.py` 对 append-only ledger 做只读检查，并已接入 `.github/workflows/m3-oos-stability.yml` 的四小时任务。它复核 forecast ID 与逻辑键一对一 canonical、supersession 引用及理由结构、预测 UTC 时间及日历日期 guard、概率范围/归一化、无 Crown quote 时 EV/ROI 必须为空、无正式单与 Telegram 标记；不训练、不结算、不访问 Crown。首次审计报告见 `latest_shadow_ledger_audit.json`：原始 forecast 8,430、逻辑/有效 forecast 4,215、superseded 4,215、settlement/Crown/EV/ROI/订单/Telegram 均为 0。报告内 ledger SHA 必须等于账本当前 SHA，避免在分支同步竞态下保存过期审计。GitHub Actions [39420305676](https://github.com/ljm198964-alt/quant-runner/actions/runs/39420305676) 于 2026-10-20 12:10:49–12:11:32 UTC SUCCESS，33/33 测试通过；下载的 shadow audit artifact 与仓库 JSON 字节一致（SHA-256 `9cb01056753bf50fd15e59b8281ceea0fa034b8be16597cfbb6d69377a98dd90`），workflow 确认报告未变，故没有生成虚假结果提交。新增概率误差拆分同样只复算这些 OOS 预测，不拟合或修改模型。
 
+后续 no-market 前瞻 shadow run [39421816230](https://github.com/ljm198964-alt/quant-runner/actions/runs/39421816230) 于 UTC `2026-10-20T12:23:02Z`–`12:25:08Z` 实际成功，40/40 测试通过。运行时结果输入 fingerprint `93e0b8b91722f9c967e608ad63ae88d4c8d8b4c466de92948673438704697c8e`、赛程 fingerprint `2db32fe59ae637841be2d3ad7abc1d410e0aa5ea543bca2fe7af61096322f526` 均未变化；符合 3 日日期保护条件的赛程身份仍有1,405个，但全部已有逻辑 forecast key，因此新增 forecast=0、settlement=0、重复修正=0。公开 artifact 中生成 UTC 为 `2026-10-20T12:23:44.220002Z`；canonical forecast key=4,215，ledger SHA 保持 `0645da41b79bbec056081188ba6fb52b4b4a40b077f743eccc7e6645fefbc21e`。Crown quote=0、EV/ROI/最大回撤=N/A、正式订单=0、Telegram=未发送；状态未变，结果持久化步骤按设计跳过。高频重复运行并没有产生新赛果或新学习信息。
+
 可复算命令（只读现存 OOS 产物，不重新训练）：
 
 ```bash
