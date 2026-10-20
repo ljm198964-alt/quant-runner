@@ -1,0 +1,13 @@
+{
+  "protocol": "M3_UPSTREAM_RUN_RECEIPT_V1",
+  "utc": "2026-10-20T10:21:20.674633+00:00",
+  "workflow_run_id": "39406828896",
+  "workflow_attempt": "1",
+  "commit": "d87c4eaf57936661db9730d0a2756e6635a4bded",
+  "v4_step_outcome": "success",
+  "original_v4_metrics_available": true,
+  "ah_trained": false,
+  "penaltyblog_oos_report_available": true,
+  "crown_roi_claim": null,
+  "telegram_sent": false
+}
