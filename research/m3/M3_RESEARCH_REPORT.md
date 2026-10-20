@@ -39,7 +39,7 @@ AH0 的胜/和/负与 DNB win/push/lose 三状态分数一致，但不是任意 
 
 ### 无重训影子账本结构审计
 
-`openfootball_shadow_audit.py` 对 append-only ledger 做只读检查，并已接入 `.github/workflows/m3-oos-stability.yml` 的四小时任务。它复核 forecast ID 与逻辑键一对一 canonical、supersession 引用及理由结构、预测 UTC 时间、概率范围/归一化、无 Crown quote 时 EV/ROI 必须为空、无正式单与 Telegram 标记；不训练、不结算、不访问 Crown。首次审计报告见 `latest_shadow_ledger_audit.json`：原始 forecast 8,430、逻辑/有效 forecast 4,215、superseded 4,215、settlement/Crown/EV/ROI/订单/Telegram 均为 0。报告内 ledger SHA 必须等于账本当前 SHA，避免在分支同步竞态下保存过期审计。
+`openfootball_shadow_audit.py` 对 append-only ledger 做只读检查，并已接入 `.github/workflows/m3-oos-stability.yml` 的四小时任务。它复核 forecast ID 与逻辑键一对一 canonical、supersession 引用及理由结构、预测 UTC 时间及日历日期 guard、概率范围/归一化、无 Crown quote 时 EV/ROI 必须为空、无正式单与 Telegram 标记；不训练、不结算、不访问 Crown。首次审计报告见 `latest_shadow_ledger_audit.json`：原始 forecast 8,430、逻辑/有效 forecast 4,215、superseded 4,215、settlement/Crown/EV/ROI/订单/Telegram 均为 0。报告内 ledger SHA 必须等于账本当前 SHA，避免在分支同步竞态下保存过期审计。GitHub Actions [39420305676](https://github.com/ljm198964-alt/quant-runner/actions/runs/39420305676) 于 2026-10-20 12:10:49–12:11:32 UTC SUCCESS，33/33 测试通过；下载的 shadow audit artifact 与仓库 JSON 字节一致（SHA-256 `9cb01056753bf50fd15e59b8281ceea0fa034b8be16597cfbb6d69377a98dd90`），workflow 确认报告未变，故没有生成虚假结果提交。
 
 可复算命令（只读现存 OOS 产物，不重新训练）：
 
