@@ -1,0 +1,4311 @@
+{
+  "protocol": "M3_PENALTYBLOG_STRICT_SEASON_FORWARD_V1",
+  "model_identity": "M3",
+  "generated_utc": "2026-10-20T10:14:43.842169+00:00",
+  "data_source": "Football-Data.co.uk match-result CSV; only Date/HomeTeam/AwayTeam/FTHG/FTAG consumed; bookmaker columns ignored",
+  "data_source_url": "https://www.football-data.co.uk/",
+  "input_directory": "upstream/football-predictor/data/raw",
+  "input_files": [
+    {
+      "file": "1718_B1.csv",
+      "sha256": "4fea24437fc7c897e3995fd760f7719209df7c9344c8681d52e42a6bf814d88f",
+      "bytes": 61341,
+      "rows_read": 240,
+      "rows_with_valid_date_teams_ft": 240,
+      "status": "ok"
+    },
+    {
+      "file": "1718_D1.csv",
+      "sha256": "033227408247769568111af49de2a50f6951c87e6d43f9e1a01e73d647bced3e",
+      "bytes": 78641,
+      "rows_read": 306,
+      "rows_with_valid_date_teams_ft": 306,
+      "status": "ok"
+    },
+    {
+      "file": "1718_E0.csv",
+      "sha256": "4f3389365ef3f7ac966764ed8ba67cf3b79f5aebed18dd224099c4b2c98bc67b",
+      "bytes": 100734,
+      "rows_read": 380,
+      "rows_with_valid_date_teams_ft": 380,
+      "status": "ok"
+    },
+    {
+      "file": "1718_F1.csv",
+      "sha256": "95997fd3c3e13be3101b216fe9b26a9ce6715ac6b76b115e44926c12b90977e6",
+      "bytes": 95353,
+      "rows_read": 380,
+      "rows_with_valid_date_teams_ft": 380,
+      "status": "ok"
+    },
+    {
+      "file": "1718_I1.csv",
+      "sha256": "664a8874d3a33923036120c4162e72f13887e0897b51effe27f89969c79c335d",
+      "bytes": 95137,
+      "rows_read": 380,
+      "rows_with_valid_date_teams_ft": 380,
+      "status": "ok"
+    },
+    {
+      "file": "1718_SP1.csv",
+      "sha256": "5786719e06d1a5387cb90fac71597c890f496df19e8e1aa868bbc852f7e730fd",
+      "bytes": 96801,
+      "rows_read": 380,
+      "rows_with_valid_date_teams_ft": 380,
+      "status": "ok"
+    },
+    {
+      "file": "1819_B1.csv",
+      "sha256": "19c3b2a685b9a624f172d2794529caec385a957a96ddc6ca399a59bafc0b9cb4",
+      "bytes": 58925,
+      "rows_read": 240,
+      "rows_with_valid_date_teams_ft": 240,
+      "status": "ok"
+    },
+    {
+      "file": "1819_D1.csv",
+      "sha256": "f03ee41b741aca9c43cbafb800bbc6f01ca9d7ed19c1a9dd4c309389280cfe11",
+      "bytes": 75587,
+      "rows_read": 306,
+      "rows_with_valid_date_teams_ft": 306,
+      "status": "ok"
+    },
+    {
+      "file": "1819_E0.csv",
+      "sha256": "7c096b3c2ecd54c6993d22eeea73450c2bde11e3457238b226b8f43c62dfc35e",
+      "bytes": 96144,
+      "rows_read": 380,
+      "rows_with_valid_date_teams_ft": 380,
+      "status": "ok"
+    },
+    {
+      "file": "1819_F1.csv",
+      "sha256": "31559a4d8b52eff6f78e13a9b33d7b844e4f41d823dd1cf5c1aaa61c51eaaf9c",
+      "bytes": 91888,
+      "rows_read": 380,
+      "rows_with_valid_date_teams_ft": 380,
+      "status": "ok"
+    },
+    {
+      "file": "1819_I1.csv",
+      "sha256": "2baea8a1fb31096960b5f5797d31dbb6b454eb41b00845e6b0b79feb82a0e3d0",
+      "bytes": 91392,
+      "rows_read": 380,
+      "rows_with_valid_date_teams_ft": 380,
+      "status": "ok"
+    },
+    {
+      "file": "1819_SP1.csv",
+      "sha256": "9b8cece2c85e90e382b30dc4fc5046534f12c6d2b0efa74cd7d1d52e90a0c201",
+      "bytes": 92914,
+      "rows_read": 380,
+      "rows_with_valid_date_teams_ft": 380,
+      "status": "ok"
+    },
+    {
+      "file": "1920_B1.csv",
+      "sha256": "f64077e0fcd43a2d961ac7462ca3902d9aa67e86a12bb8c2b6e1c11984c9d5b8",
+      "bytes": 104897,
+      "rows_read": 232,
+      "rows_with_valid_date_teams_ft": 232,
+      "status": "ok"
+    },
+    {
+      "file": "1920_D1.csv",
+      "sha256": "0a032b1adc75f7fa018dcfeff7fcdcc0a89014e3fe69f44534f538b6f931aef5",
+      "bytes": 138965,
+      "rows_read": 306,
+      "rows_with_valid_date_teams_ft": 306,
+      "status": "ok"
+    },
+    {
+      "file": "1920_E0.csv",
+      "sha256": "100037618b94f94057400bb02bf6bac4ef74ddaa58cde4b38370839c39caee61",
+      "bytes": 175475,
+      "rows_read": 380,
+      "rows_with_valid_date_teams_ft": 380,
+      "status": "ok"
+    },
+    {
+      "file": "1920_F1.csv",
+      "sha256": "bda566f6aea24bc2f08cceac8f7d6c81d7f9c64cfda9fdae7eb9be2b84dddd2a",
+      "bytes": 125011,
+      "rows_read": 279,
+      "rows_with_valid_date_teams_ft": 279,
+      "status": "ok"
+    },
+    {
+      "file": "1920_I1.csv",
+      "sha256": "f33233e0c428ebe4f7cb854c4a504e0b59c4e009ee8b679269486e26afdc575b",
+      "bytes": 170130,
+      "rows_read": 380,
+      "rows_with_valid_date_teams_ft": 380,
+      "status": "ok"
+    },
+    {
+      "file": "1920_SP1.csv",
+      "sha256": "a05d5d60eee0b1414c56d6d6817f860cdc620e206234069a1886c98a8cb318da",
+      "bytes": 171484,
+      "rows_read": 380,
+      "rows_with_valid_date_teams_ft": 380,
+      "status": "ok"
+    },
+    {
+      "file": "2021_B1.csv",
+      "sha256": "6e74a3f376c67b18bc40175aaf4d87b553ed8d10335ec48e6c0d805fd0117687",
+      "bytes": 138909,
+      "rows_read": 306,
+      "rows_with_valid_date_teams_ft": 306,
+      "status": "ok"
+    },
+    {
+      "file": "2021_D1.csv",
+      "sha256": "48ec5d53d2452b6ebdbc07bd78a836d6a4686f99fc020439ee3292e685315e61",
+      "bytes": 139075,
+      "rows_read": 306,
+      "rows_with_valid_date_teams_ft": 306,
+      "status": "ok"
+    },
+    {
+      "file": "2021_E0.csv",
+      "sha256": "5afe63f69401457b8354eaacee24f9a3e520b3c3af6329564a9783e20d789c62",
+      "bytes": 175815,
+      "rows_read": 380,
+      "rows_with_valid_date_teams_ft": 380,
+      "status": "ok"
+    },
+    {
+      "file": "2021_F1.csv",
+      "sha256": "124560ab39a1c256eb6ee5ad2dd1eed250c9780d0cbb34525d9abee41fbf7f70",
+      "bytes": 170539,
+      "rows_read": 380,
+      "rows_with_valid_date_teams_ft": 380,
+      "status": "ok"
+    },
+    {
+      "file": "2021_I1.csv",
+      "sha256": "c09196fa18877547442807d375317299947abdd6d51a5e0df044cc6026e13f36",
+      "bytes": 170667,
+      "rows_read": 380,
+      "rows_with_valid_date_teams_ft": 380,
+      "status": "ok"
+    },
+    {
+      "file": "2021_SP1.csv",
+      "sha256": "b4137db923101f464e8403c4973acbfaf7d71724ce93b4336fad580e894d9591",
+      "bytes": 171721,
+      "rows_read": 380,
+      "rows_with_valid_date_teams_ft": 380,
+      "status": "ok"
+    },
+    {
+      "file": "2122_B1.csv",
+      "sha256": "1fbc0221c0c017c34ff480268b153959576b0c707dffbeaf3141819a7d8d4363",
+      "bytes": 138528,
+      "rows_read": 306,
+      "rows_with_valid_date_teams_ft": 306,
+      "status": "ok"
+    },
+    {
+      "file": "2122_D1.csv",
+      "sha256": "034d0e1296e944dddf25e3c91b85ef5bd1ad25661b89d73878f5c73bfea4b9fc",
+      "bytes": 139177,
+      "rows_read": 306,
+      "rows_with_valid_date_teams_ft": 306,
+      "status": "ok"
+    },
+    {
+      "file": "2122_E0.csv",
+      "sha256": "335afcbabeb2939fa10ab39ba3e8215072d0b577cb8d0705c1e44c56e934e703",
+      "bytes": 175363,
+      "rows_read": 380,
+      "rows_with_valid_date_teams_ft": 380,
+      "status": "ok"
+    },
+    {
+      "file": "2122_F1.csv",
+      "sha256": "9e9eaefb8704264f8d55a718a119d940de4af7d7b4217ac4097b957406e16213",
+      "bytes": 171274,
+      "rows_read": 380,
+      "rows_with_valid_date_teams_ft": 380,
+      "status": "ok"
+    },
+    {
+      "file": "2122_I1.csv",
+      "sha256": "6a9555d5a90e652a883fd2862a52545c06e264016cd770347c067a6d7c993170",
+      "bytes": 171204,
+      "rows_read": 380,
+      "rows_with_valid_date_teams_ft": 380,
+      "status": "ok"
+    },
+    {
+      "file": "2122_SP1.csv",
+      "sha256": "2d9e619700712823d15716c07715133f8c3b1a09046930dcfc785a38633dee2e",
+      "bytes": 172174,
+      "rows_read": 380,
+      "rows_with_valid_date_teams_ft": 380,
+      "status": "ok"
+    },
+    {
+      "file": "2223_B1.csv",
+      "sha256": "46737ea78b45a1fa6827b733a884c78f2610f37961781336ea7aa6dbfd64dcb4",
+      "bytes": 135378,
+      "rows_read": 306,
+      "rows_with_valid_date_teams_ft": 306,
+      "status": "ok"
+    },
+    {
+      "file": "2223_D1.csv",
+      "sha256": "b716517b25033ce8e0243e967aa961876425a4c41e97c8aa8fa59f2aca061341",
+      "bytes": 139302,
+      "rows_read": 306,
+      "rows_with_valid_date_teams_ft": 306,
+      "status": "ok"
+    },
+    {
+      "file": "2223_E0.csv",
+      "sha256": "8442792d3b614c94ea3cf381bd2736805889cc1713169035368fff19c3d02380",
+      "bytes": 176180,
+      "rows_read": 380,
+      "rows_with_valid_date_teams_ft": 380,
+      "status": "ok"
+    },
+    {
+      "file": "2223_F1.csv",
+      "sha256": "18ea07d922e8b6360b81189637efd5aaf44779765db856bff208d5b1acf69b2f",
+      "bytes": 171165,
+      "rows_read": 380,
+      "rows_with_valid_date_teams_ft": 380,
+      "status": "ok"
+    },
+    {
+      "file": "2223_I1.csv",
+      "sha256": "9960837f37a97ae700f876c87b85a8b7a2f5a5d05a53077830c21b9db8880c45",
+      "bytes": 171573,
+      "rows_read": 380,
+      "rows_with_valid_date_teams_ft": 380,
+      "status": "ok"
+    },
+    {
+      "file": "2223_SP1.csv",
+      "sha256": "53348112526b5165539df240be350083989bb258f30c0ff7cacbc0165ca7e4b3",
+      "bytes": 172199,
+      "rows_read": 380,
+      "rows_with_valid_date_teams_ft": 380,
+      "status": "ok"
+    },
+    {
+      "file": "2324_B1.csv",
+      "sha256": "379d10bd92cecba6349f043f0661e3548e16d8053b234a7cace7493acfb72144",
+      "bytes": 136827,
+      "rows_read": 312,
+      "rows_with_valid_date_teams_ft": 312,
+      "status": "ok"
+    },
+    {
+      "file": "2324_D1.csv",
+      "sha256": "1de8bc12a133dbbf71bc6ffda62082642f087f61b1b7c15ae9f2d320876fb07e",
+      "bytes": 135825,
+      "rows_read": 306,
+      "rows_with_valid_date_teams_ft": 306,
+      "status": "ok"
+    },
+    {
+      "file": "2324_E0.csv",
+      "sha256": "b2e057b0ed959f198b0f63d2391c01239f3608e6de5db68edab3f88e04d07ff3",
+      "bytes": 172196,
+      "rows_read": 380,
+      "rows_with_valid_date_teams_ft": 380,
+      "status": "ok"
+    },
+    {
+      "file": "2324_F1.csv",
+      "sha256": "ca0a4bf51d5b1ccfd0e1558ea41de6bb829df6c96c759888a87248d296d5adb7",
+      "bytes": 135000,
+      "rows_read": 306,
+      "rows_with_valid_date_teams_ft": 306,
+      "status": "ok"
+    },
+    {
+      "file": "2324_I1.csv",
+      "sha256": "343a89db026fe4204ebeabd663cdfee8d02a45457828fc1cb63fa630ca170723",
+      "bytes": 167015,
+      "rows_read": 380,
+      "rows_with_valid_date_teams_ft": 380,
+      "status": "ok"
+    },
+    {
+      "file": "2324_SP1.csv",
+      "sha256": "5323f596c7ed318e4bce95557a369d809d98501fa499ea5f41350cd45cf3c7d9",
+      "bytes": 168164,
+      "rows_read": 380,
+      "rows_with_valid_date_teams_ft": 380,
+      "status": "ok"
+    },
+    {
+      "file": "2425_B1.csv",
+      "sha256": "fcc3ec3a7bdd57ec42df76bb03aa1858ee18be88886a379f42b4c7b2e7f5d0eb",
+      "bytes": 158659,
+      "rows_read": 312,
+      "rows_with_valid_date_teams_ft": 312,
+      "status": "ok"
+    },
+    {
+      "file": "2425_D1.csv",
+      "sha256": "a295c58033cfe6393cbbc28f7db85671839b960c5f1153fd3678e20ad2adb92e",
+      "bytes": 156414,
+      "rows_read": 306,
+      "rows_with_valid_date_teams_ft": 306,
+      "status": "ok"
+    },
+    {
+      "file": "2425_E0.csv",
+      "sha256": "d0c8ce4a96d886cf60cf101f570f4a3893844226f91c7bd769eb568c49edbfa4",
+      "bytes": 197110,
+      "rows_read": 380,
+      "rows_with_valid_date_teams_ft": 380,
+      "status": "ok"
+    },
+    {
+      "file": "2425_F1.csv",
+      "sha256": "fe6ae6a0c30d05f0ac88e0fc4a31452c7203e2b444703dfa941e22f38f20ab63",
+      "bytes": 154703,
+      "rows_read": 306,
+      "rows_with_valid_date_teams_ft": 306,
+      "status": "ok"
+    },
+    {
+      "file": "2425_I1.csv",
+      "sha256": "79d87a5b18771e066ac7419b7876bfd9771a68ca117a9712375d6bc9685abee3",
+      "bytes": 191722,
+      "rows_read": 380,
+      "rows_with_valid_date_teams_ft": 380,
+      "status": "ok"
+    },
+    {
+      "file": "2425_SP1.csv",
+      "sha256": "c086e96d6a53f6e6c0fce4e35db0d1728c773b4362323da0161a34769e315a36",
+      "bytes": 192863,
+      "rows_read": 380,
+      "rows_with_valid_date_teams_ft": 380,
+      "status": "ok"
+    },
+    {
+      "file": "2526_B1.csv",
+      "sha256": "7ba1d75b2f23ab6bf36952fa61b62e80905e2d38fa059ad389106772aebaf481",
+      "bytes": 158888,
+      "rows_read": 311,
+      "rows_with_valid_date_teams_ft": 311,
+      "status": "ok"
+    },
+    {
+      "file": "2526_D1.csv",
+      "sha256": "618301a4b39918225a8ccc57f0f839d675e1abd92fa3a3ccd9a67acd7c79dd7f",
+      "bytes": 159944,
+      "rows_read": 306,
+      "rows_with_valid_date_teams_ft": 306,
+      "status": "ok"
+    },
+    {
+      "file": "2526_E0.csv",
+      "sha256": "3e3a8352f9ada6789c508d6ca184424421fed56a30400904a4a327c583407e62",
+      "bytes": 203438,
+      "rows_read": 380,
+      "rows_with_valid_date_teams_ft": 380,
+      "status": "ok"
+    },
+    {
+      "file": "2526_F1.csv",
+      "sha256": "898b7ddcd373cfe955ae353b1a98cf7f1c8757ca10b69d53039f4e098e88f192",
+      "bytes": 158471,
+      "rows_read": 306,
+      "rows_with_valid_date_teams_ft": 306,
+      "status": "ok"
+    },
+    {
+      "file": "2526_I1.csv",
+      "sha256": "709ae279617d16af226312bcceac941e71241745ddaf950bdac2b83afad4fcbb",
+      "bytes": 196217,
+      "rows_read": 380,
+      "rows_with_valid_date_teams_ft": 380,
+      "status": "ok"
+    },
+    {
+      "file": "2526_SP1.csv",
+      "sha256": "4ca2e285f3ee0702f6bc55fcaa4f5a15cb3aef6220735a1d15398131e21d63f5",
+      "bytes": 197653,
+      "rows_read": 380,
+      "rows_with_valid_date_teams_ft": 380,
+      "status": "ok"
+    },
+    {
+      "file": "2627_B1.csv",
+      "sha256": "fdf5837eb9aa9c412c00df8c3d38d3fb9440de1cfffbe9817c3435d990c0fbc7",
+      "bytes": 34786,
+      "rows_read": 72,
+      "rows_with_valid_date_teams_ft": 72,
+      "status": "ok"
+    },
+    {
+      "file": "2627_D1.csv",
+      "sha256": "79f84b0b65acf2400c1d7a5c7328007bb68a6f38da6e87198d82f9f75e4e5d89",
+      "bytes": 26278,
+      "rows_read": 54,
+      "rows_with_valid_date_teams_ft": 54,
+      "status": "ok"
+    },
+    {
+      "file": "2627_E0.csv",
+      "sha256": "705ef4373f6c4c9ec09b67eb3ca3398d6a770813095efc5d629edb591e4ee41c",
+      "bytes": 34516,
+      "rows_read": 70,
+      "rows_with_valid_date_teams_ft": 70,
+      "status": "ok"
+    },
+    {
+      "file": "2627_F1.csv",
+      "sha256": "25fa187a66a8c0e7a0aab3cf762f69c4b087ebfc11e91e84612326c8633e4612",
+      "bytes": 30374,
+      "rows_read": 63,
+      "rows_with_valid_date_teams_ft": 63,
+      "status": "ok"
+    },
+    {
+      "file": "2627_I1.csv",
+      "sha256": "8d4a049abd91d687a63b95051828c00a440c7444e1614a52025addf76a0fb763",
+      "bytes": 33436,
+      "rows_read": 70,
+      "rows_with_valid_date_teams_ft": 70,
+      "status": "ok"
+    },
+    {
+      "file": "2627_SP1.csv",
+      "sha256": "fce301ca633a62a824d66ec938dbe162e70873e91967e59bf2a170fe0cfc823a",
+      "bytes": 42217,
+      "rows_read": 88,
+      "rows_with_valid_date_teams_ft": 88,
+      "status": "ok"
+    }
+  ],
+  "input_fingerprint_sha256": "5fbdf985cb8be4081e69959dfe7bd4e9685c8c556471a8bb11551c4b38809db1",
+  "test_set_fingerprint_sha256": "c99206973fbc9bd97730fa428b3f37233c4674ab9328a18f2fcceec0d92193fa",
+  "data_changed_vs_previous_snapshot": null,
+  "usable_matches": 19093,
+  "league_counts": {
+    "B1": 2637,
+    "D1": 2808,
+    "E0": 3490,
+    "F1": 3160,
+    "I1": 3490,
+    "SP1": 3508
+  },
+  "season_counts": {
+    "1718": 2066,
+    "1819": 2066,
+    "1920": 1957,
+    "2021": 2132,
+    "2122": 2132,
+    "2223": 2132,
+    "2324": 2064,
+    "2425": 2064,
+    "2526": 2063,
+    "2627": 417
+  },
+  "test_matches_total": 17027,
+  "test_matches_scored": 14696,
+  "time_basis": "UTC; upstream date-only values parsed as UTC midnight; entire test match date excluded from training",
+  "train_test_isolation": "For each league and test season, train rows come only from earlier season files and satisfy match_date_utc < earliest test-season match_date_utc. No same-date or test-season outcome is used to fit that split.",
+  "handicap_diagnostic": "home Asian Handicap 0.0 (draw-no-bet); generic probability diagnostic only, no Crown price/line linkage or ROI",
+  "ou_diagnostic": "Over 2.5 probability diagnostic only; no Crown price/line linkage or ROI",
+  "penaltyblog_version": "1.13.1",
+  "quant_runner_commit": "a948f93f4e5b9a564da1274c4ba2dc099f864664",
+  "football_predictor_commit": "2f75be0f26363e26a42aaff34ede68f35635da02",
+  "models": [
+    {
+      "model": "poisson",
+      "overall_metrics": {
+        "1x2": {
+          "n_predicted": 14696,
+          "n_test_total": 17027,
+          "log_loss": 1.0042762260605294,
+          "brier": 0.5996835322969468
+        },
+        "ah_home_0": {
+          "n_predicted": 14696,
+          "n_test_total": 17027,
+          "log_loss": 1.0042762260605294,
+          "brier": 0.5996835322969468
+        },
+        "ou_over_2_5": {
+          "n_predicted": 14696,
+          "n_test_total": 17027,
+          "log_loss": 0.6864452376220421,
+          "brier": 0.24650008000845786,
+          "mean_predicted_probability": 0.5220614202425742,
+          "observed_rate": 0.5358600979858464
+        }
+      },
+      "by_test_season": [
+        {
+          "season": "1819",
+          "league_metrics": {
+            "B1": {
+              "1x2": {
+                "n_predicted": 210,
+                "n_test_total": 240,
+                "log_loss": 1.0439798660215527,
+                "brier": 0.6257572436888522
+              },
+              "ah_home_0": {
+                "n_predicted": 210,
+                "n_test_total": 240,
+                "log_loss": 1.0439798660215527,
+                "brier": 0.6257572436888522
+              },
+              "ou_over_2_5": {
+                "n_predicted": 210,
+                "n_test_total": 240,
+                "log_loss": 0.6892904639819701,
+                "brier": 0.24781128075846137,
+                "mean_predicted_probability": 0.5423346654043322,
+                "observed_rate": 0.580952380952381
+              }
+            },
+            "D1": {
+              "1x2": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.024894458190483,
+                "brier": 0.6126751586103363
+              },
+              "ah_home_0": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.024894458190483,
+                "brier": 0.6126751586103363
+              },
+              "ou_over_2_5": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 0.7118310580507519,
+                "brier": 0.2585806229113284,
+                "mean_predicted_probability": 0.5212177087321368,
+                "observed_rate": 0.6416666666666667
+              }
+            },
+            "E0": {
+              "1x2": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 0.8924906504153448,
+                "brier": 0.5219828069863124
+              },
+              "ah_home_0": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 0.8924906504153448,
+                "brier": 0.5219828069863124
+              },
+              "ou_over_2_5": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 0.7086525745626129,
+                "brier": 0.2566368421703557,
+                "mean_predicted_probability": 0.5132189183643125,
+                "observed_rate": 0.5588235294117647
+              }
+            },
+            "F1": {
+              "1x2": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.0580930979840024,
+                "brier": 0.6359911302331313
+              },
+              "ah_home_0": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.0580930979840024,
+                "brier": 0.6359911302331313
+              },
+              "ou_over_2_5": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 0.6963192379275476,
+                "brier": 0.2505450823150813,
+                "mean_predicted_probability": 0.4967646448691154,
+                "observed_rate": 0.4869281045751634
+              }
+            },
+            "I1": {
+              "1x2": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 0.9895366772571388,
+                "brier": 0.590651414193666
+              },
+              "ah_home_0": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 0.9895366772571388,
+                "brier": 0.590651414193666
+              },
+              "ou_over_2_5": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 0.7085152984081385,
+                "brier": 0.2572851552624967,
+                "mean_predicted_probability": 0.4697675845847749,
+                "observed_rate": 0.4963235294117647
+              }
+            },
+            "SP1": {
+              "1x2": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 1.0276792681183138,
+                "brier": 0.6171056815911349
+              },
+              "ah_home_0": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 1.0276792681183138,
+                "brier": 0.6171056815911349
+              },
+              "ou_over_2_5": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 0.6740092583507497,
+                "brier": 0.2395769568849183,
+                "mean_predicted_probability": 0.495818891628567,
+                "observed_rate": 0.45588235294117646
+              }
+            }
+          }
+        },
+        {
+          "season": "1920",
+          "league_metrics": {
+            "B1": {
+              "1x2": {
+                "n_predicted": 232,
+                "n_test_total": 232,
+                "log_loss": 0.9700247746086064,
+                "brier": 0.5733724269967055
+              },
+              "ah_home_0": {
+                "n_predicted": 232,
+                "n_test_total": 232,
+                "log_loss": 0.9700247746086064,
+                "brier": 0.5733724269967055
+              },
+              "ou_over_2_5": {
+                "n_predicted": 232,
+                "n_test_total": 232,
+                "log_loss": 0.7045842739588355,
+                "brier": 0.25529027112372704,
+                "mean_predicted_probability": 0.5497260741360378,
+                "observed_rate": 0.5646551724137931
+              }
+            },
+            "D1": {
+              "1x2": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.0204218993531124,
+                "brier": 0.6123488694109802
+              },
+              "ah_home_0": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.0204218993531124,
+                "brier": 0.6123488694109802
+              },
+              "ou_over_2_5": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 0.6475258373851009,
+                "brier": 0.22816906333354314,
+                "mean_predicted_probability": 0.599350339096419,
+                "observed_rate": 0.6666666666666666
+              }
+            },
+            "E0": {
+              "1x2": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 0.9849488155014515,
+                "brier": 0.5854596102591183
+              },
+              "ah_home_0": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 0.9849488155014515,
+                "brier": 0.5854596102591183
+              },
+              "ou_over_2_5": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 0.669413972750756,
+                "brier": 0.2384252598081542,
+                "mean_predicted_probability": 0.5267883719685874,
+                "observed_rate": 0.5441176470588235
+              }
+            },
+            "F1": {
+              "1x2": {
+                "n_predicted": 251,
+                "n_test_total": 279,
+                "log_loss": 1.0052492041781715,
+                "brier": 0.6029807728952785
+              },
+              "ah_home_0": {
+                "n_predicted": 251,
+                "n_test_total": 279,
+                "log_loss": 1.0052492041781715,
+                "brier": 0.6029807728952785
+              },
+              "ou_over_2_5": {
+                "n_predicted": 251,
+                "n_test_total": 279,
+                "log_loss": 0.7077902727667249,
+                "brier": 0.2564640294629932,
+                "mean_predicted_probability": 0.49842460855409065,
+                "observed_rate": 0.47410358565737054
+              }
+            },
+            "I1": {
+              "1x2": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.022360096077848,
+                "brier": 0.6121812327629894
+              },
+              "ah_home_0": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.022360096077848,
+                "brier": 0.6121812327629894
+              },
+              "ou_over_2_5": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 0.706748088744329,
+                "brier": 0.25650359525698496,
+                "mean_predicted_probability": 0.4895131474629401,
+                "observed_rate": 0.6143790849673203
+              }
+            },
+            "SP1": {
+              "1x2": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 0.9969512584142542,
+                "brier": 0.6004286452354204
+              },
+              "ah_home_0": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 0.9969512584142542,
+                "brier": 0.6004286452354204
+              },
+              "ou_over_2_5": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 0.654329800690657,
+                "brier": 0.23131499263589972,
+                "mean_predicted_probability": 0.4688320712568044,
+                "observed_rate": 0.44485294117647056
+              }
+            }
+          }
+        },
+        {
+          "season": "2021",
+          "league_metrics": {
+            "B1": {
+              "1x2": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.0408209702390487,
+                "brier": 0.6282914567367321
+              },
+              "ah_home_0": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.0408209702390487,
+                "brier": 0.6282914567367321
+              },
+              "ou_over_2_5": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 0.6725835874896353,
+                "brier": 0.24015373232587198,
+                "mean_predicted_probability": 0.5462490533655906,
+                "observed_rate": 0.5625
+              }
+            },
+            "D1": {
+              "1x2": {
+                "n_predicted": 272,
+                "n_test_total": 306,
+                "log_loss": 1.0293924930768283,
+                "brier": 0.6172169790561424
+              },
+              "ah_home_0": {
+                "n_predicted": 272,
+                "n_test_total": 306,
+                "log_loss": 1.0293924930768283,
+                "brier": 0.6172169790561424
+              },
+              "ou_over_2_5": {
+                "n_predicted": 272,
+                "n_test_total": 306,
+                "log_loss": 0.6623791956399346,
+                "brier": 0.23525649578650618,
+                "mean_predicted_probability": 0.5846641186772229,
+                "observed_rate": 0.6102941176470589
+              }
+            },
+            "E0": {
+              "1x2": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 1.0416138351536715,
+                "brier": 0.6205136748075617
+              },
+              "ah_home_0": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 1.0416138351536715,
+                "brier": 0.6205136748075617
+              },
+              "ou_over_2_5": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.7096357095666215,
+                "brier": 0.2573833263944263,
+                "mean_predicted_probability": 0.4964284767917356,
+                "observed_rate": 0.49122807017543857
+              }
+            },
+            "F1": {
+              "1x2": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.0403110227416648,
+                "brier": 0.6225000999488052
+              },
+              "ah_home_0": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.0403110227416648,
+                "brier": 0.6225000999488052
+              },
+              "ou_over_2_5": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 0.7150640478777021,
+                "brier": 0.2596415591071609,
+                "mean_predicted_probability": 0.4906099983748831,
+                "observed_rate": 0.5392156862745098
+              }
+            },
+            "I1": {
+              "1x2": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.9609316639605624,
+                "brier": 0.5691557633266514
+              },
+              "ah_home_0": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.9609316639605624,
+                "brier": 0.5691557633266514
+              },
+              "ou_over_2_5": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.6908133866281869,
+                "brier": 0.24861977396424675,
+                "mean_predicted_probability": 0.5291430935036988,
+                "observed_rate": 0.5467836257309941
+              }
+            },
+            "SP1": {
+              "1x2": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.0042691915739437,
+                "brier": 0.6004248810957082
+              },
+              "ah_home_0": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.0042691915739437,
+                "brier": 0.6004248810957082
+              },
+              "ou_over_2_5": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 0.6912592908109491,
+                "brier": 0.24857159832640677,
+                "mean_predicted_probability": 0.48587999836534546,
+                "observed_rate": 0.4444444444444444
+              }
+            }
+          }
+        },
+        {
+          "season": "2122",
+          "league_metrics": {
+            "B1": {
+              "1x2": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.0322055959946448,
+                "brier": 0.6208855337915417
+              },
+              "ah_home_0": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.0322055959946448,
+                "brier": 0.6208855337915417
+              },
+              "ou_over_2_5": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 0.6889777778620615,
+                "brier": 0.2474214805976885,
+                "mean_predicted_probability": 0.5731628981397185,
+                "observed_rate": 0.5416666666666666
+              }
+            },
+            "D1": {
+              "1x2": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.0180442240492487,
+                "brier": 0.6098642228474138
+              },
+              "ah_home_0": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.0180442240492487,
+                "brier": 0.6098642228474138
+              },
+              "ou_over_2_5": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 0.6468227065052693,
+                "brier": 0.22761562070168823,
+                "mean_predicted_probability": 0.5765442683026757,
+                "observed_rate": 0.5916666666666667
+              }
+            },
+            "E0": {
+              "1x2": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.9449072040901386,
+                "brier": 0.5601677574280425
+              },
+              "ah_home_0": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.9449072040901386,
+                "brier": 0.5601677574280425
+              },
+              "ou_over_2_5": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.6676402481595627,
+                "brier": 0.23747064098953047,
+                "mean_predicted_probability": 0.5272726651766672,
+                "observed_rate": 0.5350877192982456
+              }
+            },
+            "F1": {
+              "1x2": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 1.0262593981575077,
+                "brier": 0.6170221199506672
+              },
+              "ah_home_0": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 1.0262593981575077,
+                "brier": 0.6170221199506672
+              },
+              "ou_over_2_5": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.6947259824569276,
+                "brier": 0.25026186908147163,
+                "mean_predicted_probability": 0.5004926392528491,
+                "observed_rate": 0.5029239766081871
+              }
+            },
+            "I1": {
+              "1x2": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.0086342643266182,
+                "brier": 0.601619980850537
+              },
+              "ah_home_0": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.0086342643266182,
+                "brier": 0.601619980850537
+              },
+              "ou_over_2_5": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 0.6858069055198053,
+                "brier": 0.2462090337202434,
+                "mean_predicted_probability": 0.5478680783069169,
+                "observed_rate": 0.565359477124183
+              }
+            },
+            "SP1": {
+              "1x2": {
+                "n_predicted": 380,
+                "n_test_total": 380,
+                "log_loss": 1.0166478025621077,
+                "brier": 0.6070020758988766
+              },
+              "ah_home_0": {
+                "n_predicted": 380,
+                "n_test_total": 380,
+                "log_loss": 1.0166478025621077,
+                "brier": 0.6070020758988766
+              },
+              "ou_over_2_5": {
+                "n_predicted": 380,
+                "n_test_total": 380,
+                "log_loss": 0.7019248467135013,
+                "brier": 0.25369447985689025,
+                "mean_predicted_probability": 0.4885225559404231,
+                "observed_rate": 0.44473684210526315
+              }
+            }
+          }
+        },
+        {
+          "season": "2223",
+          "league_metrics": {
+            "B1": {
+              "1x2": {
+                "n_predicted": 272,
+                "n_test_total": 306,
+                "log_loss": 0.9566979775943326,
+                "brier": 0.5653647447327613
+              },
+              "ah_home_0": {
+                "n_predicted": 272,
+                "n_test_total": 306,
+                "log_loss": 0.9566979775943326,
+                "brier": 0.5653647447327613
+              },
+              "ou_over_2_5": {
+                "n_predicted": 272,
+                "n_test_total": 306,
+                "log_loss": 0.6613177070608462,
+                "brier": 0.23427114999743273,
+                "mean_predicted_probability": 0.5547329263095879,
+                "observed_rate": 0.5845588235294118
+              }
+            },
+            "D1": {
+              "1x2": {
+                "n_predicted": 306,
+                "n_test_total": 306,
+                "log_loss": 1.0024465335175323,
+                "brier": 0.5990129556900815
+              },
+              "ah_home_0": {
+                "n_predicted": 306,
+                "n_test_total": 306,
+                "log_loss": 1.0024465335175323,
+                "brier": 0.5990129556900815
+              },
+              "ou_over_2_5": {
+                "n_predicted": 306,
+                "n_test_total": 306,
+                "log_loss": 0.67056752599493,
+                "brier": 0.23851384972595394,
+                "mean_predicted_probability": 0.5814504229392923,
+                "observed_rate": 0.6045751633986928
+              }
+            },
+            "E0": {
+              "1x2": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 1.0260638065671228,
+                "brier": 0.6143000524504931
+              },
+              "ah_home_0": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 1.0260638065671228,
+                "brier": 0.6143000524504931
+              },
+              "ou_over_2_5": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.6851548170242301,
+                "brier": 0.24627816267139352,
+                "mean_predicted_probability": 0.5371942685033192,
+                "observed_rate": 0.5350877192982456
+              }
+            },
+            "F1": {
+              "1x2": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.025731225463734,
+                "brier": 0.6107464023248536
+              },
+              "ah_home_0": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.025731225463734,
+                "brier": 0.6107464023248536
+              },
+              "ou_over_2_5": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 0.6910127951226447,
+                "brier": 0.24876980370152105,
+                "mean_predicted_probability": 0.5035715687657037,
+                "observed_rate": 0.5784313725490197
+              }
+            },
+            "I1": {
+              "1x2": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.0065975475025017,
+                "brier": 0.6004700004999106
+              },
+              "ah_home_0": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.0065975475025017,
+                "brier": 0.6004700004999106
+              },
+              "ou_over_2_5": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 0.738826600483813,
+                "brier": 0.2716418769608822,
+                "mean_predicted_probability": 0.5804975687966751,
+                "observed_rate": 0.4542483660130719
+              }
+            },
+            "SP1": {
+              "1x2": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.9939255512023427,
+                "brier": 0.5922484658190597
+              },
+              "ah_home_0": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.9939255512023427,
+                "brier": 0.5922484658190597
+              },
+              "ou_over_2_5": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.6960359791070978,
+                "brier": 0.2509576344397598,
+                "mean_predicted_probability": 0.4545325090085174,
+                "observed_rate": 0.4619883040935672
+              }
+            }
+          }
+        },
+        {
+          "season": "2324",
+          "league_metrics": {
+            "B1": {
+              "1x2": {
+                "n_predicted": 276,
+                "n_test_total": 312,
+                "log_loss": 1.0194452776113407,
+                "brier": 0.6109239113430348
+              },
+              "ah_home_0": {
+                "n_predicted": 276,
+                "n_test_total": 312,
+                "log_loss": 1.0194452776113407,
+                "brier": 0.6109239113430348
+              },
+              "ou_over_2_5": {
+                "n_predicted": 276,
+                "n_test_total": 312,
+                "log_loss": 0.6833529564846406,
+                "brier": 0.24514499238577261,
+                "mean_predicted_probability": 0.5562735877561685,
+                "observed_rate": 0.532608695652174
+              }
+            },
+            "D1": {
+              "1x2": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.0178438774284957,
+                "brier": 0.6083178972425396
+              },
+              "ah_home_0": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.0178438774284957,
+                "brier": 0.6083178972425396
+              },
+              "ou_over_2_5": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 0.6499745310697359,
+                "brier": 0.2287376752320283,
+                "mean_predicted_probability": 0.5989002922171508,
+                "observed_rate": 0.6375
+              }
+            },
+            "E0": {
+              "1x2": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.9497217127737836,
+                "brier": 0.5612620036331217
+              },
+              "ah_home_0": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.9497217127737836,
+                "brier": 0.5612620036331217
+              },
+              "ou_over_2_5": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.7068553567121325,
+                "brier": 0.2561897905112098,
+                "mean_predicted_probability": 0.49237335071454597,
+                "observed_rate": 0.6403508771929824
+              }
+            },
+            "F1": {
+              "1x2": {
+                "n_predicted": 272,
+                "n_test_total": 306,
+                "log_loss": 1.0324835044549616,
+                "brier": 0.6178551322768433
+              },
+              "ah_home_0": {
+                "n_predicted": 272,
+                "n_test_total": 306,
+                "log_loss": 1.0324835044549616,
+                "brier": 0.6178551322768433
+              },
+              "ou_over_2_5": {
+                "n_predicted": 272,
+                "n_test_total": 306,
+                "log_loss": 0.6839626270358949,
+                "brier": 0.24544137869748064,
+                "mean_predicted_probability": 0.5120592212468718,
+                "observed_rate": 0.5330882352941176
+              }
+            },
+            "I1": {
+              "1x2": {
+                "n_predicted": 380,
+                "n_test_total": 380,
+                "log_loss": 1.002372678799968,
+                "brier": 0.6011843951750407
+              },
+              "ah_home_0": {
+                "n_predicted": 380,
+                "n_test_total": 380,
+                "log_loss": 1.002372678799968,
+                "brier": 0.6011843951750407
+              },
+              "ou_over_2_5": {
+                "n_predicted": 380,
+                "n_test_total": 380,
+                "log_loss": 0.689927980754661,
+                "brier": 0.24832114367993668,
+                "mean_predicted_probability": 0.5179223393526932,
+                "observed_rate": 0.4921052631578947
+              }
+            },
+            "SP1": {
+              "1x2": {
+                "n_predicted": 380,
+                "n_test_total": 380,
+                "log_loss": 0.9993733986906561,
+                "brier": 0.5948273331673511
+              },
+              "ah_home_0": {
+                "n_predicted": 380,
+                "n_test_total": 380,
+                "log_loss": 0.9993733986906561,
+                "brier": 0.5948273331673511
+              },
+              "ou_over_2_5": {
+                "n_predicted": 380,
+                "n_test_total": 380,
+                "log_loss": 0.6647845339788766,
+                "brier": 0.2359219462203778,
+                "mean_predicted_probability": 0.47977218529232,
+                "observed_rate": 0.4605263157894737
+              }
+            }
+          }
+        },
+        {
+          "season": "2425",
+          "league_metrics": {
+            "B1": {
+              "1x2": {
+                "n_predicted": 272,
+                "n_test_total": 312,
+                "log_loss": 1.0030925476647814,
+                "brier": 0.5973845965930585
+              },
+              "ah_home_0": {
+                "n_predicted": 272,
+                "n_test_total": 312,
+                "log_loss": 1.0030925476647814,
+                "brier": 0.5973845965930585
+              },
+              "ou_over_2_5": {
+                "n_predicted": 272,
+                "n_test_total": 312,
+                "log_loss": 0.6863772409149758,
+                "brier": 0.24678851981564578,
+                "mean_predicted_probability": 0.556854675507031,
+                "observed_rate": 0.5110294117647058
+              }
+            },
+            "D1": {
+              "1x2": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.0338353934503248,
+                "brier": 0.6190367819170668
+              },
+              "ah_home_0": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.0338353934503248,
+                "brier": 0.6190367819170668
+              },
+              "ou_over_2_5": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 0.654318965527828,
+                "brier": 0.23117783912303827,
+                "mean_predicted_probability": 0.6046965648358966,
+                "observed_rate": 0.6208333333333333
+              }
+            },
+            "E0": {
+              "1x2": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 1.066779188145103,
+                "brier": 0.6444117521885547
+              },
+              "ah_home_0": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 1.066779188145103,
+                "brier": 0.6444117521885547
+              },
+              "ou_over_2_5": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.6903467563635828,
+                "brier": 0.24866015580786818,
+                "mean_predicted_probability": 0.5466006357422999,
+                "observed_rate": 0.564327485380117
+              }
+            },
+            "F1": {
+              "1x2": {
+                "n_predicted": 306,
+                "n_test_total": 306,
+                "log_loss": 0.9895158956894827,
+                "brier": 0.5883681980916985
+              },
+              "ah_home_0": {
+                "n_predicted": 306,
+                "n_test_total": 306,
+                "log_loss": 0.9895158956894827,
+                "brier": 0.5883681980916985
+              },
+              "ou_over_2_5": {
+                "n_predicted": 306,
+                "n_test_total": 306,
+                "log_loss": 0.6818649738610278,
+                "brier": 0.2443749974235346,
+                "mean_predicted_probability": 0.49344391154627554,
+                "observed_rate": 0.5555555555555556
+              }
+            },
+            "I1": {
+              "1x2": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.9794954358033365,
+                "brier": 0.5859257291306509
+              },
+              "ah_home_0": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.9794954358033365,
+                "brier": 0.5859257291306509
+              },
+              "ou_over_2_5": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.6819793969503454,
+                "brier": 0.24447086142708171,
+                "mean_predicted_probability": 0.5013731389981504,
+                "observed_rate": 0.4853801169590643
+              }
+            },
+            "SP1": {
+              "1x2": {
+                "n_predicted": 380,
+                "n_test_total": 380,
+                "log_loss": 0.9821072840149316,
+                "brier": 0.5832328281243028
+              },
+              "ah_home_0": {
+                "n_predicted": 380,
+                "n_test_total": 380,
+                "log_loss": 0.9821072840149316,
+                "brier": 0.5832328281243028
+              },
+              "ou_over_2_5": {
+                "n_predicted": 380,
+                "n_test_total": 380,
+                "log_loss": 0.6733370441205119,
+                "brier": 0.24010536384341252,
+                "mean_predicted_probability": 0.44532708270352067,
+                "observed_rate": 0.4868421052631579
+              }
+            }
+          }
+        },
+        {
+          "season": "2526",
+          "league_metrics": {
+            "B1": {
+              "1x2": {
+                "n_predicted": 276,
+                "n_test_total": 311,
+                "log_loss": 1.0220875931221507,
+                "brier": 0.6133218289867259
+              },
+              "ah_home_0": {
+                "n_predicted": 276,
+                "n_test_total": 311,
+                "log_loss": 1.0220875931221507,
+                "brier": 0.6133218289867259
+              },
+              "ou_over_2_5": {
+                "n_predicted": 276,
+                "n_test_total": 311,
+                "log_loss": 0.7085040706725902,
+                "brier": 0.25723272375009676,
+                "mean_predicted_probability": 0.55763010326294,
+                "observed_rate": 0.4963768115942029
+              }
+            },
+            "D1": {
+              "1x2": {
+                "n_predicted": 306,
+                "n_test_total": 306,
+                "log_loss": 0.9718254071968366,
+                "brier": 0.5760572450974175
+              },
+              "ah_home_0": {
+                "n_predicted": 306,
+                "n_test_total": 306,
+                "log_loss": 0.9718254071968366,
+                "brier": 0.5760572450974175
+              },
+              "ou_over_2_5": {
+                "n_predicted": 306,
+                "n_test_total": 306,
+                "log_loss": 0.6648817854205562,
+                "brier": 0.2365399406680982,
+                "mean_predicted_probability": 0.5530990561644819,
+                "observed_rate": 0.6372549019607843
+              }
+            },
+            "E0": {
+              "1x2": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 1.0470848116603866,
+                "brier": 0.6301525789480439
+              },
+              "ah_home_0": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 1.0470848116603866,
+                "brier": 0.6301525789480439
+              },
+              "ou_over_2_5": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.678416962218842,
+                "brier": 0.24269095247728403,
+                "mean_predicted_probability": 0.5437643304416986,
+                "observed_rate": 0.5614035087719298
+              }
+            },
+            "F1": {
+              "1x2": {
+                "n_predicted": 272,
+                "n_test_total": 306,
+                "log_loss": 0.9757620073524139,
+                "brier": 0.5813734601162799
+              },
+              "ah_home_0": {
+                "n_predicted": 272,
+                "n_test_total": 306,
+                "log_loss": 0.9757620073524139,
+                "brier": 0.5813734601162799
+              },
+              "ou_over_2_5": {
+                "n_predicted": 272,
+                "n_test_total": 306,
+                "log_loss": 0.6823978910061822,
+                "brier": 0.24466776881965366,
+                "mean_predicted_probability": 0.5288823584264238,
+                "observed_rate": 0.5220588235294118
+              }
+            },
+            "I1": {
+              "1x2": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 1.0050000400297374,
+                "brier": 0.6015227427398407
+              },
+              "ah_home_0": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 1.0050000400297374,
+                "brier": 0.6015227427398407
+              },
+              "ou_over_2_5": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.71457760278321,
+                "brier": 0.26059769771906416,
+                "mean_predicted_probability": 0.5121754137032614,
+                "observed_rate": 0.4502923976608187
+              }
+            },
+            "SP1": {
+              "1x2": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.9828621603222933,
+                "brier": 0.5836829448574912
+              },
+              "ah_home_0": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.9828621603222933,
+                "brier": 0.5836829448574912
+              },
+              "ou_over_2_5": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.6887427939616798,
+                "brier": 0.24786292305471344,
+                "mean_predicted_probability": 0.4747956472130727,
+                "observed_rate": 0.5116959064327485
+              }
+            }
+          }
+        },
+        {
+          "season": "2627",
+          "league_metrics": {
+            "B1": {
+              "1x2": {
+                "n_predicted": 57,
+                "n_test_total": 72,
+                "log_loss": 0.8937527251732209,
+                "brier": 0.5212284751807839
+              },
+              "ah_home_0": {
+                "n_predicted": 57,
+                "n_test_total": 72,
+                "log_loss": 0.8937527251732209,
+                "brier": 0.5212284751807839
+              },
+              "ou_over_2_5": {
+                "n_predicted": 57,
+                "n_test_total": 72,
+                "log_loss": 0.7120506372684208,
+                "brier": 0.25942431356276796,
+                "mean_predicted_probability": 0.5264515545340738,
+                "observed_rate": 0.6491228070175439
+              }
+            },
+            "D1": {
+              "1x2": {
+                "n_predicted": 48,
+                "n_test_total": 54,
+                "log_loss": 0.9749706048734673,
+                "brier": 0.5842965399845803
+              },
+              "ah_home_0": {
+                "n_predicted": 48,
+                "n_test_total": 54,
+                "log_loss": 0.9749706048734673,
+                "brier": 0.5842965399845803
+              },
+              "ou_over_2_5": {
+                "n_predicted": 48,
+                "n_test_total": 54,
+                "log_loss": 0.6143564491481467,
+                "brier": 0.21229074895069402,
+                "mean_predicted_probability": 0.5975917281574744,
+                "observed_rate": 0.75
+              }
+            },
+            "E0": {
+              "1x2": {
+                "n_predicted": 57,
+                "n_test_total": 70,
+                "log_loss": 1.0217606074914964,
+                "brier": 0.6139993149364374
+              },
+              "ah_home_0": {
+                "n_predicted": 57,
+                "n_test_total": 70,
+                "log_loss": 1.0217606074914964,
+                "brier": 0.6139993149364374
+              },
+              "ou_over_2_5": {
+                "n_predicted": 57,
+                "n_test_total": 70,
+                "log_loss": 0.6711963244624465,
+                "brier": 0.2395582715245115,
+                "mean_predicted_probability": 0.5453712952433033,
+                "observed_rate": 0.543859649122807
+              }
+            },
+            "F1": {
+              "1x2": {
+                "n_predicted": 56,
+                "n_test_total": 63,
+                "log_loss": 0.9824843885101033,
+                "brier": 0.5839032299338368
+              },
+              "ah_home_0": {
+                "n_predicted": 56,
+                "n_test_total": 63,
+                "log_loss": 0.9824843885101033,
+                "brier": 0.5839032299338368
+              },
+              "ou_over_2_5": {
+                "n_predicted": 56,
+                "n_test_total": 63,
+                "log_loss": 0.695142370260634,
+                "brier": 0.2510540991907569,
+                "mean_predicted_probability": 0.5293487692492096,
+                "observed_rate": 0.6071428571428571
+              }
+            },
+            "I1": {
+              "1x2": {
+                "n_predicted": 70,
+                "n_test_total": 70,
+                "log_loss": 0.9367065684909776,
+                "brier": 0.5473918007153674
+              },
+              "ah_home_0": {
+                "n_predicted": 70,
+                "n_test_total": 70,
+                "log_loss": 0.9367065684909776,
+                "brier": 0.5473918007153674
+              },
+              "ou_over_2_5": {
+                "n_predicted": 70,
+                "n_test_total": 70,
+                "log_loss": 0.6894991488351576,
+                "brier": 0.24827899914997376,
+                "mean_predicted_probability": 0.49478294259157546,
+                "observed_rate": 0.6
+              }
+            },
+            "SP1": {
+              "1x2": {
+                "n_predicted": 79,
+                "n_test_total": 88,
+                "log_loss": 0.948397084745468,
+                "brier": 0.5622818446643143
+              },
+              "ah_home_0": {
+                "n_predicted": 79,
+                "n_test_total": 88,
+                "log_loss": 0.948397084745468,
+                "brier": 0.5622818446643143
+              },
+              "ou_over_2_5": {
+                "n_predicted": 79,
+                "n_test_total": 88,
+                "log_loss": 0.656690833062456,
+                "brier": 0.23231218793118122,
+                "mean_predicted_probability": 0.4803203628423205,
+                "observed_rate": 0.5316455696202531
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "model": "dixon_coles",
+      "overall_metrics": {
+        "1x2": {
+          "n_predicted": 14696,
+          "n_test_total": 17027,
+          "log_loss": 1.004154675372286,
+          "brier": 0.5994996132227824
+        },
+        "ah_home_0": {
+          "n_predicted": 14696,
+          "n_test_total": 17027,
+          "log_loss": 1.004154675372286,
+          "brier": 0.5994996132227824
+        },
+        "ou_over_2_5": {
+          "n_predicted": 14696,
+          "n_test_total": 17027,
+          "log_loss": 0.6864678329830124,
+          "brier": 0.24651003588714346,
+          "mean_predicted_probability": 0.5219404940003076,
+          "observed_rate": 0.5358600979858464
+        }
+      },
+      "by_test_season": [
+        {
+          "season": "1819",
+          "league_metrics": {
+            "B1": {
+              "1x2": {
+                "n_predicted": 210,
+                "n_test_total": 240,
+                "log_loss": 1.0440526369945475,
+                "brier": 0.6256538361733488
+              },
+              "ah_home_0": {
+                "n_predicted": 210,
+                "n_test_total": 240,
+                "log_loss": 1.0440526369945475,
+                "brier": 0.6256538361733488
+              },
+              "ou_over_2_5": {
+                "n_predicted": 210,
+                "n_test_total": 240,
+                "log_loss": 0.6892874860922864,
+                "brier": 0.2478086669177812,
+                "mean_predicted_probability": 0.5425276609389558,
+                "observed_rate": 0.580952380952381
+              }
+            },
+            "D1": {
+              "1x2": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.029484035290992,
+                "brier": 0.6146245031160533
+              },
+              "ah_home_0": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.029484035290992,
+                "brier": 0.6146245031160533
+              },
+              "ou_over_2_5": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 0.7118607301859609,
+                "brier": 0.2585883698520394,
+                "mean_predicted_probability": 0.5210455560546208,
+                "observed_rate": 0.6416666666666667
+              }
+            },
+            "E0": {
+              "1x2": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 0.8976129577264621,
+                "brier": 0.5245973697629767
+              },
+              "ah_home_0": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 0.8976129577264621,
+                "brier": 0.5245973697629767
+              },
+              "ou_over_2_5": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 0.7089309157354823,
+                "brier": 0.25677297399330223,
+                "mean_predicted_probability": 0.5129028062776949,
+                "observed_rate": 0.5588235294117647
+              }
+            },
+            "F1": {
+              "1x2": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.0576610120993788,
+                "brier": 0.6355680267882262
+              },
+              "ah_home_0": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.0576610120993788,
+                "brier": 0.6355680267882262
+              },
+              "ou_over_2_5": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 0.6962769591486441,
+                "brier": 0.25053029660829185,
+                "mean_predicted_probability": 0.4968568989402698,
+                "observed_rate": 0.4869281045751634
+              }
+            },
+            "I1": {
+              "1x2": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 0.9882754667202872,
+                "brier": 0.5898443005338158
+              },
+              "ah_home_0": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 0.9882754667202872,
+                "brier": 0.5898443005338158
+              },
+              "ou_over_2_5": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 0.708502472797619,
+                "brier": 0.25728018423220017,
+                "mean_predicted_probability": 0.4697527317567568,
+                "observed_rate": 0.4963235294117647
+              }
+            },
+            "SP1": {
+              "1x2": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 1.0334573258352908,
+                "brier": 0.6205948732359255
+              },
+              "ah_home_0": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 1.0334573258352908,
+                "brier": 0.6205948732359255
+              },
+              "ou_over_2_5": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 0.674011073032065,
+                "brier": 0.23957655033016156,
+                "mean_predicted_probability": 0.49586498797496076,
+                "observed_rate": 0.45588235294117646
+              }
+            }
+          }
+        },
+        {
+          "season": "1920",
+          "league_metrics": {
+            "B1": {
+              "1x2": {
+                "n_predicted": 232,
+                "n_test_total": 232,
+                "log_loss": 0.973139163651772,
+                "brier": 0.5750356057051872
+              },
+              "ah_home_0": {
+                "n_predicted": 232,
+                "n_test_total": 232,
+                "log_loss": 0.973139163651772,
+                "brier": 0.5750356057051872
+              },
+              "ou_over_2_5": {
+                "n_predicted": 232,
+                "n_test_total": 232,
+                "log_loss": 0.7046111728271583,
+                "brier": 0.2553178878019341,
+                "mean_predicted_probability": 0.5493343293440371,
+                "observed_rate": 0.5646551724137931
+              }
+            },
+            "D1": {
+              "1x2": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.0228528298437738,
+                "brier": 0.6123977622651515
+              },
+              "ah_home_0": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.0228528298437738,
+                "brier": 0.6123977622651515
+              },
+              "ou_over_2_5": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 0.6476597323612626,
+                "brier": 0.22823915804447367,
+                "mean_predicted_probability": 0.5992278331564622,
+                "observed_rate": 0.6666666666666666
+              }
+            },
+            "E0": {
+              "1x2": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 0.9847113917400657,
+                "brier": 0.5847537425251516
+              },
+              "ah_home_0": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 0.9847113917400657,
+                "brier": 0.5847537425251516
+              },
+              "ou_over_2_5": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 0.66936755681232,
+                "brier": 0.23840300944262408,
+                "mean_predicted_probability": 0.526627851031014,
+                "observed_rate": 0.5441176470588235
+              }
+            },
+            "F1": {
+              "1x2": {
+                "n_predicted": 251,
+                "n_test_total": 279,
+                "log_loss": 1.0053651094382052,
+                "brier": 0.6030763650386122
+              },
+              "ah_home_0": {
+                "n_predicted": 251,
+                "n_test_total": 279,
+                "log_loss": 1.0053651094382052,
+                "brier": 0.6030763650386122
+              },
+              "ou_over_2_5": {
+                "n_predicted": 251,
+                "n_test_total": 279,
+                "log_loss": 0.7077972015038944,
+                "brier": 0.25646672541471904,
+                "mean_predicted_probability": 0.4984261081989295,
+                "observed_rate": 0.47410358565737054
+              }
+            },
+            "I1": {
+              "1x2": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.0239170519333503,
+                "brier": 0.6126960375841095
+              },
+              "ah_home_0": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.0239170519333503,
+                "brier": 0.6126960375841095
+              },
+              "ou_over_2_5": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 0.7067306914021427,
+                "brier": 0.25649507925884746,
+                "mean_predicted_probability": 0.48976025214899405,
+                "observed_rate": 0.6143790849673203
+              }
+            },
+            "SP1": {
+              "1x2": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 0.9973882089240715,
+                "brier": 0.6006465811320021
+              },
+              "ah_home_0": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 0.9973882089240715,
+                "brier": 0.6006465811320021
+              },
+              "ou_over_2_5": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 0.65432045990973,
+                "brier": 0.23131028623186345,
+                "mean_predicted_probability": 0.4688227659622407,
+                "observed_rate": 0.44485294117647056
+              }
+            }
+          }
+        },
+        {
+          "season": "2021",
+          "league_metrics": {
+            "B1": {
+              "1x2": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.0439222618590065,
+                "brier": 0.6291091794218595
+              },
+              "ah_home_0": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.0439222618590065,
+                "brier": 0.6291091794218595
+              },
+              "ou_over_2_5": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 0.6725537249164438,
+                "brier": 0.24013972620054236,
+                "mean_predicted_probability": 0.5458346728987377,
+                "observed_rate": 0.5625
+              }
+            },
+            "D1": {
+              "1x2": {
+                "n_predicted": 272,
+                "n_test_total": 306,
+                "log_loss": 1.0244802311969494,
+                "brier": 0.613846626580331
+              },
+              "ah_home_0": {
+                "n_predicted": 272,
+                "n_test_total": 306,
+                "log_loss": 1.0244802311969494,
+                "brier": 0.613846626580331
+              },
+              "ou_over_2_5": {
+                "n_predicted": 272,
+                "n_test_total": 306,
+                "log_loss": 0.6623745231450734,
+                "brier": 0.2352556707312885,
+                "mean_predicted_probability": 0.5841381218286382,
+                "observed_rate": 0.6102941176470589
+              }
+            },
+            "E0": {
+              "1x2": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 1.0448558745582444,
+                "brier": 0.6214714683560503
+              },
+              "ah_home_0": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 1.0448558745582444,
+                "brier": 0.6214714683560503
+              },
+              "ou_over_2_5": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.7095968599801568,
+                "brier": 0.2573604651735487,
+                "mean_predicted_probability": 0.49665040291271595,
+                "observed_rate": 0.49122807017543857
+              }
+            },
+            "F1": {
+              "1x2": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.0400081506684733,
+                "brier": 0.6224947099082062
+              },
+              "ah_home_0": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.0400081506684733,
+                "brier": 0.6224947099082062
+              },
+              "ou_over_2_5": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 0.7150251943676212,
+                "brier": 0.25962395389049464,
+                "mean_predicted_probability": 0.4906358954057581,
+                "observed_rate": 0.5392156862745098
+              }
+            },
+            "I1": {
+              "1x2": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.9594521149017945,
+                "brier": 0.5685322206362441
+              },
+              "ah_home_0": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.9594521149017945,
+                "brier": 0.5685322206362441
+              },
+              "ou_over_2_5": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.6909410936290683,
+                "brier": 0.24866834174229568,
+                "mean_predicted_probability": 0.5296301296878152,
+                "observed_rate": 0.5467836257309941
+              }
+            },
+            "SP1": {
+              "1x2": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.003017733409642,
+                "brier": 0.5997971587791561
+              },
+              "ah_home_0": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.003017733409642,
+                "brier": 0.5997971587791561
+              },
+              "ou_over_2_5": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 0.691247521315599,
+                "brier": 0.2485649399457314,
+                "mean_predicted_probability": 0.48585904980348804,
+                "observed_rate": 0.4444444444444444
+              }
+            }
+          }
+        },
+        {
+          "season": "2122",
+          "league_metrics": {
+            "B1": {
+              "1x2": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.0317546518064011,
+                "brier": 0.6206077282904978
+              },
+              "ah_home_0": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.0317546518064011,
+                "brier": 0.6206077282904978
+              },
+              "ou_over_2_5": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 0.6889711228111637,
+                "brier": 0.24742360785516204,
+                "mean_predicted_probability": 0.5731569644988396,
+                "observed_rate": 0.5416666666666666
+              }
+            },
+            "D1": {
+              "1x2": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.0189345783608497,
+                "brier": 0.6087718600752516
+              },
+              "ah_home_0": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.0189345783608497,
+                "brier": 0.6087718600752516
+              },
+              "ou_over_2_5": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 0.646509682407292,
+                "brier": 0.22747548061142933,
+                "mean_predicted_probability": 0.5759235243489241,
+                "observed_rate": 0.5916666666666667
+              }
+            },
+            "E0": {
+              "1x2": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.9443213146849683,
+                "brier": 0.5598798474390436
+              },
+              "ah_home_0": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.9443213146849683,
+                "brier": 0.5598798474390436
+              },
+              "ou_over_2_5": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.667630572629729,
+                "brier": 0.23746596648350973,
+                "mean_predicted_probability": 0.5267954620075961,
+                "observed_rate": 0.5350877192982456
+              }
+            },
+            "F1": {
+              "1x2": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 1.0260096990199394,
+                "brier": 0.6168983640883134
+              },
+              "ah_home_0": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 1.0260096990199394,
+                "brier": 0.6168983640883134
+              },
+              "ou_over_2_5": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.6947347651939246,
+                "brier": 0.2502657693952914,
+                "mean_predicted_probability": 0.5004926574892806,
+                "observed_rate": 0.5029239766081871
+              }
+            },
+            "I1": {
+              "1x2": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.006790884229597,
+                "brier": 0.6004612618175114
+              },
+              "ah_home_0": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.006790884229597,
+                "brier": 0.6004612618175114
+              },
+              "ou_over_2_5": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 0.685836389322214,
+                "brier": 0.24622216437506828,
+                "mean_predicted_probability": 0.5479537278682571,
+                "observed_rate": 0.565359477124183
+              }
+            },
+            "SP1": {
+              "1x2": {
+                "n_predicted": 380,
+                "n_test_total": 380,
+                "log_loss": 1.014512668068078,
+                "brier": 0.6058655521508423
+              },
+              "ah_home_0": {
+                "n_predicted": 380,
+                "n_test_total": 380,
+                "log_loss": 1.014512668068078,
+                "brier": 0.6058655521508423
+              },
+              "ou_over_2_5": {
+                "n_predicted": 380,
+                "n_test_total": 380,
+                "log_loss": 0.7019672005744096,
+                "brier": 0.2537120481005005,
+                "mean_predicted_probability": 0.4885519070140459,
+                "observed_rate": 0.44473684210526315
+              }
+            }
+          }
+        },
+        {
+          "season": "2223",
+          "league_metrics": {
+            "B1": {
+              "1x2": {
+                "n_predicted": 272,
+                "n_test_total": 306,
+                "log_loss": 0.9575731022633103,
+                "brier": 0.5657625374146965
+              },
+              "ah_home_0": {
+                "n_predicted": 272,
+                "n_test_total": 306,
+                "log_loss": 0.9575731022633103,
+                "brier": 0.5657625374146965
+              },
+              "ou_over_2_5": {
+                "n_predicted": 272,
+                "n_test_total": 306,
+                "log_loss": 0.6613040669231103,
+                "brier": 0.23426486436510097,
+                "mean_predicted_probability": 0.5547116819362419,
+                "observed_rate": 0.5845588235294118
+              }
+            },
+            "D1": {
+              "1x2": {
+                "n_predicted": 306,
+                "n_test_total": 306,
+                "log_loss": 1.001265191405447,
+                "brier": 0.5987634351764584
+              },
+              "ah_home_0": {
+                "n_predicted": 306,
+                "n_test_total": 306,
+                "log_loss": 1.001265191405447,
+                "brier": 0.5987634351764584
+              },
+              "ou_over_2_5": {
+                "n_predicted": 306,
+                "n_test_total": 306,
+                "log_loss": 0.6706696364387407,
+                "brier": 0.23856038988850606,
+                "mean_predicted_probability": 0.5808442815068711,
+                "observed_rate": 0.6045751633986928
+              }
+            },
+            "E0": {
+              "1x2": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 1.027412666513981,
+                "brier": 0.6146024532636244
+              },
+              "ah_home_0": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 1.027412666513981,
+                "brier": 0.6146024532636244
+              },
+              "ou_over_2_5": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.6851031199061053,
+                "brier": 0.24625289500336078,
+                "mean_predicted_probability": 0.5371167061850683,
+                "observed_rate": 0.5350877192982456
+              }
+            },
+            "F1": {
+              "1x2": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.025765657578411,
+                "brier": 0.6106232599456678
+              },
+              "ah_home_0": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.025765657578411,
+                "brier": 0.6106232599456678
+              },
+              "ou_over_2_5": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 0.6911258515505824,
+                "brier": 0.24882253498741824,
+                "mean_predicted_probability": 0.5033947308123826,
+                "observed_rate": 0.5784313725490197
+              }
+            },
+            "I1": {
+              "1x2": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.004115695384801,
+                "brier": 0.5992019027061078
+              },
+              "ah_home_0": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.004115695384801,
+                "brier": 0.5992019027061078
+              },
+              "ou_over_2_5": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 0.738821470756253,
+                "brier": 0.27163628398220674,
+                "mean_predicted_probability": 0.5804653229327434,
+                "observed_rate": 0.4542483660130719
+              }
+            },
+            "SP1": {
+              "1x2": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.9952126108444554,
+                "brier": 0.5929958939392914
+              },
+              "ah_home_0": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.9952126108444554,
+                "brier": 0.5929958939392914
+              },
+              "ou_over_2_5": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.6961954867958071,
+                "brier": 0.2510302268637269,
+                "mean_predicted_probability": 0.45459753728948443,
+                "observed_rate": 0.4619883040935672
+              }
+            }
+          }
+        },
+        {
+          "season": "2324",
+          "league_metrics": {
+            "B1": {
+              "1x2": {
+                "n_predicted": 276,
+                "n_test_total": 312,
+                "log_loss": 1.0178712321396968,
+                "brier": 0.6101459436845075
+              },
+              "ah_home_0": {
+                "n_predicted": 276,
+                "n_test_total": 312,
+                "log_loss": 1.0178712321396968,
+                "brier": 0.6101459436845075
+              },
+              "ou_over_2_5": {
+                "n_predicted": 276,
+                "n_test_total": 312,
+                "log_loss": 0.6832829604197678,
+                "brier": 0.24511073437795852,
+                "mean_predicted_probability": 0.5564299439949112,
+                "observed_rate": 0.532608695652174
+              }
+            },
+            "D1": {
+              "1x2": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.0149934267053815,
+                "brier": 0.6062048650014019
+              },
+              "ah_home_0": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.0149934267053815,
+                "brier": 0.6062048650014019
+              },
+              "ou_over_2_5": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 0.6503018408748108,
+                "brier": 0.22888277014797254,
+                "mean_predicted_probability": 0.5986533358548111,
+                "observed_rate": 0.6375
+              }
+            },
+            "E0": {
+              "1x2": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.9503537652100492,
+                "brier": 0.5616178074858322
+              },
+              "ah_home_0": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.9503537652100492,
+                "brier": 0.5616178074858322
+              },
+              "ou_over_2_5": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.7069771427583252,
+                "brier": 0.25624430606319526,
+                "mean_predicted_probability": 0.4922310877326391,
+                "observed_rate": 0.6403508771929824
+              }
+            },
+            "F1": {
+              "1x2": {
+                "n_predicted": 272,
+                "n_test_total": 306,
+                "log_loss": 1.0321159931147739,
+                "brier": 0.6176804001584958
+              },
+              "ah_home_0": {
+                "n_predicted": 272,
+                "n_test_total": 306,
+                "log_loss": 1.0321159931147739,
+                "brier": 0.6176804001584958
+              },
+              "ou_over_2_5": {
+                "n_predicted": 272,
+                "n_test_total": 306,
+                "log_loss": 0.6839449234042287,
+                "brier": 0.24543338307443796,
+                "mean_predicted_probability": 0.5119870008543117,
+                "observed_rate": 0.5330882352941176
+              }
+            },
+            "I1": {
+              "1x2": {
+                "n_predicted": 380,
+                "n_test_total": 380,
+                "log_loss": 0.9982552731111295,
+                "brier": 0.5990015927592781
+              },
+              "ah_home_0": {
+                "n_predicted": 380,
+                "n_test_total": 380,
+                "log_loss": 0.9982552731111295,
+                "brier": 0.5990015927592781
+              },
+              "ou_over_2_5": {
+                "n_predicted": 380,
+                "n_test_total": 380,
+                "log_loss": 0.6898781423669615,
+                "brier": 0.24829629966018843,
+                "mean_predicted_probability": 0.5177016808635926,
+                "observed_rate": 0.4921052631578947
+              }
+            },
+            "SP1": {
+              "1x2": {
+                "n_predicted": 380,
+                "n_test_total": 380,
+                "log_loss": 0.9980791704669822,
+                "brier": 0.5939490252102881
+              },
+              "ah_home_0": {
+                "n_predicted": 380,
+                "n_test_total": 380,
+                "log_loss": 0.9980791704669822,
+                "brier": 0.5939490252102881
+              },
+              "ou_over_2_5": {
+                "n_predicted": 380,
+                "n_test_total": 380,
+                "log_loss": 0.6647904707538573,
+                "brier": 0.23592414193512398,
+                "mean_predicted_probability": 0.47975699699698093,
+                "observed_rate": 0.4605263157894737
+              }
+            }
+          }
+        },
+        {
+          "season": "2425",
+          "league_metrics": {
+            "B1": {
+              "1x2": {
+                "n_predicted": 272,
+                "n_test_total": 312,
+                "log_loss": 1.0002564373391913,
+                "brier": 0.5960631209521206
+              },
+              "ah_home_0": {
+                "n_predicted": 272,
+                "n_test_total": 312,
+                "log_loss": 1.0002564373391913,
+                "brier": 0.5960631209521206
+              },
+              "ou_over_2_5": {
+                "n_predicted": 272,
+                "n_test_total": 312,
+                "log_loss": 0.686406618585154,
+                "brier": 0.24680306300355206,
+                "mean_predicted_probability": 0.5567383892595363,
+                "observed_rate": 0.5110294117647058
+              }
+            },
+            "D1": {
+              "1x2": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.0313958181863927,
+                "brier": 0.6167564928092938
+              },
+              "ah_home_0": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.0313958181863927,
+                "brier": 0.6167564928092938
+              },
+              "ou_over_2_5": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 0.6543270971769556,
+                "brier": 0.23116877462764027,
+                "mean_predicted_probability": 0.6036535632094817,
+                "observed_rate": 0.6208333333333333
+              }
+            },
+            "E0": {
+              "1x2": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 1.0671047986799946,
+                "brier": 0.6444166834727727
+              },
+              "ah_home_0": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 1.0671047986799946,
+                "brier": 0.6444166834727727
+              },
+              "ou_over_2_5": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.6903506355480319,
+                "brier": 0.24866229748399435,
+                "mean_predicted_probability": 0.546584840453032,
+                "observed_rate": 0.564327485380117
+              }
+            },
+            "F1": {
+              "1x2": {
+                "n_predicted": 306,
+                "n_test_total": 306,
+                "log_loss": 0.9916049622731268,
+                "brier": 0.5895406215935688
+              },
+              "ah_home_0": {
+                "n_predicted": 306,
+                "n_test_total": 306,
+                "log_loss": 0.9916049622731268,
+                "brier": 0.5895406215935688
+              },
+              "ou_over_2_5": {
+                "n_predicted": 306,
+                "n_test_total": 306,
+                "log_loss": 0.6819252462123896,
+                "brier": 0.24440373567182355,
+                "mean_predicted_probability": 0.4933987271678246,
+                "observed_rate": 0.5555555555555556
+              }
+            },
+            "I1": {
+              "1x2": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.9757629844921576,
+                "brier": 0.5842603710192767
+              },
+              "ah_home_0": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.9757629844921576,
+                "brier": 0.5842603710192767
+              },
+              "ou_over_2_5": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.6820745247055999,
+                "brier": 0.24451569098927434,
+                "mean_predicted_probability": 0.5011636418094694,
+                "observed_rate": 0.4853801169590643
+              }
+            },
+            "SP1": {
+              "1x2": {
+                "n_predicted": 380,
+                "n_test_total": 380,
+                "log_loss": 0.9820594376951682,
+                "brier": 0.583149135979051
+              },
+              "ah_home_0": {
+                "n_predicted": 380,
+                "n_test_total": 380,
+                "log_loss": 0.9820594376951682,
+                "brier": 0.583149135979051
+              },
+              "ou_over_2_5": {
+                "n_predicted": 380,
+                "n_test_total": 380,
+                "log_loss": 0.6733644355727249,
+                "brier": 0.24011742894153051,
+                "mean_predicted_probability": 0.44528868113347236,
+                "observed_rate": 0.4868421052631579
+              }
+            }
+          }
+        },
+        {
+          "season": "2526",
+          "league_metrics": {
+            "B1": {
+              "1x2": {
+                "n_predicted": 276,
+                "n_test_total": 311,
+                "log_loss": 1.0222165639277325,
+                "brier": 0.6132399906943965
+              },
+              "ah_home_0": {
+                "n_predicted": 276,
+                "n_test_total": 311,
+                "log_loss": 1.0222165639277325,
+                "brier": 0.6132399906943965
+              },
+              "ou_over_2_5": {
+                "n_predicted": 276,
+                "n_test_total": 311,
+                "log_loss": 0.7083751678718331,
+                "brier": 0.25717160161564034,
+                "mean_predicted_probability": 0.5573633291529267,
+                "observed_rate": 0.4963768115942029
+              }
+            },
+            "D1": {
+              "1x2": {
+                "n_predicted": 306,
+                "n_test_total": 306,
+                "log_loss": 0.9708791207596936,
+                "brier": 0.5761160228709683
+              },
+              "ah_home_0": {
+                "n_predicted": 306,
+                "n_test_total": 306,
+                "log_loss": 0.9708791207596936,
+                "brier": 0.5761160228709683
+              },
+              "ou_over_2_5": {
+                "n_predicted": 306,
+                "n_test_total": 306,
+                "log_loss": 0.6651737617586027,
+                "brier": 0.236678759646718,
+                "mean_predicted_probability": 0.552635600649303,
+                "observed_rate": 0.6372549019607843
+              }
+            },
+            "E0": {
+              "1x2": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 1.046362515053498,
+                "brier": 0.6296939717594708
+              },
+              "ah_home_0": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 1.046362515053498,
+                "brier": 0.6296939717594708
+              },
+              "ou_over_2_5": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.6784115758410301,
+                "brier": 0.2426878998995429,
+                "mean_predicted_probability": 0.5436881291333912,
+                "observed_rate": 0.5614035087719298
+              }
+            },
+            "F1": {
+              "1x2": {
+                "n_predicted": 272,
+                "n_test_total": 306,
+                "log_loss": 0.975513085459419,
+                "brier": 0.5813874617133562
+              },
+              "ah_home_0": {
+                "n_predicted": 272,
+                "n_test_total": 306,
+                "log_loss": 0.975513085459419,
+                "brier": 0.5813874617133562
+              },
+              "ou_over_2_5": {
+                "n_predicted": 272,
+                "n_test_total": 306,
+                "log_loss": 0.68240684274201,
+                "brier": 0.2446668478244358,
+                "mean_predicted_probability": 0.5285047776251429,
+                "observed_rate": 0.5220588235294118
+              }
+            },
+            "I1": {
+              "1x2": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 1.0042347477334,
+                "brier": 0.6010534076628169
+              },
+              "ah_home_0": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 1.0042347477334,
+                "brier": 0.6010534076628169
+              },
+              "ou_over_2_5": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.7144375004921639,
+                "brier": 0.2605301902237418,
+                "mean_predicted_probability": 0.511664758133242,
+                "observed_rate": 0.4502923976608187
+              }
+            },
+            "SP1": {
+              "1x2": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.9831128255692503,
+                "brier": 0.5838144299513084
+              },
+              "ah_home_0": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.9831128255692503,
+                "brier": 0.5838144299513084
+              },
+              "ou_over_2_5": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.6888202042244946,
+                "brier": 0.24790054752178123,
+                "mean_predicted_probability": 0.47468784113315055,
+                "observed_rate": 0.5116959064327485
+              }
+            }
+          }
+        },
+        {
+          "season": "2627",
+          "league_metrics": {
+            "B1": {
+              "1x2": {
+                "n_predicted": 57,
+                "n_test_total": 72,
+                "log_loss": 0.8963301319147041,
+                "brier": 0.524268282199367
+              },
+              "ah_home_0": {
+                "n_predicted": 57,
+                "n_test_total": 72,
+                "log_loss": 0.8963301319147041,
+                "brier": 0.524268282199367
+              },
+              "ou_over_2_5": {
+                "n_predicted": 57,
+                "n_test_total": 72,
+                "log_loss": 0.7117515726995409,
+                "brier": 0.2592737673049564,
+                "mean_predicted_probability": 0.5264325805370201,
+                "observed_rate": 0.6491228070175439
+              }
+            },
+            "D1": {
+              "1x2": {
+                "n_predicted": 48,
+                "n_test_total": 54,
+                "log_loss": 0.9786648385114658,
+                "brier": 0.587724327763336
+              },
+              "ah_home_0": {
+                "n_predicted": 48,
+                "n_test_total": 54,
+                "log_loss": 0.9786648385114658,
+                "brier": 0.587724327763336
+              },
+              "ou_over_2_5": {
+                "n_predicted": 48,
+                "n_test_total": 54,
+                "log_loss": 0.6149897523659456,
+                "brier": 0.21258264385705347,
+                "mean_predicted_probability": 0.5974787474264498,
+                "observed_rate": 0.75
+              }
+            },
+            "E0": {
+              "1x2": {
+                "n_predicted": 57,
+                "n_test_total": 70,
+                "log_loss": 1.0193562043424111,
+                "brier": 0.6127907183962469
+              },
+              "ah_home_0": {
+                "n_predicted": 57,
+                "n_test_total": 70,
+                "log_loss": 1.0193562043424111,
+                "brier": 0.6127907183962469
+              },
+              "ou_over_2_5": {
+                "n_predicted": 57,
+                "n_test_total": 70,
+                "log_loss": 0.671130176691415,
+                "brier": 0.23952444617638352,
+                "mean_predicted_probability": 0.545298949730201,
+                "observed_rate": 0.543859649122807
+              }
+            },
+            "F1": {
+              "1x2": {
+                "n_predicted": 56,
+                "n_test_total": 63,
+                "log_loss": 0.9833544597042063,
+                "brier": 0.5847199664368549
+              },
+              "ah_home_0": {
+                "n_predicted": 56,
+                "n_test_total": 63,
+                "log_loss": 0.9833544597042063,
+                "brier": 0.5847199664368549
+              },
+              "ou_over_2_5": {
+                "n_predicted": 56,
+                "n_test_total": 63,
+                "log_loss": 0.6950547187344964,
+                "brier": 0.2510102342719797,
+                "mean_predicted_probability": 0.5295337468797033,
+                "observed_rate": 0.6071428571428571
+              }
+            },
+            "I1": {
+              "1x2": {
+                "n_predicted": 70,
+                "n_test_total": 70,
+                "log_loss": 0.9417002776331921,
+                "brier": 0.5499242621652934
+              },
+              "ah_home_0": {
+                "n_predicted": 70,
+                "n_test_total": 70,
+                "log_loss": 0.9417002776331921,
+                "brier": 0.5499242621652934
+              },
+              "ou_over_2_5": {
+                "n_predicted": 70,
+                "n_test_total": 70,
+                "log_loss": 0.6894776206778809,
+                "brier": 0.24826931118867995,
+                "mean_predicted_probability": 0.49487139171494454,
+                "observed_rate": 0.6
+              }
+            },
+            "SP1": {
+              "1x2": {
+                "n_predicted": 79,
+                "n_test_total": 88,
+                "log_loss": 0.9465212992983283,
+                "brier": 0.5613195821453525
+              },
+              "ah_home_0": {
+                "n_predicted": 79,
+                "n_test_total": 88,
+                "log_loss": 0.9465212992983283,
+                "brier": 0.5613195821453525
+              },
+              "ou_over_2_5": {
+                "n_predicted": 79,
+                "n_test_total": 88,
+                "log_loss": 0.656767465009156,
+                "brier": 0.23234824654412742,
+                "mean_predicted_probability": 0.4804337729723599,
+                "observed_rate": 0.5316455696202531
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "model": "bivariate_poisson",
+      "overall_metrics": {
+        "1x2": {
+          "n_predicted": 14696,
+          "n_test_total": 17027,
+          "log_loss": 1.0041411940963654,
+          "brier": 0.5995231375836293
+        },
+        "ah_home_0": {
+          "n_predicted": 14696,
+          "n_test_total": 17027,
+          "log_loss": 1.0041411940963654,
+          "brier": 0.5995231375836293
+        },
+        "ou_over_2_5": {
+          "n_predicted": 14696,
+          "n_test_total": 17027,
+          "log_loss": 0.6864673291179005,
+          "brier": 0.246522253916115,
+          "mean_predicted_probability": 0.5188207035185105,
+          "observed_rate": 0.5358600979858464
+        }
+      },
+      "by_test_season": [
+        {
+          "season": "1819",
+          "league_metrics": {
+            "B1": {
+              "1x2": {
+                "n_predicted": 210,
+                "n_test_total": 240,
+                "log_loss": 1.0468865843245931,
+                "brier": 0.6268501387629068
+              },
+              "ah_home_0": {
+                "n_predicted": 210,
+                "n_test_total": 240,
+                "log_loss": 1.0468865843245931,
+                "brier": 0.6268501387629068
+              },
+              "ou_over_2_5": {
+                "n_predicted": 210,
+                "n_test_total": 240,
+                "log_loss": 0.6884220975617378,
+                "brier": 0.24737119171225064,
+                "mean_predicted_probability": 0.5331893262516539,
+                "observed_rate": 0.580952380952381
+              }
+            },
+            "D1": {
+              "1x2": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.0263639242846787,
+                "brier": 0.6133442886382743
+              },
+              "ah_home_0": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.0263639242846787,
+                "brier": 0.6133442886382743
+              },
+              "ou_over_2_5": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 0.7132076041275962,
+                "brier": 0.2592579688096293,
+                "mean_predicted_probability": 0.5180190260778007,
+                "observed_rate": 0.6416666666666667
+              }
+            },
+            "E0": {
+              "1x2": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 0.893159710605665,
+                "brier": 0.5222787424264145
+              },
+              "ah_home_0": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 0.893159710605665,
+                "brier": 0.5222787424264145
+              },
+              "ou_over_2_5": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 0.7088293280741512,
+                "brier": 0.2567853191765693,
+                "mean_predicted_probability": 0.5115645665458333,
+                "observed_rate": 0.5588235294117647
+              }
+            },
+            "F1": {
+              "1x2": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.0580832767647428,
+                "brier": 0.6355989128958325
+              },
+              "ah_home_0": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.0580832767647428,
+                "brier": 0.6355989128958325
+              },
+              "ou_over_2_5": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 0.6960048618242205,
+                "brier": 0.25048026237146187,
+                "mean_predicted_probability": 0.4959548062428796,
+                "observed_rate": 0.4869281045751634
+              }
+            },
+            "I1": {
+              "1x2": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 0.9853088174122914,
+                "brier": 0.5872433739010154
+              },
+              "ah_home_0": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 0.9853088174122914,
+                "brier": 0.5872433739010154
+              },
+              "ou_over_2_5": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 0.7106052969349764,
+                "brier": 0.2583727473566389,
+                "mean_predicted_probability": 0.4627357045227416,
+                "observed_rate": 0.4963235294117647
+              }
+            },
+            "SP1": {
+              "1x2": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 1.026953931301978,
+                "brier": 0.6166032667266348
+              },
+              "ah_home_0": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 1.026953931301978,
+                "brier": 0.6166032667266348
+              },
+              "ou_over_2_5": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 0.6729884054136036,
+                "brier": 0.2391760011114108,
+                "mean_predicted_probability": 0.4950323918731956,
+                "observed_rate": 0.45588235294117646
+              }
+            }
+          }
+        },
+        {
+          "season": "1920",
+          "league_metrics": {
+            "B1": {
+              "1x2": {
+                "n_predicted": 232,
+                "n_test_total": 232,
+                "log_loss": 0.9698612981604772,
+                "brier": 0.5729531173723805
+              },
+              "ah_home_0": {
+                "n_predicted": 232,
+                "n_test_total": 232,
+                "log_loss": 0.9698612981604772,
+                "brier": 0.5729531173723805
+              },
+              "ou_over_2_5": {
+                "n_predicted": 232,
+                "n_test_total": 232,
+                "log_loss": 0.7051284336188378,
+                "brier": 0.2555847419690807,
+                "mean_predicted_probability": 0.5416989975144488,
+                "observed_rate": 0.5646551724137931
+              }
+            },
+            "D1": {
+              "1x2": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.0210074443400226,
+                "brier": 0.6126170626277782
+              },
+              "ah_home_0": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.0210074443400226,
+                "brier": 0.6126170626277782
+              },
+              "ou_over_2_5": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 0.6484531311080359,
+                "brier": 0.22861699847472358,
+                "mean_predicted_probability": 0.5964532566215843,
+                "observed_rate": 0.6666666666666666
+              }
+            },
+            "E0": {
+              "1x2": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 0.9853002736515838,
+                "brier": 0.5853917097072175
+              },
+              "ah_home_0": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 0.9853002736515838,
+                "brier": 0.5853917097072175
+              },
+              "ou_over_2_5": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 0.6698414115912945,
+                "brier": 0.23861904792819263,
+                "mean_predicted_probability": 0.5240309499117672,
+                "observed_rate": 0.5441176470588235
+              }
+            },
+            "F1": {
+              "1x2": {
+                "n_predicted": 251,
+                "n_test_total": 279,
+                "log_loss": 1.0054897175965065,
+                "brier": 0.6031927089014952
+              },
+              "ah_home_0": {
+                "n_predicted": 251,
+                "n_test_total": 279,
+                "log_loss": 1.0054897175965065,
+                "brier": 0.6031927089014952
+              },
+              "ou_over_2_5": {
+                "n_predicted": 251,
+                "n_test_total": 279,
+                "log_loss": 0.7066688835615915,
+                "brier": 0.25593352754369525,
+                "mean_predicted_probability": 0.4963214190888389,
+                "observed_rate": 0.47410358565737054
+              }
+            },
+            "I1": {
+              "1x2": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.0295979788426073,
+                "brier": 0.6154530177320346
+              },
+              "ah_home_0": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.0295979788426073,
+                "brier": 0.6154530177320346
+              },
+              "ou_over_2_5": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 0.7132277442659446,
+                "brier": 0.25964474116593345,
+                "mean_predicted_probability": 0.4820001958672266,
+                "observed_rate": 0.6143790849673203
+              }
+            },
+            "SP1": {
+              "1x2": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 0.9945235548871878,
+                "brier": 0.5994896055648795
+              },
+              "ah_home_0": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 0.9945235548871878,
+                "brier": 0.5994896055648795
+              },
+              "ou_over_2_5": {
+                "n_predicted": 272,
+                "n_test_total": 380,
+                "log_loss": 0.6532426240730899,
+                "brier": 0.23070826393907132,
+                "mean_predicted_probability": 0.4661519230069235,
+                "observed_rate": 0.44485294117647056
+              }
+            }
+          }
+        },
+        {
+          "season": "2021",
+          "league_metrics": {
+            "B1": {
+              "1x2": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.0414506119749904,
+                "brier": 0.628594253401282
+              },
+              "ah_home_0": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.0414506119749904,
+                "brier": 0.628594253401282
+              },
+              "ou_over_2_5": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 0.6723259083371081,
+                "brier": 0.2400299389300479,
+                "mean_predicted_probability": 0.5428901954455462,
+                "observed_rate": 0.5625
+              }
+            },
+            "D1": {
+              "1x2": {
+                "n_predicted": 272,
+                "n_test_total": 306,
+                "log_loss": 1.0289763404186607,
+                "brier": 0.6169677466629216
+              },
+              "ah_home_0": {
+                "n_predicted": 272,
+                "n_test_total": 306,
+                "log_loss": 1.0289763404186607,
+                "brier": 0.6169677466629216
+              },
+              "ou_over_2_5": {
+                "n_predicted": 272,
+                "n_test_total": 306,
+                "log_loss": 0.6625365798697116,
+                "brier": 0.23532441969595363,
+                "mean_predicted_probability": 0.5837499913871165,
+                "observed_rate": 0.6102941176470589
+              }
+            },
+            "E0": {
+              "1x2": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 1.0437377575014453,
+                "brier": 0.6212198343894115
+              },
+              "ah_home_0": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 1.0437377575014453,
+                "brier": 0.6212198343894115
+              },
+              "ou_over_2_5": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.7096173393188208,
+                "brier": 0.2573734496539667,
+                "mean_predicted_probability": 0.49420420551087935,
+                "observed_rate": 0.49122807017543857
+              }
+            },
+            "F1": {
+              "1x2": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.0416292446365634,
+                "brier": 0.6228743975837651
+              },
+              "ah_home_0": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.0416292446365634,
+                "brier": 0.6228743975837651
+              },
+              "ou_over_2_5": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 0.7155639648207439,
+                "brier": 0.259874234112444,
+                "mean_predicted_probability": 0.4897167488450262,
+                "observed_rate": 0.5392156862745098
+              }
+            },
+            "I1": {
+              "1x2": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.9592432343706203,
+                "brier": 0.5683311232972826
+              },
+              "ah_home_0": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.9592432343706203,
+                "brier": 0.5683311232972826
+              },
+              "ou_over_2_5": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.6914512060910353,
+                "brier": 0.2489640262066095,
+                "mean_predicted_probability": 0.5236325859776357,
+                "observed_rate": 0.5467836257309941
+              }
+            },
+            "SP1": {
+              "1x2": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.0026482418246032,
+                "brier": 0.5996006768937194
+              },
+              "ah_home_0": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.0026482418246032,
+                "brier": 0.5996006768937194
+              },
+              "ou_over_2_5": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 0.6902349873890316,
+                "brier": 0.24804903900707465,
+                "mean_predicted_probability": 0.48314031372048455,
+                "observed_rate": 0.4444444444444444
+              }
+            }
+          }
+        },
+        {
+          "season": "2122",
+          "league_metrics": {
+            "B1": {
+              "1x2": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.032185968828894,
+                "brier": 0.6209143237071174
+              },
+              "ah_home_0": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.032185968828894,
+                "brier": 0.6209143237071174
+              },
+              "ou_over_2_5": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 0.6883069124984718,
+                "brier": 0.24712061968934013,
+                "mean_predicted_probability": 0.5698517662278724,
+                "observed_rate": 0.5416666666666666
+              }
+            },
+            "D1": {
+              "1x2": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.0182237497174447,
+                "brier": 0.6098242687950275
+              },
+              "ah_home_0": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.0182237497174447,
+                "brier": 0.6098242687950275
+              },
+              "ou_over_2_5": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 0.647102307401491,
+                "brier": 0.2277435905724546,
+                "mean_predicted_probability": 0.5756774103185389,
+                "observed_rate": 0.5916666666666667
+              }
+            },
+            "E0": {
+              "1x2": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.94417116539465,
+                "brier": 0.5598067430360145
+              },
+              "ah_home_0": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.94417116539465,
+                "brier": 0.5598067430360145
+              },
+              "ou_over_2_5": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.6678291466732407,
+                "brier": 0.23756016532026986,
+                "mean_predicted_probability": 0.525192887976022,
+                "observed_rate": 0.5350877192982456
+              }
+            },
+            "F1": {
+              "1x2": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 1.0258694165136846,
+                "brier": 0.6168631727324679
+              },
+              "ah_home_0": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 1.0258694165136846,
+                "brier": 0.6168631727324679
+              },
+              "ou_over_2_5": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.6944656337756675,
+                "brier": 0.2501458635223765,
+                "mean_predicted_probability": 0.4987567398310415,
+                "observed_rate": 0.5029239766081871
+              }
+            },
+            "I1": {
+              "1x2": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.007299271363044,
+                "brier": 0.6006736304335062
+              },
+              "ah_home_0": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.007299271363044,
+                "brier": 0.6006736304335062
+              },
+              "ou_over_2_5": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 0.6863902985677569,
+                "brier": 0.2465201666001288,
+                "mean_predicted_probability": 0.5406803943763601,
+                "observed_rate": 0.565359477124183
+              }
+            },
+            "SP1": {
+              "1x2": {
+                "n_predicted": 380,
+                "n_test_total": 380,
+                "log_loss": 1.0154923285972142,
+                "brier": 0.6063079758634792
+              },
+              "ah_home_0": {
+                "n_predicted": 380,
+                "n_test_total": 380,
+                "log_loss": 1.0154923285972142,
+                "brier": 0.6063079758634792
+              },
+              "ou_over_2_5": {
+                "n_predicted": 380,
+                "n_test_total": 380,
+                "log_loss": 0.7010659904380145,
+                "brier": 0.2533065867408723,
+                "mean_predicted_probability": 0.48643321918008525,
+                "observed_rate": 0.44473684210526315
+              }
+            }
+          }
+        },
+        {
+          "season": "2223",
+          "league_metrics": {
+            "B1": {
+              "1x2": {
+                "n_predicted": 272,
+                "n_test_total": 306,
+                "log_loss": 0.9567863184147155,
+                "brier": 0.5653633747707867
+              },
+              "ah_home_0": {
+                "n_predicted": 272,
+                "n_test_total": 306,
+                "log_loss": 0.9567863184147155,
+                "brier": 0.5653633747707867
+              },
+              "ou_over_2_5": {
+                "n_predicted": 272,
+                "n_test_total": 306,
+                "log_loss": 0.6615117438800683,
+                "brier": 0.23435265008650952,
+                "mean_predicted_probability": 0.5524840343451577,
+                "observed_rate": 0.5845588235294118
+              }
+            },
+            "D1": {
+              "1x2": {
+                "n_predicted": 306,
+                "n_test_total": 306,
+                "log_loss": 1.0021054766243331,
+                "brier": 0.5988985888078562
+              },
+              "ah_home_0": {
+                "n_predicted": 306,
+                "n_test_total": 306,
+                "log_loss": 1.0021054766243331,
+                "brier": 0.5988985888078562
+              },
+              "ou_over_2_5": {
+                "n_predicted": 306,
+                "n_test_total": 306,
+                "log_loss": 0.6706053254200308,
+                "brier": 0.2385383992902909,
+                "mean_predicted_probability": 0.5799216152705525,
+                "observed_rate": 0.6045751633986928
+              }
+            },
+            "E0": {
+              "1x2": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 1.0280082899441723,
+                "brier": 0.6151055831845722
+              },
+              "ah_home_0": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 1.0280082899441723,
+                "brier": 0.6151055831845722
+              },
+              "ou_over_2_5": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.6852626435239707,
+                "brier": 0.24633023241209123,
+                "mean_predicted_probability": 0.5345759621553535,
+                "observed_rate": 0.5350877192982456
+              }
+            },
+            "F1": {
+              "1x2": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.0261691839653813,
+                "brier": 0.6106069309107423
+              },
+              "ah_home_0": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.0261691839653813,
+                "brier": 0.6106069309107423
+              },
+              "ou_over_2_5": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 0.6918445043545052,
+                "brier": 0.2491709363032501,
+                "mean_predicted_probability": 0.5009554395184832,
+                "observed_rate": 0.5784313725490197
+              }
+            },
+            "I1": {
+              "1x2": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.006409311043913,
+                "brier": 0.6003939875860989
+              },
+              "ah_home_0": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 1.006409311043913,
+                "brier": 0.6003939875860989
+              },
+              "ou_over_2_5": {
+                "n_predicted": 306,
+                "n_test_total": 380,
+                "log_loss": 0.7348620248101604,
+                "brier": 0.26984723628176477,
+                "mean_predicted_probability": 0.5741339102753406,
+                "observed_rate": 0.4542483660130719
+              }
+            },
+            "SP1": {
+              "1x2": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.9955879065934957,
+                "brier": 0.5930687868031767
+              },
+              "ah_home_0": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.9955879065934957,
+                "brier": 0.5930687868031767
+              },
+              "ou_over_2_5": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.6955846687381239,
+                "brier": 0.25075707669466546,
+                "mean_predicted_probability": 0.4503241943340384,
+                "observed_rate": 0.4619883040935672
+              }
+            }
+          }
+        },
+        {
+          "season": "2324",
+          "league_metrics": {
+            "B1": {
+              "1x2": {
+                "n_predicted": 276,
+                "n_test_total": 312,
+                "log_loss": 1.0185320085416236,
+                "brier": 0.610484611888956
+              },
+              "ah_home_0": {
+                "n_predicted": 276,
+                "n_test_total": 312,
+                "log_loss": 1.0185320085416236,
+                "brier": 0.610484611888956
+              },
+              "ou_over_2_5": {
+                "n_predicted": 276,
+                "n_test_total": 312,
+                "log_loss": 0.6832910060063818,
+                "brier": 0.2451187309278538,
+                "mean_predicted_probability": 0.5528047916525342,
+                "observed_rate": 0.532608695652174
+              }
+            },
+            "D1": {
+              "1x2": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.0174819263509474,
+                "brier": 0.6081115294409812
+              },
+              "ah_home_0": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.0174819263509474,
+                "brier": 0.6081115294409812
+              },
+              "ou_over_2_5": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 0.6502694658755741,
+                "brier": 0.22887817640818536,
+                "mean_predicted_probability": 0.5973145149740904,
+                "observed_rate": 0.6375
+              }
+            },
+            "E0": {
+              "1x2": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.949900023729187,
+                "brier": 0.5613529131577305
+              },
+              "ah_home_0": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.949900023729187,
+                "brier": 0.5613529131577305
+              },
+              "ou_over_2_5": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.7060511900042501,
+                "brier": 0.25586649560538754,
+                "mean_predicted_probability": 0.4916981712916695,
+                "observed_rate": 0.6403508771929824
+              }
+            },
+            "F1": {
+              "1x2": {
+                "n_predicted": 272,
+                "n_test_total": 306,
+                "log_loss": 1.032871999471478,
+                "brier": 0.6179929975506209
+              },
+              "ah_home_0": {
+                "n_predicted": 272,
+                "n_test_total": 306,
+                "log_loss": 1.032871999471478,
+                "brier": 0.6179929975506209
+              },
+              "ou_over_2_5": {
+                "n_predicted": 272,
+                "n_test_total": 306,
+                "log_loss": 0.6845682740629426,
+                "brier": 0.24572689824159766,
+                "mean_predicted_probability": 0.5091878177635082,
+                "observed_rate": 0.5330882352941176
+              }
+            },
+            "I1": {
+              "1x2": {
+                "n_predicted": 380,
+                "n_test_total": 380,
+                "log_loss": 0.9989452417325941,
+                "brier": 0.5995636348501654
+              },
+              "ah_home_0": {
+                "n_predicted": 380,
+                "n_test_total": 380,
+                "log_loss": 0.9989452417325941,
+                "brier": 0.5995636348501654
+              },
+              "ou_over_2_5": {
+                "n_predicted": 380,
+                "n_test_total": 380,
+                "log_loss": 0.688528361165543,
+                "brier": 0.24765068605624602,
+                "mean_predicted_probability": 0.5135286536514005,
+                "observed_rate": 0.4921052631578947
+              }
+            },
+            "SP1": {
+              "1x2": {
+                "n_predicted": 380,
+                "n_test_total": 380,
+                "log_loss": 0.9982191353062092,
+                "brier": 0.5937799062842274
+              },
+              "ah_home_0": {
+                "n_predicted": 380,
+                "n_test_total": 380,
+                "log_loss": 0.9982191353062092,
+                "brier": 0.5937799062842274
+              },
+              "ou_over_2_5": {
+                "n_predicted": 380,
+                "n_test_total": 380,
+                "log_loss": 0.6652079150645815,
+                "brier": 0.23611320963176288,
+                "mean_predicted_probability": 0.4762091673837333,
+                "observed_rate": 0.4605263157894737
+              }
+            }
+          }
+        },
+        {
+          "season": "2425",
+          "league_metrics": {
+            "B1": {
+              "1x2": {
+                "n_predicted": 272,
+                "n_test_total": 312,
+                "log_loss": 1.0011242532400217,
+                "brier": 0.5964335180640195
+              },
+              "ah_home_0": {
+                "n_predicted": 272,
+                "n_test_total": 312,
+                "log_loss": 1.0011242532400217,
+                "brier": 0.5964335180640195
+              },
+              "ou_over_2_5": {
+                "n_predicted": 272,
+                "n_test_total": 312,
+                "log_loss": 0.6859481878403825,
+                "brier": 0.24656847147464725,
+                "mean_predicted_probability": 0.5534383697915052,
+                "observed_rate": 0.5110294117647058
+              }
+            },
+            "D1": {
+              "1x2": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.0335821009069308,
+                "brier": 0.6188302101735336
+              },
+              "ah_home_0": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 1.0335821009069308,
+                "brier": 0.6188302101735336
+              },
+              "ou_over_2_5": {
+                "n_predicted": 240,
+                "n_test_total": 306,
+                "log_loss": 0.6543220278187322,
+                "brier": 0.23118343401935545,
+                "mean_predicted_probability": 0.6023530912747577,
+                "observed_rate": 0.6208333333333333
+              }
+            },
+            "E0": {
+              "1x2": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 1.0681914324404267,
+                "brier": 0.6450279358030117
+              },
+              "ah_home_0": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 1.0681914324404267,
+                "brier": 0.6450279358030117
+              },
+              "ou_over_2_5": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.6904020033234424,
+                "brier": 0.24869308944764523,
+                "mean_predicted_probability": 0.5442707096490305,
+                "observed_rate": 0.564327485380117
+              }
+            },
+            "F1": {
+              "1x2": {
+                "n_predicted": 306,
+                "n_test_total": 306,
+                "log_loss": 0.9908778879285142,
+                "brier": 0.589008329986579
+              },
+              "ah_home_0": {
+                "n_predicted": 306,
+                "n_test_total": 306,
+                "log_loss": 0.9908778879285142,
+                "brier": 0.589008329986579
+              },
+              "ou_over_2_5": {
+                "n_predicted": 306,
+                "n_test_total": 306,
+                "log_loss": 0.6824131342193988,
+                "brier": 0.24463185265934376,
+                "mean_predicted_probability": 0.49102569392513373,
+                "observed_rate": 0.5555555555555556
+              }
+            },
+            "I1": {
+              "1x2": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.9750833308484202,
+                "brier": 0.5840898737227339
+              },
+              "ah_home_0": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.9750833308484202,
+                "brier": 0.5840898737227339
+              },
+              "ou_over_2_5": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.6815181698194482,
+                "brier": 0.24424515064289773,
+                "mean_predicted_probability": 0.49456809339122554,
+                "observed_rate": 0.4853801169590643
+              }
+            },
+            "SP1": {
+              "1x2": {
+                "n_predicted": 380,
+                "n_test_total": 380,
+                "log_loss": 0.9818476483276635,
+                "brier": 0.5829252906571174
+              },
+              "ah_home_0": {
+                "n_predicted": 380,
+                "n_test_total": 380,
+                "log_loss": 0.9818476483276635,
+                "brier": 0.5829252906571174
+              },
+              "ou_over_2_5": {
+                "n_predicted": 380,
+                "n_test_total": 380,
+                "log_loss": 0.6748069987512427,
+                "brier": 0.24082389008869204,
+                "mean_predicted_probability": 0.44207946298955825,
+                "observed_rate": 0.4868421052631579
+              }
+            }
+          }
+        },
+        {
+          "season": "2526",
+          "league_metrics": {
+            "B1": {
+              "1x2": {
+                "n_predicted": 276,
+                "n_test_total": 311,
+                "log_loss": 1.022264875612671,
+                "brier": 0.6134736027665285
+              },
+              "ah_home_0": {
+                "n_predicted": 276,
+                "n_test_total": 311,
+                "log_loss": 1.022264875612671,
+                "brier": 0.6134736027665285
+              },
+              "ou_over_2_5": {
+                "n_predicted": 276,
+                "n_test_total": 311,
+                "log_loss": 0.7074301747215956,
+                "brier": 0.2567395124655897,
+                "mean_predicted_probability": 0.5545684679185694,
+                "observed_rate": 0.4963768115942029
+              }
+            },
+            "D1": {
+              "1x2": {
+                "n_predicted": 306,
+                "n_test_total": 306,
+                "log_loss": 0.9711301192236331,
+                "brier": 0.5757356304105972
+              },
+              "ah_home_0": {
+                "n_predicted": 306,
+                "n_test_total": 306,
+                "log_loss": 0.9711301192236331,
+                "brier": 0.5757356304105972
+              },
+              "ou_over_2_5": {
+                "n_predicted": 306,
+                "n_test_total": 306,
+                "log_loss": 0.6641200572861257,
+                "brier": 0.23620032077328523,
+                "mean_predicted_probability": 0.5524484959054201,
+                "observed_rate": 0.6372549019607843
+              }
+            },
+            "E0": {
+              "1x2": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 1.0469408826773676,
+                "brier": 0.630051167598136
+              },
+              "ah_home_0": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 1.0469408826773676,
+                "brier": 0.630051167598136
+              },
+              "ou_over_2_5": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.678478220730511,
+                "brier": 0.24273155640128044,
+                "mean_predicted_probability": 0.5418123863297799,
+                "observed_rate": 0.5614035087719298
+              }
+            },
+            "F1": {
+              "1x2": {
+                "n_predicted": 272,
+                "n_test_total": 306,
+                "log_loss": 0.9752692904532648,
+                "brier": 0.5811795615578271
+              },
+              "ah_home_0": {
+                "n_predicted": 272,
+                "n_test_total": 306,
+                "log_loss": 0.9752692904532648,
+                "brier": 0.5811795615578271
+              },
+              "ou_over_2_5": {
+                "n_predicted": 272,
+                "n_test_total": 306,
+                "log_loss": 0.6821183045834415,
+                "brier": 0.24452919114518615,
+                "mean_predicted_probability": 0.5266125676312867,
+                "observed_rate": 0.5220588235294118
+              }
+            },
+            "I1": {
+              "1x2": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 1.0046873444777484,
+                "brier": 0.6014216491086837
+              },
+              "ah_home_0": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 1.0046873444777484,
+                "brier": 0.6014216491086837
+              },
+              "ou_over_2_5": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.7125913598389425,
+                "brier": 0.2596297378174393,
+                "mean_predicted_probability": 0.5065011415328646,
+                "observed_rate": 0.4502923976608187
+              }
+            },
+            "SP1": {
+              "1x2": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.9836007520524939,
+                "brier": 0.5840656188355405
+              },
+              "ah_home_0": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.9836007520524939,
+                "brier": 0.5840656188355405
+              },
+              "ou_over_2_5": {
+                "n_predicted": 342,
+                "n_test_total": 380,
+                "log_loss": 0.689127098551269,
+                "brier": 0.2480317120816646,
+                "mean_predicted_probability": 0.47102148217471534,
+                "observed_rate": 0.5116959064327485
+              }
+            }
+          }
+        },
+        {
+          "season": "2627",
+          "league_metrics": {
+            "B1": {
+              "1x2": {
+                "n_predicted": 57,
+                "n_test_total": 72,
+                "log_loss": 0.8934292498908328,
+                "brier": 0.5215310785203834
+              },
+              "ah_home_0": {
+                "n_predicted": 57,
+                "n_test_total": 72,
+                "log_loss": 0.8934292498908328,
+                "brier": 0.5215310785203834
+              },
+              "ou_over_2_5": {
+                "n_predicted": 57,
+                "n_test_total": 72,
+                "log_loss": 0.7159621834236688,
+                "brier": 0.26130346561163653,
+                "mean_predicted_probability": 0.522863630433983,
+                "observed_rate": 0.6491228070175439
+              }
+            },
+            "D1": {
+              "1x2": {
+                "n_predicted": 48,
+                "n_test_total": 54,
+                "log_loss": 0.9754967335121753,
+                "brier": 0.5849132528025347
+              },
+              "ah_home_0": {
+                "n_predicted": 48,
+                "n_test_total": 54,
+                "log_loss": 0.9754967335121753,
+                "brier": 0.5849132528025347
+              },
+              "ou_over_2_5": {
+                "n_predicted": 48,
+                "n_test_total": 54,
+                "log_loss": 0.6152762391452975,
+                "brier": 0.21269811555008675,
+                "mean_predicted_probability": 0.5951557241033983,
+                "observed_rate": 0.75
+              }
+            },
+            "E0": {
+              "1x2": {
+                "n_predicted": 57,
+                "n_test_total": 70,
+                "log_loss": 1.0202124472590062,
+                "brier": 0.6133892269050562
+              },
+              "ah_home_0": {
+                "n_predicted": 57,
+                "n_test_total": 70,
+                "log_loss": 1.0202124472590062,
+                "brier": 0.6133892269050562
+              },
+              "ou_over_2_5": {
+                "n_predicted": 57,
+                "n_test_total": 70,
+                "log_loss": 0.6715031520079547,
+                "brier": 0.2397248034464735,
+                "mean_predicted_probability": 0.5429764651706999,
+                "observed_rate": 0.543859649122807
+              }
+            },
+            "F1": {
+              "1x2": {
+                "n_predicted": 56,
+                "n_test_total": 63,
+                "log_loss": 0.9824768708991287,
+                "brier": 0.584006969350224
+              },
+              "ah_home_0": {
+                "n_predicted": 56,
+                "n_test_total": 63,
+                "log_loss": 0.9824768708991287,
+                "brier": 0.584006969350224
+              },
+              "ou_over_2_5": {
+                "n_predicted": 56,
+                "n_test_total": 63,
+                "log_loss": 0.6955694731544456,
+                "brier": 0.25127489960721755,
+                "mean_predicted_probability": 0.5263048700159457,
+                "observed_rate": 0.6071428571428571
+              }
+            },
+            "I1": {
+              "1x2": {
+                "n_predicted": 70,
+                "n_test_total": 70,
+                "log_loss": 0.9404539225210795,
+                "brier": 0.5488187818772408
+              },
+              "ah_home_0": {
+                "n_predicted": 70,
+                "n_test_total": 70,
+                "log_loss": 0.9404539225210795,
+                "brier": 0.5488187818772408
+              },
+              "ou_over_2_5": {
+                "n_predicted": 70,
+                "n_test_total": 70,
+                "log_loss": 0.6908280158904646,
+                "brier": 0.2489153873168055,
+                "mean_predicted_probability": 0.4893076575235142,
+                "observed_rate": 0.6
+              }
+            },
+            "SP1": {
+              "1x2": {
+                "n_predicted": 79,
+                "n_test_total": 88,
+                "log_loss": 0.9422768724288003,
+                "brier": 0.5591568247519078
+              },
+              "ah_home_0": {
+                "n_predicted": 79,
+                "n_test_total": 88,
+                "log_loss": 0.9422768724288003,
+                "brier": 0.5591568247519078
+              },
+              "ou_over_2_5": {
+                "n_predicted": 79,
+                "n_test_total": 88,
+                "log_loss": 0.6566388692296669,
+                "brier": 0.23228872948467758,
+                "mean_predicted_probability": 0.47476018654521407,
+                "observed_rate": 0.5316455696202531
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "automatic_model_promotion": false,
+  "telegram_sent": false,
+  "crown_roi": null,
+  "predictions_sha256": "ffce7e2ce53261580fa10d3f7033a7a081402a08a6dfb08fc419cad5c93afde3",
+  "prediction_rows": 51081,
+  "prediction_artifact": "research/m3/results/predictions/ffce7e2ce53261580fa10d3f7033a7a081402a08a6dfb08fc419cad5c93afde3.csv"
+}
