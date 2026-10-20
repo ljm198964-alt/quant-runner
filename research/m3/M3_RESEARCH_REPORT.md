@@ -2,6 +2,24 @@
 
 报告生成时间：2026-10-20 UTC。研究目标是完成独立研究系统，不启用正式投注。
 
+## OpenFootball：独立真实 OOS 与前瞻无盘口影子
+
+GitHub Actions [39415198829](https://github.com/ljm198964-alt/quant-runner/actions/runs/39415198829) 于 2026-10-20T11:30:25Z 全步骤 SUCCESS。研究代码提交 `8c011d68ecbd51ff5a7fa90c3cb88178656e30ce`；结果与影子账本由 Actions 落库提交 `7613522`。报告生成 UTC 为 `2026-10-20T11:30:06.224625+00:00`，影子运行 UTC 为 `2026-10-20T11:29:18.057086Z`。源为 CC0-1.0 的 `openfootball/football.json` commit `e6744429ee395bc86f247348c6184bb08d4eb361`，penaltyblog 固定 1.13.1。
+
+源中 50 个赛季×联赛文件（2017/18–2026/27），五个可用联赛 E0/D1/SP1/I1/F1，共 16,210 场完赛赛果；B1 文件缺失，明确不补造。严格逐联赛逐赛季前推 45 个测试切分全部有早期训练数据，测试共 14,384 场，三模型共 43,152 条预测；每种模型有 11,254 条已评分预测，未覆盖的升班/新队不生成假概率。每个测试季都只用更早赛季且比赛日严格早于该季首个测试日期的记录训练。完整切分、逐场赛果/概率和来源文件 SHA 保存在本目录 `results/openfootball/`。
+
+| 模型 | AH0/DNB 三状态 Log Loss | AH0/DNB Brier | OU O2.5 Log Loss | OU O2.5 Brier |
+|---|---:|---:|---:|---:|
+| Poisson | 1.00076 | 0.59739 | 0.68634 | 0.24638 |
+| Dixon-Coles | 1.00104 | 0.59744 | 0.68633 | 0.24638 |
+| Bivariate Poisson | 1.00090 | 0.59737 | 0.68649 | 0.24648 |
+
+AH0 的胜/和/负与 DNB win/push/lose 三状态分数一致，但不是任意 Crown 让球线评价；OU 仅固定 O2.5。模型总体分数很接近，未证明复杂模型稳健胜过 Poisson；详细逐测试赛季指标和校准分箱见 `latest_oos_report.json`。这是五联赛 CC0 数据上的独立口径，与 Football-Data 六联赛 OOS 不能直接做性能优劣比较。
+
+同一 run 使用源中的 1,405 个日期至少领先 3 天的 fixture，追加 4,215 条前瞻预测（3 模型×每场），账本为 `shadow_ledger.jsonl`。生成时间、训练输入 hash、模型版本/参数、fixture 和赛果身份均记录；本次是首次持久化运行，故前次数据/赛程指纹为 null；没有已结算影子样本，结算指标、ROI 和最大回撤均为 null。当前不抓 Crown，不记录 EV、下注或 Telegram。源 fixture 的具体时间字段无文档化时区，本协议完全忽略时刻，只使用日历日期并标注“时区未指定”；因此不能声称精确 UTC 开赛窗口。
+
+工作流 `.github/workflows/m3-openfootball-shadow.yml` 配置每 4 小时、手动和指定文件变更触发，并在数据/赛程/账本有变化时把历史报告和账本提交回研究分支；本次 PR 分支 push 验证证明代码、测试、实际拟合、结果落库均成功。GitHub 定时事件只对默认分支生效，PR 合并前不能称该新工作流已在默认分支持续定时运行。原 Football-Data 工作流维持现状。OpenFootball 本身每日更新，四小时触发不会制造新增赛果；本次之后须以指纹判断实际是否有新信息。
+
 ## 状态摘要
 
 - **AH：** penaltyblog Poisson、Dixon-Coles、Bivariate Poisson 已在真实赛果上完成严格赛季前推样本外预测。此轮实现的盘口诊断是主队 AH 0（DNB）三状态概率；没有可匹配的 Crown 盘口线和水位，不能声称 Crown ROI。
