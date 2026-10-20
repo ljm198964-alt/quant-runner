@@ -219,3 +219,26 @@ PR #52 于 `2026-10-20T13:54:45Z` 合入 main，merge commit `f6265be68f108c79bb
 PR #53 合入 main（merge commit `4f0e356f54c772b000bc418cb2811084e74a7efc`）。PR 与 main Actions（[39435457855](https://github.com/ljm198964-alt/quant-runner/actions/runs/39435457855)、[39435722524](https://github.com/ljm198964-alt/quant-runner/actions/runs/39435722524)）均成功，58 项测试通过。最新前瞻校准报告 [latest_shadow_performance.json](results/openfootball/latest_shadow_performance.json) 在 UTC `2026-10-20T14:00:44.027468Z` 对 4,215 个 canonical forecast keys 作只读盘点，但真实已结算前瞻样本为 0；AH0/DNB 与 OU O2.5 前瞻 Log Loss、Brier 均为 null。Crown quote=0，EV/ROI/profit/drawdown 皆不可计算。此报告不使用历史 hindcast 替代前瞻成绩。
 
 公开源码/Workflow/Secret 元数据复核确认仓库有 `TOTALCORNER_TOKEN` 名称，但 M3 训练、稳定性与影子 workflow 均不引用它；引用位置属于 M1/MR1 或混合来源归档任务。混合 Crown/Bet365 artifact 的逐 fixture 复算已见 [Crown stage A/B audit](M3_CROWN_STAGE_A_B_AUDIT.md)：仅 1/17,027 个 M3 OOS 比赛身份各有一个 AH 与 OU Crown 观察值，无一条配对同期 M3 forecast；这不能构成全量历史覆盖或 strategy ROI。OddsPapi 在公开仓库无凭证、connector、保存响应，`singbet` 品牌交叉映射和对 M3 的许可未核实。既有 API token 及历史调用不等于 M3 自动采集/留存/公开授权，因此没有用该 Secret 发起 M3 请求，也没有复制 M1/MR1 的私人预测或报价。前瞻 Crown 采集尚未开始；当前公开工作仍有 4,215 条无市场 forecast，但零结算。
+
+## Crown 阶段 A/B/C 统一证据矩阵（2026-10-20）
+
+本节把当前可审计的概率模型、原版 V4、唯一历史 Crown 线级样本和前瞻账本汇总在一处。历史 Crown 单场是严格时间前推 hindcast；它不等于预测当时已登记的 M3 forecast。故 `同期前瞻 Crown 样本` 对所有模型仍为 0，以下单场 EV 独立标注为历史敏感性诊断，不能合成已实现 PnL、策略 ROI 或最大回撤。
+
+| 模型家族 | 模型 | OOS 目标及样本 | Log Loss | Brier | Crown 同期前瞻样本 | 已有 Crown 线级诊断 |
+|---|---|---|---:|---:|---:|---|
+| penaltyblog | Poisson | AH0/DNB 三状态、OU O2.5；14,696 场/模型 | 1.004276 / 0.686445 | 0.599684 / 0.246500 | AH 0、OU 0 | 唯一 hindcast fixture: AH -1.5 home/away EV -0.053597/-0.006210；OU 3.5 over/under -0.009268/-0.053602 |
+| penaltyblog | Dixon-Coles | 同上 | 1.004147 / 0.686464 | 0.599494 / 0.246509 | AH 0、OU 0 | AH -1.5 -0.058872/-0.000880；OU 3.5 -0.015133/-0.048312 |
+| penaltyblog | Bivariate Poisson | 同上 | 1.004141 / 0.686467 | 0.599523 / 0.246522 | AH 0、OU 0 | AH -1.5 -0.054837/-0.004958；OU 3.5 -0.009490/-0.053401 |
+| 原版 Football Predictor V4 | Logistic | OU O2.5；六个测试赛季共10,688行，季间指标算术平均 | 0.680061 | 0.243557 | OU 0 | 唯一 Crown OU 线为3.5；超出 V4 目标线，拒绝外推 |
+| 原版 Football Predictor V4 | LightGBM | 同上，10,688行 | 0.679440 | 0.243287 | OU 0 | 同上 |
+| 原版 Football Predictor V4 | Market-anchored Logistic | OU O2.5；10,687行 | 0.677639 | 0.242430 | OU 0 | 同上 |
+| 原版 Football Predictor V4 | Market-residual Logistic | OU O2.5；10,687行 | 0.669058 | 0.238262 | OU 0 | 同上 |
+| 原版 Football Predictor V4 | Market-blend Logistic | OU O2.5；10,687行 | 0.669726 | 0.238549 | OU 0 | 同上 |
+
+penaltyblog 每行 Log Loss 与 Brier 按 AH0/DNB、OU O2.5 顺序排列，数字来自严格赛季前推、未知队不补预测的保存 OOS 面板；测试分母17,027，未评分2,331场。V4 数字是原版逐季 walk-forward CSV 六个 test-season 指标的宏平均（不是逐场加权）；原版 ROI 宏平均分别为 Logistic -6.36%、LightGBM -8.69%、Market-anchored -14.53%、Market-residual -15.43%、Market-blend -15.88%，其口径使用原项目赔率和阈值，只描述上游回测，绝非 Crown ROI 或 M3 已确认交易规则。完整原始表为 [`latest_v4_original_metrics.csv`](results/latest_v4_original_metrics.csv)。
+
+Crown 阶段 A 的存档交集为公开混合赛事 artifact 16 场中的 Dortmund–Werder 1 场：每市场一条 Crown-labelled pre-kickoff 观察值，AH -1.5（1.93/1.95），OU 3.5（2.04/1.84）；分别距已记录 UTC kickoff 2,354.63 与 2,978.32 分钟。它们只证明该 artifact 内的历史报价，不是盘口执行凭证，也没有同期 M3 forecast。AH 结果为主队全输/客队全赢，OU 为 Over 全赢/Under 全输；这些是四个分离的反事实方向，不能合并成策略收益。该 artifact 的采集/来源边界、hash 与逐线复算见 [Crown Stage A/B 审计](M3_CROWN_STAGE_A_B_AUDIT.md)。
+
+阶段 C 当前仅有无盘口前瞻 shadow：截至账本审计 4,215 个 canonical forecast（每模型1,405）、0个结算、0条 Crown quote。最新校准报告 generated UTC `2026-10-20T14:00:44.027468Z`，AH0/DNB 与 OU O2.5 的真实前瞻 Log Loss/Brier 均为 null；EV、ROI、利润及最大回撤均不可计算。OpenFootball 只带时区未指定的赛程日历日，M3 不能从日历日推断精确 kickoff UTC。每四小时数据/训练工作流及独立稳定性审计仍启用；最新训练 run [39430911396](https://github.com/ljm198964-alt/quant-runner/actions/runs/39430911396) 的输入 fingerprint 未变化，故不宣称新增学习。PR #53 的 main 验收 [39435722524](https://github.com/ljm198964-alt/quant-runner/actions/runs/39435722524) 和之后的稳定性 push run [39435884887](https://github.com/ljm198964-alt/quant-runner/actions/runs/39435884887) 均成功、58项测试通过；PR #54 的文档合并为 `293d83b5ec8589994dc80b71c2056e281da53e07`，只更新交接和报告。
+
+**当前判断：** penaltyblog 在无市场 OOS 上三模型结果接近；V4 的市场残差/融合模型原版概率分数较低，但原版阈值 ROI 为负且全属上游市场口径。现有 Crown 单场敏感性诊断不能支持盈利结论。进入有效 Crown 前瞻评估还需要：可证明覆盖 M3 自动采集、盘口留存/派生公开范围的现存授权证据；有独立、精确的 UTC kickoff 与球队身份依据；以及与未来预测按 UTC 同期记录的 Crown AH/OU 报价。其余数据更新、赛后独立结算和跨期校准应随已启用 M3 workflow 继续累积。
