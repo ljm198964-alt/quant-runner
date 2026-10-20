@@ -2930,3 +2930,8 @@
 - 私有目录访问模式保护在 commit `ee459c1c534498f1601fea1844d4a6dd371a5b03` 经 Actions [39434308057](https://github.com/ljm198964-alt/quant-runner/actions/runs/39434308057) 于 2026-10-20T13:53:16Z–13:54:07Z 验收，53/53 tests PASS，OOS/ledger audit PASS，报告 unchanged。PR #52 已于 `2026-10-20T13:54:45Z` 合入 main，merge commit `f6265be68f108c79bbc355f14406201eebe0a9d4`。main Actions [39434528029](https://github.com/ljm198964-alt/quant-runner/actions/runs/39434528029) 于 13:54:47Z–13:55:30Z 成功：53/53 tests 与 OOS/ledger audit PASS，`M3_STABILITY_REPORT_UNCHANGED`。
 
 - 当前公共仓库 main HEAD 在 PR #52 merge commit `f6265be68f108c79bbc355f14406201eebe0a9d4` 后经 Actions `39434528029` 验收。AH/OU 真实 Crown recorded-forward pair 仍为0；不要启动自动采集，除非找到覆盖 M3/API/留存用途的现有书面授权范围。
+
+## 2026-10-20 M3 数据来源/UTC kickoff 语义复核
+- 查看 Football-Data 官方 upcoming fixtures 页面后，确认其提供日期、时间及混合盘口列，但所查官方说明仅标注文件上传时间、赔率采集 British time，未明确 fixture `Time` 列的赛事时区。不可将其未核实地转换成 kickoff UTC，也不能把该表的任何其他公司赔率用于 Crown 交易。本轮只读官网页面，没有下载/import fixtures.csv。
+- Football-Data 官方 data 页说明数据面向 private individuals，并排除 commercial 或使用自动 bots/scrapers/AI 的 data-training products。现有 Football-Data/V4 自动下载和个人 M3 研究具体是否落入限制尚未确认。引用：[fixtures page](https://football-data.co.uk/matches/fixtures.csv)、[data usage page](https://football-data.co.uk/data.php)。保留现有四小时工作流配置，本轮未重新训练；需要在后续数据来源范围审查中处理这一限制。
+- 此时 latest M3 OpenFootball no-market shadow run 仍为 `39430911655`（13:30 UTC，输入与赛程指纹不变、forecast/settlement均0）；latest original V4 + penaltyblog run `39430911396`（13:30 UTC）输入未变。下一次定时尚未到时；当前主分支 HEAD `d6a509c538a1c6fbbf803c0f3615e05114277072`。Crown API 未请求，forward quote pairs 仍0。

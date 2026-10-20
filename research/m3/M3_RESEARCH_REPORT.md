@@ -203,3 +203,7 @@ PR #52 提交 `56b0261a3a2403be11576cbdbf817c4e8ce49f51` 的 Actions [3943405152
 
 
 PR #52 于 `2026-10-20T13:54:45Z` 合入 main，merge commit `f6265be68f108c79bbc355f14406201eebe0a9d4`。默认分支 Actions [39434528029](https://github.com/ljm198964-alt/quant-runner/actions/runs/39434528029) 在 main commit 上于 13:54:47Z–13:55:30Z 成功：53/53 tests、OOS/shadow ledger 审计 PASS，报告 unchanged。证明合并后工程兼容，不代表新增数据或 Crown 研究结果。
+
+## 数据时间与来源使用范围补充（2026-10-20）
+
+复核了 Football-Data 官方 upcoming fixtures 页面：页面提供 fixture 日期、时间和赔率，并标注周末/周中赔率采集时段及文件更新时间为英国时间；所查官方说明没有明确 `Time` 列的 kickoff 时区。因此不能把该字段直接转为比赛 UTC，也不应把 feed 当作 Crown 来源。该 fixture 表含多公司赔率，本项目不得读取其赔率列作为交易价。本轮只检查官方网页，没有下载 fixture CSV 或导入新样本。另官方 data 页写明数据主要供个人使用，排除商业或使用自动 bots/scrapers/AI 的 data-training products；该表述对现有个人 M3 研究和定时自动下载/训练的具体适用范围尚未得到确认。参见 [官方 fixtures 说明](https://football-data.co.uk/matches/fixtures.csv) 与 [官方数据页使用说明](https://football-data.co.uk/data.php)。这是一项来源许可及时间语义待核查事项；现有 OOS 数字未因此重算，本轮也没有改变用户已确认的四小时 workflow。
