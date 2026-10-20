@@ -57,6 +57,27 @@ jobs:
           source /tmp/m3-penaltyblog-venv/bin/activate
           pip install penaltyblog
           python -c 'import penaltyblog; print("penaltyblog import ok")'
+      - name: Execute M3 penaltyblog Poisson and Dixon-Coles research adapter
+        shell: bash
+        run: |
+          source /tmp/m3-penaltyblog-venv/bin/activate
+          python - <<'PY'
+          import glob
+          import pandas as pd
+          from research.m3.penaltyblog_official_runner import fit_and_predict
+          files=sorted(glob.glob("upstream/football-predictor/data/raw/*.csv"))
+          if not files:
+              print("M3_PENALTYBLOG_NO_INDEPENDENT_FT")
+              raise SystemExit(1)
+          match_file=files[0]
+          df=pd.read_csv(match_file)
+          df=df.dropna(subset=["HomeTeam","AwayTeam","FTHG","FTAG"])
+          home,away=df.iloc[-1][["HomeTeam","AwayTeam"]]
+          for model in ("poisson","dixon-coles"):
+              result=fit_and_predict(match_file,home,away,model)
+              print("M3_PENALTYBLOG_MODEL_EXECUTED",result["model_type"],result["training_rows"])
+          print("M3_PENALTYBLOG_IN_SAMPLE_SMOKE_ONLY_NO_ROI")
+          PY
       - name: Save original V4 research outputs and source revision
         if: always()
         shell: bash
