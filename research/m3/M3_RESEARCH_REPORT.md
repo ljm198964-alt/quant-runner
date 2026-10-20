@@ -2,6 +2,8 @@
 
 报告生成时间：2026-10-20 UTC。研究目标是完成独立研究系统，不启用正式投注。
 
+最新前瞻 shadow 复验：PR #51 head `f95a23d028924dbad918f1c5d201829906a460e6` 对应 Actions [39430049592](https://github.com/ljm198964-alt/quant-runner/actions/runs/39430049592)，UTC `13:23:58Z`–`13:25:19Z` 全步骤 SUCCESS，M3 单元测试通过。运行产物 UTC `2026-10-20T13:24:32.579566Z`，OpenFootball 源 commit `e6744429ee395bc86f247348c6184bb08d4eb361`。14,384 场 OOS 测试、43,152 条模型预测，其中各模型11,254条已评分；训练结果和未来赛程输入均未变化，故本次新增学习信息、预测、修订和结算均为0。Shadow 保留4,215个唯一 forecast keys、Crown quote=0，EV/ROI=N/A；B1来源文件仍缺失。此 run 只上传研究 artifact，没有新结果 commit。它验证了 PR 分支 no-market 流程，没有验证 Crown 行情链路。
+
 最新复验：commit `6737a07bad4568a031551c8dfa256dc30cd55c22` 对应的 GitHub Actions run [39426586706](https://github.com/ljm198964-alt/quant-runner/actions/runs/39426586706) 于 2026-10-20T12:59:11Z–13:00:04Z SUCCESS。40/40 M3 单元测试和保存结果的稳定性/账本审计均通过；严格 UTC cutoff 复核 33,762 行，三模型各 11,254 个配对评分样本，输入 fingerprint 未变，Crown quotes used=false，账本 4,215 个 canonical forecast、0 settlement。报告输入没有变化，Actions 正确记录 `M3_STABILITY_REPORT_UNCHANGED`，没有伪报新增学习或盘口结果。源码与输出详情见 `latest_oos_stability.json` 和 `latest_shadow_ledger_audit.json`。
 
 阶段 B 结算工具在 PR HEAD `906bd21bc6e9051725448699e10556c4f83a6f3f` 对应的 Actions [39427250600](https://github.com/ljm198964-alt/quant-runner/actions/runs/39427250600) 中完成云端验收：45/45 tests PASS，OOS stability/ledger audit SUCCESS；workflow 于 `2026-10-20T13:03:57Z`–`13:04:51Z` 运行。输入数据没有变化，Crown quotes used=false，报告未产生新 shadow/OOS 数据或结果提交。真实单场 Crown hindcast 的 EV 与结算复算见 [Stage A/B audit](M3_CROWN_STAGE_A_B_AUDIT.md)。
