@@ -153,6 +153,8 @@ M3 原始预测产物没有 Crown 盘口。但对已有公开 Actions 存档作�
 
 该适配器以提交 `feb6f4dfabb19653bbedaaba2a212644e86a85d0` 和 Actions [39421816343](https://github.com/ljm198964-alt/quant-runner/actions/runs/39421816343) 完成真实云端验收：UTC `2026-10-20T12:23:01Z`–`12:23:40Z`，40/40 M3 tests 通过；同一 run 对已存 OOS/shadow 文件完成无重训审计，3 模型各11,254个评分样本，逐行复核33,762条训练 cutoff，Crown quotes used=false，结果无变化。该 run 不重新拟合，也没有新增样本或 Crown 数据。
 
+V4 的单场 Crown 适用性也已按原版市场范围核验：run `39407478152` 的暂存 artifact `walk_forward_predictions.csv` 有10,687行，SHA-256 `b612c1158cefe014676d56e4cf7fce2c9137f3b9b9ce3f7be78d524d16a9a921`，其中存在 Dortmund–Werder D1 2026/27 同日预测；但归档 Crown OU 盘口线不等于 V4 原版 O2.5 目标，因此 V4 的五种方案在此场均不计 Crown 盘口评估样本。该 CSV 还含上游来源市场字段，保留在 90 天 Actions artifact（到期 UTC `2027-01-18T10:22:29Z`），未复制进公开 M3 仓库；公开版本继续只保存按模型/赛季聚合的指标。详情见 [Crown 审计](M3_CROWN_STAGE_A_B_AUDIT.md)。
+
 另一项局限是 M3 当前逐场产物只保存 AH 0 与 O2.5 概率；除上述单场临时重算外，没有整套 Crown 市场线对应的历史概率面板，故不能对这 17,027 场统一计算 Crown 线级 Log Loss、Brier、收益或回撤。不得用无时区的 Football-Data 日历日去伪造 Crown 精确开赛匹配。
 
 其次，修复/补充可审计的升降级球队身份历史，使未覆盖比例下降但不对历史球队身份作未来推断；延长更多赛季的跨季稳定性评估；为 V4 源码许可寻求上游明确说明；最后再独立验证一个有差异且有许可的 OU 方法。
