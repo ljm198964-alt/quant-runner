@@ -2,7 +2,9 @@
 
 报告生成时间：2026-10-20 UTC。研究目标是完成独立研究系统，不启用正式投注。
 
-最新前瞻 shadow 复验：PR #51 head `f95a23d028924dbad918f1c5d201829906a460e6` 对应 Actions [39430049592](https://github.com/ljm198964-alt/quant-runner/actions/runs/39430049592)，UTC `13:23:58Z`–`13:25:19Z` 全步骤 SUCCESS，M3 单元测试通过。运行产物 UTC `2026-10-20T13:24:32.579566Z`，OpenFootball 源 commit `e6744429ee395bc86f247348c6184bb08d4eb361`。14,384 场 OOS 测试、43,152 条模型预测，其中各模型11,254条已评分；训练结果和未来赛程输入均未变化，故本次新增学习信息、预测、修订和结算均为0。Shadow 保留4,215个唯一 forecast keys、Crown quote=0，EV/ROI=N/A；B1来源文件仍缺失。此 run 只上传研究 artifact，没有新结果 commit。它验证了 PR 分支 no-market 流程，没有验证 Crown 行情链路。
+PR #51 已于 UTC `2026-10-20T13:30:00Z` 合入公开 `main`，merge commit `e6298aded2d009752d37e10ce879f306119b8c9d`。合并后三个研究 workflow 均实际完成：No-Market Shadow [39430911655](https://github.com/ljm198964-alt/quant-runner/actions/runs/39430911655) SUCCESS，43 tests pass；OOS Stability Audit [39430911610](https://github.com/ljm198964-alt/quant-runner/actions/runs/39430911610) SUCCESS，43 tests pass；Upstream V4 + penaltyblog research [39430911396](https://github.com/ljm198964-alt/quant-runner/actions/runs/39430911396) SUCCESS，自动落库结果 commit `49031c8`。Shadow 在 UTC `2026-10-20T13:30:45.393965Z` 生成：输入/赛程不变，新增预测、修订、结算均0，4,215唯一 forecast keys，Crown quote=0；重复运行未被报告成新增学习。稳定性报告未变化并按预期跳过落库。
+
+合并后重训的 penaltyblog 报告在 UTC `2026-10-20T13:35:38.779498Z` 生成，输入指纹与上版相同。Football-Data 提供19,093场历史结果，测试分母17,027场；严格逐季训练后每个模型评分14,696场，覆盖率86.31%。Poisson、Dixon-Coles、Bivariate Poisson 各自对 AH0/DNB 三状态的 Log Loss 分别为1.00428、1.00415、1.00414，Brier为0.59968、0.59949、0.59952；OU O2.5 Log Loss为0.68645、0.68646、0.68647，Brier为0.24650、0.24651、0.24652。该诊断只代表 AH0/DNB 与 O2.5；不是任意 Crown AH/OU 线的评价。162个拟合参数版本、逐场 OOS 预测和报告均由 Actions commit `49031c8` 保存在 `results/history/39430911396-1/`。本次输入数据未更新；Crown ROI=null、无 Telegram、无自动模型提升。
 
 最新复验：commit `6737a07bad4568a031551c8dfa256dc30cd55c22` 对应的 GitHub Actions run [39426586706](https://github.com/ljm198964-alt/quant-runner/actions/runs/39426586706) 于 2026-10-20T12:59:11Z–13:00:04Z SUCCESS。40/40 M3 单元测试和保存结果的稳定性/账本审计均通过；严格 UTC cutoff 复核 33,762 行，三模型各 11,254 个配对评分样本，输入 fingerprint 未变，Crown quotes used=false，账本 4,215 个 canonical forecast、0 settlement。报告输入没有变化，Actions 正确记录 `M3_STABILITY_REPORT_UNCHANGED`，没有伪报新增学习或盘口结果。源码与输出详情见 `latest_oos_stability.json` 和 `latest_shadow_ledger_audit.json`。
 
@@ -115,6 +117,8 @@ AH 结果以三状态多分类分数计分，DNB 的 win/push/lose 恰与胜/平
 ## Football Predictor V4：OU 原版回测
 
 工作流按作者 README 执行 V4 原入口。报告共 54 个模型×测试季节记录，范围为六联赛 E0/I1/SP1/D1/F1/B1，测试季从 2021/22 至当前部分 2026/27；每季约 2,039–2,097 场（当前部分赛季 383 场）。模型包括 LightGBM、Logistic、Market-anchored Logistic、Market-residual Logistic、Market-blend Logistic，以及 Poisson/联赛基线、开盘/收盘市场基准。
+
+合并后上游 Actions `39430911396` 按相同原始 V4 入口再次生成54行指标，并把本次 `comparison.json` 落库。源码与输入指纹未变化，因此是可复现性重跑而非新增训练信息。比较文件明确 `test_sample_identity_verified=false`：行数相同只允许描述各季指标延续情况，不能称为逐场身份配对比较或显著差值。
 
 基于 CSV 中各季 `n_test` 加权，主要 OU Log Loss / Brier 为：
 
