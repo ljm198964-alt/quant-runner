@@ -1,5 +1,12 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-20 M3 本轮实际验收尝试与持久化修复
+- 用户要求GPT自己核实M3真实运行，不重复让用户操作终端。已通过GitHub直接读取公开Runner main：`research/m3/results/latest_upstream_run.json` 和 `latest_v4_original_metrics.csv` 均不存在（404），说明尚无能在该路径验证的训练/回测回执；不等于可以断言Actions从未运行。原工作流可读取，已配置V4原版download/features/backtest和penaltyblog接口。
+- GitHub connector不提供按workflow列举最近运行或触发dispatch操作；网页/github API打开失败，容器直连api.github.com DNS失败，因此未取得运行ID/日志。不得将提交工作流等同实际训练成功。
+- 找到写回回执当前采用单次`git push origin HEAD:main`，并发提交时会失败且报告遗失。已在公开Runner直接修改现有`.github/workflows/m3-independent-research.yml`并提交`85d9d3a7d0246a58f347ff92b3625a1a77534d84`：保存回执和原版指标临时副本，逐次fetch主分支并复位临时Runner本地checkout、复制回执后最多3次提交推送；仅持久化上游执行事实，模型算法、训练数据、交易条件、赛事范围、AH/OU、TG全部未变。工作流路径本身已有push触发配置；**目前仅确认修改已提交，未获新run及持久化成功证明**。
+- 更新后再次fetch M3回执文件仍404。继续任务要以GitHub真实新增run记录/持久文件为证据，解析fail的实际步骤后修复；现阶段不可捏造真实训练指标、Crown ROI或宣称已打通。
+
+
 ## 2026-10-20 M3真实训练回执缺口修复
 - 用户要求继续M3、优先实际训练核验。对公开GitHub Actions workflow网页与api直接访问均失败（工具DisabledError/API不可访问）；GitHub连接器没有“列出最新workflow runs”或dispatch接口，PR-only关联run查询为空不能证明没运行；当前容器访问api.github.com亦DNS失败。因此尚无可核实V4云端成功回执，不报告模型ROI。
 - 在既有公开Runner工作流`.github/workflows/m3-independent-research.yml`提交`dd828d9b6ab7b114d8b63cefb463f0b35efce8c4`：原V4 download→features→backtest不变；将V4步骤标记id，执行后（包括失败）尝试在公开`research/m3/results/latest_upstream_run.json`写入实际run ID、运行UTC、V4步骤outcome、原报告是否存在；成功产生原`walk_forward_metrics.csv`则按原文件内容写入`research/m3/results/latest_v4_original_metrics.csv`。仅公开上游训练聚合指标，不写Crown VIP盘口，不动其他模型账本，不发TG，不新增交易Gate/定时策略/自动升级。
