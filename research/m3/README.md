@@ -13,6 +13,7 @@ M3 是独立研究模型，不读取 M1、M2、MR1 的预测、订单、参数�
 - [OpenFootball 无盘口影子 OOS 报告](results/openfootball/latest_oos_report.json)
 - [OpenFootball 配对样本跨季稳定性审计](results/openfootball/latest_oos_stability.json)
 - [稳定性审计复算器](openfootball_stability.py)
+- [无重训稳定性 Actions 工作流](../../.github/workflows/m3-oos-stability.yml)
 - [OpenFootball 影子运行收据](results/openfootball/latest_shadow_run.json)
 - [OpenFootball 预测/结算追加式账本](results/openfootball/shadow_ledger.jsonl)
 - 历史报告、预测 CSV 与参数快照在 `results/history/`、`results/predictions/`、`results/model_parameters/`。

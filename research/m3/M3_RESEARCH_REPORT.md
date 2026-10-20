@@ -110,6 +110,7 @@ Football Predictor V4 检出版本未发现显式 LICENSE 文件；其源码未�
 - 重复数据以指纹如实标记无变化；历史版本比较仅在测试身份和样本数匹配时比较 penaltyblog 指标；V4 比较在测试样本数改变时抑制差值。
 - 当前工作流已验证拟合参数 SHA 归档及 10 分箱校准数据，11 项 M3 单元测试本地通过；54 个 league×season 时间切分均满足训练结束早于测试开始。
 - 实际 Actions：`39402727958`（旧流程成功，但只有 penaltyblog 样本内 API smoke，不算 AH OOS）；`39406087077`（首次真实 penaltyblog OOS）；`39406828896`（模型参数文件首次报告但因工作流遗漏未落库）；`39407478152`（修复后 SUCCESS，参数、预测、报告、切分和 V4 指标均持久化，receipt 正确记录 AH 训练状态）。最新输入指纹与预测哈希可在 `latest_penaltyblog_oos_report.json` 查验。
+- 新增独立 `.github/workflows/m3-oos-stability.yml`，每四小时 UTC 读取已存 OpenFootball OOS 报告/逐场预测并做 M3 单测与稳定性复算，不运行拟合器；仅结果指纹变化时同步持久化 JSON。设置为在保存 OOS 文件更新后自动触发，并与模型 OOS 工作流分开并发。此工作流真实 Actions 验收状态见后续 handoff；PR 尚未合并前 schedule 不在默认分支生效。
 
 ## Crown 缺口、限制与下一步
 

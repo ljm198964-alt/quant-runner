@@ -1,0 +1,108 @@
+name: M3 Saved OOS Stability Audit
+concurrency:
+  group: m3-oos-stability-${{ github.ref }}
+  cancel-in-progress: false
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '50 */4 * * *'
+  push:
+    paths:
+      - '.github/workflows/m3-oos-stability.yml'
+      - 'research/m3/openfootball_stability.py'
+      - 'research/m3/test_openfootball_stability.py'
+      - 'research/m3/results/openfootball/latest_oos_report.json'
+      - 'research/m3/results/openfootball/latest_oos_predictions.csv'
+permissions:
+  contents: write
+jobs:
+  saved-oos-stability:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install pinned M3 metric runtime
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install penaltyblog==1.13.1 pandas numpy
+      - name: Run M3 unit tests without fitting models
+        run: python -m unittest discover -s research/m3 -p 'test_*.py' -v
+      - name: Audit saved paired OOS probabilities and block stability
+        id: audit
+        run: |
+          python -m research.m3.openfootball_stability \
+            --report research/m3/results/openfootball/latest_oos_report.json \
+            --predictions research/m3/results/openfootball/latest_oos_predictions.csv \
+            --output research/m3/results/openfootball/latest_oos_stability.json
+          python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          from pathlib import Path
+          p=Path('research/m3/results/openfootball/latest_oos_stability.json')
+          x=json.loads(p.read_text())
+          print('## M3 saved OOS stability audit (no model fitting)')
+          print(f"- Source input fingerprint: `{x['input_fingerprint_sha256']}`")
+          print(f"- Saved prediction SHA-256: `{x['prediction_file_sha256']}`")
+          print(f"- Paired scored matches per model: {x['paired_scored_matches_per_model']}")
+          print(f"- Strict UTC cutoff rows rechecked: {x['strict_utc_cutoff_rows_verified']}")
+          print(f"- Paired league-season cells: `{json.dumps({k:v['paired_league_season_cells'] for k,v in x['markets'].items()}, sort_keys=True)}`")
+          print(f"- Crown quotes used: `{x['crown_quotes_used']}`; Crown EV/ROI: `N/A`")
+          for market, details in x['cluster_bootstrap'].items():
+              all_include_zero=all(entry['interval_includes_zero'] for model in details['models'].values() for entry in model.values())
+              print(f"- {market}: {details['blocks']} league-season blocks, {details['replicates']} paired bootstrap draws; all model-difference intervals include zero: `{all_include_zero}`")
+          PY
+          mkdir -p "$RUNNER_TEMP/m3-stability-result"
+          cp research/m3/results/openfootball/latest_oos_stability.json "$RUNNER_TEMP/m3-stability-result/"
+      - name: Preserve stability receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: m3-oos-stability-${{ github.run_id }}-${{ github.run_attempt }}
+          path: research/m3/results/openfootball/latest_oos_stability.json
+          if-no-files-found: warn
+          retention-days: 90
+      - name: Persist changed stability report with branch sync
+        if: steps.audit.outcome == 'success'
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          for i in 1 2 3; do
+            git fetch origin "$GITHUB_REF_NAME"
+            git reset --hard "origin/$GITHUB_REF_NAME"
+            candidate="$RUNNER_TEMP/m3-stability-result/latest_oos_stability.json"
+            python - <<'PY' > "$RUNNER_TEMP/m3-stability-result/current.txt"
+          import hashlib, json
+          import os
+          from pathlib import Path
+          candidate=json.loads(Path(os.environ['RUNNER_TEMP'], 'm3-stability-result', 'latest_oos_stability.json').read_text())
+          report=json.loads(Path('research/m3/results/openfootball/latest_oos_report.json').read_text())
+          prediction=Path('research/m3/results/openfootball/latest_oos_predictions.csv')
+          digest=hashlib.sha256(prediction.read_bytes()).hexdigest()
+          current=(candidate['input_fingerprint_sha256']==report['input_fingerprint_sha256']
+                   and candidate['evaluation_fingerprint_sha256']==report['evaluation_fingerprint_sha256']
+                   and candidate['prediction_file_sha256']==digest)
+          print('true' if current else 'false')
+          PY
+            if [ "$(cat "$RUNNER_TEMP/m3-stability-result/current.txt")" != "true" ]; then
+              echo 'M3_STABILITY_CANDIDATE_STALE_AFTER_BRANCH_SYNC'
+              exit 0
+            fi
+            cp "$candidate" research/m3/results/openfootball/latest_oos_stability.json
+            git add research/m3/results/openfootball/latest_oos_stability.json
+            if git diff --cached --quiet; then
+              echo 'M3_STABILITY_REPORT_UNCHANGED'
+              exit 0
+            fi
+            git commit -m "Persist M3 saved OOS stability audit $GITHUB_RUN_ID"
+            if git push origin "HEAD:$GITHUB_REF_NAME"; then
+              exit 0
+            fi
+            echo "M3_STABILITY_PUSH_RETRY=$i"
+          done
+          echo 'M3_STABILITY_PERSIST_FAILED_AFTER_SYNC_RETRIES'
+          exit 1
