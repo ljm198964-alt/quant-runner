@@ -1,5 +1,11 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-20 M3真实训练回执缺口修复
+- 用户要求继续M3、优先实际训练核验。对公开GitHub Actions workflow网页与api直接访问均失败（工具DisabledError/API不可访问）；GitHub连接器没有“列出最新workflow runs”或dispatch接口，PR-only关联run查询为空不能证明没运行；当前容器访问api.github.com亦DNS失败。因此尚无可核实V4云端成功回执，不报告模型ROI。
+- 在既有公开Runner工作流`.github/workflows/m3-independent-research.yml`提交`dd828d9b6ab7b114d8b63cefb463f0b35efce8c4`：原V4 download→features→backtest不变；将V4步骤标记id，执行后（包括失败）尝试在公开`research/m3/results/latest_upstream_run.json`写入实际run ID、运行UTC、V4步骤outcome、原报告是否存在；成功产生原`walk_forward_metrics.csv`则按原文件内容写入`research/m3/results/latest_v4_original_metrics.csv`。仅公开上游训练聚合指标，不写Crown VIP盘口，不动其他模型账本，不发TG，不新增交易Gate/定时策略/自动升级。
+- **本轮只确认代码提交**。尚未验证新工作流云端实际运行、文件提交成功或模型训练成功；git push写回仍可能受仓库权限/并发影响。后续直接读上述两份文件核对实际结果；不要将“结果写回代码”当成“结果已落库”。
+
+
 ## 2026-10-20 M3上游V4独立审计：实际策略与用户无Gate要求的边界
 - 再次复查原版`pkotengpoku/football-predictor`的`config/leagues.yml`、`src/football_predictor/cli.py`、`download.py`和`v4.py`，确认默认包含五大联赛和比利时B1、历史赛季1718至2526（current_season 2627仅手动--include-current），下载失败按单个CSV捕获，需实际报告核对数据完整性。
 - `v4.py`原版包含`choose_edge_threshold`和依据`selected_threshold`产生`bet_side=over/under/none`及模拟Profit，这是开源作者原始回测行为，**不是用户确认的M3交易Gate**。遵从“先原版运行”的指令，可保留原版报告用于审计；不得将其阈值自动移植到M3正式订单或Crown交易。
