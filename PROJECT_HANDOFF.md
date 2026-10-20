@@ -1,5 +1,12 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-20 M3上游V4独立审计：实际策略与用户无Gate要求的边界
+- 再次复查原版`pkotengpoku/football-predictor`的`config/leagues.yml`、`src/football_predictor/cli.py`、`download.py`和`v4.py`，确认默认包含五大联赛和比利时B1、历史赛季1718至2526（current_season 2627仅手动--include-current），下载失败按单个CSV捕获，需实际报告核对数据完整性。
+- `v4.py`原版包含`choose_edge_threshold`和依据`selected_threshold`产生`bet_side=over/under/none`及模拟Profit，这是开源作者原始回测行为，**不是用户确认的M3交易Gate**。遵从“先原版运行”的指令，可保留原版报告用于审计；不得将其阈值自动移植到M3正式订单或Crown交易。
+- V4 README说明其主要目标固定Over2.5，原版赔率来源为Football-Data.co.uk，并非Crown交易报价；其原版ROI仅是上游数据回测，不等于M3 Crown盘口ROI。AH仍需penaltyblog单独训练验证，不能拿V4主胜等价AH。
+- M3工作流修复后commit `7b54a475696092f6425a312b0a20ea5e8b7b2377` 已提交；当前无法通过现有GitHub connector按workflow枚举最新run，只能在拥有run id时读取jobs/logs；GitHub公开页面与api URL尝试不可用，执行环境到api.github.com DNS失败。因此**实际云端训练状态未被验证**，不能凭PR-only关联run空列表认定未触发，也不能声称成功；没有编造样本数/ROI、没有修改M3策略/触发/门槛/TG。
+
+
 ## 2026-10-20 M3 官方penaltyblog接口实际错误修复及运行步骤接线
 - 上游`martineastwood/penaltyblog/penaltyblog/models/__init__.py`实际导出`DixonColesGoalModel`（单数Goal），而先前M3适配器错误引用`DixonColesGoalsModel`。已修改`research/m3/penaltyblog_official_runner.py`，commit `dd574c44a6479da1f7208a964824a3a11372a37a`。只修复API拼写，不改变预测规则或增加Gate。
 - 已在公开Runner的现有M3上游训练工作流补充penaltyblog安装后调用Poisson、Dixon-Coles原版fit/predict的只读示例步骤，commit `7b54a475696092f6425a312b0a20ea5e8b7b2377`。示例用V4独立CSV原始数据做接口smoke，不视为样本外AH实战模型或盈利成绩；原版V4 download/features/backtest命令不变。
