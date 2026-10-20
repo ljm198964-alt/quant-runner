@@ -16,6 +16,8 @@ class CrownShadowLedgerTests(unittest.TestCase):
             destination = Path(root) / "private" / "crown.jsonl"
             record = synthetic_record()
             record["authorization"]["allowed_uses"] = ["m3_research", "quote_retention", "automated_api"]
+            record["forecast"]["protocol"] = "RECORDED_FORWARD"
+            record["forecast"]["predicted_at_utc"] = "2026-10-01T08:30:00Z"
             summary = append_records(destination, [record], repo)
             self.assertEqual(summary["event_count"], 1)
             self.assertEqual(summary["retained_quote_count_by_market"], {"AH": 1, "OU": 1})

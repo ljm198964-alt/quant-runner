@@ -189,3 +189,6 @@ V4 的单场 Crown 适用性也已按原版市场范围核验：run `39407478152
 本轮 `crown_pairing.py` 已由 PR #52 提交 `c95377c` 推送，并在 Actions [39432967398](https://github.com/ljm198964-alt/quant-runner/actions/runs/39432967398) 于 2026-10-20 13:44 UTC 验收成功：46/46 M3 tests 通过，saved OOS / shadow ledger audit 成功，稳定性文件无变化；未重训，Crown 配对数仍为 AH=0、OU=0。PR #52 当前仍开放。
 
 为阶段 C 补充 `crown_shadow_ledger.py`：它把已验证的 M3 Crown 证据追加到仓库外、权限 `0600` 的私有 JSONL，使用链式 SHA-256 校验，重复记录幂等；只在授权记录明确列出 `m3_research` 与 `quote_retention`，且 API 数据另列 `automated_api` 时允许持久化。审计输出只包括市场计数和文件哈希。该工具已实现但**尚无可导入的真实、合规 M3 Crown 记录**，所以未创建报价账本数据，也不计算 EV/ROI；它不是自动采集器或预测概率生成器。
+
+
+配对审计已额外收紧：只有 `RECORDED_FORWARD` forecast 能进入有效 paired quote 计数，带回测标签的 `STRICT_WALK_FORWARD_HINDCAST` 只进入单独排除计数；私有影子账本拒绝 hindcast。避免历史回测生成时间晚于历史报价仍被误称赛前预测。

@@ -23,6 +23,7 @@ def _utc(value: str) -> datetime:
 def audit_records(records: list[dict]) -> dict:
     """Validate and pair import records; return no fixture IDs, prices, or lines."""
     counts = {"AH": 0, "OU": 0}
+    hindcast_candidates = {"AH": 0, "OU": 0}
     forecast_protocols: dict[str, int] = {}
     for record in records:
         summary = validate_record(record)
@@ -34,6 +35,9 @@ def audit_records(records: list[dict]) -> dict:
             observed = _utc(quote["observed_at_utc"])
             if not (observed < kickoff and observed <= _utc(record["source"]["received_at_utc"])):
                 continue
+            if summary["forecast_protocol"] != "RECORDED_FORWARD":
+                hindcast_candidates[quote["market"]] += 1
+                continue
             if predicted and _utc(predicted) > observed:
                 continue
             counts[quote["market"]] += 1
@@ -43,6 +47,7 @@ def audit_records(records: list[dict]) -> dict:
         "validated_record_count": len(records),
         "forecast_protocol_counts": forecast_protocols,
         "eligible_quote_pairs_by_market": counts,
+        "retrospective_hindcast_candidates_excluded_by_market": hindcast_candidates,
         "EV_and_ROI": "not_computed_without_market_specific_model_probability_grid_and_settlement policy",
         "quote_values_persisted": False,
         "other_model_data_read": False,

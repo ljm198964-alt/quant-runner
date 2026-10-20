@@ -65,6 +65,7 @@ def append_records(path: Path, records: list[dict], repository_root: Path) -> di
     if not isinstance(records, list):
         raise ValueError("input must be an array of validated evidence records")
     destination.parent.mkdir(parents=True, exist_ok=True)
+    os.chmod(destination.parent, 0o700)
     if destination.exists():
         os.chmod(destination, 0o600)
     events = _read(destination)
@@ -79,6 +80,8 @@ def append_records(path: Path, records: list[dict], repository_root: Path) -> di
             raise ValueError("written permission must explicitly cover M3 research and quote retention")
         if record["source"].get("capture_method") == "authorized_api" and "automated_api" not in uses:
             raise ValueError("written permission must explicitly cover automated API capture")
+        if record["forecast"].get("protocol") != "RECORDED_FORWARD":
+            raise ValueError("private Crown shadow ledger accepts recorded-forward forecasts only")
         record_hash = _sha(record)
         if record_hash in existing:
             continue
