@@ -1,5 +1,12 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-20 M3 进一步执行：原版工作流回执追查与penaltyblog官方AH/OU接口
+- GitHub连接器已尝试查询M3最新工作流提交`16b570f6b5a1c2e15f2257a2b56cc127e019b3f0`的关联run，结果为空；该接口仅查PR触发运行，因此**不能据此断定没有push运行，也不能声称成功**。公开网页/Actions API当前无法取得可访问日志；真实V4回测指标仍未验证。
+- 核实上游Football Predictor V4 `src/football_predictor/cli.py`及`download.py`：README规定的download/features/backtest仍适用；download会捕获单个CSV失败，故未核验实际下载成功场次之前不能假设模型已训练。
+- 直接核对penaltyblog官方models overview的 `PoissonGoalsModel`/`DixonColesGoalsModel`、`fit()`、`predict()`、`asian_handicap()`与`total_goals()` API。新增独立`research/m3/penaltyblog_official_runner.py`，公开Runner提交`508e4fca0ecc2ba2820c5ff891013cc4c2eaec9d`：读取独立M3 CSV，按官方原版API训练Poisson或Dixon-Coles并报告主胜平负、示例AH -0.5/OU 2.5概率。不接M1/M2/MR1账本、不增加投注筛选/EV门槛、不发TG、不声明Crown ROI。特定AH/OU 盘口仅是接口演示，非用户冻结的可交易盘口范围规则。
+- 目前尚无云端该脚本实际运行成功或真实训练回执；真实Crown盘口双边AH/OU仍待独立配对。保持只读研究，不自动更新/替换模型，也不设未经用户确认的Gate。
+
+
 ## 2026-10-20 M3 启动持续训练与版本记录（不自动替换）
 - 用户要求先开始M3持续学习工作。遵照最近用户确认，只按原开源README执行OU V4训练与时间前推回测；penaltyblog仍仅按README安装，未自行定义AH模型训练行为。无新增EV/信心/时间/样本交易Gate，未开启TG，M3不接M1/M2/MR1数据及订单。
 - 公开Runner M3工作流 `.github/workflows/m3-independent-research.yml` 新提交 `c2ed9d5651bf25a13c1caf60b74ef26191f0a1f5`：不改变原版`download → features → backtest`命令，追加保存上游原报告`walk_forward_metrics.csv`、`walk_forward_predictions.csv`、`v4_subgroup_metrics.csv`和上游代码、Runner代码SHA及运行UTC至GitHub Actions artifact。为后续重复训练及版本差异对照保存证据。没有自动替换模型或自动发布。
