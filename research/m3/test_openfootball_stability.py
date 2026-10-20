@@ -75,6 +75,7 @@ class OpenFootballStabilityTests(unittest.TestCase):
             self.assertEqual(result["paired_scored_matches_per_model"], 2)
             self.assertEqual(result["strict_utc_cutoff_rows_verified"], 6)
             self.assertEqual(result["markets"]["AH0_DNB_3WAY"]["paired_league_season_cells"], 2)
+            self.assertEqual(result["source_report_generated_utc"], "2026-01-01T00:00:00Z")
             self.assertIsNone(result["Crown_ROI"])
             self.assertTrue(result["cluster_bootstrap"]["AH0_DNB_3WAY"]["models"]["dixon_coles"]["log_loss"]["interval_includes_zero"])
             self.assertEqual(result["cluster_bootstrap"]["AH0_DNB_3WAY"]["models"]["dixon_coles"]["log_loss"]["observed_pooled_difference_vs_poisson"], 0.0)

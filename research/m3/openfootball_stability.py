@@ -292,7 +292,7 @@ def build_stability_report(report_path: Path, predictions_path: Path, bootstrap_
         "source_report_protocol": report["protocol"],
         "data_source": report["data_source"],
         "data_source_commit": report["data_source_commit"],
-        "generated_utc": report["generated_utc"],
+        "source_report_generated_utc": report["generated_utc"],
         "input_fingerprint_sha256": report["input_fingerprint_sha256"],
         "evaluation_fingerprint_sha256": report["evaluation_fingerprint_sha256"],
         "prediction_file_sha256": prediction_sha,
