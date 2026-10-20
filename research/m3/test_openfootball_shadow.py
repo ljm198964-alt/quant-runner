@@ -12,6 +12,7 @@ from research.m3 import openfootball_shadow as shadow
 
 class FakeGrid:
     home_draw_away = (0.45, 0.30, 0.25)
+    grid = [[0.4, 0.2], [0.2, 0.2]]
 
     def asian_handicap_probs(self, side, line):
         return {"win": 0.45, "push": 0.30, "lose": 0.25}
@@ -84,6 +85,9 @@ class OpenFootballShadowTests(unittest.TestCase):
                 self.assertEqual(first["forecasts_appended"], 1)
                 forecast = json.loads(ledger.read_text().splitlines()[0])
                 self.assertEqual(forecast["market_data_status"], "NO_CROWN_QUOTE_CAPTURED")
+                self.assertEqual(forecast["score_probability_grid"], FakeGrid.grid)
+                self.assertEqual(forecast["score_probability_grid_semantics"],
+                    "penaltyblog_normalized_rows_home_goals_columns_away_goals")
                 self.assertIsNone(forecast["ev_per_unit"])
                 self.assertIsNone(forecast["roi"])
                 self.assertFalse(forecast["formal_order"])

@@ -100,6 +100,24 @@ def build_shadow_ledger_audit(ledger_path: Path) -> dict:
                 raise ValueError("predicted probability must be finite and in [0, 1]")
             if not math.isclose(sum(one_x_two), 1.0, abs_tol=1e-8) or not math.isclose(sum(ah), 1.0, abs_tol=1e-8):
                 raise ValueError("forecast probability distributions must sum to one")
+            score_grid = event.get("score_probability_grid")
+            if score_grid is not None:
+                if (not isinstance(score_grid, list) or not score_grid
+                        or any(not isinstance(row, list) or not row for row in score_grid)):
+                    raise ValueError("score probability grid must be a non-empty matrix")
+                width = len(score_grid[0])
+                if any(len(row) != width for row in score_grid):
+                    raise ValueError("score probability grid must be rectangular")
+                probabilities = [value for row in score_grid for value in row]
+                if any(isinstance(value, bool) or not isinstance(value, (int, float))
+                       or not math.isfinite(value) or not 0 <= value <= 1
+                       for value in probabilities):
+                    raise ValueError("score grid probabilities must be finite and in [0, 1]")
+                if not math.isclose(math.fsum(probabilities), 1.0, rel_tol=0, abs_tol=1e-8):
+                    raise ValueError("score probability grid must sum to one")
+                if event.get("score_probability_grid_semantics") != (
+                        "penaltyblog_normalized_rows_home_goals_columns_away_goals"):
+                    raise ValueError("score probability grid semantics must be explicit")
         key_groups[_forecast_key(event)].append(event)
 
     corrections = [e for e in events if e.get("event_type") == "FORECAST_DUPLICATE_SUPERSEDED"]
@@ -158,6 +176,9 @@ def build_shadow_ledger_audit(ledger_path: Path) -> dict:
                                            for e in forecasts if e["forecast_id"] not in superseded_set),
         "ev_calculable_count": sum(e.get("ev_per_unit") is not None
                                    for e in forecasts if e["forecast_id"] not in superseded_set),
+        "canonical_forecasts_with_score_grid_count": sum(
+            isinstance(e.get("score_probability_grid"), list)
+            for e in forecasts if e["forecast_id"] not in superseded_set),
         "roi_calculable_count": sum(e.get("roi") is not None
                                     for e in forecasts if e["forecast_id"] not in superseded_set),
         "formal_order_count": sum(bool(e.get("formal_order")) for e in events),

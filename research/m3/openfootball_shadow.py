@@ -52,6 +52,34 @@ def _sha256_json(value) -> str:
     return _sha256_bytes(body)
 
 
+def _serialize_score_probability_grid(prediction) -> list[list[float]]:
+    """Return penaltyblog's normalized score matrix in compact row-major form."""
+    matrix = prediction.grid
+    if hasattr(matrix, "tolist"):
+        matrix = matrix.tolist()
+    if not isinstance(matrix, list) or not matrix:
+        raise ValueError("penaltyblog prediction must expose a non-empty score grid")
+    rows = []
+    width = None
+    for row in matrix:
+        if hasattr(row, "tolist"):
+            row = row.tolist()
+        if not isinstance(row, (list, tuple)) or not row:
+            raise ValueError("penaltyblog score grid rows must be non-empty arrays")
+        if width is None:
+            width = len(row)
+        if len(row) != width:
+            raise ValueError("penaltyblog score grid must be rectangular")
+        values = [float(value) for value in row]
+        if any(not math.isfinite(value) or value < 0 or value > 1 for value in values):
+            raise ValueError("penaltyblog score grid probabilities must be finite in [0, 1]")
+        rows.append(values)
+    mass = math.fsum(value for row in rows for value in row)
+    if not math.isclose(mass, 1.0, rel_tol=0, abs_tol=1e-8):
+        raise ValueError(f"penaltyblog normalized score grid must sum to one; got {mass}")
+    return rows
+
+
 def _evaluation_code_fingerprint() -> str:
     """Hash code that determines the OOS protocol, not unrelated repo commits."""
     paths = (Path(__file__), Path(__file__).with_name("penaltyblog_walkforward.py"))
@@ -509,7 +537,10 @@ def run_shadow(data: pd.DataFrame, fixtures: list[dict], files: list[dict], cove
                                  "ah_home_0_p_win": float(ah["win"]),
                                  "ah_home_0_p_push": float(ah["push"]),
                                  "ah_home_0_p_lose": float(ah["lose"]),
-                                 "ou_p_over_2_5": float(grid.total_goals("over", 2.5))})
+                                 "ou_p_over_2_5": float(grid.total_goals("over", 2.5)),
+                                 "score_probability_grid": _serialize_score_probability_grid(grid),
+                                 "score_probability_grid_semantics":
+                                     "penaltyblog_normalized_rows_home_goals_columns_away_goals"})
                 base["source_file"] = fixture["source_file"]
                 base["source_row"] = fixture["source_row"]
                 if _append_once(ledger_path, events, base, "forecast_id"):
