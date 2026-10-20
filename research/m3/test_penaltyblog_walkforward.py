@@ -30,6 +30,9 @@ class FakeModel:
     def predict(self, home, away):
         return FakeGrid()
 
+    def get_params(self):
+        return {"intercept": 0.1}
+
 
 class PenaltyblogWalkForwardTests(unittest.TestCase):
     def test_predicts_only_after_strict_utc_date_cutoff(self):
@@ -39,19 +42,23 @@ class PenaltyblogWalkForwardTests(unittest.TestCase):
                 w = csv.writer(f)
                 w.writerow(["Date", "HomeTeam", "AwayTeam", "FTHG", "FTAG", "B365H"])
                 w.writerow(["11/08/2017", "A", "B", 2, 0, 1.5])
-                w.writerow(["12/08/2017", "B", "A", 1, 1, 2.0])
+                # A stale or mislabeled source row on the test date must not leak
+                # into the fit even though it is stored under an earlier season.
+                w.writerow(["10/08/2018", "B", "A", 1, 1, 2.0])
             with (root / "1819_E0.csv").open("w", newline="") as f:
                 w = csv.writer(f)
                 w.writerow(["Date", "HomeTeam", "AwayTeam", "FTHG", "FTAG", "B365H"])
                 w.writerow(["10/08/2018", "A", "B", 0, 1, 2.1])
             data, files = wf.read_matches(root)
             with patch.dict(wf.MODEL_TYPES, {name: FakeModel for name in wf.MODEL_TYPES}):
-                predictions, splits = wf.build_predictions(data)
+                predictions, splits, fitted_models = wf.build_predictions(data)
             split = next(s for s in splits if s["test_season"] == "1819")
-            self.assertEqual(split["train_rows"], 2)
+            self.assertEqual(split["train_rows"], 1)
             self.assertLess(split["train_end_utc"], split["test_start_utc"])
             self.assertEqual(len(predictions), 3)
-            self.assertTrue(all(p["train_rows"] == 2 for p in predictions))
+            self.assertEqual(len(fitted_models), 3)
+            self.assertEqual(fitted_models[0]["parameters"], {"intercept": 0.1})
+            self.assertTrue(all(p["train_rows"] == 1 for p in predictions))
             self.assertTrue(all(p["actual_result_1x2"] == "A" for p in predictions))
             self.assertTrue(all(p["prediction_status"] == "predicted" for p in predictions))
             self.assertEqual(len(files), 2)
@@ -66,7 +73,7 @@ class PenaltyblogWalkForwardTests(unittest.TestCase):
              "kickoff_date_utc": "2018-08-10T00:00:00Z", "source_file": "1819_E0.csv"},
         ])
         with patch.dict(wf.MODEL_TYPES, {name: FakeModel for name in wf.MODEL_TYPES}):
-            predictions, _ = wf.build_predictions(data)
+            predictions, _, _ = wf.build_predictions(data)
         self.assertTrue(all(p["prediction_status"] == "unseen_team_in_training" for p in predictions))
         self.assertTrue(all(p["p_home"] == "" for p in predictions))
 
@@ -77,6 +84,12 @@ class PenaltyblogWalkForwardTests(unittest.TestCase):
         self.assertEqual(result["n_predicted"], 1)
         self.assertAlmostEqual(result["log_loss"], -__import__("math").log(0.45))
         self.assertAlmostEqual(result["brier"], (0.45 - 1) ** 2 + 0.30 ** 2 + 0.25 ** 2)
+        self.assertEqual(sum(x["n"] for x in result["calibration_bins"]["home_win"]), 1)
+        ou_row = {"model": "x", "prediction_status": "predicted", "ou_p_over_2_5": 0.7,
+                  "actual_ou_over_2_5": 1}
+        ou = wf.score_rows([ou_row], "x", "ou_over_2_5")
+        self.assertAlmostEqual(ou["log_loss"], -__import__("math").log(0.7))
+        self.assertEqual(sum(x["n"] for x in ou["calibration_bins"]), 1)
 
 
 if __name__ == "__main__":

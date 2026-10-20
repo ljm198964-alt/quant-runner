@@ -96,9 +96,10 @@ def read_matches(input_dir: Path) -> tuple[pd.DataFrame, list[dict]]:
     return data, files
 
 
-def build_predictions(data: pd.DataFrame) -> tuple[list[dict], list[dict]]:
+def build_predictions(data: pd.DataFrame) -> tuple[list[dict], list[dict], list[dict]]:
     predictions: list[dict] = []
     splits: list[dict] = []
+    fitted_models: list[dict] = []
     for league, league_data in data.groupby("league", sort=True):
         seasons = sorted(league_data["season"].unique(), key=lambda s: (league_data.loc[league_data.season.eq(s), "match_date_utc"].min(), s))
         for season_index, season in enumerate(seasons[1:], start=1):
@@ -126,6 +127,14 @@ def build_predictions(data: pd.DataFrame) -> tuple[list[dict], list[dict]]:
                 model = model_cls(train["home_goals"], train["away_goals"], train["home_team"], train["away_team"])
                 model.fit()
                 known = set(model.teams)
+                fitted_models.append({
+                    "model": model_name, "league": league, "test_season": season,
+                    "train_rows": int(len(train)),
+                    "train_start_utc": train["match_date_utc"].min().isoformat(),
+                    "train_end_utc": train["match_date_utc"].max().isoformat(),
+                    "training_teams": [str(team) for team in model.teams],
+                    "parameters": {str(key): float(value) for key, value in model.get_params().items()},
+                })
                 for row in test.itertuples(index=False):
                     record = {
                         "model": model_name, "league": league, "season": season,
@@ -153,7 +162,7 @@ def build_predictions(data: pd.DataFrame) -> tuple[list[dict], list[dict]]:
                                        "ou_p_over_2_5": float(grid.total_goals("over", 2.5))})
                     predictions.append(record)
             splits.append(split_meta)
-    return predictions, splits
+    return predictions, splits, fitted_models
 
 
 def score_rows(rows: list[dict], model: str, market: str) -> dict:
@@ -175,16 +184,36 @@ def score_rows(rows: list[dict], model: str, market: str) -> dict:
         p = np.clip(probs, eps, 1 - eps)
         log_loss = float(-np.mean(actual * np.log(p) + (1 - actual) * np.log(1 - p)))
         brier = float(np.mean((probs - actual) ** 2))
+        calibration = []
+        for bucket in range(10):
+            lo, hi = bucket / 10, (bucket + 1) / 10
+            mask = (probs >= lo) & ((probs < hi) if bucket < 9 else (probs <= hi))
+            calibration.append({"probability_bin": f"{lo:.1f}-{hi:.1f}", "n": int(mask.sum()),
+                                "mean_predicted_probability": float(np.mean(probs[mask])) if mask.any() else None,
+                                "observed_rate": float(np.mean(actual[mask])) if mask.any() else None})
         return {"n_predicted": int(len(valid)), "n_test_total": int(sum(1 for r in rows if r["model"] == model)),
                 "log_loss": log_loss, "brier": brier, "mean_predicted_probability": float(np.mean(probs)),
-                "observed_rate": float(np.mean(actual))}
+                "observed_rate": float(np.mean(actual)), "calibration_bins": calibration}
     probs = np.clip(probs, eps, 1)
     probs = probs / probs.sum(axis=1, keepdims=True)
     log_loss = float(-np.mean(np.log(probs[np.arange(len(actual)), actual])))
     one_hot = np.eye(probs.shape[1])[actual]
     brier = float(np.mean(np.sum((probs - one_hot) ** 2, axis=1)))
+    class_names = ("home_win", "draw_push", "away_lose")
+    calibration = {}
+    for class_idx, class_name in enumerate(class_names):
+        actual_class = (actual == class_idx).astype(int)
+        bins = []
+        for bucket in range(10):
+            lo, hi = bucket / 10, (bucket + 1) / 10
+            class_prob = probs[:, class_idx]
+            mask = (class_prob >= lo) & ((class_prob < hi) if bucket < 9 else (class_prob <= hi))
+            bins.append({"probability_bin": f"{lo:.1f}-{hi:.1f}", "n": int(mask.sum()),
+                         "mean_predicted_probability": float(np.mean(class_prob[mask])) if mask.any() else None,
+                         "observed_rate": float(np.mean(actual_class[mask])) if mask.any() else None})
+        calibration[class_name] = bins
     return {"n_predicted": int(len(valid)), "n_test_total": int(sum(1 for r in rows if r["model"] == model)),
-            "log_loss": log_loss, "brier": brier}
+            "log_loss": log_loss, "brier": brier, "calibration_bins": calibration}
 
 
 def main() -> None:
@@ -196,7 +225,7 @@ def main() -> None:
     parser.add_argument("--upstream-commit", default="unknown")
     args = parser.parse_args()
     data, files = read_matches(args.input_dir)
-    predictions, splits = build_predictions(data)
+    predictions, splits, fitted_models = build_predictions(data)
     models = []
     for model in MODEL_TYPES:
         model_rows = [r for r in predictions if r["model"] == model]
@@ -234,12 +263,18 @@ def main() -> None:
         "season_counts": {k: int(v) for k, v in data.groupby("season").size().items()},
         "test_matches_total": int(sum(s.get("test_rows", 0) for s in splits)),
         "test_matches_scored": int(sum(r["prediction_status"] == "predicted" for r in predictions if r["model"] == "poisson")),
+        "scored_coverage_of_test_matches": (
+            float(sum(r["prediction_status"] == "predicted" for r in predictions if r["model"] == "poisson"))
+            / int(sum(s.get("test_rows", 0) for s in splits))
+            if sum(s.get("test_rows", 0) for s in splits) else None
+        ),
         "time_basis": "UTC; upstream date-only values parsed as UTC midnight; entire test match date excluded from training",
         "train_test_isolation": "For each league and test season, train rows come only from earlier season files and satisfy match_date_utc < earliest test-season match_date_utc. No same-date or test-season outcome is used to fit that split.",
         "handicap_diagnostic": "home Asian Handicap 0.0 (draw-no-bet); generic probability diagnostic only, no Crown price/line linkage or ROI",
         "ou_diagnostic": "Over 2.5 probability diagnostic only; no Crown price/line linkage or ROI",
         "penaltyblog_version": version("penaltyblog"), "quant_runner_commit": args.quant_runner_commit,
         "football_predictor_commit": args.upstream_commit,
+        "fitted_models_count": len(fitted_models),
         "models": models, "automatic_model_promotion": False, "telegram_sent": False,
         "crown_roi": None,
     }
@@ -254,11 +289,20 @@ def main() -> None:
         meta["predictions_sha256"] = hashlib.sha256(prediction_csv.encode()).hexdigest()
         meta["prediction_rows"] = len(predictions)
         meta["prediction_artifact"] = f"research/m3/results/predictions/{meta['predictions_sha256']}.csv"
+    parameter_text = json.dumps(fitted_models, indent=2, ensure_ascii=False, sort_keys=True) + "\n"
+    parameter_path = args.output_dir / "penaltyblog_oos_model_parameters.json"
+    parameter_path.write_text(parameter_text)
+    meta["model_parameters_sha256"] = hashlib.sha256(parameter_text.encode()).hexdigest()
+    meta["model_parameters_artifact"] = (
+        f"research/m3/results/model_parameters/{meta['model_parameters_sha256']}.json"
+    )
     (args.output_dir / "penaltyblog_oos_report.json").write_text(json.dumps(meta, indent=2, ensure_ascii=False) + "\n")
     (args.output_dir / "penaltyblog_oos_splits.json").write_text(json.dumps(splits, indent=2, ensure_ascii=False) + "\n")
     print(json.dumps({"protocol": meta["protocol"], "generated_utc": meta["generated_utc"],
                       "input_fingerprint_sha256": data_fingerprint, "usable_matches": meta["usable_matches"],
                       "test_matches_total": meta["test_matches_total"], "test_matches_scored": meta["test_matches_scored"],
+                      "fitted_models_count": meta["fitted_models_count"],
+                      "model_parameters_sha256": meta["model_parameters_sha256"],
                       "penaltyblog_version": meta["penaltyblog_version"], "models": models}, ensure_ascii=False))
 
 

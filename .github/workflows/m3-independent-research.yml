@@ -135,6 +135,8 @@ jobs:
               record['penaltyblog_oos_prediction_rows']=oos_report.get('prediction_rows')
               record['penaltyblog_oos_input_fingerprint_sha256']=oos_report.get('input_fingerprint_sha256')
               record['penaltyblog_version']=oos_report.get('penaltyblog_version')
+              record['penaltyblog_fitted_models_count']=oos_report.get('fitted_models_count')
+              record['penaltyblog_model_parameters_sha256']=oos_report.get('model_parameters_sha256')
           else:
               record['penaltyblog_oos_report_available']=False
           (out/'latest_m3_run.json').write_text(json.dumps(record,indent=2)+'\n')
@@ -188,6 +190,12 @@ jobs:
                 cp "$RUNNER_TEMP/m3-receipt/m3-penaltyblog-oos/penaltyblog_oos_predictions.csv" "research/m3/results/predictions/$prediction_sha.csv"
               fi
               echo "Prediction artifact: research/m3/results/predictions/$prediction_sha.csv" > "$history_dir/prediction_artifact.txt"
+              parameter_sha="$(python -c 'import json,sys; print(json.load(open(sys.argv[1]))["model_parameters_sha256"])' "$RUNNER_TEMP/m3-receipt/m3-penaltyblog-oos/penaltyblog_oos_report.json")"
+              mkdir -p research/m3/results/model_parameters
+              if [ ! -f "research/m3/results/model_parameters/$parameter_sha.json" ]; then
+                cp "$RUNNER_TEMP/m3-receipt/m3-penaltyblog-oos/penaltyblog_oos_model_parameters.json" "research/m3/results/model_parameters/$parameter_sha.json"
+              fi
+              echo "Model parameter artifact: research/m3/results/model_parameters/$parameter_sha.json" > "$history_dir/model_parameter_artifact.txt"
             fi
             if [ -f "$RUNNER_TEMP/m3-receipt/latest_v4_original_metrics.csv" ]; then
               cp "$RUNNER_TEMP/m3-receipt/latest_v4_original_metrics.csv" research/m3/results/
