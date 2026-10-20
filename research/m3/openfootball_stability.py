@@ -10,6 +10,7 @@ import csv
 import hashlib
 import json
 import math
+import random
 from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
@@ -25,6 +26,7 @@ MARKETS = {
     "AH0_DNB_3WAY": "ah_home_0",
     "OU_OVER_2_5": "ou_over_2_5",
 }
+EPS = 1e-15
 
 
 def _utc(value: str, field: str) -> datetime:
@@ -73,17 +75,90 @@ def _load_predictions(path: Path) -> tuple[dict[str, dict[tuple[str, ...], dict]
     return model_rows, digest, generated_rows
 
 
-def _wins(metrics_by_model: dict[str, dict[str, float]]) -> dict[str, int]:
-    wins = {m: 0 for m in MODEL_NAMES}
-    for values in metrics_by_model.values():
-        best = min(values.values())
-        for model, value in values.items():
-            if math.isclose(value, best, rel_tol=0.0, abs_tol=1e-12):
-                wins[model] += 1
-    return wins
+def _row_losses(row: dict[str, str], market: str) -> dict[str, float]:
+    if market == "AH0_DNB_3WAY":
+        labels = {"win": 0, "push": 1, "lose": 2}
+        if row.get("actual_ah_home_0") not in labels:
+            raise ValueError("unexpected AH0/DNB result label")
+        probs = [float(row[k]) for k in ("ah_home_0_p_win", "ah_home_0_p_push", "ah_home_0_p_lose")]
+        probs = [min(1.0, max(EPS, p)) for p in probs]
+        total = sum(probs)
+        probs = [p / total for p in probs]
+        actual = labels[row["actual_ah_home_0"]]
+        return {
+            "log_loss": -math.log(probs[actual]),
+            "brier": sum((p - (1.0 if idx == actual else 0.0)) ** 2 for idx, p in enumerate(probs)),
+        }
+    p = float(row["ou_p_over_2_5"])
+    actual = int(row["actual_ou_over_2_5"])
+    clipped = min(1 - EPS, max(EPS, p))
+    return {
+        "log_loss": -(actual * math.log(clipped) + (1 - actual) * math.log(1 - clipped)),
+        "brier": (p - actual) ** 2,
+    }
 
 
-def build_stability_report(report_path: Path, predictions_path: Path) -> dict:
+def _cluster_bootstrap(model_rows: dict, seed: int, replicates: int) -> dict:
+    cluster_losses: dict[str, dict[str, dict[str, dict[str, float]]]] = {
+        market: defaultdict(lambda: {m: {metric: 0.0 for metric in METRICS} for m in MODEL_NAMES})
+        for market in MARKETS
+    }
+    cluster_counts: dict[str, dict[str, int]] = {market: defaultdict(int) for market in MARKETS}
+    for model in MODEL_NAMES:
+        for row in model_rows[model].values():
+            cluster = f"{row['league']}-{row['season']}"
+            for market in MARKETS:
+                values = _row_losses(row, market)
+                for metric in METRICS:
+                    cluster_losses[market][cluster][model][metric] += values[metric]
+                if model == MODEL_NAMES[0]:
+                    cluster_counts[market][cluster] += 1
+
+    rng = random.Random(seed)
+    output = {}
+    for market in MARKETS:
+        clusters = sorted(cluster_counts[market])
+        if len(clusters) < 2:
+            raise ValueError("cluster bootstrap requires at least two league-season blocks")
+        samples = {
+            model: {metric: [] for metric in METRICS}
+            for model in MODEL_NAMES if model != "poisson"
+        }
+        for _ in range(replicates):
+            chosen = rng.choices(clusters, k=len(clusters))
+            n = sum(cluster_counts[market][cell] for cell in chosen)
+            base = {metric: sum(cluster_losses[market][cell]["poisson"][metric] for cell in chosen)
+                    for metric in METRICS}
+            for model in samples:
+                for metric in METRICS:
+                    total = sum(cluster_losses[market][cell][model][metric] for cell in chosen)
+                    samples[model][metric].append((total - base[metric]) / n)
+        market_result = {}
+        for model, by_metric in samples.items():
+            market_result[model] = {}
+            for metric, values in by_metric.items():
+                values.sort()
+                low = values[int(0.025 * (replicates - 1))]
+                high = values[int(0.975 * (replicates - 1))]
+                market_result[model][metric] = {
+                    "mean_difference_vs_poisson": sum(values) / replicates,
+                    "cluster_bootstrap_95pct_interval": [low, high],
+                    "interval_includes_zero": low <= 0 <= high,
+                }
+        output[market] = {
+            "block_unit": "league-season",
+            "blocks": len(clusters),
+            "replicates": replicates,
+            "seed": seed,
+            "comparisons_vs": "poisson",
+            "models": market_result,
+            "interpretation": "descriptive cluster-bootstrap uncertainty; not a strategy test or model promotion rule",
+        }
+    return output
+
+
+def build_stability_report(report_path: Path, predictions_path: Path, bootstrap_seed: int = 20261020,
+                           bootstrap_replicates: int = 10000) -> dict:
     report = json.loads(report_path.read_text(encoding="utf-8"))
     if report.get("protocol") != "M3_OPENFOOTBALL_STRICT_WALKFORWARD_V1":
         raise ValueError("unexpected M3 OOS report protocol")
@@ -100,6 +175,13 @@ def build_stability_report(report_path: Path, predictions_path: Path) -> dict:
         metric_n = model_reports[model]["overall_metrics"]["ah_home_0"]["n_predicted"]
         if metric_n != len(model_rows[model]):
             raise ValueError(f"scored prediction row count does not match OOS metrics for {model}")
+        for market, report_key in MARKETS.items():
+            scored = [_row_losses(row, market) for row in model_rows[model].values()]
+            summary = model_reports[model]["overall_metrics"][report_key]
+            for metric in METRICS:
+                calculated = sum(row[metric] for row in scored) / len(scored)
+                if not math.isclose(calculated, float(summary[metric]), rel_tol=0.0, abs_tol=2e-8):
+                    raise ValueError(f"prediction-level recomputation disagrees with OOS report for {model} {market} {metric}")
 
     split_rows: dict[str, dict[str, dict[str, dict]]] = {market: {} for market in MARKETS}
     for model in MODEL_NAMES:
@@ -194,6 +276,17 @@ def build_stability_report(report_path: Path, predictions_path: Path) -> dict:
             "OU_O2_5_calibration_bias_predicted_minus_observed": ou_pred - ou_actual,
         }
 
+    if bootstrap_replicates < 1000:
+        raise ValueError("use at least 1000 cluster bootstrap replicates")
+    bootstrap = _cluster_bootstrap(model_rows, bootstrap_seed, bootstrap_replicates)
+    for market, result in bootstrap.items():
+        for model, by_metric in result["models"].items():
+            for metric, summary in by_metric.items():
+                summary["observed_pooled_difference_vs_poisson"] = (
+                    markets_out[market]["overall_metrics"][model][metric]
+                    - markets_out[market]["overall_metrics"]["poisson"][metric]
+                )
+
     return {
         "protocol": "M3_OOS_STABILITY_AUDIT_V1",
         "source_report_protocol": report["protocol"],
@@ -212,6 +305,7 @@ def build_stability_report(report_path: Path, predictions_path: Path) -> dict:
         "strict_utc_cutoff_rows_verified": len(scored_keys) * len(MODEL_NAMES),
         "markets": markets_out,
         "calibration": calibration,
+        "cluster_bootstrap": bootstrap,
         "crown_quotes_used": False,
         "Crown_EV": None,
         "Crown_ROI": None,

@@ -21,6 +21,108 @@
       "scored_matches": 11254
     }
   },
+  "cluster_bootstrap": {
+    "AH0_DNB_3WAY": {
+      "block_unit": "league-season",
+      "blocks": 45,
+      "comparisons_vs": "poisson",
+      "interpretation": "descriptive cluster-bootstrap uncertainty; not a strategy test or model promotion rule",
+      "models": {
+        "bivariate_poisson": {
+          "brier": {
+            "cluster_bootstrap_95pct_interval": [
+              -0.0003683333445012012,
+              0.00032451181819023733
+            ],
+            "interval_includes_zero": true,
+            "mean_difference_vs_poisson": -2.0255412504656052e-05,
+            "observed_pooled_difference_vs_poisson": -2.05335672550655e-05
+          },
+          "log_loss": {
+            "cluster_bootstrap_95pct_interval": [
+              -0.0005505907381429506,
+              0.0008341147960900703
+            ],
+            "interval_includes_zero": true,
+            "mean_difference_vs_poisson": 0.0001363681844875635,
+            "observed_pooled_difference_vs_poisson": 0.0001369312012606816
+          }
+        },
+        "dixon_coles": {
+          "brier": {
+            "cluster_bootstrap_95pct_interval": [
+              -0.0003716873772788703,
+              0.0004966102891176864
+            ],
+            "interval_includes_zero": true,
+            "mean_difference_vs_poisson": 5.227291880357836e-05,
+            "observed_pooled_difference_vs_poisson": 4.7691786795533986e-05
+          },
+          "log_loss": {
+            "cluster_bootstrap_95pct_interval": [
+              -0.00047162299828791185,
+              0.0010699248501625078
+            ],
+            "interval_includes_zero": true,
+            "mean_difference_vs_poisson": 0.00029106609124438177,
+            "observed_pooled_difference_vs_poisson": 0.00028294639623016593
+          }
+        }
+      },
+      "replicates": 10000,
+      "seed": 20261020
+    },
+    "OU_OVER_2_5": {
+      "block_unit": "league-season",
+      "blocks": 45,
+      "comparisons_vs": "poisson",
+      "interpretation": "descriptive cluster-bootstrap uncertainty; not a strategy test or model promotion rule",
+      "models": {
+        "bivariate_poisson": {
+          "brier": {
+            "cluster_bootstrap_95pct_interval": [
+              -0.00011757071371251888,
+              0.00033454589572113876
+            ],
+            "interval_includes_zero": true,
+            "mean_difference_vs_poisson": 9.024019059724564e-05,
+            "observed_pooled_difference_vs_poisson": 9.033278889458707e-05
+          },
+          "log_loss": {
+            "cluster_bootstrap_95pct_interval": [
+              -0.0002933638018365275,
+              0.0006581457472855458
+            ],
+            "interval_includes_zero": true,
+            "mean_difference_vs_poisson": 0.00014765004601465092,
+            "observed_pooled_difference_vs_poisson": 0.000147769357413563
+          }
+        },
+        "dixon_coles": {
+          "brier": {
+            "cluster_bootstrap_95pct_interval": [
+              -1.737508534684261e-05,
+              1.0443213616517431e-05
+            ],
+            "interval_includes_zero": true,
+            "mean_difference_vs_poisson": -3.136401332220634e-06,
+            "observed_pooled_difference_vs_poisson": -3.158514944590074e-06
+          },
+          "log_loss": {
+            "cluster_bootstrap_95pct_interval": [
+              -4.275133337078938e-05,
+              2.068985972350185e-05
+            ],
+            "interval_includes_zero": true,
+            "mean_difference_vs_poisson": -9.942508743880769e-06,
+            "observed_pooled_difference_vs_poisson": -9.988623091761184e-06
+          }
+        }
+      },
+      "replicates": 10000,
+      "seed": 20261020
+    }
+  },
   "crown_quotes_used": false,
   "data_source": "openfootball/football.json",
   "data_source_commit": "e6744429ee395bc86f247348c6184bb08d4eb361",
