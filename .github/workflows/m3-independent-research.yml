@@ -1,6 +1,8 @@
 name: M3 Upstream Open-Source Research
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '20 0 * * *'
   push:
     paths:
       - '.github/workflows/m3-independent-research.yml'
@@ -138,11 +140,21 @@ jobs:
           for i in 1 2 3; do
             git fetch origin main
             git reset --hard FETCH_HEAD
-            mkdir -p research/m3/results
+            mkdir -p research/m3/results/history/"$GITHUB_RUN_ID"-"$GITHUB_RUN_ATTEMPT"
+            if [ -f "$RUNNER_TEMP/m3-receipt/latest_v4_original_metrics.csv" ]; then
+              python research/m3/compare_upstream_snapshots.py \
+                --previous research/m3/results/latest_v4_original_metrics.csv \
+                --current "$RUNNER_TEMP/m3-receipt/latest_v4_original_metrics.csv" \
+                --run-id "$GITHUB_RUN_ID" \
+                --output research/m3/results/history/"$GITHUB_RUN_ID"-"$GITHUB_RUN_ATTEMPT"/comparison.json
+            fi
             cp "$RUNNER_TEMP/m3-receipt/latest_upstream_run.json" research/m3/results/
+            cp "$RUNNER_TEMP/m3-receipt/latest_upstream_run.json" research/m3/results/history/"$GITHUB_RUN_ID"-"$GITHUB_RUN_ATTEMPT"/receipt.json
             if [ -f "$RUNNER_TEMP/m3-receipt/latest_v4_original_metrics.csv" ]; then
               cp "$RUNNER_TEMP/m3-receipt/latest_v4_original_metrics.csv" research/m3/results/
+              cp "$RUNNER_TEMP/m3-receipt/latest_v4_original_metrics.csv" research/m3/results/history/"$GITHUB_RUN_ID"-"$GITHUB_RUN_ATTEMPT"/original_v4_metrics.csv
             fi
+            git add research/m3/results/history
             git add research/m3/results/latest_upstream_run.json
             if [ -f research/m3/results/latest_v4_original_metrics.csv ]; then
               git add research/m3/results/latest_v4_original_metrics.csv
