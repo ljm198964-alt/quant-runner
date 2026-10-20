@@ -40,6 +40,7 @@ MODELS = {
 }
 SUPPORTED_SEASON_START = 2017
 DATE_GUARD_DAYS = 3
+FORECAST_MODEL_SEMANTIC_VERSION = "penaltyblog-goal-distribution-v1"
 
 
 def _sha256_bytes(data: bytes) -> str:
@@ -49,6 +50,12 @@ def _sha256_bytes(data: bytes) -> str:
 def _sha256_json(value) -> str:
     body = json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode()
     return _sha256_bytes(body)
+
+
+def _evaluation_code_fingerprint() -> str:
+    """Hash code that determines the OOS protocol, not unrelated repo commits."""
+    paths = (Path(__file__), Path(__file__).with_name("penaltyblog_walkforward.py"))
+    return _sha256_json([[path.name, _sha256_bytes(path.read_bytes())] for path in paths])
 
 
 def _season_code(folder: str) -> str | None:
@@ -193,8 +200,9 @@ def evaluate_oos(data: pd.DataFrame, files: list[dict], source_commit: str,
             for market in ("1x2", "ah_home_0", "ou_over_2_5")},
             "by_test_season": seasons})
     fingerprint = _results_fingerprint(data)
+    evaluation_code_fingerprint = _evaluation_code_fingerprint()
     evaluation_fingerprint = _sha256_json(["M3_OPENFOOTBALL_STRICT_WALKFORWARD_V1",
-                                           fingerprint, quant_runner_commit])
+                                           fingerprint, evaluation_code_fingerprint])
     previous_path = output_dir / "latest_oos_report.json"
     previous_fingerprint = None
     previous_evaluation_fingerprint = None
@@ -238,6 +246,7 @@ def evaluate_oos(data: pd.DataFrame, files: list[dict], source_commit: str,
         "input_files": files,
         "input_fingerprint_sha256": fingerprint,
         "evaluation_fingerprint_sha256": evaluation_fingerprint,
+        "evaluation_code_fingerprint_sha256": evaluation_code_fingerprint,
         "data_changed_vs_previous_snapshot": None if previous_fingerprint is None else fingerprint != previous_fingerprint,
         "source_file_snapshot_sha256": source_snapshot_fingerprint,
         "results_rows": int(len(data)),
@@ -310,8 +319,27 @@ def _model_version(model_name: str, train: pd.DataFrame, params: dict,
              int(r.home_goals), int(r.away_goals)] for r in train.itertuples(index=False)]
     input_hash = _sha256_json(rows)
     version_hash = _sha256_json(["M3_OPENFOOTBALL_MODEL_VERSION_V1", model_name, input_hash,
-                                 params, quant_runner_commit, penaltyblog_version])
+                                 params, FORECAST_MODEL_SEMANTIC_VERSION, penaltyblog_version])
     return input_hash, version_hash
+
+
+def _forecast_key(fixture_identity_id: str, schedule_revision_id: str, model: str,
+                  training_input_sha256: str, penaltyblog_version: str,
+                  semantic_version: str = FORECAST_MODEL_SEMANTIC_VERSION) -> str:
+    return _sha256_json(["M3_SHADOW_FORECAST_KEY_V1", fixture_identity_id,
+                         schedule_revision_id, model, training_input_sha256,
+                         semantic_version, penaltyblog_version])
+
+
+def _forecast_key_from_event(event: dict) -> str:
+    if event.get("forecast_key_id"):
+        return str(event["forecast_key_id"])
+    # Migrate pre-key records. Their only version difference was repository
+    # commit identity, which is provenance and must not create a new forecast.
+    return _forecast_key(event["fixture_identity_id"], event["schedule_revision_id"],
+                         event["model"], event["training_input_sha256"],
+                         event["penaltyblog_version"],
+                         event.get("model_semantic_version", FORECAST_MODEL_SEMANTIC_VERSION))
 
 
 def _settlement_metrics(events: list[dict]) -> dict:
@@ -323,10 +351,16 @@ def _settlement_metrics(events: list[dict]) -> dict:
     result = {}
     for model in MODELS:
         matched = []
-        for forecast_id, settlement in latest.items():
-            forecast = forecasts.get(forecast_id)
-            if forecast and forecast.get("model") == model:
+    superseded = {e.get("superseded_forecast_id") for e in events
+                  if e.get("event_type") == "FORECAST_DUPLICATE_SUPERSEDED"}
+    seen_keys = set()
+    for forecast_id, settlement in latest.items():
+        forecast = forecasts.get(forecast_id)
+        if forecast and forecast_id not in superseded and forecast.get("model") == model:
+            key = _forecast_key_from_event(forecast)
+            if key not in seen_keys:
                 matched.append((forecast, settlement))
+                seen_keys.add(key)
         scored = [(f, s) for f, s in matched if f.get("forecast_status") == "PREDICTED_NO_MARKET"
                   and all(isinstance(f.get(key), (int, float)) for key in
                           ("p_home", "p_draw", "p_away", "ou_p_over_2_5"))]
@@ -377,7 +411,31 @@ def run_shadow(data: pd.DataFrame, fixtures: list[dict], files: list[dict], cove
         previous_result_fingerprint = prior_meta.get("results_fingerprint_sha256")
         previous_fixture_fingerprint = prior_meta.get("fixture_fingerprint_sha256")
     events = _read_ledger(ledger_path)
-    forecast_ids = {e.get("forecast_id") for e in events if e.get("event_type") == "FORECAST"}
+    # Append explicit correction events for duplicate legacy forecasts, preserving
+    # the append-only audit trail while selecting one canonical sample per key.
+    existing_forecasts = [e for e in events if e.get("event_type") == "FORECAST"]
+    superseded_ids = {e.get("superseded_forecast_id") for e in events
+                      if e.get("event_type") == "FORECAST_DUPLICATE_SUPERSEDED"}
+    canonical_by_key = {}
+    duplicate_corrections = 0
+    for event in existing_forecasts:
+        key = _forecast_key_from_event(event)
+        canonical = canonical_by_key.setdefault(key, event)
+        if event is canonical or event.get("forecast_id") in superseded_ids:
+            continue
+        correction = {"event_type": "FORECAST_DUPLICATE_SUPERSEDED",
+            "supersession_id": _sha256_json(["M3_SHADOW_DUPLICATE_SUPERSEDED_V1",
+                                               event.get("forecast_id"), canonical.get("forecast_id")]),
+            "superseded_forecast_id": event.get("forecast_id"),
+            "canonical_forecast_id": canonical.get("forecast_id"),
+            "forecast_key_id": key,
+            "reason": "same fixture schedule, model, training data, semantic model version, and library; repository commit alone differed",
+            "formal_order": False}
+        if _append_once(ledger_path, events, correction, "supersession_id"):
+            duplicate_corrections += 1
+            superseded_ids.add(event.get("forecast_id"))
+    forecast_keys = {_forecast_key_from_event(e) for e in existing_forecasts
+                     if e.get("forecast_id") not in superseded_ids}
     model_records = []
     eligible_fixtures = [f for f in fixtures if date.fromisoformat(f["source_date"]) >=
                          (as_of_utc.date() + timedelta(days=DATE_GUARD_DAYS))]
@@ -410,11 +468,14 @@ def run_shadow(data: pd.DataFrame, fixtures: list[dict], files: list[dict], cove
             model_records.append(record)
             known_teams = set(str(t) for t in model.teams)
             for fixture in known_fixtures:
-                forecast_id = _sha256_json(["M3_SHADOW_FORECAST_V1", fixture["fixture_identity_id"],
-                    fixture["schedule_revision_id"], model_name, model_version])
-                if forecast_id in forecast_ids:
+                forecast_key_id = _forecast_key(fixture["fixture_identity_id"],
+                    fixture["schedule_revision_id"], model_name, train_hash, penaltyblog_version)
+                if forecast_key_id in forecast_keys:
                     continue
+                forecast_id = forecast_key_id
                 base = {"event_type": "FORECAST", "forecast_id": forecast_id,
+                    "forecast_key_id": forecast_key_id,
+                    "model_semantic_version": FORECAST_MODEL_SEMANTIC_VERSION,
                     "fixture_identity_id": fixture["fixture_identity_id"], "league": league,
                     "season": fixture["season"], "round": fixture["round"],
                     "source_fixture_date": fixture["source_date"],
@@ -454,14 +515,22 @@ def run_shadow(data: pd.DataFrame, fixtures: list[dict], files: list[dict], cove
                 if _append_once(ledger_path, events, base, "forecast_id"):
                     forecasts_added += 1
                     per_league[league]["forecasts_added"] += 1
-                    forecast_ids.add(forecast_id)
+                    forecast_keys.add(forecast_key_id)
     # Results are joined only after a full-time score is present in the current source snapshot.
     completed = {}
     for row in data.to_dict("records"):
         completed[row["fixture_identity_id"]] = row
     settlement_ids = {e.get("settlement_id") for e in events if e.get("event_type") == "SETTLEMENT"}
     settlements_added = 0
-    forecasts = [e for e in events if e.get("event_type") == "FORECAST"]
+    forecasts = []
+    seen_forecast_keys = set()
+    for event in events:
+        if event.get("event_type") != "FORECAST" or event.get("forecast_id") in superseded_ids:
+            continue
+        key = _forecast_key_from_event(event)
+        if key not in seen_forecast_keys:
+            forecasts.append(event)
+            seen_forecast_keys.add(key)
     for forecast in forecasts:
         row = completed.get(forecast["fixture_identity_id"])
         if row is None:
@@ -521,8 +590,13 @@ def run_shadow(data: pd.DataFrame, fixtures: list[dict], files: list[dict], cove
         "unsupported_schedule_leagues": ["B1"],
         "eligible_future_fixture_identities": len(eligible_fixtures),
         "forecasts_appended": forecasts_added,
+        "superseded_forecasts_appended": duplicate_corrections,
         "settlements_appended": settlements_added,
         "total_forecast_events": sum(e.get("event_type") == "FORECAST" for e in events),
+        "unique_forecast_keys": len({_forecast_key_from_event(e) for e in events
+                                      if e.get("event_type") == "FORECAST" and
+                                      e.get("forecast_id") not in superseded_ids}),
+        "superseded_forecast_events": len(superseded_ids),
         "total_settlement_events": sum(e.get("event_type") == "SETTLEMENT" for e in events),
         "probability_metrics_by_model": _settlement_metrics(events),
         "crown_quote_captured": False,
@@ -548,6 +622,7 @@ def run_shadow(data: pd.DataFrame, fixtures: list[dict], files: list[dict], cove
         meta["data_changed_vs_previous_snapshot"] is not False
         or meta["fixture_schedule_changed_vs_previous_snapshot"] is not False
         or forecasts_added > 0
+        or duplicate_corrections > 0
         or settlements_added > 0
     )
     if research_state_changed:

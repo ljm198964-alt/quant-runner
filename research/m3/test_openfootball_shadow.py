@@ -88,9 +88,19 @@ class OpenFootballShadowTests(unittest.TestCase):
                 self.assertIsNone(forecast["roi"])
                 self.assertFalse(forecast["formal_order"])
 
-                second = shadow.run_shadow(data, [base_fixture, near_fixture], [], {}, "commit-a",
+                # Simulate the old release, which generated a second forecast
+                # solely because the whole repository commit changed.
+                legacy_duplicate = {**forecast, "forecast_id": "legacy-duplicate-id",
+                    "forecast_key_id": None, "model_version_id": "legacy-commit-bound-version",
+                    "quant_runner_commit": "docs-only-commit"}
+                with ledger.open("a", encoding="utf-8") as handle:
+                    handle.write(json.dumps(legacy_duplicate) + "\n")
+
+                second = shadow.run_shadow(data, [base_fixture, near_fixture], [], {}, "docs-only-commit",
                     datetime(2026, 10, 20, 16, tzinfo=timezone.utc), ledger, output, "test-2")
                 self.assertEqual(second["forecasts_appended"], 0)
+                self.assertEqual(second["superseded_forecasts_appended"], 1)
+                self.assertEqual(second["unique_forecast_keys"], 1)
 
                 settled_data = pd.concat([data, pd.DataFrame([{
                     **training[0], "season": "2627", "match_date_utc": pd.Timestamp("2026-10-23", tz="UTC"),
@@ -104,7 +114,8 @@ class OpenFootballShadowTests(unittest.TestCase):
                 self.assertIsNone(third["roi"])
                 self.assertEqual(third["probability_metrics_by_model"]["poisson"]["n_settled"], 1)
                 all_events = [json.loads(line) for line in ledger.read_text().splitlines()]
-                self.assertEqual([e["event_type"] for e in all_events], ["FORECAST", "SETTLEMENT"])
+                self.assertEqual([e["event_type"] for e in all_events], ["FORECAST", "FORECAST",
+                    "FORECAST_DUPLICATE_SUPERSEDED", "SETTLEMENT"])
                 self.assertFalse(all_events[-1]["formal_ledger_write"])
 
 

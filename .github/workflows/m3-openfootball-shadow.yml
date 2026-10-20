@@ -58,12 +58,15 @@ jobs:
           print(f"- Result data fingerprint: `{shadow['results_fingerprint_sha256']}`")
           print(f"- Training results changed: `{shadow['data_changed_vs_previous_snapshot']}`")
           print(f"- New no-market forecast events: {shadow['forecasts_appended']}; new settlements: {shadow['settlements_appended']}")
+          print(f"- Duplicate forecast correction events: {shadow['superseded_forecasts_appended']}; unique forecast keys: {shadow['unique_forecast_keys']}")
           print(f"- Crown quotes captured: `{shadow['crown_quote_captured']}`; EV/ROI: `N/A`")
           print(f"- B1 schedule source coverage: `{shadow['source_coverage']['B1']['status']}`")
           print(f"- Shadow metrics: `{json.dumps(shadow['probability_metrics_by_model'], sort_keys=True)}`")
           changed=(shadow['data_changed_vs_previous_snapshot'] is not False
                    or shadow['fixture_schedule_changed_vs_previous_snapshot'] is not False
-                   or shadow['forecasts_appended'] > 0 or shadow['settlements_appended'] > 0)
+                   or shadow['forecasts_appended'] > 0
+                   or shadow['superseded_forecasts_appended'] > 0
+                   or shadow['settlements_appended'] > 0)
           print(f"- Persistent research state changed: `{changed}`")
           Path(os.environ['RUNNER_TEMP'], 'm3-shadow-state-changed').write_text(str(changed).lower())
           PY
