@@ -11,6 +11,8 @@ M3 是独立研究模型，不读取 M1、M2、MR1 的预测、订单、参数�
 - [最新时间切分清单](results/latest_penaltyblog_oos_splits.json)
 - [最新 V4 原版指标](results/latest_v4_original_metrics.csv)
 - [OpenFootball 无盘口影子 OOS 报告](results/openfootball/latest_oos_report.json)
+- [OpenFootball 配对样本跨季稳定性审计](results/openfootball/latest_oos_stability.json)
+- [稳定性审计复算器](openfootball_stability.py)
 - [OpenFootball 影子运行收据](results/openfootball/latest_shadow_run.json)
 - [OpenFootball 预测/结算追加式账本](results/openfootball/shadow_ledger.jsonl)
 - 历史报告、预测 CSV 与参数快照在 `results/history/`、`results/predictions/`、`results/model_parameters/`。

@@ -18,6 +18,32 @@ AH0 的胜/和/负与 DNB win/push/lose 三状态分数一致，但不是任意 
 
 同一 run 使用源中的 1,405 个日期至少领先 3 天的 fixture，追加 4,215 条前瞻预测（3 模型×每场），账本为 `shadow_ledger.jsonl`。生成时间、训练输入 hash、模型版本/参数、fixture 和赛果身份均记录；本次是首次持久化运行，故前次数据/赛程指纹为 null；没有已结算影子样本，结算指标、ROI 和最大回撤均为 null。当前不抓 Crown，不记录 EV、下注或 Telegram。源 fixture 的具体时间字段无文档化时区，本协议完全忽略时刻，只使用日历日期并标注“时区未指定”；因此不能声称精确 UTC 开赛窗口。
 
+### 固定样本跨季模型稳定性审计（不重训）
+
+对已保存的 `latest_oos_report.json` 与逐场 OOS CSV 运行 `openfootball_stability.py`，生成 [latest_oos_stability.json](results/openfootball/latest_oos_stability.json)。审计确认三模型在 AH0/DNB 与 O2.5 都共享同一组 11,254 场可评分 OOS 比赛；45 个联赛×赛季单元上每个模型样本数一致，共复核 33,762 条模型预测，训练 cutoff 对每条预测严格早于源日历日期。另 3,130 个测试 fixture 没有预测，主要因测试球队未出现于训练历史；它们保留在测试分母，不做补造。
+
+| 盘口概率目标 | 模型 | Log Loss | Brier | 45 个配对联赛×赛季单元中最佳数（Log Loss / Brier） |
+|---|---|---:|---:|---:|
+| AH0/DNB 三状态 | Poisson | 1.000761 | 0.597390 | 21 / 18 |
+| AH0/DNB 三状态 | Dixon-Coles | 1.001044 | 0.597438 | 15 / 19 |
+| AH0/DNB 三状态 | Bivariate Poisson | 1.000898 | 0.597370 | 9 / 8 |
+| 固定 O2.5 | Poisson | 0.686342 | 0.246385 | 14 / 13 |
+| 固定 O2.5 | Dixon-Coles | 0.686333 | 0.246382 | 13 / 14 |
+| 固定 O2.5 | Bivariate Poisson | 0.686490 | 0.246475 | 18 / 18 |
+
+这是同一赛果、同一测试身份的配对比较，不能从很小的汇总差异推导稳定模型胜者。OU 上 Dixon-Coles 与 Poisson 的 Log Loss 差仅约 0.000010；两者 Brier 差约 0.000003。不同模型在 45 个联赛×赛季单元里轮流领先。2026/27 当前部分赛季只有199个可评分样本，不能当成稳定结论。没有做显著性检验、投注策略筛选或 Crown 收益计算。
+
+三种模型在这 11,254 个 O2.5 预测上的平均概率分别为 Poisson 0.51786、Dixon-Coles 0.51780、Bivariate Poisson 0.51469；Over 实际比例为 0.53874，平均预测低约 2.09、2.09、2.40 个百分点。该偏差是全量描述性校准，不是皇冠线价概率优势；不能对概率做事后修正后再用同一 OOS 集合声称改进。AH 评价仍仅为 DNB 三状态结果，不等价任意 AH 线。
+
+可复算命令（只读现存 OOS 产物，不重新训练）：
+
+```bash
+python -m research.m3.openfootball_stability \
+  --report research/m3/results/openfootball/latest_oos_report.json \
+  --predictions research/m3/results/openfootball/latest_oos_predictions.csv \
+  --output research/m3/results/openfootball/latest_oos_stability.json
+```
+
 ### 影子账本幂等性修复及二次 Actions 验收
 
 首次 Actions run 后的手动重复 run `39415593340` 暴露出 ID 设计缺陷：forecast/model version ID 将整个 quant-runner commit 纳入身份，文档 commit 使同一数据上的4,215条预测被重复追加；该 run 全绿但不能作为“无变化不追加”的验收。复核后没有删除、覆盖或隐瞒旧账本行。修复提交 `88091ba` 将预测身份改为 fixture/赛程 revision + 模型语义版本 + 训练输入指纹 + penaltyblog 版本，并让 OOS 快照按研究代码内容哈希与赛果指纹归档，不随文档或 Actions 结果 commit 变化。对同语义重复记录只选一条进入评分/结算，其余通过 append-only `FORECAST_DUPLICATE_SUPERSEDED` 事件明确标记。

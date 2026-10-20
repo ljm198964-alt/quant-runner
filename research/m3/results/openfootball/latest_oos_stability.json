@@ -1,0 +1,467 @@
+{
+  "Crown_EV": null,
+  "Crown_ROI": null,
+  "calibration": {
+    "bivariate_poisson": {
+      "OU_O2_5_calibration_bias_predicted_minus_observed": -0.024048783529194595,
+      "OU_O2_5_mean_predicted_probability": 0.5146929971710009,
+      "OU_O2_5_observed_over_rate": 0.5387417807001955,
+      "scored_matches": 11254
+    },
+    "dixon_coles": {
+      "OU_O2_5_calibration_bias_predicted_minus_observed": -0.020937365585835588,
+      "OU_O2_5_mean_predicted_probability": 0.5178044151143599,
+      "OU_O2_5_observed_over_rate": 0.5387417807001955,
+      "scored_matches": 11254
+    },
+    "poisson": {
+      "OU_O2_5_calibration_bias_predicted_minus_observed": -0.020882971293425423,
+      "OU_O2_5_mean_predicted_probability": 0.5178588094067701,
+      "OU_O2_5_observed_over_rate": 0.5387417807001955,
+      "scored_matches": 11254
+    }
+  },
+  "crown_quotes_used": false,
+  "data_source": "openfootball/football.json",
+  "data_source_commit": "e6744429ee395bc86f247348c6184bb08d4eb361",
+  "evaluation_fingerprint_sha256": "c6bdb7edeb213005b7770219b7572b8b6b809cf962f835311a37bf21675ae631",
+  "generated_utc": "2026-10-20T11:38:35.164608+00:00",
+  "input_fingerprint_sha256": "93e0b8b91722f9c967e608ad63ae88d4c8d8b4c466de92948673438704697c8e",
+  "markets": {
+    "AH0_DNB_3WAY": {
+      "lower_is_better_cell_wins": {
+        "brier": {
+          "bivariate_poisson": 8,
+          "dixon_coles": 19,
+          "poisson": 18
+        },
+        "log_loss": {
+          "bivariate_poisson": 9,
+          "dixon_coles": 15,
+          "poisson": 21
+        }
+      },
+      "meaning": "AH0/DNB win-push-lose three-state probabilities",
+      "overall_metrics": {
+        "bivariate_poisson": {
+          "brier": 0.5973699288140577,
+          "brier_range_across_league_season_cells": [
+            0.5073541022016249,
+            0.7380967551675454
+          ],
+          "log_loss": 1.0008976276144215,
+          "log_loss_range_across_league_season_cells": [
+            0.8686709332612077,
+            1.2486790722096999
+          ]
+        },
+        "dixon_coles": {
+          "brier": 0.5974381541681083,
+          "brier_range_across_league_season_cells": [
+            0.508237621711362,
+            0.7358490005881633
+          ],
+          "log_loss": 1.001043642809391,
+          "log_loss_range_across_league_season_cells": [
+            0.867151211677132,
+            1.246998537422471
+          ]
+        },
+        "poisson": {
+          "brier": 0.5973904623813128,
+          "brier_range_across_league_season_cells": [
+            0.5069138306999326,
+            0.7362260443232687
+          ],
+          "log_loss": 1.0007606964131608,
+          "log_loss_range_across_league_season_cells": [
+            0.8660608091688505,
+            1.2416621215890855
+          ]
+        }
+      },
+      "paired_league_season_cells": 45,
+      "paired_scored_matches_per_model": 11254,
+      "weighted_metrics_by_test_season": {
+        "1819": {
+          "metrics": {
+            "bivariate_poisson": {
+              "brier": 0.5955961826834366,
+              "log_loss": 0.9988074401324352
+            },
+            "dixon_coles": {
+              "brier": 0.5975944470090692,
+              "log_loss": 1.002042938547144
+            },
+            "poisson": {
+              "brier": 0.5962882360288533,
+              "log_loss": 0.999406279004086
+            }
+          },
+          "paired_scored_matches": 1362
+        },
+        "1920": {
+          "metrics": {
+            "bivariate_poisson": {
+              "brier": 0.6033152916826687,
+              "log_loss": 1.0074487461978536
+            },
+            "dixon_coles": {
+              "brier": 0.6027304295772223,
+              "log_loss": 1.0069209772212908
+            },
+            "poisson": {
+              "brier": 0.6026852836507708,
+              "log_loss": 1.0060684680080252
+            }
+          },
+          "paired_scored_matches": 1341
+        },
+        "2021": {
+          "metrics": {
+            "bivariate_poisson": {
+              "brier": 0.623838380663733,
+              "log_loss": 1.0423473640350425
+            },
+            "dixon_coles": {
+              "brier": 0.6231396829485025,
+              "log_loss": 1.041089692864505
+            },
+            "poisson": {
+              "brier": 0.6237308179349705,
+              "log_loss": 1.0417947784010162
+            }
+          },
+          "paired_scored_matches": 700
+        },
+        "2122": {
+          "metrics": {
+            "bivariate_poisson": {
+              "brier": 0.6056635903090551,
+              "log_loss": 1.0115267004658808
+            },
+            "dixon_coles": {
+              "brier": 0.6053092415363777,
+              "log_loss": 1.0111947321355137
+            },
+            "poisson": {
+              "brier": 0.6059716141807485,
+              "log_loss": 1.0120955633558484
+            }
+          },
+          "paired_scored_matches": 1500
+        },
+        "2223": {
+          "metrics": {
+            "bivariate_poisson": {
+              "brier": 0.6035424011096878,
+              "log_loss": 1.0122073505832283
+            },
+            "dixon_coles": {
+              "brier": 0.603232687629894,
+              "log_loss": 1.0113911307007413
+            },
+            "poisson": {
+              "brier": 0.6033133265518594,
+              "log_loss": 1.0114497558525442
+            }
+          },
+          "paired_scored_matches": 1602
+        },
+        "2324": {
+          "metrics": {
+            "bivariate_poisson": {
+              "brier": 0.5903474281043347,
+              "log_loss": 0.9898630510666779
+            },
+            "dixon_coles": {
+              "brier": 0.5900169721299978,
+              "log_loss": 0.9893346702027568
+            },
+            "poisson": {
+              "brier": 0.5910290793387274,
+              "log_loss": 0.9910331367949927
+            }
+          },
+          "paired_scored_matches": 1452
+        },
+        "2425": {
+          "metrics": {
+            "bivariate_poisson": {
+              "brier": 0.5990393439467984,
+              "log_loss": 1.0022913940204825
+            },
+            "dixon_coles": {
+              "brier": 0.5988080708787099,
+              "log_loss": 1.0021001629477824
+            },
+            "poisson": {
+              "brier": 0.5993984470070953,
+              "log_loss": 1.0030252585083086
+            }
+          },
+          "paired_scored_matches": 1591
+        },
+        "2526": {
+          "metrics": {
+            "bivariate_poisson": {
+              "brier": 0.5775225727749356,
+              "log_loss": 0.9727618205224001
+            },
+            "dixon_coles": {
+              "brier": 0.578242060348351,
+              "log_loss": 0.9737368589232268
+            },
+            "poisson": {
+              "brier": 0.5766603097290884,
+              "log_loss": 0.9711759026942538
+            }
+          },
+          "paired_scored_matches": 1507
+        },
+        "2627": {
+          "metrics": {
+            "bivariate_poisson": {
+              "brier": 0.5523297206407657,
+              "log_loss": 0.9365286248274203
+            },
+            "dixon_coles": {
+              "brier": 0.5528862759855568,
+              "log_loss": 0.9376955881873695
+            },
+            "poisson": {
+              "brier": 0.5515856215114272,
+              "log_loss": 0.9353473606423968
+            }
+          },
+          "paired_scored_matches": 199
+        }
+      }
+    },
+    "OU_OVER_2_5": {
+      "lower_is_better_cell_wins": {
+        "brier": {
+          "bivariate_poisson": 18,
+          "dixon_coles": 14,
+          "poisson": 13
+        },
+        "log_loss": {
+          "bivariate_poisson": 18,
+          "dixon_coles": 13,
+          "poisson": 14
+        }
+      },
+      "meaning": "fixed Over 2.5 binary probability",
+      "overall_metrics": {
+        "bivariate_poisson": {
+          "brier": 0.24647503261741047,
+          "brier_range_across_league_season_cells": [
+            0.1999802218640907,
+            0.2923418419688769
+          ],
+          "log_loss": 0.6864902628266617,
+          "log_loss_range_across_league_season_cells": [
+            0.587827221593593,
+            0.7844008413748605
+          ]
+        },
+        "dixon_coles": {
+          "brier": 0.2463815413135713,
+          "brier_range_across_league_season_cells": [
+            0.1995250340221341,
+            0.2933434959503557
+          ],
+          "log_loss": 0.6863325048461564,
+          "log_loss_range_across_league_season_cells": [
+            0.5867609076696347,
+            0.7865907486145461
+          ]
+        },
+        "poisson": {
+          "brier": 0.24638469982851588,
+          "brier_range_across_league_season_cells": [
+            0.19936228237107614,
+            0.2933190091337858
+          ],
+          "log_loss": 0.6863424934692481,
+          "log_loss_range_across_league_season_cells": [
+            0.5864178649466214,
+            0.7865493215922296
+          ]
+        }
+      },
+      "paired_league_season_cells": 45,
+      "paired_scored_matches_per_model": 11254,
+      "weighted_metrics_by_test_season": {
+        "1819": {
+          "metrics": {
+            "bivariate_poisson": {
+              "brier": 0.252604801174915,
+              "log_loss": 0.6999165763477604
+            },
+            "dixon_coles": {
+              "brier": 0.25235738638443167,
+              "log_loss": 0.699544947352077
+            },
+            "poisson": {
+              "brier": 0.2523332307353128,
+              "log_loss": 0.6994958299980287
+            }
+          },
+          "paired_scored_matches": 1362
+        },
+        "1920": {
+          "metrics": {
+            "bivariate_poisson": {
+              "brier": 0.24326302361035376,
+              "log_loss": 0.6794401108603811
+            },
+            "dixon_coles": {
+              "brier": 0.24265477773365063,
+              "log_loss": 0.6781492661988981
+            },
+            "poisson": {
+              "brier": 0.2426491390056505,
+              "log_loss": 0.6781392848355196
+            }
+          },
+          "paired_scored_matches": 1341
+        },
+        "2021": {
+          "metrics": {
+            "bivariate_poisson": {
+              "brier": 0.25680315938540166,
+              "log_loss": 0.7085738480813729
+            },
+            "dixon_coles": {
+              "brier": 0.25674070687927786,
+              "log_loss": 0.7084613496676059
+            },
+            "poisson": {
+              "brier": 0.2567318630025656,
+              "log_loss": 0.7084434406210013
+            }
+          },
+          "paired_scored_matches": 700
+        },
+        "2122": {
+          "metrics": {
+            "bivariate_poisson": {
+              "brier": 0.24571884706531238,
+              "log_loss": 0.6848518048209089
+            },
+            "dixon_coles": {
+              "brier": 0.24553639452996337,
+              "log_loss": 0.6845030499754933
+            },
+            "poisson": {
+              "brier": 0.24555390609294295,
+              "log_loss": 0.6845497628202625
+            }
+          },
+          "paired_scored_matches": 1500
+        },
+        "2223": {
+          "metrics": {
+            "bivariate_poisson": {
+              "brier": 0.25107453746831176,
+              "log_loss": 0.6963273775064105
+            },
+            "dixon_coles": {
+              "brier": 0.2513686817112141,
+              "log_loss": 0.6970045742048523
+            },
+            "poisson": {
+              "brier": 0.2513710084428315,
+              "log_loss": 0.697019500320101
+            }
+          },
+          "paired_scored_matches": 1602
+        },
+        "2324": {
+          "metrics": {
+            "bivariate_poisson": {
+              "brier": 0.2423917164452524,
+              "log_loss": 0.6781777959291708
+            },
+            "dixon_coles": {
+              "brier": 0.2424634782038526,
+              "log_loss": 0.6783594573188615
+            },
+            "poisson": {
+              "brier": 0.24248186997599547,
+              "log_loss": 0.6783968468690961
+            }
+          },
+          "paired_scored_matches": 1452
+        },
+        "2425": {
+          "metrics": {
+            "bivariate_poisson": {
+              "brier": 0.2417784025637485,
+              "log_loss": 0.6765195388674389
+            },
+            "dixon_coles": {
+              "brier": 0.24168619495182156,
+              "log_loss": 0.6763356505573659
+            },
+            "poisson": {
+              "brier": 0.24170510831334635,
+              "log_loss": 0.6763758532166718
+            }
+          },
+          "paired_scored_matches": 1591
+        },
+        "2526": {
+          "metrics": {
+            "bivariate_poisson": {
+              "brier": 0.24571770470798485,
+              "log_loss": 0.684219132715555
+            },
+            "dixon_coles": {
+              "brier": 0.24577628879191454,
+              "log_loss": 0.6843609351613874
+            },
+            "poisson": {
+              "brier": 0.24577885110115885,
+              "log_loss": 0.6843681875808643
+            }
+          },
+          "paired_scored_matches": 1507
+        },
+        "2627": {
+          "metrics": {
+            "bivariate_poisson": {
+              "brier": 0.23158733804155696,
+              "log_loss": 0.6551508217017216
+            },
+            "dixon_coles": {
+              "brier": 0.2310892477635611,
+              "log_loss": 0.6541150568527035
+            },
+            "poisson": {
+              "brier": 0.23104676529794946,
+              "log_loss": 0.6540249502374897
+            }
+          },
+          "paired_scored_matches": 199
+        }
+      }
+    }
+  },
+  "models": [
+    "poisson",
+    "dixon_coles",
+    "bivariate_poisson"
+  ],
+  "note": "Descriptive paired OOS stability only. No significance test, strategy, Crown quote, EV, ROI, drawdown, parameter selection or model promotion is implied.",
+  "paired_scored_matches_per_model": 11254,
+  "prediction_file_sha256": "24eccf0152e1c8961c29cfd0512fb9a237ebbaaedc8d83390d1f7a96da0d3fe7",
+  "prediction_rows": 43152,
+  "protocol": "M3_OOS_STABILITY_AUDIT_V1",
+  "scored_predictions_per_model": 11254,
+  "source_report_protocol": "M3_OPENFOOTBALL_STRICT_WALKFORWARD_V1",
+  "strict_utc_cutoff_rows_verified": 33762,
+  "test_matches": 14384,
+  "train_test_isolation": "Each league-season tests only that season; training is earlier seasons and strictly before the first test calendar date."
+}

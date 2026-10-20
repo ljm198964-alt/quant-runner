@@ -1,5 +1,11 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-20 M3 既有 OOS 配对样本跨季稳定性复核（无重训）
+- 基于已落库 OpenFootball 报告与逐场预测新增确定性审计器 `research/m3/openfootball_stability.py`、3项回归测试及结果 `research/m3/results/openfootball/latest_oos_stability.json`。本地直接复算，无网络请求、无模型拟合。验证 3 模型对 AH0/DNB 与固定 O2.5 使用相同的11,254场评分身份；45个联赛×赛季配对单元/市场；33,762条已评分模型行训练 cutoff 严格早于源日历比赛日。测试分母14,384场，其余3,130未预测场因未见队等原因保留为缺覆盖，未补造。
+- OOS分数：AH0/DNB 三状态 Poisson LL/Brier 1.000761/0.597390，Dixon-Coles 1.001044/0.597438，Bivariate 1.000898/0.597370；其45格LL最佳数21/15/9，Brier最佳数18/19/8。O2.5三者依次0.686342/0.246385、0.686333/0.246382、0.686490/0.246475；格子最佳数 Poisson 14/13、Dixon 13/14、Bivariate 18/18。无稳定单一赢家；Dixon与Poisson OU总体LL只差约0.000010，Brier约0.000003。2026/27只有199个评分样本。未做显著性检验，不能声称显著优胜。
+- 全样本 O2.5 实际Over比例0.538742；模型平均概率0.517859/0.517804/0.514693，表现为约2.09/2.09/2.40个百分点低估。此为描述性校准观察，未使用同一测试集做事后修正或调参；无 Crown 盘口、EV、ROI、收益或回撤推断。每模型预测覆盖78.24%测试行。
+- 稳定性审计 JSON SHA-256 `ceca2bbc7b9e17f866f23cf2c11df2264cfd689fb25e2ef7231792ab6c84f1f6`，引用已持久化 OOS 报告生成 UTC `2026-10-20T11:38:35.164608+00:00`、数据 fingerprint `93e0b8b91722f9c967e608ad63ae88d4c8d8b4c466de92948673404697c8e`、逐场预测 CSV SHA `24eccf0152e1c8961c29cfd0512fb9a237ebbaaedc8d83390d1f7a96da0d3fe7`。复算器输出只含评价指标、分季聚合和输入hash，无赛事逐行数据/盘口。配套测试总数现为25项（其中新工具3项 synthetic-only 正反例），完整 M3 本地测试通过；不为此分析重复 OOS 拟合。PR #51的base main为`455bf06`；`git diff origin/main...HEAD`仅涉及 `.github/workflows/m3-*`、`research/m3/**` 与 handoff/report，未见 M1/M2/MR1生产路径。
+
 ## 2026-10-20 M3 Crown 单场线级诊断与离线输入契约
 - 只读复核既有 Crown/Bet365 paired-research Actions artifact [37765506416](https://github.com/ljm198964-alt/quant-runner/actions/runs/37765506416)，16 场中 1 场与 M3 D1 2026/27 OOS 身份对应；artifact 匹配覆盖下限为1/17,027，对 AH、OU 各一条报价。此统计仅针对该存档，不能推广到 Crown 全部历史。其余15场超出 M3 六联赛范围。事件/2–2赛果由 Bundesliga 官方赛报交叉核验。
 - Dortmund–Werder 的 AH、OU 选中 observation 分别比 kickoff 早450.66与1,074.35分钟；两者均赛前但较早，报告时不建立新freshness门槛。该 M3 概率为使用截至 `2026-05-16T00:00:00Z`、2,754训练行得到的严格前推 hindcast，模型结果在10月批量重算；不是当时已记录的live forecast。以存档线价重建后12个模型×市场×side理论单单位EV诊断均负；单场、非预注册方向、无下注，实际ROI与最大回撤仍不可计算。具体quote线价未写入公开报告；摘要 response SHA `2b60bd3ff46828451f1d1b06514020bbf52531571155108f6a3749905bd46c52`，且上游 artifact 的 `bookmaker_execution_verified=false`。
