@@ -125,7 +125,6 @@ jobs:
             'telegram_sent':False,
           }
           out=Path('research/m3/results');out.mkdir(parents=True,exist_ok=True)
-          (out/'latest_upstream_run.json').write_text(json.dumps(record,indent=2)+'\n')
           if report.exists():
               (out/'latest_v4_original_metrics.csv').write_bytes(report.read_bytes())
           if (oos/'penaltyblog_oos_report.json').exists():
@@ -139,6 +138,7 @@ jobs:
               record['penaltyblog_model_parameters_sha256']=oos_report.get('model_parameters_sha256')
           else:
               record['penaltyblog_oos_report_available']=False
+          (out/'latest_upstream_run.json').write_text(json.dumps(record,indent=2)+'\n')
           (out/'latest_m3_run.json').write_text(json.dumps(record,indent=2)+'\n')
           PY
           # Keep upstream results in a temporary copy while main can advance.
@@ -208,6 +208,7 @@ jobs:
               if [ -f "$latest" ]; then git add "$latest"; fi
             done
             if [ -d research/m3/results/predictions ]; then git add research/m3/results/predictions; fi
+            if [ -d research/m3/results/model_parameters ]; then git add research/m3/results/model_parameters; fi
             if [ -f research/m3/results/latest_v4_original_metrics.csv ]; then
               git add research/m3/results/latest_v4_original_metrics.csv
             fi
