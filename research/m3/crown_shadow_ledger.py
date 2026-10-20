@@ -45,17 +45,30 @@ def add_line_ev(record: dict) -> dict:
     if grid is not None:
         if not isinstance(grid, list) or not grid:
             raise ValueError("forecast.score_probability_grid must be a non-empty array")
-        for index, cell in enumerate(grid):
-            if not isinstance(cell, dict):
-                raise ValueError(f"score_probability_grid[{index}] must be an object")
-            h, a, probability = cell.get("home_goals"), cell.get("away_goals"), cell.get("probability")
-            if (isinstance(h, bool) or not isinstance(h, int) or h < 0
-                    or isinstance(a, bool) or not isinstance(a, int) or a < 0
-                    or isinstance(probability, bool) or not isinstance(probability, (int, float))
-                    or not 0 <= probability <= 1):
-                raise ValueError(f"score_probability_grid[{index}] has invalid values")
-            normalized_rows.append((h, a, float(probability)))
-            mass += float(probability)
+        if all(isinstance(row, list) for row in grid):
+            width = len(grid[0]) if grid[0] else 0
+            if not width or any(len(row) != width for row in grid):
+                raise ValueError("score_probability_grid matrix must be rectangular and non-empty")
+            for home_goals, row in enumerate(grid):
+                for away_goals, probability in enumerate(row):
+                    if (isinstance(probability, bool) or not isinstance(probability, (int, float))
+                            or not 0 <= probability <= 1):
+                        raise ValueError("score_probability_grid matrix has invalid probabilities")
+                    probability = float(probability)
+                    normalized_rows.append((home_goals, away_goals, probability))
+                    mass += probability
+        else:
+            for index, cell in enumerate(grid):
+                if not isinstance(cell, dict):
+                    raise ValueError(f"score_probability_grid[{index}] must be an object")
+                h, a, probability = cell.get("home_goals"), cell.get("away_goals"), cell.get("probability")
+                if (isinstance(h, bool) or not isinstance(h, int) or h < 0
+                        or isinstance(a, bool) or not isinstance(a, int) or a < 0
+                        or isinstance(probability, bool) or not isinstance(probability, (int, float))
+                        or not 0 <= probability <= 1):
+                    raise ValueError(f"score_probability_grid[{index}] has invalid values")
+                normalized_rows.append((h, a, float(probability)))
+                mass += float(probability)
         if mass <= 0 or mass > 1 + 1e-9:
             raise ValueError("score probability mass must be in (0, 1]")
         grid_hash = _sha(grid)

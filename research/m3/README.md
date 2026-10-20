@@ -62,3 +62,5 @@ OpenFootball 评估的 AH 只报告 AH0/DNB 三状态概率，OU 报告固定 O2
 ```bash
 python -m unittest discover -s research/m3 -p 'test_*.py' -v
 ```
+
+新增 OpenFootball 前瞻预测会保留 penaltyblog 1.13.1 原生归一化精确比分矩阵（行=主队进球、列=客队进球），并由账本审计验证矩阵形状、有限概率、总质量和方向语义。现有历史 forecast 不回填比分矩阵；已有 AH0 / OU2.5 字段不变。私有 Crown writer 可消费新预测矩阵，对经过独立授权、身份与 UTC 时序验证的确切 Crown AH/OU 线计算五状态概率和条件 EV。报价缺失时 EV/ROI 仍为空。OpenFootball 赛程没有精确 UTC kickoff，因此比分矩阵能力本身不构成 Crown 市场配对。

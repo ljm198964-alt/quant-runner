@@ -49,7 +49,19 @@ class OpenFootballShadowAuditTests(unittest.TestCase):
         self.assertEqual(result["settlement_event_count"], 0)
         self.assertEqual(result["crown_quote_captured_count"], 0)
         self.assertEqual(result["ev_calculable_count"], 0)
+        self.assertEqual(result["canonical_forecasts_with_score_grid_count"], 0)
         self.assertTrue(result["unique_forecast_keys_one_canonical_each"])
+
+    def test_validates_new_score_grid_matrix_without_requiring_it_for_legacy_rows(self):
+        event = forecast("f1", "2026-10-20T11:00:00Z")
+        event["score_probability_grid"] = [[0.5, 0.25], [0.15, 0.1]]
+        event["score_probability_grid_semantics"] = (
+            "penaltyblog_normalized_rows_home_goals_columns_away_goals")
+        result = build_shadow_ledger_audit(self._write([event]))
+        self.assertEqual(result["canonical_forecasts_with_score_grid_count"], 1)
+        event["score_probability_grid"] = [[0.4, 0.2], [0.2, 0.1]]
+        with self.assertRaisesRegex(ValueError, "must sum to one"):
+            build_shadow_ledger_audit(self._write([event]))
 
     def test_rejects_duplicate_key_without_supersession(self):
         with self.assertRaisesRegex(ValueError, "canonical forecasts"):

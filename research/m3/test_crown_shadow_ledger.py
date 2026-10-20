@@ -48,6 +48,16 @@ class CrownShadowLedgerTests(unittest.TestCase):
         self.assertAlmostEqual(evaluation["side_results"]["over"]
                                ["expected_unit_return_conditional_on_grid"], -1.0)
 
+    def test_compact_penaltyblog_matrix_supports_arbitrary_crown_lines(self):
+        record = synthetic_record()
+        record["forecast"]["score_probability_grid"] = [[0.5, 0.2], [0.2, 0.1]]
+        record["quotes"][1]["line"] = 1.0
+        enriched = add_line_ev(record)
+        evaluation = enriched["quotes"][1]["m3_line_probability_evaluation"]
+        self.assertEqual(evaluation["probability_source"], "full_score_grid")
+        self.assertAlmostEqual(evaluation["score_grid_probability_coverage"], 1.0)
+        self.assertIn("over", evaluation["side_results"])
+
     def test_requires_explicit_retention_scope(self):
         with tempfile.TemporaryDirectory() as root:
             repo = Path(root) / "repo"

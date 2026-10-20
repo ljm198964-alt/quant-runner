@@ -245,3 +245,8 @@ Crown 阶段 A 的存档交集为公开混合赛事 artifact 16 场中的 Dortmu
 
 ## 前瞻 UTC kickoff 来源审计
 只读检查发现 football-data.org v4 官方 Match resource 提供精确 `utcDate`、competition/season、比赛 ID、主客队 ID 与名称和 `lastUpdated`，技术上可供**未来**M3赛程身份及UTC kickoff配对使用；它不提供 Crown 行情，不能替代 Crown 价格。当前 `lastUpdated` 也不能证明历史报价时点之前使用者已知的赛程版本。该源需注册并接受服务条款，API key限定单一 application；官方 Free Tier 联赛名单未列比利时 Jupiler Pro League，而M3固定范围包含B1。公开仓库没有 football-data.org key 名称，故没有注册、请求或新增长期数据。若未来发现已授权且覆盖完整赛事范围的账户，可单独建立追加式赛程快照并严格按 provider ID、team ID 与 UTC `utcDate` 匹配；完整边界见 [Crown audit](M3_CROWN_STAGE_A_B_AUDIT.md)。来源：[官方 Match API](https://docs.football-data.org/general/v4/match.html)、[联赛覆盖](https://www.football-data.org/coverage)、[注册与条款](https://www.football-data.org/client/register)。
+
+## 2026-10-20 前瞻比分网格与 Crown 线级 EV 接口
+- 为新生成的 OpenFootball penaltyblog 影子 forecast 保存原生归一化比分概率矩阵，矩阵行表示主队进球、列表示客队进球；AH0、OU O2.5 原有字段不变。只读 ledger audit 现在验证矩阵结构、概率有限且处于[0,1]、总质量为1及方向语义。历史 canonical 记录不回填、不重算；未带矩阵的既有记录仍可审计。
+- `crown_shadow_ledger.add_line_ev` 可同时读取此紧凑矩阵与旧稀疏单元格式，按原盘线重新求五种亚洲盘结算状态和单单位条件 EV。矩阵序列化本机基准为 16×16 / 5,704 bytes；来源为 penaltyblog 1.13.1 `create_dixon_coles_grid` 的结构验证，不是比赛预测或 Crown 结果。
+- 本次 Python 3.12 + penaltyblog 1.13.1 本地完整 M3 测试 60/60 通过，真实 penaltyblog grid 序列化总概率质量 0.9999999999999999，编译与 `git diff --check` 通过。该功能须待本分支 GitHub Actions 验收；尚无新 forward forecast、合法 Crown quote 或 Crown EV/ROI。OpenFootball 赛程仍无精确 kickoff UTC，因而比分网格不能自行建立有效盘口配对。
