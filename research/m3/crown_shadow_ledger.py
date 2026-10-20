@@ -158,8 +158,10 @@ def append_records(path: Path, records: list[dict], repository_root: Path) -> di
     destination = _check_private_destination(path, repository_root)
     if not isinstance(records, list):
         raise ValueError("input must be an array of validated evidence records")
-    destination.parent.mkdir(parents=True, exist_ok=True)
-    os.chmod(destination.parent, 0o700)
+    parent_existed = destination.parent.exists()
+    destination.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
+    if parent_existed and destination.parent.stat().st_mode & 0o077:
+        raise ValueError("existing private ledger directory must be mode 0700 or stricter")
     if destination.exists():
         os.chmod(destination, 0o600)
     events = _read(destination)

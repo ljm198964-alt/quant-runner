@@ -65,6 +65,21 @@ class CrownShadowLedgerTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "outside the repository"):
                 append_records(repo / "quotes.jsonl", [record], repo)
 
+    def test_refuses_broad_existing_parent_without_chmod(self):
+        with tempfile.TemporaryDirectory() as root:
+            repo = Path(root) / "repo"
+            repo.mkdir()
+            parent = Path(root) / "private"
+            parent.mkdir(mode=0o755)
+            parent.chmod(0o755)
+            record = synthetic_record()
+            record["authorization"]["allowed_uses"] = ["m3_research", "quote_retention", "automated_api"]
+            record["forecast"]["protocol"] = "RECORDED_FORWARD"
+            record["forecast"]["predicted_at_utc"] = "2026-10-01T08:30:00Z"
+            with self.assertRaisesRegex(ValueError, "mode 0700"):
+                append_records(parent / "ledger.jsonl", [record], repo)
+            self.assertEqual(parent.stat().st_mode & 0o777, 0o755)
+
     def test_api_capture_requires_automated_scope(self):
         with tempfile.TemporaryDirectory() as root:
             repo = Path(root) / "repo"
