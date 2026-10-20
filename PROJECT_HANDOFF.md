@@ -1,7 +1,13 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-20 M3 无重训配对 OOS 稳定性 Actions 验收
+- 新增独立 `.github/workflows/m3-oos-stability.yml`（代码提交 `ebcdbe512d49eb19eaaa74edca4442ad2d1143f0`），只读取已经持久化的 OOS 报告和逐场概率，运行26项 M3 单元测试、逐场分数与 UTC cutoff 审核、45个 league-season 配对区块 bootstrap；不运行模型拟合器、不抓 Crown。
+- Actions run [39419131182](https://github.com/ljm198964-alt/quant-runner/actions/runs/39419131182) completed SUCCESS，UTC `2026-10-20T12:01:20Z`–`12:01:59Z`；26/26 tests、审计、结果写回均成功，结果 commit `c96748a`。随后将输出字段名从含糊的 `generated_utc` 改成 `source_report_generated_utc`（明确它属于源 OOS 生成时刻），修订提交 `ef582422d4b4f375744b0ea0e46b25b676d36325`；新 Actions [39419363464](https://github.com/ljm198964-alt/quant-runner/actions/runs/39419363464) 再次 SUCCESS（UTC `12:03:15Z`–`12:03:58Z`），26/26通过并将更正报告落库为 `2442713`。
+- 当前 `latest_oos_stability.json` SHA-256 `1792587f18601ddf8bc68a52b4b6aa79f2f8b410e70827ca5a5cdd7d568e04fc`；分析的是保存的 OOS 报告（源生成 UTC `2026-10-20T11:38:35.164608+00:00`），输入 fingerprint `93e0b8b91722f9c967e608ad63ae88d4c8d8b4c466de92948673404697c8e`、预测 CSV SHA `24eccf0152e1c8961c29cfd0512fb9a237ebbaaedc8d83390d1f7a96da0d3fe7`。三模型共享11,254评分比赛、每市场45个配对单元；33,762条预测 cutoff 逐行验证，AH0/DNB与O2.5 的8个模型差值95%区块 bootstrap 区间全部包含0。新增 OOS/赛程学习信息为0；Crown quotes used=false、EV/ROI=null。仅按稳定性结果 hash变化写回。
+- 定时为每四小时 UTC、在原模型 OOS schedule 的35分后；push 收到已存 OOS report/CSV更新时也触发。schedule 仅在 PR #51 合并后对默认分支运行，当前 PR 仍 OPEN，不能称默认分支已周期运行。
+
 ## 2026-10-20 M3 既有 OOS 配对样本跨季稳定性复核（无重训）
-- 稳定性脚本/测试/报告首版提交 `55f5561ccefbd570e570c548dcb3c65e735cc526` 中区块计数因在模型循环内累加而偏高；随后本地审阅发现，在修正提交 `a4dbb8eea316bd739a41464610111a6279415f94` 中改为每场只计一次并重新生成所有 bootstrap 数值。未使用有缺陷首版结果。最终版由26项本地测试覆盖，尚未单独获得 Actions 执行证明；最近相关云端验收仍为 Crown-contract run `39417655093`（22项测试，不含本分析器）。
+- 稳定性脚本/测试/报告首版提交 `55f5561ccefbd570e570c548dcb3c65e735cc526` 中区块计数因在模型循环内累加而偏高；随后本地审阅发现，在修正提交 `a4dbb8eea316bd739a41464610111a6279415f94` 中改为每场只计一次并重新生成所有 bootstrap 数值。未使用有缺陷首版结果。最终版由26项本地测试及 Actions runs `39419131182`、`39419363464`验证。
 - 基于已落库 OpenFootball 报告与逐场预测新增确定性审计器 `research/m3/openfootball_stability.py`、4项回归测试及结果 `research/m3/results/openfootball/latest_oos_stability.json`。本地直接复算，无网络请求、无模型拟合。验证 3 模型对 AH0/DNB 与固定 O2.5 使用相同的11,254场评分身份；45个联赛×赛季配对单元/市场；33,762条已评分模型行训练 cutoff 严格早于源日历比赛日。逐场概率重新计算的Log Loss/Brier均与原报告吻合（容差`2e-8`）。测试分母14,384场，其余3,130未预测场因未见队等原因保留为缺覆盖，未补造。
 - OOS分数：AH0/DNB 三状态 Poisson LL/Brier 1.000761/0.597390，Dixon-Coles 1.001044/0.597438，Bivariate 1.000898/0.597370；其45格LL最佳数21/15/9，Brier最佳数18/19/8。O2.5三者依次0.686342/0.246385、0.686333/0.246382、0.686490/0.246475；格子最佳数 Poisson 14/13、Dixon 13/14、Bivariate 18/18。无稳定单一赢家；Dixon与Poisson OU总体LL只差约0.000010，Brier约0.000003。2026/27只有199个评分样本。未做预先设定的假设检验，不能声称显著优胜。
 - 45个 league-season 区块、10,000次 seed `20261020` bootstrap 对非基准模型相对 Poisson 的全部8个95%区间都包含0（未做多重比较调整），没有稳定优势证据。校正计数后的主要区间见最新 stability JSON 与 M3 report；bootstrap 只是描述性区块不确定性，不是收益策略验证。

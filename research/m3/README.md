@@ -18,6 +18,8 @@ M3 是独立研究模型，不读取 M1、M2、MR1 的预测、订单、参数�
 - [OpenFootball 预测/结算追加式账本](results/openfootball/shadow_ledger.jsonl)
 - 历史报告、预测 CSV 与参数快照在 `results/history/`、`results/predictions/`、`results/model_parameters/`。
 
+稳定性工作流在 PR 分支完成 Actions run [39419131182](https://github.com/ljm198964-alt/quant-runner/actions/runs/39419131182) 与 [39419363464](https://github.com/ljm198964-alt/quant-runner/actions/runs/39419363464)：两次均运行现有产物分析和完整 M3 单元测试，不执行模型拟合；结果按 SHA 变化持久化。定时每四小时 UTC；PR 合并前 schedule 尚不在默认分支执行。
+
 GitHub Actions 工作流 `.github/workflows/m3-independent-research.yml` 保持每 4 小时 UTC 运行，下载开源 Football Predictor V4 数据，按原项目流程执行 OU 模型，并对 penaltyblog 的 Poisson、Dixon-Coles、Bivariate Poisson 执行严格赛季前推 AH / OU 评估。每次运行记录输入文件 SHA-256、来源 commit、模型参数、预测文件哈希、时间切分、分数与前次报告比较；输入哈希相同会明确记录没有新增数据变化。
 
 独立工作流 `.github/workflows/m3-openfootball-shadow.yml` 也配置为每 4 小时、手动和代码变更触发，使用 OpenFootball CC0 赛果/赛程分别运行三种 penaltyblog 进球模型，持久化严格赛季前推预测、逐次模型参数快照、运行历史与无盘口影子账本。它不下载或读取 Crown 报价，也不写正式账本。OpenFootball 日期没有文档化时区：具体开赛时间被忽略，影子预测只接纳源日历日期至少晚于运行 UTC 日期 3 天的 fixture。B1 在此数据源缺席。工作流已在 PR 分支经 Actions 验收；定时 schedule 只有在进入默认分支后才会生效。
