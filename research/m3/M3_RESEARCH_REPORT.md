@@ -186,7 +186,7 @@ V4 的单场 Crown 适用性也已按原版市场范围核验：run `39407478152
 新增 M3-only 离线配对审计器 `crown_pairing.py`：输入必须先符合书面授权引用、Crown 来源标识、精确 fixture 映射、UTC kickoff、模型截止时间和报价时序校验；输出仅保留分市场配对计数，不落公开报价值、不联网、不读其它模型数据、不触发订单/TG。真实配对/EV 尚无；本地新增接口专项测试通过。本机 Python 3.9 环境未安装 penaltyblog，隔离 pip 安装无输出后中断；随后本轮代码由 Actions run `39432967398` 在 Python 3.11 上全量验收，46/46 tests 成功。
 
 
-本轮 `crown_pairing.py` 已由 PR #52 提交 `c95377c` 推送，并在 Actions [39432967398](https://github.com/ljm198964-alt/quant-runner/actions/runs/39432967398) 于 2026-10-20 13:44 UTC 验收成功：46/46 M3 tests 通过，saved OOS / shadow ledger audit 成功，稳定性文件无变化；未重训，Crown 配对数仍为 AH=0、OU=0。PR #52 当前仍开放。
+本轮 `crown_pairing.py` 已由 PR #52 提交 `c95377c` 推送，并在 Actions [39432967398](https://github.com/ljm198964-alt/quant-runner/actions/runs/39432967398) 于 2026-10-20 13:44 UTC 验收成功：46/46 M3 tests 通过，saved OOS / shadow ledger audit 成功，稳定性文件无变化；未重训，Crown 配对数仍为 AH=0、OU=0。PR #52 已合并。
 
 为阶段 C 补充 `crown_shadow_ledger.py`：它把已验证的 M3 Crown 证据追加到仓库外、权限 `0600` 的私有 JSONL，使用链式 SHA-256 校验，重复记录幂等；只在授权记录明确列出 `m3_research` 与 `quote_retention`，且 API 数据另列 `automated_api` 时允许持久化。审计输出只包括市场计数和文件哈希。该工具已实现但**尚无可导入的真实、合规 M3 Crown 记录**，所以未创建报价账本数据，也不计算 EV/ROI；它不是自动采集器或预测概率生成器。
 
@@ -200,3 +200,6 @@ V4 的单场 Crown 适用性也已按原版市场范围核验：run `39407478152
 PR #52 提交 `56b0261a3a2403be11576cbdbf817c4e8ce49f51` 的 Actions [39434051526](https://github.com/ljm198964-alt/quant-runner/actions/runs/39434051526) 于 2026-10-20T13:51:33Z–13:52:23Z 成功：52/52 M3 tests、保存 OOS 和 shadow ledger audit 通过，`M3_STABILITY_REPORT_UNCHANGED`。该 run 包含私有 Crown ledger 的支持线 EV 计算测试（合成 fixture），没有真实 quote、新训练或新 forecast。PR #52 仍开放。
 
 私有目录权限保护最后由 PR #52 HEAD `ee459c1c534498f1601fea1844d4a6dd371a5b03` 的 Actions [39434308057](https://github.com/ljm198964-alt/quant-runner/actions/runs/39434308057) 于 2026-10-20T13:53:16Z–13:54:07Z 验收：53/53 tests、保存 OOS / shadow ledger audit 成功，稳定性报告不变。测试确认只给新建专用目录设 `0700`，已有宽权限目录会被拒绝且不会被 chmod。无重训、行情请求或研究数据变化。
+
+
+PR #52 于 `2026-10-20T13:54:45Z` 合入 main，merge commit `f6265be68f108c79bbc355f14406201eebe0a9d4`。默认分支 Actions [39434528029](https://github.com/ljm198964-alt/quant-runner/actions/runs/39434528029) 在 main commit 上于 13:54:47Z–13:55:30Z 成功：53/53 tests、OOS/shadow ledger 审计 PASS，报告 unchanged。证明合并后工程兼容，不代表新增数据或 Crown 研究结果。
