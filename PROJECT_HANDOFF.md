@@ -1,3 +1,8 @@
+## 2026-10-20 M3无盘口研究继续：B1来源新线索与现状核对
+- GitHub当前运行核实：M3 OpenFootball shadow `39438762203` SUCCESS、Saved OOS Stability `39438762094` SUCCESS；生产`results/openfootball/latest_shadow_performance.json` generated_utc 2026-10-20T14:00:44Z，canonical=4215，已结算=0，Crown=0，EV/ROI=N/A；`results/crown/latest_pairing_status.json` generated_utc 2026-10-20T13:42:29Z，AH/OU有效历史配对均0、自动前瞻Crown采集尚未开始、权限未验证。没有制造新增结算或盘口。
+- 新只读审计开源`oladeeayo/open-matchday`项目：官方README称75赛事的2026/27 fixtures/results，`leagues.py`显示`BEL_1_pro-league`、ESPN `bel.1`与FD B1映射，可能补齐现有OpenFootball缺的比利时联赛，但`time`字段声称“CET-1 where known”，缺严格IANA UTC/DST证据，且上游衍生许可需验证。不得直接当真实 UTC kickoff/赛前可见信息、不得回填旧预测、不得当Crown报价。研究记录已提交`research/m3/M3_ADDITIONAL_FIXTURE_SOURCE_AUDIT_20261020.md` commit `1475fe332e6b12a473eaf052494857bd0fafcaa0`；**仅发现候选、未接入/未运行新预测或结算**。
+- 下一步实操是对该候选逐场源数据、实际 UTC/DST、推迟比赛和许可证进行比对，满足才接入M3独立只读 FT/赛程记录；Crown M3采集仍受授权范围证据阻塞，不可绕过。
+
 ## 2026-10-20 M3 默认分支合并及生产前研究 Actions 验收
 - PR #51 已于 UTC `13:30:00Z` 合入公开 `main`，merge commit `e6298aded2d009752d37e10ce879f306119b8c9d`，PR head `cc31b1353a707c45617d86a26c8d6fe41d532c7c`。合并仅启用 M3 研究 workflow，没有改 M1/M2/MR1 正式链路、Telegram、交易 Gate 或模型自动提升。
 - 合并后 `M3 OpenFootball No-Market Shadow Research` [run 39430911655](https://github.com/ljm198964-alt/quant-runner/actions/runs/39430911655) 于 `13:30:03Z`–`13:31:37Z` SUCCESS，43 tests pass。输入结果及赛程未变化；14,384个 OOS 测试身份、43,152条模型预测，每模型11,254个已评分；1,405个未来 fixture identity、4,215个唯一 M3 forecast keys。新增预测、修订、结算均0，Crown quote=0，故无需新持久化提交；artifact 保存本次 run receipt。OpenFootball 源 commit `e6744429ee395bc86f247348c6184bb08d4eb361`，B1 文件仍缺失。
