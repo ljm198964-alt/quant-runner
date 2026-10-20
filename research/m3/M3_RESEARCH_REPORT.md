@@ -198,3 +198,5 @@ V4 的单场 Crown 适用性也已按原版市场范围核验：run `39407478152
 私有 M3 shadow intake 现可在录入真实 recorded-forward 证据时，按 forecast 明确支持范围计算：完整比分概率网格可对该 Crown 记录的精确 AH/OU 线生成五状态概率与条件单位 EV，并记录网格概率覆盖；仅有三状态 AH0 或 O2.5 单点概率时，只评对应的 AH0 / OU2.5。其它盘口线标为不可用，尤其不将 Football Predictor V4 的 O2.5 外推到其他 OU 线。EV 计算单测为合成 fixtures，不是实际 Crown 结果；ROI 仍需独立前瞻策略定义及真实结算序列，本轮保持 null。
 
 PR #52 提交 `56b0261a3a2403be11576cbdbf817c4e8ce49f51` 的 Actions [39434051526](https://github.com/ljm198964-alt/quant-runner/actions/runs/39434051526) 于 2026-10-20T13:51:33Z–13:52:23Z 成功：52/52 M3 tests、保存 OOS 和 shadow ledger audit 通过，`M3_STABILITY_REPORT_UNCHANGED`。该 run 包含私有 Crown ledger 的支持线 EV 计算测试（合成 fixture），没有真实 quote、新训练或新 forecast。PR #52 仍开放。
+
+私有目录权限保护最后由 PR #52 HEAD `ee459c1c534498f1601fea1844d4a6dd371a5b03` 的 Actions [39434308057](https://github.com/ljm198964-alt/quant-runner/actions/runs/39434308057) 于 2026-10-20T13:53:16Z–13:54:07Z 验收：53/53 tests、保存 OOS / shadow ledger audit 成功，稳定性报告不变。测试确认只给新建专用目录设 `0700`，已有宽权限目录会被拒绝且不会被 chmod。无重训、行情请求或研究数据变化。
