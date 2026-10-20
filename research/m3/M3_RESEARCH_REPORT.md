@@ -6,12 +6,12 @@
 
 - **AH：** penaltyblog Poisson、Dixon-Coles、Bivariate Poisson 已在真实赛果上完成严格赛季前推样本外预测。此轮实现的盘口诊断是主队 AH 0（DNB）三状态概率；没有可匹配的 Crown 盘口线和水位，不能声称 Crown ROI。
 - **OU：** Football Predictor V4 原版五类模型已有完整多赛季样本外报告；penaltyblog 三种进球分布也生成固定 O2.5 的独立 OOS 概率。V4 的原版模拟 ROI 使用作者研究的市场赔率、阈值和结算口径，不是 Crown ROI。
-- **自动化：** 每四小时 UTC 更新输入、训练/评估、比较历史报告并在公开分支保存报告、预测和输入/模型版本哈希。Actions run `39406087077` 成功；其 OOS 结果已持久化在公开分支提交 `0d4d0a4`。后续本报告所列的扩展参数归档和概率校准分箱仍待下一次 Actions 运行验收。
+- **自动化：** 每四小时 UTC 更新输入、训练/评估、比较历史报告并在公开分支保存报告、预测和输入/模型版本哈希。首次 OOS run `39406087077` 成功；增强验收 run `39407478152` 也 SUCCESS，最新结果已持久化在公开分支提交 `67680e4`。
 - **安全边界：** 研究仅使用 M3 上游历史数据；未接入 M1/M2/MR1 的模型或账本，未触碰生产模型，未发送 TG，也没有自动模型晋级或新增交易 Gate。
 
 ## penaltyblog：真实 AH / OU OOS 结果
 
-来源为 [Football-Data.co.uk](https://www.football-data.co.uk/) 六个联赛：E0、I1、SP1、D1、F1、B1；数据覆盖 2017/18 至 2026/27 当前部分赛季。Actions run `39406087077` 在 2026-10-20 10:14:43 UTC 生成报告，使用 penaltyblog 1.13.1，量化 Runner 源码 commit `a948f93f4e5b9a564da1274c4ba2dc099f864664`，Football Predictor 上游 commit `2f75be0f26363e26a42aaff34ede68f35635da02`。
+来源为 [Football-Data.co.uk](https://www.football-data.co.uk/) 六个联赛：E0、I1、SP1、D1、F1、B1；数据覆盖 2017/18 至 2026/27 当前部分赛季。增强验收 Actions run `39407478152` 在 2026-10-20 10:27:00 UTC 生成报告，使用 penaltyblog 1.13.1，量化 Runner 源码 commit `0aa1514`，Football Predictor 上游 commit `2f75be0f26363e26a42aaff34ede68f35635da02`。
 
 输入共 60 个 CSV、19,093 场有效历史比赛。按更早赛季训练并向后预测，共有 17,027 个测试比赛行、51,081 条模型预测（每场每模型一条）。每种模型对 14,696 场给出可评分概率，覆盖测试行 86.3%；2,331 场因至少一队不在该联赛训练历史中而明确标为未预测。无球队映射回填或伪预测。
 
@@ -25,7 +25,7 @@ AH 结果以三状态多分类分数计分，DNB 的 win/push/lose 恰与胜/平
 
 数据完整性：报告 `input_fingerprint_sha256=5fbdf985cb8be4081e69959dfe7bd4e9685c8c556471a8bb11551c4b38809db1`；测试比赛身份也有独立哈希。Football-Data 日期字段无时区且仅为日历日期，统一解释为 UTC 午夜，并排除测试季首场所在的整个日期；训练只含更早赛季文件和严格早于测试日的记录。文件中其他赔率列没有被模型读取。数据本身不含 Crown 历史 AH/OU 盘线，因此 Crown 覆盖、有效样本收益、ROI 和最大回撤均为**不可计算**，不是 0。
 
-注意：这一份 2026-10-20 全数据 CI 报告尚未包含最新本地工作树的拟合参数归档与校准分箱增强。代码已具备这些功能并通过本地测试，但必须待下一次 GitHub Actions 成功才将其视为已在自动化运行中验收。
+报告记录 162 次实际拟合参数，参数快照已公开落库为 SHA 命名 JSON；其文件 SHA-256 与报告字段一致。逐场预测 CSV 的文件 SHA-256 也与报告一致。输入指纹与上一轮相同，`data_changed_vs_previous_snapshot=false`，本次运行没有新增比赛信息。逐场预测覆盖 51,081 模型×比赛记录，参数文件 505,365 字节。
 
 ## Football Predictor V4：OU 原版回测
 
@@ -56,8 +56,8 @@ Football Predictor V4 检出版本未发现显式 LICENSE 文件；其源码未�
 - 保留原有四小时 UTC 训练频率；严格设置工作流并发，避免同分支运行互相覆盖。
 - 每次记录源 commit、UTC 生成时间、CSV 文件哈希、总输入指纹、测试样本身份指纹、预测哈希、切分报告和指标。
 - 重复数据以指纹如实标记无变化；历史版本比较仅在测试身份和样本数匹配时比较 penaltyblog 指标；V4 比较在测试样本数改变时抑制差值。
-- 当前代码已增加拟合模型参数 SHA 归档及 10 分箱校准数据；11 项 M3 单元测试在本地通过。自动化验收仍待新的 Actions 运行。
-- 实际 Actions：`39402727958`（旧流程成功，但只有 penaltyblog 样本内 API smoke，不算 AH OOS）；`39406087077`（本轮首次真实 penaltyblog OOS 成功并落库）。不能把前一 run 的 smoke test 当样本外证据。
+- 当前工作流已验证拟合参数 SHA 归档及 10 分箱校准数据，11 项 M3 单元测试本地通过；54 个 league×season 时间切分均满足训练结束早于测试开始。
+- 实际 Actions：`39402727958`（旧流程成功，但只有 penaltyblog 样本内 API smoke，不算 AH OOS）；`39406087077`（首次真实 penaltyblog OOS）；`39406828896`（模型参数文件首次报告但因工作流遗漏未落库）；`39407478152`（修复后 SUCCESS，参数、预测、报告、切分和 V4 指标均持久化，receipt 正确记录 AH 训练状态）。最新输入指纹与预测哈希可在 `latest_penaltyblog_oos_report.json` 查验。
 
 ## Crown 缺口、限制与下一步
 

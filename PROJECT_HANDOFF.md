@@ -2791,3 +2791,9 @@
 - 自动工作流仍每四小时 UTC；现已记录输入指纹、来源 commit、预测 hash、严格切分、历史比较并持久化报告。进一步改动已在本工作树：存储每个 penaltyblog 拟合模型参数的内容哈希快照，并加入概率校准分箱；11 个本地单测通过，真实本地训练亦成功（较小数据副本）；需等更新后的 GitHub Actions 成功后才能宣布增强自动归档/校准验收完成。后续更新此交接时追加真实 Actions run ID、bot 结果提交 SHA、最终报告生成 UTC 和对应数据哈希。
 - 本轮未引入未验证的第三模型：审查到的 1X2-only 方法不满足 OU/AH 目标；有候选缺少明确开源许可或与进球分布方法同质。Football Predictor V4 检出版本未发现 LICENSE 文件，未复制源代码，只由 Actions 临时目录按原入口运行；后续需核实授权。下一研究重点为合法、同期 Crown 历史线价覆盖与可审计的球队升降级身份历史，不得用其他来源赔率替代 Crown。
 - 边界：未读取/更改 M1、M2、MR1 生产模型、预测、订单、参数或账本；无 Telegram、无正式模型晋级、无 EV/置信度/数量/时效/联赛 Gate。
+
+### M3 自动化增强最终验证补记（2026-10-20）
+- 增强工作流代码 commit `0aa1514`；最终自动运行 [39407478152](https://github.com/ljm198964-alt/quant-runner/actions/runs/39407478152) completed SUCCESS，结果落库 commit `67680e4`。前一 run `39406828896` 曾因漏 `git add model_parameters/` 而只记录参数路径未存文件；已修复并由最终 run 重新验证。V4 OU 与 penaltyblog OOS 两个核心步骤及持久化步骤全部成功。
+- 最终报告 UTC `2026-10-20T10:27:00.187293+00:00`；相同数据指纹 `5fbdf985cb8be4081e69959dfe7bd4e9685c8c556471a8bb11551c4b38809db1`，故 `data_changed_vs_previous_snapshot=false`。输入 19,093 场，测试 17,027 场，每模型 14,696 可评分（86.31%），162 次拟合（54 切分×3 模型）。AH0/OU 指标见最新 JSON 和 `research/m3/M3_RESEARCH_REPORT.md`。
+- 预测文件 `research/m3/results/predictions/bf65f8aa8a29da978685895d00c16d9d98ab6cc819a2f295408173708bf29aa8.csv`（SHA 与报告一致）；参数文件 `research/m3/results/model_parameters/7c675e2d1c82c704ce3af476c624eb6e6082422e0692c937afff1385f884a795.json`（SHA 与报告一致）。UTC 切分检查：54/54 均满足 `train_end_utc < test_start_utc`。`latest_upstream_run.json` 与 `latest_m3_run.json` 均记录 `ah_trained=true`。单元测试 11/11、本地实际训练、Python 编译、YAML 解析、`git diff --check` 均通过。
+- 本次验收完成研究系统和真实 OOS 结果落库，但并未补上 Crown 同期历史盘口，也没有独立跑通第三种不同原理的开源 OU 方法；不得报告 Crown ROI 或宣布正式模型可下注。V4 上游许可证未明确的问题继续跟进。
