@@ -27,6 +27,8 @@ Football Predictor V4 的 ROI 列只还原其上游研究阈值和原数据赔�
 
 OpenFootball 评估的 AH 只报告 AH0/DNB 三状态概率，OU 报告固定 O2.5；目前影子账本尚无 Crown 盘口、EV、ROI 或可计算回撤。原始 OpenFootball 日期键不代表精确 kickoff UTC。
 
+账本 append-only，保留了首次版本身份实现造成的重复预测历史行；随后 4,215 条以 `FORECAST_DUPLICATE_SUPERSEDED` 标记为重复。报告按唯一 forecast key 计有效预测，账本不会把 superseded 行再次计分/结算。修复后的重复 Actions run 已验证新预测、结算、重复修正均为 0，ledger SHA 不变；详情见完整验收报告。
+
 运行单元测试：
 
 ```bash

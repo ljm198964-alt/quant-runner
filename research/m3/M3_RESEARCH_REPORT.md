@@ -18,6 +18,12 @@ AH0 的胜/和/负与 DNB win/push/lose 三状态分数一致，但不是任意 
 
 同一 run 使用源中的 1,405 个日期至少领先 3 天的 fixture，追加 4,215 条前瞻预测（3 模型×每场），账本为 `shadow_ledger.jsonl`。生成时间、训练输入 hash、模型版本/参数、fixture 和赛果身份均记录；本次是首次持久化运行，故前次数据/赛程指纹为 null；没有已结算影子样本，结算指标、ROI 和最大回撤均为 null。当前不抓 Crown，不记录 EV、下注或 Telegram。源 fixture 的具体时间字段无文档化时区，本协议完全忽略时刻，只使用日历日期并标注“时区未指定”；因此不能声称精确 UTC 开赛窗口。
 
+### 影子账本幂等性修复及二次 Actions 验收
+
+首次 Actions run 后的手动重复 run `39415593340` 暴露出 ID 设计缺陷：forecast/model version ID 将整个 quant-runner commit 纳入身份，文档 commit 使同一数据上的4,215条预测被重复追加；该 run 全绿但不能作为“无变化不追加”的验收。复核后没有删除、覆盖或隐瞒旧账本行。修复提交 `88091ba` 将预测身份改为 fixture/赛程 revision + 模型语义版本 + 训练输入指纹 + penaltyblog 版本，并让 OOS 快照按研究代码内容哈希与赛果指纹归档，不随文档或 Actions 结果 commit 变化。对同语义重复记录只选一条进入评分/结算，其余通过 append-only `FORECAST_DUPLICATE_SUPERSEDED` 事件明确标记。
+
+修复后的真实 Actions run [39416174708](https://github.com/ljm198964-alt/quant-runner/actions/runs/39416174708) SUCCESS，结果落库 commit `8ab0434`：输入及赛程指纹分别未变化；新预测0、结算0、追加重复修正4,215。原始 forecast 行8,430、唯一逻辑预测键4,215、被 superseded 行4,215，账本 SHA-256 为 `0645da41b79bbec056081188ba6fb52b4b4a40b077f743eccc7e6645fefbc21e`。随后手动 Actions [39416501773](https://github.com/ljm198964-alt/quant-runner/actions/runs/39416501773) SUCCESS，状态确认无赛果/赛程变化、无新 forecast、无新 settlement、无新重复修正；账本 SHA 保持不变，结果持久化步骤按预期跳过。两个 run 都重新执行了真实 OOS，OOS 数据输入 fingerprint 保持 `93e0b8b91722f9c967e608ad63ae88d4c8d8b4c466de92948673438704697c8e`；修复后代码评估 fingerprint 固定为 `c6bdb7edeb213005b7770219b7572b8b6b809cf962f835311a37bf21675ae631`。这证明本源快照没有新增学习信息，也没有被报告成成绩改善。
+
 工作流 `.github/workflows/m3-openfootball-shadow.yml` 配置每 4 小时、手动和指定文件变更触发，并在数据/赛程/账本有变化时把历史报告和账本提交回研究分支；本次 PR 分支 push 验证证明代码、测试、实际拟合、结果落库均成功。GitHub 定时事件只对默认分支生效，PR 合并前不能称该新工作流已在默认分支持续定时运行。原 Football-Data 工作流维持现状。OpenFootball 本身每日更新，四小时触发不会制造新增赛果；本次之后须以指纹判断实际是否有新信息。
 
 ## 状态摘要
