@@ -2,6 +2,8 @@
 
 报告生成时间：2026-10-20 UTC。研究目标是完成独立研究系统，不启用正式投注。
 
+最新复验：commit `6737a07bad4568a031551c8dfa256dc30cd55c22` 对应的 GitHub Actions run [39426586706](https://github.com/ljm198964-alt/quant-runner/actions/runs/39426586706) 于 2026-10-20T12:59:11Z–13:00:04Z SUCCESS。40/40 M3 单元测试和保存结果的稳定性/账本审计均通过；严格 UTC cutoff 复核 33,762 行，三模型各 11,254 个配对评分样本，输入 fingerprint 未变，Crown quotes used=false，账本 4,215 个 canonical forecast、0 settlement。报告输入没有变化，Actions 正确记录 `M3_STABILITY_REPORT_UNCHANGED`，没有伪报新增学习或盘口结果。源码与输出详情见 `latest_oos_stability.json` 和 `latest_shadow_ledger_audit.json`。
+
 ## OpenFootball：独立真实 OOS 与前瞻无盘口影子
 
 GitHub Actions [39415198829](https://github.com/ljm198964-alt/quant-runner/actions/runs/39415198829) 于 2026-10-20T11:30:25Z 全步骤 SUCCESS。研究代码提交 `8c011d68ecbd51ff5a7fa90c3cb88178656e30ce`；结果与影子账本由 Actions 落库提交 `7613522`。报告生成 UTC 为 `2026-10-20T11:30:06.224625+00:00`，影子运行 UTC 为 `2026-10-20T11:29:18.057086Z`。源为 CC0-1.0 的 `openfootball/football.json` commit `e6744429ee395bc86f247348c6184bb08d4eb361`，penaltyblog 固定 1.13.1。
