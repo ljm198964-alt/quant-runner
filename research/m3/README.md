@@ -45,6 +45,8 @@ OpenFootball 评估的 AH 只报告 AH0/DNB 三状态概率，OU 报告固定 O2
 
 最新无盘口 shadow run [39421816230](https://github.com/ljm198964-alt/quant-runner/actions/runs/39421816230) 于 2026-10-20 UTC 成功，40 项测试通过。输入/赛程指纹均未变；日期保护范围内 1,405 个 fixture 全已有 canonical forecast，故新预测、结算和重复修正均为0，账本 SHA 不变。Crown quote=0，EV/ROI/最大回撤不可计算；本次没有新增学习信息。
 
+已审计一个近期历史盘口候选 OddsPapi：供应商将 `singbet` 称作 Crown in Asia，文档提供 UTC historical snapshots 与 AH/总进球市场，历史可用范围从 2026-01 起。但尚未核验该slug与 M3 现有 Crown 标记的独立身份映射、API样本和公开研究许可；未注册账户、未调用API，故**不计入**当前 Crown 数据覆盖。细节见 [Crown archive audit](M3_CROWN_STAGE_A_B_AUDIT.md)。
+
 如获得书面授权，可用 `crown_totalcorner_import.py` 在本地离线读取既存 TotalCorner Crown API 响应；它要求 IANA 时区证据、精确队伍身份与独立 UTC kickoff、过滤所有不满足赛前条件的移动记录，并且拒绝 DST 歧义及未定义复合线。该 adapter 不联网、不打印或落库价格、不计算 EV/ROI；合成测试只验证转换逻辑，并不增加真实 Crown 覆盖。当前未提供书面授权，因此未执行任何新 Crown 请求。该适配器提交 `feb6f4dfabb19653bbedaaba2a212644e86a85d0` 已由 Actions [39421816343](https://github.com/ljm198964-alt/quant-runner/actions/runs/39421816343) 真实验收，40 项 M3 tests 通过；该 workflow 是无重训审计，未新增数据或 Crown 覆盖。
 
 运行单元测试：
