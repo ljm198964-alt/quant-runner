@@ -1,5 +1,11 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-20 M3 官方penaltyblog接口实际错误修复及运行步骤接线
+- 上游`martineastwood/penaltyblog/penaltyblog/models/__init__.py`实际导出`DixonColesGoalModel`（单数Goal），而先前M3适配器错误引用`DixonColesGoalsModel`。已修改`research/m3/penaltyblog_official_runner.py`，commit `dd574c44a6479da1f7208a964824a3a11372a37a`。只修复API拼写，不改变预测规则或增加Gate。
+- 已在公开Runner的现有M3上游训练工作流补充penaltyblog安装后调用Poisson、Dixon-Coles原版fit/predict的只读示例步骤，commit `7b54a475696092f6425a312b0a20ea5e8b7b2377`。示例用V4独立CSV原始数据做接口smoke，不视为样本外AH实战模型或盈利成绩；原版V4 download/features/backtest命令不变。
+- **工作流新提交不等于运行成功。** 当前容器无penaltyblog安装且不能直接联网训练，GitHub连接器没有可直接按workflow枚举运行或触发dispatch的接口；尚未取得新M3 Actions成功run、AH/OU真实预测指标或Crown ROI。待实际运行回执核验之后才能继续报告训练结果。M3独立，M1 OU仍暂停，未发TG。
+
+
 ## 2026-10-20 M3 进一步执行：原版工作流回执追查与penaltyblog官方AH/OU接口
 - GitHub连接器已尝试查询M3最新工作流提交`16b570f6b5a1c2e15f2257a2b56cc127e019b3f0`的关联run，结果为空；该接口仅查PR触发运行，因此**不能据此断定没有push运行，也不能声称成功**。公开网页/Actions API当前无法取得可访问日志；真实V4回测指标仍未验证。
 - 核实上游Football Predictor V4 `src/football_predictor/cli.py`及`download.py`：README规定的download/features/backtest仍适用；download会捕获单个CSV失败，故未核验实际下载成功场次之前不能假设模型已训练。
