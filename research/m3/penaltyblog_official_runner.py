@@ -7,14 +7,14 @@ import argparse
 import json
 from pathlib import Path
 import pandas as pd
-from penaltyblog.models import PoissonGoalsModel, DixonColesGoalsModel
+from penaltyblog.models import PoissonGoalsModel, DixonColesGoalModel
 
 def fit_and_predict(csv_path, home, away, model_name):
     df=pd.read_csv(csv_path)
     missing=[c for c in ("HomeTeam","AwayTeam","FTHG","FTAG") if c not in df]
     if missing:raise ValueError("Missing original match columns: "+",".join(missing))
     df=df.dropna(subset=("HomeTeam","AwayTeam","FTHG","FTAG"))
-    cls={"poisson":PoissonGoalsModel,"dixon-coles":DixonColesGoalsModel}[model_name]
+    cls={"poisson":PoissonGoalsModel,"dixon-coles":DixonColesGoalModel}[model_name]
     model=cls(df["FTHG"],df["FTAG"],df["HomeTeam"],df["AwayTeam"])
     model.fit()
     pred=model.predict(home,away)
