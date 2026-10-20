@@ -157,6 +157,54 @@ def _cluster_bootstrap(model_rows: dict, seed: int, replicates: int) -> dict:
     return output
 
 
+def _probability_bias(rows: list[dict]) -> dict:
+    """Describe forecast-minus-observed outcome rates without fitting a calibrator."""
+    if not rows:
+        return {"n": 0, "markets": {}}
+    ah_labels = ("win", "push", "lose")
+    ah_probability_columns = {
+        "win": "ah_home_0_p_win", "push": "ah_home_0_p_push", "lose": "ah_home_0_p_lose",
+    }
+    ah_actual_column = "actual_ah_home_0"
+    markets = {"AH0_DNB_3WAY": {"outcomes": {}}, "OU_OVER_2_5": {}}
+    for label, column in ah_probability_columns.items():
+        predicted = sum(float(row[column]) for row in rows) / len(rows)
+        observed = sum(row[ah_actual_column] == label for row in rows) / len(rows)
+        markets["AH0_DNB_3WAY"]["outcomes"][label] = {
+            "mean_predicted_probability": predicted,
+            "observed_rate": observed,
+            "predicted_minus_observed": predicted - observed,
+        }
+    ou_predicted = sum(float(row["ou_p_over_2_5"]) for row in rows) / len(rows)
+    ou_observed = sum(int(row["actual_ou_over_2_5"]) for row in rows) / len(rows)
+    markets["OU_OVER_2_5"] = {
+        "mean_predicted_probability": ou_predicted,
+        "observed_rate": ou_observed,
+        "predicted_minus_observed": ou_predicted - ou_observed,
+    }
+    return {"n": len(rows), "markets": markets}
+
+
+def _probability_bias_by_group(model_rows: dict) -> dict:
+    output = {}
+    for model in MODEL_NAMES:
+        rows = list(model_rows[model].values())
+        by_season: dict[str, list[dict]] = defaultdict(list)
+        by_league: dict[str, list[dict]] = defaultdict(list)
+        by_league_season: dict[str, list[dict]] = defaultdict(list)
+        for row in rows:
+            by_season[row["season"]].append(row)
+            by_league[row["league"]].append(row)
+            by_league_season.setdefault(f"{row['league']}-{row['season']}", []).append(row)
+        output[model] = {
+            "overall": _probability_bias(rows),
+            "by_test_season": {key: _probability_bias(value) for key, value in sorted(by_season.items())},
+            "by_league": {key: _probability_bias(value) for key, value in sorted(by_league.items())},
+            "by_league_season": {key: _probability_bias(value) for key, value in sorted(by_league_season.items())},
+        }
+    return output
+
+
 def build_stability_report(report_path: Path, predictions_path: Path, bootstrap_seed: int = 20261020,
                            bootstrap_replicates: int = 10000) -> dict:
     report = json.loads(report_path.read_text(encoding="utf-8"))
@@ -305,6 +353,7 @@ def build_stability_report(report_path: Path, predictions_path: Path, bootstrap_
         "strict_utc_cutoff_rows_verified": len(scored_keys) * len(MODEL_NAMES),
         "markets": markets_out,
         "calibration": calibration,
+        "probability_bias": _probability_bias_by_group(model_rows),
         "cluster_bootstrap": bootstrap,
         "crown_quotes_used": False,
         "Crown_EV": None,

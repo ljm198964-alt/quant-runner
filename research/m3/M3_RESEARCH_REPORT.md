@@ -37,9 +37,24 @@ AH0 的胜/和/负与 DNB win/push/lose 三状态分数一致，但不是任意 
 
 三种模型在这 11,254 个 O2.5 预测上的平均概率分别为 Poisson 0.51786、Dixon-Coles 0.51780、Bivariate Poisson 0.51469；Over 实际比例为 0.53874，平均预测低约 2.09、2.09、2.40 个百分点。该偏差是全量描述性校准，不是皇冠线价概率优势；不能对概率做事后修正后再用同一 OOS 集合声称改进。AH 评价仍仅为 DNB 三状态结果，不等价任意 AH 线。
 
+最新 `latest_oos_stability.json` 的 `probability_bias` 从相同逐场 OOS 行计算 `(平均预测概率−实际发生率)`，按模型、赛季、联赛和联赛×赛季拆分；AH0 分别报告 win/push/lose，OU 仅固定 O2.5。它是边际频率误差描述，不是概率分箱检验、显著性检验或策略筛选；没有拟合修正器，也没有改预测。
+
+| O2.5 子样本 | n | Poisson 偏差 | Dixon-Coles 偏差 | Bivariate Poisson 偏差 |
+|---|---:|---:|---:|---:|
+| 全部 OOS | 11,254 | -2.09 pp | -2.09 pp | -2.40 pp |
+| D1 | 1,962 | -5.15 pp | -5.18 pp | -5.35 pp |
+| E0 | 2,274 | -3.23 pp | -3.24 pp | -3.46 pp |
+| F1 | 2,211 | -2.69 pp | -2.68 pp | -2.88 pp |
+| I1 | 2,373 | +0.29 pp | +0.29 pp | -0.37 pp |
+| SP1 | 2,434 | -0.32 pp | -0.32 pp | -0.61 pp |
+| 2025/26 | 1,507 | -4.34 pp | -4.35 pp | -4.65 pp |
+| 2026/27 部分赛季 | 199 | -10.07 pp | -10.07 pp | -10.41 pp |
+
+三个模型对 O2.5 的误差方向在 D1/E0 及若干赛季较集中，但联赛差异明显；2026/27 只有 199 场，不能外推。Poisson 的 AH0 边际偏差为 win +0.67 pp、push -1.14 pp、lose +0.46 pp；Dixon-Coles 约 +0.10、+0.03、-0.13 pp；Bivariate Poisson 约 +0.43、-0.46、+0.03 pp。边际发生率不能说明每个预测概率区间都已校准，也不能说明相对 Crown 价格有优势；没有据此事后校准或筛选投注。
+
 ### 无重训影子账本结构审计
 
-`openfootball_shadow_audit.py` 对 append-only ledger 做只读检查，并已接入 `.github/workflows/m3-oos-stability.yml` 的四小时任务。它复核 forecast ID 与逻辑键一对一 canonical、supersession 引用及理由结构、预测 UTC 时间及日历日期 guard、概率范围/归一化、无 Crown quote 时 EV/ROI 必须为空、无正式单与 Telegram 标记；不训练、不结算、不访问 Crown。首次审计报告见 `latest_shadow_ledger_audit.json`：原始 forecast 8,430、逻辑/有效 forecast 4,215、superseded 4,215、settlement/Crown/EV/ROI/订单/Telegram 均为 0。报告内 ledger SHA 必须等于账本当前 SHA，避免在分支同步竞态下保存过期审计。GitHub Actions [39420305676](https://github.com/ljm198964-alt/quant-runner/actions/runs/39420305676) 于 2026-10-20 12:10:49–12:11:32 UTC SUCCESS，33/33 测试通过；下载的 shadow audit artifact 与仓库 JSON 字节一致（SHA-256 `9cb01056753bf50fd15e59b8281ceea0fa034b8be16597cfbb6d69377a98dd90`），workflow 确认报告未变，故没有生成虚假结果提交。
+`openfootball_shadow_audit.py` 对 append-only ledger 做只读检查，并已接入 `.github/workflows/m3-oos-stability.yml` 的四小时任务。它复核 forecast ID 与逻辑键一对一 canonical、supersession 引用及理由结构、预测 UTC 时间及日历日期 guard、概率范围/归一化、无 Crown quote 时 EV/ROI 必须为空、无正式单与 Telegram 标记；不训练、不结算、不访问 Crown。首次审计报告见 `latest_shadow_ledger_audit.json`：原始 forecast 8,430、逻辑/有效 forecast 4,215、superseded 4,215、settlement/Crown/EV/ROI/订单/Telegram 均为 0。报告内 ledger SHA 必须等于账本当前 SHA，避免在分支同步竞态下保存过期审计。GitHub Actions [39420305676](https://github.com/ljm198964-alt/quant-runner/actions/runs/39420305676) 于 2026-10-20 12:10:49–12:11:32 UTC SUCCESS，33/33 测试通过；下载的 shadow audit artifact 与仓库 JSON 字节一致（SHA-256 `9cb01056753bf50fd15e59b8281ceea0fa034b8be16597cfbb6d69377a98dd90`），workflow 确认报告未变，故没有生成虚假结果提交。新增概率误差拆分同样只复算这些 OOS 预测，不拟合或修改模型。
 
 可复算命令（只读现存 OOS 产物，不重新训练）：
 
