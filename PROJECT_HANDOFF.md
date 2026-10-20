@@ -2926,3 +2926,4 @@
 
 - 最新 PR #52 commit `ff60d0d741ae2965b3ee8fda4b693d99786856ab` 由 Actions [39433609568](https://github.com/ljm198964-alt/quant-runner/actions/runs/39433609568) 于 2026-10-20T13:48:31Z–13:49:19Z SUCCESS：51/51 tests、saved OOS 和 shadow ledger audit 均通过，`M3_STABILITY_REPORT_UNCHANGED`。审计修正 hindcast 不算赛前配对、shadow ledger 仅收 recorded-forward。没有重训/行情请求/数据变化。PR #52 OPEN，分支与 main 兼容性尚待最终 review/合并。
 - 私有 Crown shadow writer 如输入带完整 M3 score-probability grid，会计算与每条 Crown 盘口精确匹配的五状态概率和条件 EV 并记录网格覆盖；只有 AH0 三状态 / OU2.5 概率时只算对应支持线，其他线显式 unavailable，V4 O2.5 不外推。ROI 不自动生成；需实际前瞻策略记录和结果结算。合成EV单测不算真实市场结果。
+- 支持线概率/EV 逻辑提交 `56b0261a3a2403be11576cbdbf817c4e8ce49f51` 已由 Actions [39434051526](https://github.com/ljm198964-alt/quant-runner/actions/runs/39434051526) 于 2026-10-20T13:51:33Z–13:52:23Z 成功验收：52/52 tests、saved OOS/shadow ledger audit PASS，稳定性报告 unchanged。合成测试覆盖 AH0、O2.5 scalar 和任意 quarter line score-grid EV；没有真实 Crown 价格输入，不可视为阶段 B 市场结果。
