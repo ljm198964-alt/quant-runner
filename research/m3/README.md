@@ -19,6 +19,8 @@ M3 是独立研究模型，不读取 M1、M2、MR1 的预测、订单、参数�
 - [无重训稳定性 Actions 工作流](../../.github/workflows/m3-oos-stability.yml)
 - [OpenFootball 影子运行收据](results/openfootball/latest_shadow_run.json)
 - [OpenFootball 预测/结算追加式账本](results/openfootball/shadow_ledger.jsonl)
+- [OpenFootball forward-only shadow 校准报告](results/openfootball/latest_shadow_performance.json)
+- [Forward shadow calibration 复算器](openfootball_shadow_performance.py)
 - 历史报告、预测 CSV 与参数快照在 `results/history/`、`results/predictions/`、`results/model_parameters/`。
 
 稳定性工作流在 PR 分支完成 Actions run [39419131182](https://github.com/ljm198964-alt/quant-runner/actions/runs/39419131182) 与 [39419363464](https://github.com/ljm198964-alt/quant-runner/actions/runs/39419363464)：两次均运行现有产物分析和完整 M3 单元测试，不执行模型拟合；结果按 SHA 变化持久化。PR #51 已合并；默认分支每四小时 UTC schedule 已启用，合并后复核见 [39430911655](https://github.com/ljm198964-alt/quant-runner/actions/runs/39430911655)。
@@ -43,7 +45,7 @@ OpenFootball 评估的 AH 只报告 AH0/DNB 三状态概率，OU 报告固定 O2
 
 账本 append-only，保留了首次版本身份实现造成的重复预测历史行；随后 4,215 条以 `FORECAST_DUPLICATE_SUPERSEDED` 标记为重复。报告按唯一 forecast key 计有效预测，账本不会把 superseded 行再次计分/结算。修复后的重复 Actions run 已验证新预测、结算、重复修正均为 0，ledger SHA 不变；详情见完整验收报告。
 
-`openfootball_shadow_audit.py` 在不拟合、不结算的情况下校验逻辑 forecast 键唯一、supersession 引用、UTC 预测时间和日期 guard、概率归一化、无 Crown 时 EV/ROI 为空及无正式单/TG。当前 ledger 有 8,430 条原始 FORECAST 行，其中 4,215 条明确 superseded，折为 4,215 条有效逻辑预测；零结算、零 Crown 快照、零 EV/ROI。该审计随 Saved OOS Stability 工作流每四小时运行并持久化 `results/openfootball/latest_shadow_ledger_audit.json`，且验证 ledger SHA 与当时账本一致。Actions run [39420305676](https://github.com/ljm198964-alt/quant-runner/actions/runs/39420305676) 于 2026-10-20 SUCCESS，33 项测试通过，上传 artifact 与仓库审计 JSON 一致。该 workflow 只读既存 OOS 产物及 ledger，不重新训练。
+`openfootball_shadow_audit.py` 在不拟合、不结算的情况下校验逻辑 forecast 键唯一、supersession 引用、UTC 预测时间和日期 guard、概率归一化、无 Crown 时 EV/ROI 为空及无正式单/TG。`openfootball_shadow_performance.py` 只读 canonical forward 预测和 FT settlement，按模型、源日历月/周、league×season报告AH0/DNB三状态及OU O2.5 Log Loss、Brier、校准分箱和同 fixture 模型配对差异；不作模型选择/参数调优，不混入 hindcast，不算 financial ROI。源fixture日期没有时区语义，按日历键聚合且不称作UTC kickoff。当前 ledger 有 8,430 条原始 FORECAST 行，其中 4,215 条明确 superseded，折为 4,215 条有效逻辑预测；零结算、零 Crown 快照、零 EV/ROI。该审计随 Saved OOS Stability 工作流每四小时运行并持久化 `results/openfootball/latest_shadow_ledger_audit.json`，且验证 ledger SHA 与当时账本一致。Actions run [39420305676](https://github.com/ljm198964-alt/quant-runner/actions/runs/39420305676) 于 2026-10-20 SUCCESS，33 项测试通过，上传 artifact 与仓库审计 JSON 一致。该 workflow 只读既存 OOS 产物及 ledger，不重新训练。
 
 最新无盘口 shadow run [39421816230](https://github.com/ljm198964-alt/quant-runner/actions/runs/39421816230) 于 2026-10-20 UTC 成功，40 项测试通过。输入/赛程指纹均未变；日期保护范围内 1,405 个 fixture 全已有 canonical forecast，故新预测、结算和重复修正均为0，账本 SHA 不变。Crown quote=0，EV/ROI/最大回撤不可计算；本次没有新增学习信息。
 

@@ -207,3 +207,10 @@ PR #52 于 `2026-10-20T13:54:45Z` 合入 main，merge commit `f6265be68f108c79bb
 ## 数据时间与来源使用范围补充（2026-10-20）
 
 复核了 Football-Data 官方 upcoming fixtures 页面：页面提供 fixture 日期、时间和赔率，并标注周末/周中赔率采集时段及文件更新时间为英国时间；所查官方说明没有明确 `Time` 列的 kickoff 时区。因此不能把该字段直接转为比赛 UTC，也不应把 feed 当作 Crown 来源。该 fixture 表含多公司赔率，本项目不得读取其赔率列作为交易价。本轮只检查官方网页，没有下载 fixture CSV 或导入新样本。另官方 data 页写明数据主要供个人使用，排除商业或使用自动 bots/scrapers/AI 的 data-training products；该表述对现有个人 M3 研究和定时自动下载/训练的具体适用范围尚未得到确认。参见 [官方 fixtures 说明](https://football-data.co.uk/matches/fixtures.csv) 与 [官方数据页使用说明](https://football-data.co.uk/data.php)。这是一项来源许可及时间语义待核查事项；现有 OOS 数字未因此重算，本轮也没有改变用户已确认的四小时 workflow。
+
+
+## Forward shadow 概率校准持续报告（2026-10-20）
+
+新增只读 `openfootball_shadow_performance.py`，对 M3 OpenFootball shadow ledger 的 canonical forecast 与唯一结算做 forward-only Log Loss、Brier、十等分可靠性分箱，按模型、源比赛日历周/月、league×season汇总，并对同 fixture 多模型做配对 Brier 差。结算必须在预测 UTC 时间之后，具有显式 UTC 时间戳，实际比分、1X2 与 O2.5 标签需相互一致。hindcast/superseded行不进入指标；没有显著性检验、参数调优、交易筛选或财务收益推断。
+
+截至报告生成 UTC `2026-10-20T14:00:44.027468Z`，shadow ledger 有4,215 canonical forecasts、0已结算 forward forecasts、0个已结算 fixture；三模型AH0/O2.5前瞻校准样本数均为0，指标为null，financial Crown quote/EV/ROI/PnL/drawdown全为不可计算。结果写在 [`results/openfootball/latest_shadow_performance.json`](results/openfootball/latest_shadow_performance.json)。已接入每4小时 Saved OOS Stability workflow；无ledger/code变化时保留旧报告时间戳、无重复落库。本轮只读实账本运行、没有重新训练。

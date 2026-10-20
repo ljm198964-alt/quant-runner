@@ -1,0 +1,950 @@
+{
+  "protocol": "M3_OPENFOOTBALL_SHADOW_PERFORMANCE_V1",
+  "generated_utc": "2026-10-20T14:00:44.027468Z",
+  "input_fingerprint_sha256": "9a34fa5ab508f388e4337c955fd617822f6087702278a2f4c1f4bf14678e8915",
+  "shadow_ledger_sha256": "0645da41b79bbec056081188ba6fb52b4b4a40b077f743eccc7e6645fefbc21e",
+  "analysis_code_sha256": "dc2395e2d5f2863238f6779e28842061a14a6035ecf5606f441bf1ccd7ce6561",
+  "canonical_forecast_count": 4215,
+  "settled_forward_forecast_count": 0,
+  "unique_settled_fixture_count": 0,
+  "status": "NO_SETTLED_FORWARD_SAMPLES",
+  "source_date_semantics": "fixture calendar date only; source timezone unspecified; not kickoff UTC",
+  "financial_metrics": {
+    "Crown_quotes_used": 0,
+    "EV": null,
+    "ROI": null,
+    "cumulative_profit": null,
+    "maximum_drawdown": null
+  },
+  "metrics_by_model": {
+    "poisson": {
+      "n": 0,
+      "ah0_dnb_3way_log_loss": null,
+      "ah0_dnb_3way_brier": null,
+      "ou_o2_5_log_loss": null,
+      "ou_o2_5_brier": null,
+      "calibration_deciles": {
+        "AH0_DNB_3WAY": {
+          "H": [
+            {
+              "bin_lower": 0.0,
+              "bin_upper": 0.1,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.1,
+              "bin_upper": 0.2,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.2,
+              "bin_upper": 0.3,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.3,
+              "bin_upper": 0.4,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.4,
+              "bin_upper": 0.5,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.5,
+              "bin_upper": 0.6,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.6,
+              "bin_upper": 0.7,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.7,
+              "bin_upper": 0.8,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.8,
+              "bin_upper": 0.9,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.9,
+              "bin_upper": 1.0,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            }
+          ],
+          "D": [
+            {
+              "bin_lower": 0.0,
+              "bin_upper": 0.1,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.1,
+              "bin_upper": 0.2,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.2,
+              "bin_upper": 0.3,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.3,
+              "bin_upper": 0.4,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.4,
+              "bin_upper": 0.5,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.5,
+              "bin_upper": 0.6,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.6,
+              "bin_upper": 0.7,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.7,
+              "bin_upper": 0.8,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.8,
+              "bin_upper": 0.9,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.9,
+              "bin_upper": 1.0,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            }
+          ],
+          "A": [
+            {
+              "bin_lower": 0.0,
+              "bin_upper": 0.1,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.1,
+              "bin_upper": 0.2,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.2,
+              "bin_upper": 0.3,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.3,
+              "bin_upper": 0.4,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.4,
+              "bin_upper": 0.5,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.5,
+              "bin_upper": 0.6,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.6,
+              "bin_upper": 0.7,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.7,
+              "bin_upper": 0.8,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.8,
+              "bin_upper": 0.9,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.9,
+              "bin_upper": 1.0,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            }
+          ]
+        },
+        "OU_O2_5": [
+          {
+            "bin_lower": 0.0,
+            "bin_upper": 0.1,
+            "n": 0,
+            "mean_predicted": null,
+            "observed_rate": null
+          },
+          {
+            "bin_lower": 0.1,
+            "bin_upper": 0.2,
+            "n": 0,
+            "mean_predicted": null,
+            "observed_rate": null
+          },
+          {
+            "bin_lower": 0.2,
+            "bin_upper": 0.3,
+            "n": 0,
+            "mean_predicted": null,
+            "observed_rate": null
+          },
+          {
+            "bin_lower": 0.3,
+            "bin_upper": 0.4,
+            "n": 0,
+            "mean_predicted": null,
+            "observed_rate": null
+          },
+          {
+            "bin_lower": 0.4,
+            "bin_upper": 0.5,
+            "n": 0,
+            "mean_predicted": null,
+            "observed_rate": null
+          },
+          {
+            "bin_lower": 0.5,
+            "bin_upper": 0.6,
+            "n": 0,
+            "mean_predicted": null,
+            "observed_rate": null
+          },
+          {
+            "bin_lower": 0.6,
+            "bin_upper": 0.7,
+            "n": 0,
+            "mean_predicted": null,
+            "observed_rate": null
+          },
+          {
+            "bin_lower": 0.7,
+            "bin_upper": 0.8,
+            "n": 0,
+            "mean_predicted": null,
+            "observed_rate": null
+          },
+          {
+            "bin_lower": 0.8,
+            "bin_upper": 0.9,
+            "n": 0,
+            "mean_predicted": null,
+            "observed_rate": null
+          },
+          {
+            "bin_lower": 0.9,
+            "bin_upper": 1.0,
+            "n": 0,
+            "mean_predicted": null,
+            "observed_rate": null
+          }
+        ]
+      },
+      "source_date_semantics": "calendar_date_only_timezone_unspecified_not_kickoff_utc"
+    },
+    "dixon_coles": {
+      "n": 0,
+      "ah0_dnb_3way_log_loss": null,
+      "ah0_dnb_3way_brier": null,
+      "ou_o2_5_log_loss": null,
+      "ou_o2_5_brier": null,
+      "calibration_deciles": {
+        "AH0_DNB_3WAY": {
+          "H": [
+            {
+              "bin_lower": 0.0,
+              "bin_upper": 0.1,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.1,
+              "bin_upper": 0.2,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.2,
+              "bin_upper": 0.3,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.3,
+              "bin_upper": 0.4,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.4,
+              "bin_upper": 0.5,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.5,
+              "bin_upper": 0.6,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.6,
+              "bin_upper": 0.7,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.7,
+              "bin_upper": 0.8,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.8,
+              "bin_upper": 0.9,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.9,
+              "bin_upper": 1.0,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            }
+          ],
+          "D": [
+            {
+              "bin_lower": 0.0,
+              "bin_upper": 0.1,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.1,
+              "bin_upper": 0.2,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.2,
+              "bin_upper": 0.3,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.3,
+              "bin_upper": 0.4,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.4,
+              "bin_upper": 0.5,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.5,
+              "bin_upper": 0.6,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.6,
+              "bin_upper": 0.7,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.7,
+              "bin_upper": 0.8,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.8,
+              "bin_upper": 0.9,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.9,
+              "bin_upper": 1.0,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            }
+          ],
+          "A": [
+            {
+              "bin_lower": 0.0,
+              "bin_upper": 0.1,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.1,
+              "bin_upper": 0.2,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.2,
+              "bin_upper": 0.3,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.3,
+              "bin_upper": 0.4,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.4,
+              "bin_upper": 0.5,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.5,
+              "bin_upper": 0.6,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.6,
+              "bin_upper": 0.7,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.7,
+              "bin_upper": 0.8,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.8,
+              "bin_upper": 0.9,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.9,
+              "bin_upper": 1.0,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            }
+          ]
+        },
+        "OU_O2_5": [
+          {
+            "bin_lower": 0.0,
+            "bin_upper": 0.1,
+            "n": 0,
+            "mean_predicted": null,
+            "observed_rate": null
+          },
+          {
+            "bin_lower": 0.1,
+            "bin_upper": 0.2,
+            "n": 0,
+            "mean_predicted": null,
+            "observed_rate": null
+          },
+          {
+            "bin_lower": 0.2,
+            "bin_upper": 0.3,
+            "n": 0,
+            "mean_predicted": null,
+            "observed_rate": null
+          },
+          {
+            "bin_lower": 0.3,
+            "bin_upper": 0.4,
+            "n": 0,
+            "mean_predicted": null,
+            "observed_rate": null
+          },
+          {
+            "bin_lower": 0.4,
+            "bin_upper": 0.5,
+            "n": 0,
+            "mean_predicted": null,
+            "observed_rate": null
+          },
+          {
+            "bin_lower": 0.5,
+            "bin_upper": 0.6,
+            "n": 0,
+            "mean_predicted": null,
+            "observed_rate": null
+          },
+          {
+            "bin_lower": 0.6,
+            "bin_upper": 0.7,
+            "n": 0,
+            "mean_predicted": null,
+            "observed_rate": null
+          },
+          {
+            "bin_lower": 0.7,
+            "bin_upper": 0.8,
+            "n": 0,
+            "mean_predicted": null,
+            "observed_rate": null
+          },
+          {
+            "bin_lower": 0.8,
+            "bin_upper": 0.9,
+            "n": 0,
+            "mean_predicted": null,
+            "observed_rate": null
+          },
+          {
+            "bin_lower": 0.9,
+            "bin_upper": 1.0,
+            "n": 0,
+            "mean_predicted": null,
+            "observed_rate": null
+          }
+        ]
+      },
+      "source_date_semantics": "calendar_date_only_timezone_unspecified_not_kickoff_utc"
+    },
+    "bivariate_poisson": {
+      "n": 0,
+      "ah0_dnb_3way_log_loss": null,
+      "ah0_dnb_3way_brier": null,
+      "ou_o2_5_log_loss": null,
+      "ou_o2_5_brier": null,
+      "calibration_deciles": {
+        "AH0_DNB_3WAY": {
+          "H": [
+            {
+              "bin_lower": 0.0,
+              "bin_upper": 0.1,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.1,
+              "bin_upper": 0.2,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.2,
+              "bin_upper": 0.3,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.3,
+              "bin_upper": 0.4,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.4,
+              "bin_upper": 0.5,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.5,
+              "bin_upper": 0.6,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.6,
+              "bin_upper": 0.7,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.7,
+              "bin_upper": 0.8,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.8,
+              "bin_upper": 0.9,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.9,
+              "bin_upper": 1.0,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            }
+          ],
+          "D": [
+            {
+              "bin_lower": 0.0,
+              "bin_upper": 0.1,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.1,
+              "bin_upper": 0.2,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.2,
+              "bin_upper": 0.3,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.3,
+              "bin_upper": 0.4,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.4,
+              "bin_upper": 0.5,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.5,
+              "bin_upper": 0.6,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.6,
+              "bin_upper": 0.7,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.7,
+              "bin_upper": 0.8,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.8,
+              "bin_upper": 0.9,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.9,
+              "bin_upper": 1.0,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            }
+          ],
+          "A": [
+            {
+              "bin_lower": 0.0,
+              "bin_upper": 0.1,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.1,
+              "bin_upper": 0.2,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.2,
+              "bin_upper": 0.3,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.3,
+              "bin_upper": 0.4,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.4,
+              "bin_upper": 0.5,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.5,
+              "bin_upper": 0.6,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.6,
+              "bin_upper": 0.7,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.7,
+              "bin_upper": 0.8,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.8,
+              "bin_upper": 0.9,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            },
+            {
+              "bin_lower": 0.9,
+              "bin_upper": 1.0,
+              "n": 0,
+              "mean_predicted": null,
+              "observed_rate": null
+            }
+          ]
+        },
+        "OU_O2_5": [
+          {
+            "bin_lower": 0.0,
+            "bin_upper": 0.1,
+            "n": 0,
+            "mean_predicted": null,
+            "observed_rate": null
+          },
+          {
+            "bin_lower": 0.1,
+            "bin_upper": 0.2,
+            "n": 0,
+            "mean_predicted": null,
+            "observed_rate": null
+          },
+          {
+            "bin_lower": 0.2,
+            "bin_upper": 0.3,
+            "n": 0,
+            "mean_predicted": null,
+            "observed_rate": null
+          },
+          {
+            "bin_lower": 0.3,
+            "bin_upper": 0.4,
+            "n": 0,
+            "mean_predicted": null,
+            "observed_rate": null
+          },
+          {
+            "bin_lower": 0.4,
+            "bin_upper": 0.5,
+            "n": 0,
+            "mean_predicted": null,
+            "observed_rate": null
+          },
+          {
+            "bin_lower": 0.5,
+            "bin_upper": 0.6,
+            "n": 0,
+            "mean_predicted": null,
+            "observed_rate": null
+          },
+          {
+            "bin_lower": 0.6,
+            "bin_upper": 0.7,
+            "n": 0,
+            "mean_predicted": null,
+            "observed_rate": null
+          },
+          {
+            "bin_lower": 0.7,
+            "bin_upper": 0.8,
+            "n": 0,
+            "mean_predicted": null,
+            "observed_rate": null
+          },
+          {
+            "bin_lower": 0.8,
+            "bin_upper": 0.9,
+            "n": 0,
+            "mean_predicted": null,
+            "observed_rate": null
+          },
+          {
+            "bin_lower": 0.9,
+            "bin_upper": 1.0,
+            "n": 0,
+            "mean_predicted": null,
+            "observed_rate": null
+          }
+        ]
+      },
+      "source_date_semantics": "calendar_date_only_timezone_unspecified_not_kickoff_utc"
+    }
+  },
+  "metrics_by_period_and_league": {
+    "source_fixture_month": {},
+    "source_fixture_week": {},
+    "league_season": {}
+  },
+  "same_sample_model_comparison": {
+    "poisson_minus_dixon_coles": {
+      "paired_fixture_count": 0,
+      "ah0_dnb_3way_mean_brier_delta": null,
+      "ou_o2_5_mean_brier_delta": null,
+      "inference": "descriptive_paired_difference_no_significance_or_selection"
+    },
+    "poisson_minus_bivariate_poisson": {
+      "paired_fixture_count": 0,
+      "ah0_dnb_3way_mean_brier_delta": null,
+      "ou_o2_5_mean_brier_delta": null,
+      "inference": "descriptive_paired_difference_no_significance_or_selection"
+    },
+    "dixon_coles_minus_bivariate_poisson": {
+      "paired_fixture_count": 0,
+      "ah0_dnb_3way_mean_brier_delta": null,
+      "ou_o2_5_mean_brier_delta": null,
+      "inference": "descriptive_paired_difference_no_significance_or_selection"
+    }
+  },
+  "significance_testing": false,
+  "model_selection_or_parameter_tuning": false,
+  "formal_order": false,
+  "telegram_sent": false
+}

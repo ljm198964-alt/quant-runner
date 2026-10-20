@@ -2935,3 +2935,9 @@
 - 查看 Football-Data 官方 upcoming fixtures 页面后，确认其提供日期、时间及混合盘口列，但所查官方说明仅标注文件上传时间、赔率采集 British time，未明确 fixture `Time` 列的赛事时区。不可将其未核实地转换成 kickoff UTC，也不能把该表的任何其他公司赔率用于 Crown 交易。本轮只读官网页面，没有下载/import fixtures.csv。
 - Football-Data 官方 data 页说明数据面向 private individuals，并排除 commercial 或使用自动 bots/scrapers/AI 的 data-training products。现有 Football-Data/V4 自动下载和个人 M3 研究具体是否落入限制尚未确认。引用：[fixtures page](https://football-data.co.uk/matches/fixtures.csv)、[data usage page](https://football-data.co.uk/data.php)。保留现有四小时工作流配置，本轮未重新训练；需要在后续数据来源范围审查中处理这一限制。
 - 此时 latest M3 OpenFootball no-market shadow run 仍为 `39430911655`（13:30 UTC，输入与赛程指纹不变、forecast/settlement均0）；latest original V4 + penaltyblog run `39430911396`（13:30 UTC）输入未变。下一次定时尚未到时；当前主分支 HEAD `d6a509c538a1c6fbbf803c0f3615e05114277072`。Crown API 未请求，forward quote pairs 仍0。
+
+
+## 2026-10-20 M3 forward shadow 校准自动报告
+- 新增 `research/m3/openfootball_shadow_performance.py` 与测试，扩展 `.github/workflows/m3-oos-stability.yml`：每4小时只读 canonical forecast+FT settlement，按模型、源fixture日历周/月、league×season输出AH0/DNB三状态与O2.5的 Log Loss/Brier/reliability bins及相同 fixture 模型差异。严格排除 hindsight hindcast 和 superseded history；校验 settlement UTC 晚于 forecast、赛果标签匹配比分；无意义的p-value/调参/ROI输出。日历日期语义仍明确为 timezone-unspecified。
+- 已在当前真实账本本地复算并保存 `research/m3/results/openfootball/latest_shadow_performance.json`：4,215 canonical forecasts、0 settlements、0 settled fixtures，三模型 calibration metrics N=0/null，Crown quotes/EV/ROI/PnL/DD=null。生成 UTC 见 JSON。
+- 后续 Actions 将验收完整单测并持久化。此工程不触发重新训练、不读取其他模型账本、不写 Crown 交易数据、不发 TG。
