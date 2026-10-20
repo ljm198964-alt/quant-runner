@@ -127,15 +127,38 @@ jobs:
           if report.exists():
               (out/'latest_v4_original_metrics.csv').write_bytes(report.read_bytes())
           PY
+          # Keep upstream results in a temporary copy while main can advance.
+          mkdir -p "$RUNNER_TEMP/m3-receipt"
+          cp research/m3/results/latest_upstream_run.json "$RUNNER_TEMP/m3-receipt/"
+          if [ -f research/m3/results/latest_v4_original_metrics.csv ]; then
+            cp research/m3/results/latest_v4_original_metrics.csv "$RUNNER_TEMP/m3-receipt/"
+          fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add research/m3/results/latest_upstream_run.json
-          if [ -f research/m3/results/latest_v4_original_metrics.csv ]; then
-            git add research/m3/results/latest_v4_original_metrics.csv
-          fi
-          if ! git diff --cached --quiet; then
+          for i in 1 2 3; do
+            git fetch origin main
+            git reset --hard FETCH_HEAD
+            mkdir -p research/m3/results
+            cp "$RUNNER_TEMP/m3-receipt/latest_upstream_run.json" research/m3/results/
+            if [ -f "$RUNNER_TEMP/m3-receipt/latest_v4_original_metrics.csv" ]; then
+              cp "$RUNNER_TEMP/m3-receipt/latest_v4_original_metrics.csv" research/m3/results/
+            fi
+            git add research/m3/results/latest_upstream_run.json
+            if [ -f research/m3/results/latest_v4_original_metrics.csv ]; then
+              git add research/m3/results/latest_v4_original_metrics.csv
+            fi
+            if git diff --cached --quiet; then
+              echo "M3_RECEIPT_ALREADY_RECORDED"
+              exit 0
+            fi
             git commit -m "Record independent M3 upstream execution receipt [skip ci]"
-            git push origin HEAD:main
-          fi
+            if git push origin HEAD:main; then
+              echo "M3_RECEIPT_PERSISTED"
+              exit 0
+            fi
+            sleep "$((i * 2))"
+          done
+          echo "::error::M3_RECEIPT_PERSIST_FAILED"
+          exit 1
       - name: M3 isolation statement
         run: echo 'Upstream OU V4 and penaltyblog install only; no M1/M2/MR1 ledgers, no Crown price substitution, no AH model trained, no TG sent.'
