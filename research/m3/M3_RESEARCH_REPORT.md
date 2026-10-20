@@ -183,4 +183,7 @@ V4 的单场 Crown 适用性也已按原版市场范围核验：run `39407478152
 
 当前 OpenFootball M3 shadow 日历只有无时区说明的日期键，不含准确 UTC kickoff；不能与 Crown 记录硬配。逐场 shadow 产物目前仅包含 AH0 和 O2.5 单点概率，缺完整比分概率网格，故任意 Crown 线的 EV/概率评分不可计算。Crown 同期有效匹配覆盖仍为 AH=0、OU=0；Crown EV、ROI、收益序列与最大回撤均不可计算。详见 [`results/crown/latest_pairing_status.json`](results/crown/latest_pairing_status.json)。
 
-新增 M3-only 离线配对审计器 `crown_pairing.py`：输入必须先符合书面授权引用、Crown 来源标识、精确 fixture 映射、UTC kickoff、模型截止时间和报价时序校验；输出仅保留分市场配对计数，不落公开报价值、不联网、不读其它模型数据、不触发订单/TG。真实配对/EV 尚无；本地新增接口专项测试通过。完整测试套件在该机器因 Python 3.9 环境未安装 penaltyblog、且 pip 安装长时间无输出而中断；已知云端基线验收 run `39430911396`（HEAD `e6298ad`）为 43/43 测试通过，但它早于本轮新接口，因此新接口尚未由 Actions 验收。
+新增 M3-only 离线配对审计器 `crown_pairing.py`：输入必须先符合书面授权引用、Crown 来源标识、精确 fixture 映射、UTC kickoff、模型截止时间和报价时序校验；输出仅保留分市场配对计数，不落公开报价值、不联网、不读其它模型数据、不触发订单/TG。真实配对/EV 尚无；本地新增接口专项测试通过。本机 Python 3.9 环境未安装 penaltyblog，隔离 pip 安装无输出后中断；随后本轮代码由 Actions run `39432967398` 在 Python 3.11 上全量验收，46/46 tests 成功。
+
+
+本轮 `crown_pairing.py` 已由 PR #52 提交 `c95377c` 推送，并在 Actions [39432967398](https://github.com/ljm198964-alt/quant-runner/actions/runs/39432967398) 于 2026-10-20 13:44 UTC 验收成功：46/46 M3 tests 通过，saved OOS / shadow ledger audit 成功，稳定性文件无变化；未重训，Crown 配对数仍为 AH=0、OU=0。PR #52 当前仍开放。
