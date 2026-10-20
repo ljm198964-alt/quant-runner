@@ -194,3 +194,5 @@ V4 的单场 Crown 适用性也已按原版市场范围核验：run `39407478152
 配对审计已额外收紧：只有 `RECORDED_FORWARD` forecast 能进入有效 paired quote 计数，带回测标签的 `STRICT_WALK_FORWARD_HINDCAST` 只进入单独排除计数；私有影子账本拒绝 hindcast。避免历史回测生成时间晚于历史报价仍被误称赛前预测。
 
 最新 head `ff60d0d741ae2965b3ee8fda4b693d99786856ab` 由 Actions [39433609568](https://github.com/ljm198964-alt/quant-runner/actions/runs/39433609568) 于 2026-10-20T13:48:31Z–13:49:19Z 成功验收：完整 51/51 M3 tests、保存 OOS 与 shadow ledger 审计成功，`M3_STABILITY_REPORT_UNCHANGED`。该 run 不重新训练、不请求 Crown、不增加预测或报价数据。PR #52 仍 OPEN。
+
+私有 M3 shadow intake 现可在录入真实 recorded-forward 证据时，按 forecast 明确支持范围计算：完整比分概率网格可对该 Crown 记录的精确 AH/OU 线生成五状态概率与条件单位 EV，并记录网格概率覆盖；仅有三状态 AH0 或 O2.5 单点概率时，只评对应的 AH0 / OU2.5。其它盘口线标为不可用，尤其不将 Football Predictor V4 的 O2.5 外推到其他 OU 线。EV 计算单测为合成 fixtures，不是实际 Crown 结果；ROI 仍需独立前瞻策略定义及真实结算序列，本轮保持 null。

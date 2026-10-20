@@ -2925,3 +2925,4 @@
 - 写入器无 HTTP 客户端、无模型账本读取、无正式派单/TG；因为授权范围尚未在现存材料中证明，也没有真实合格 M3 Crown 记录，本轮没有调用它写真实报价。这是阶段 C 的安全隔离存储能力，不代表 Crown collector 或 shadow live run 已启用。Pairing audit was tightened to count only recorded-forward forecast/quote pairs; retrospective hindcasts are reported separately and never enter the private shadow ledger.
 
 - 最新 PR #52 commit `ff60d0d741ae2965b3ee8fda4b693d99786856ab` 由 Actions [39433609568](https://github.com/ljm198964-alt/quant-runner/actions/runs/39433609568) 于 2026-10-20T13:48:31Z–13:49:19Z SUCCESS：51/51 tests、saved OOS 和 shadow ledger audit 均通过，`M3_STABILITY_REPORT_UNCHANGED`。审计修正 hindcast 不算赛前配对、shadow ledger 仅收 recorded-forward。没有重训/行情请求/数据变化。PR #52 OPEN，分支与 main 兼容性尚待最终 review/合并。
+- 私有 Crown shadow writer 如输入带完整 M3 score-probability grid，会计算与每条 Crown 盘口精确匹配的五状态概率和条件 EV 并记录网格覆盖；只有 AH0 三状态 / OU2.5 概率时只算对应支持线，其他线显式 unavailable，V4 O2.5 不外推。ROI 不自动生成；需实际前瞻策略记录和结果结算。合成EV单测不算真实市场结果。
