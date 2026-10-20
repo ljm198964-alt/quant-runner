@@ -2879,3 +2879,9 @@
 - 从既有 Actions run [39407478152](https://github.com/ljm198964-alt/quant-runner/actions/runs/39407478152) 下载其尚有效 artifact `m3-upstream-v4-39407478152-1`，未重训。上游 V4 commit `2f75be0f26363e26a42aaff34ede68f35635da02`，源生成 UTC `2026-10-20T10:27:01Z`。`walk_forward_predictions.csv` 10,687 rows、SHA-256 `b612c1158cefe014676d56e4cf7fce2c9137f3b9b9ce3f7be78d524d16a9a921`，artifact 到期 UTC `2027-01-18T10:22:29Z`；其中有 Dortmund–Werder D1 2026/27 同日逐场预测。
 - 与唯一 M3-linked Crown quote 交叉检查后，Crown OU 线不等于 V4 原版 O2.5 目标，因此五种 V4 方案均不能在该行作 Crown 线级评分；不把别家公司价格当交易价，也不外推到不同总进球线。CSV 带上游市场字段，没有复制进公开仓库；公开结果继续只保存模型×赛季指标。这把 V4/Crown 当前交集确认为0条有效线级评分记录。
 - 复核细节写入 `research/m3/M3_CROWN_STAGE_A_B_AUDIT.md` 和 `M3_RESEARCH_REPORT.md`。既有单场 penaltyblog hindcast 诊断不受此 V4 排除影响，仍非 ROI。
+
+### M3 Crown 现有授权与接口审计（2026-10-20）
+- 通过 GitHub repository secret inventory 仅确认 Secret 名称 `TOTALCORNER_TOKEN` 存在及其更新时间；从未读取或输出 Secret 值。公开 Crown workflow 使用 TotalCorner `/match/bookmaker_odds/{match_id}?bookmaker=crown`；API 官方说明还提供按日期/联赛的赛程接口，因此 M3 技术上可实现独立 ID 发现与前瞻匹配。
+- 公开 Actions 历史中目前只见两个专门 Crown run：paired `37765506416`（已核验单个 M3 hindcast 交集），source smoke `37770905675`（响应经 M1/MR1 parser，严格排除）。没有发现 OddsPapi 接线、Secret 名称或已保存响应。没有读取私有 M1/MR1 账本/报价或运行其流程。
+- 已有凭证与历史调用不等价于 M3 自动采集、保留和公开研究的书面许可。公开 M3 文件未找到可追溯授权引用或账户 IANA 时区证据。当前 TotalCorner 条款要求自动提取事先书面同意。为遵守该边界，本轮没有启动新 Crown 请求/采集；不复用 M1/MR1 的私有数据。需在已有授权档案中定位覆盖 M3 scope 的授权引用，之后才能启用独立 collector。不是缺少 Token，也没有要求申请新 Token。
+- M3 同期记录预测×Crown 的历史样本仍为0；唯一 M3 联结为事后 walk-forward hindcast，不能作为实盘式 ROI。没有合法、可核实的 Crown 价线样本规模计算 EV 聚合、线级 OOS 或 ROI 均不可估；公开审计详见 `research/m3/M3_CROWN_STAGE_A_B_AUDIT.md`。本轮未修改任何生产模型/账本、未引入 Gate、未发 Telegram。
