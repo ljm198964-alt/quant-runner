@@ -16,6 +16,12 @@
 
 # 量化亚洲盘｜跨会话工作交接记录
 
+## M3 Crown API 许可边界与来源身份补充（2026-10-20）
+- 更新官方条款/API文档交叉阅读：TotalCorner API文档明确 VIP 程序化接口、`bookmaker=crown`、AH/goal-line movements、样例请求及速率限制；现行 ToS 将 API 包含在 Service 中，同时约束 automated extraction，未明确 API 客户端是否豁免，也未授予价线公开再发布权。已在 `research/m3/M3_CROWN_STAGE_A_B_AUDIT.md` 与 `M3_RESEARCH_REPORT.md` 更新为“接口可用与实际授权范围分开验证”，不再把条款简单概括为已明确禁止官方 API 调用。
+- OddsPapi 自己将 `singbet` 称为“Crown in Asia/formerly Crown”，但没有核实到运营方一手映射；另一供应商目录将 Crown、SingBet 分列。OddsPapi 数据仍未计入 Crown，不能用于 Crown EV/ROI。
+- 连接邮箱只读检索到供应商通知和一封仍为草稿的 AI Picks 自动读取许可询问；没有找到供应商书面回复。草稿的主题是 AI Picks 页面数据，不证明 Crown 市场 API 自动采集或公开留存授权。账户曾收到 VIP 期限通知，但未凭该邮件推断当前访问状态；未发送邮件、未访问 API、未查看/输出 token 或账户私有数据。此邮箱审计结果留在对话，不写入公开仓库。
+- 本机 M3 全套测试复跑 `43/43 PASS`；`git diff --check` 通过。公开仓库只更新 Crown 权限边界与来源身份表述，无新训练、报价或回测数据；未触发 Actions。PR #51 仍 OPEN，最新文档改动尚未提交/推送，等待后续验收。
+
 ## 2026-10-20 M3 无重训配对 OOS 稳定性 Actions 验收
 - 新增独立 `.github/workflows/m3-oos-stability.yml`（代码提交 `ebcdbe512d49eb19eaaa74edca4442ad2d1143f0`），只读取已经持久化的 OOS 报告和逐场概率，运行26项 M3 单元测试、逐场分数与 UTC cutoff 审核、45个 league-season 配对区块 bootstrap；不运行模型拟合器、不抓 Crown。
 - Actions run [39419131182](https://github.com/ljm198964-alt/quant-runner/actions/runs/39419131182) completed SUCCESS，UTC `2026-10-20T12:01:20Z`–`12:01:59Z`；26/26 tests、审计、结果写回均成功，结果 commit `c96748a`。随后将输出字段名从含糊的 `generated_utc` 改成 `source_report_generated_utc`（明确它属于源 OOS 生成时刻），修订提交 `ef582422d4b4f375744b0ea0e46b25b676d36325`；新 Actions [39419363464](https://github.com/ljm198964-alt/quant-runner/actions/runs/39419363464) 再次 SUCCESS（UTC `12:03:15Z`–`12:03:58Z`），26/26通过并将更正报告落库为 `2442713`。

@@ -157,7 +157,7 @@ M3 原始预测产物没有 Crown 盘口。但对已有公开 Actions 存档作�
 
 影子账本成熟度复核：当前保留 4,215 个 canonical forecast，fixture 日历日期为 `2026-10-23` 至 `2027-05-30`。以 `2026-10-20 UTC` 审核时这些比赛均未到期，故当前无可结算前瞻样本；账本有 0 Crown snapshot、0 settlement。该字段是源日历日期且没有文档化时区，本复核只得出“无已成熟条目”，不推算实际 kickoff UTC。原始事件、重复 forecast 与显式 supersession 均保留不变。
 
-后续 Crown 数据工作的合规前置条件尚未满足。TotalCorner 当前条款（2026-09-02 生效）将自动化抓取/提取列为需事先书面同意的行为；因此本轮不新增自动 Crown 抓取、镜像原始 quote、或把逐价数据写进公开仓库。其 API 文档确实列出历史 odds movement 和 Crown bookmaker endpoint，但接口可用不等于获得自动提取/再发布许可：[TotalCorner Terms](https://www.totalcorner.com/page/terms)、[TotalCorner API](https://www.totalcorner.com/page/api)。如后续获得书面许可，应使用可审计的授权数据源补齐足够的 AH 与 OU 样本，分别报告同期覆盖、线级 OOS 概率评分与按预先固定规则的收益序列；在此之前不能宣称有可估计的 Crown ROI。
+后续 Crown 数据工作的授权范围尚未核实。TotalCorner 官方 API 文档面向 VIP 开发者，提供 `bookmaker=crown`、AH/goal-line movements、curl/Python 请求示例和限速；当前条款则把 APIs 纳入 Service，并要求自动化提取事先书面同意，未明确说明已文档化的 API 客户端调用是否豁免，也未明授公开保留/分发 Crown 价线。因此本轮不新增自动 Crown 请求、镜像原始响应或把新逐价数据写进公开仓库：[TotalCorner Terms](https://www.totalcorner.com/page/terms)、[TotalCorner API](https://www.totalcorner.com/page/api)。这不等于接口不存在，也不把既有 token 视作权限范围证明。OddsPapi 的 `singbet` 是供应商自称“Crown in Asia”的未核实 alias，另一供应商将 SingBet 与 Crown 分列；没有操作方一手来源确认前不计为 Crown。后续只有可追溯的既有授权范围明确覆盖自动采集/留存/发布，且开赛 UTC、赛队身份可独立核验时，才建立独立采集配对；在此之前不能宣称有可估计的 Crown ROI。
 
 本轮依据该 API 文档新增离线适配器 `crown_totalcorner_import.py`：只读用户已在授权环境保存的原始 JSON，不联网。适配器要求书面授权编号、match ID 精确命中、源队名精确映射、账户 IANA 时区证据、API kickoff 与独立核实 UTC kickoff 完全一致；只归一化开赛前、未暂停的 AH/goal-line movement 行，且拒绝 DST 歧义和未定义复合线。CLI 只输出原始响应 hash、引用行计数和 UTC 时间范围，不输出价格、不保存规范化 quote。专项测试使用合成样本，确认转换与失败路径，不是 Crown 真实观察，未改变前述有效覆盖数。接口说明见 [`crown_totalcorner_import_contract.md`](crown_totalcorner_import_contract.md)。
 
