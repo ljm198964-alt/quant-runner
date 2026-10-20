@@ -151,7 +151,9 @@ M3 原始预测产物没有 Crown 盘口。但对已有公开 Actions 存档作�
 
 该场已有 Crown AH 线为主队 -1.5（主/客水位1.93/1.95），OU 线为3.5（大/小水位2.04/1.84）；报价时刻及样本来源、概率和逐方向 EV 见 [Crown Stage A/B audit](M3_CROWN_STAGE_A_B_AUDIT.md)。对同一逐场线级概率与水位计算后，三种 penaltyblog 模型在 AH、OU 的四个方向每单位理论 EV 都为负，范围约 -0.0589 至 -0.0009。比赛赛果为2–2：该线下 AH 主队方向全输、客队方向全赢，OU 大球全赢、小球全输。按每方向单独1单位描述性结算，净收益分别为 -1.00/+0.95/+1.04/-1.00；它们是四种互斥方向的反事实结果，不构成同一策略的收益序列。没有预先规定选边策略、真实下单或重复样本，因此策略 ROI、累计收益和最大回撤均仍为 **N/A**。这一行是赛后生成的严格 walk-forward hindcast，不是同期记录预测，也不能证明盈利。
 
-新增离线纯函数 `crown_market_eval.py` 用于核算 AH/OU 整数、半数及四分之一盘的全赢、半赢、走水、半输、全输与单位 EV。它不抓取、不校验来源授权或选择下注方向；输入必须先通过 Crown 证据校验。5项合成测试通过，未将合成数据计入实绩。V4 原版只有 O2.5 支持，本场 Crown 总进球线为3.5，故其五种模型方案仍是0条有效 Crown 评估样本。
+既有 `probabilities.py` 已实现 AH/OU quarter-line 比分网格结算和单位 EV；本轮将 exact-score AH/OU 结算与从五类结算概率计算单位 EV 的 API 补充到该模块，避免重复建立第二套结算器。新增测试覆盖观察到的2–2线级结算及 quarter-line 五类状态。接口不抓取、不校验授权、不选择下注方向；真实输入必须先通过 Crown 证据与时间校验。合成测试不计入实绩。V4 原版只有 O2.5 支持，本场 Crown 总进球线为3.5，故其五种模型方案仍是0条有效 Crown 评估样本。
+
+影子账本成熟度复核：当前保留 4,215 个 canonical forecast，fixture 日历日期为 `2026-10-23` 至 `2027-05-30`。以 `2026-10-20 UTC` 审核时这些比赛均未到期，故当前无可结算前瞻样本；账本有 0 Crown snapshot、0 settlement。该字段是源日历日期且没有文档化时区，本复核只得出“无已成熟条目”，不推算实际 kickoff UTC。原始事件、重复 forecast 与显式 supersession 均保留不变。
 
 后续 Crown 数据工作的合规前置条件尚未满足。TotalCorner 当前条款（2026-09-02 生效）将自动化抓取/提取列为需事先书面同意的行为；因此本轮不新增自动 Crown 抓取、镜像原始 quote、或把逐价数据写进公开仓库。其 API 文档确实列出历史 odds movement 和 Crown bookmaker endpoint，但接口可用不等于获得自动提取/再发布许可：[TotalCorner Terms](https://www.totalcorner.com/page/terms)、[TotalCorner API](https://www.totalcorner.com/page/api)。如后续获得书面许可，应使用可审计的授权数据源补齐足够的 AH 与 OU 样本，分别报告同期覆盖、线级 OOS 概率评分与按预先固定规则的收益序列；在此之前不能宣称有可估计的 Crown ROI。
 

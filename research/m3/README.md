@@ -8,7 +8,6 @@ M3 是独立研究模型，不读取 M1、M2、MR1 的预测、订单、参数�
 - [Crown 存档线级审计](M3_CROWN_STAGE_A_B_AUDIT.md)
 - [Crown 离线证据录入契约](crown_evidence_contract.md)
 - [Crown TotalCorner 已授权响应离线导入规范](crown_totalcorner_import_contract.md)
-- [Crown 亚洲盘结算与 EV 计算函数](crown_market_eval.py)
 - [最新 penaltyblog OOS 报告](results/latest_penaltyblog_oos_report.json)
 - [最新时间切分清单](results/latest_penaltyblog_oos_splits.json)
 - [最新 V4 原版指标](results/latest_v4_original_metrics.csv)
@@ -52,7 +51,7 @@ OpenFootball 评估的 AH 只报告 AH0/DNB 三状态概率，OU 报告固定 O2
 
 如获得书面授权，可用 `crown_totalcorner_import.py` 在本地离线读取既存 TotalCorner Crown API 响应；它要求 IANA 时区证据、精确队伍身份与独立 UTC kickoff、过滤所有不满足赛前条件的移动记录，并且拒绝 DST 歧义及未定义复合线。该 adapter 不联网、不打印或落库价格、不计算 EV/ROI；合成测试只验证转换逻辑，并不增加真实 Crown 覆盖。当前未提供书面授权，因此未执行任何新 Crown 请求。该适配器提交 `feb6f4dfabb19653bbedaaba2a212644e86a85d0` 已由 Actions [39421816343](https://github.com/ljm198964-alt/quant-runner/actions/runs/39421816343) 真实验收，40 项 M3 tests 通过；该 workflow 是无重训审计，未新增数据或 Crown 覆盖。
 
-`crown_market_eval.py` 提供独立的结算和单位 EV 纯函数，支持 AH/OU 的全赢、半赢、走水、半输、全输以及 quarter-line；它不抓数据、不选择下注方向、不充当来源验证或交易 Gate。真实数据在调用前必须先经过 Crown 盘口身份、授权和 UTC 时序校验。当前单场已归档 Crown 样本的线级 EV 和反事实单位结算见 [M3 Crown Stage A/B audit](M3_CROWN_STAGE_A_B_AUDIT.md)；样本太少，不报告策略 ROI、累计收益或回撤。
+既有 `probabilities.py` 包含由进球概率网格计算 AH/OU 单位 EV 的功能；现补充给定实际比分的 AH/OU 结算及从 full/half settlement probabilities 汇总 EV 的纯函数，覆盖全赢、半赢、走水、半输、全输和 quarter-line。它不抓数据、不选择下注方向、不充当来源验证或交易 Gate。真实数据在调用前必须先经过 Crown 盘口身份、授权和 UTC 时序校验。当前单场已归档 Crown 样本的线级 EV 和反事实单位结算见 [M3 Crown Stage A/B audit](M3_CROWN_STAGE_A_B_AUDIT.md)；样本太少，不报告策略 ROI、累计收益或回撤。
 
 运行单元测试：
 

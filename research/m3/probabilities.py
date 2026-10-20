@@ -46,6 +46,59 @@ def _asian_result(metric, line, decimal):
     return state, pnl
 
 
+def settle_score(market, line, side, home_goals, away_goals, decimal):
+    """Settle a Crown-style Asian market line against an exact final score.
+
+    ``line`` is the home-team handicap for AH or total-goals line for OU.
+    ``decimal`` is the price on the named selection. Source provenance and quote
+    timestamps must be validated separately before calling this helper.
+    """
+    for name, score in (("home_goals", home_goals), ("away_goals", away_goals)):
+        if isinstance(score, bool) or not isinstance(score, int) or score < 0:
+            raise ValueError(f"{name} must be a non-negative integer")
+    if market == "AH":
+        if side == "home":
+            metric, selected_line = home_goals - away_goals, line
+        elif side == "away":
+            metric, selected_line = away_goals - home_goals, -line
+        else:
+            raise ValueError("AH side must be home or away")
+    elif market == "OU":
+        if side == "over":
+            metric, selected_line = home_goals + away_goals, -line
+        elif side == "under":
+            metric, selected_line = -(home_goals + away_goals), line
+        else:
+            raise ValueError("OU side must be over or under")
+    else:
+        raise ValueError("market must be AH or OU")
+    return _asian_result(metric, selected_line, decimal)
+
+
+def expected_unit_return(state_probabilities, decimal):
+    """Compute unit EV from probabilities of Asian settlement outcomes."""
+    if not isinstance(state_probabilities, dict):
+        raise ValueError("state_probabilities must be an object")
+    states = ("FULL_WIN", "HALF_WIN", "PUSH", "HALF_LOSS", "FULL_LOSS")
+    if set(state_probabilities) != set(states):
+        raise ValueError(f"state_probabilities must contain exactly {list(states)}")
+    if not isinstance(decimal, (int, float)) or isinstance(decimal, bool) \
+            or not math.isfinite(decimal) or decimal <= 1:
+        raise ValueError("decimal must be finite and greater than 1")
+    values = []
+    for state in states:
+        value = state_probabilities[state]
+        if not isinstance(value, (int, float)) or isinstance(value, bool) \
+                or not math.isfinite(value) or not 0 <= value <= 1:
+            raise ValueError(f"probability {state} must be finite and between 0 and 1")
+        values.append(value)
+    if not math.isclose(sum(values), 1.0, rel_tol=0, abs_tol=1e-9):
+        raise ValueError("state probabilities must sum to 1")
+    p = state_probabilities
+    return ((p["FULL_WIN"] + 0.5 * p["HALF_WIN"]) * (decimal - 1)
+            - p["FULL_LOSS"] - 0.5 * p["HALF_LOSS"])
+
+
 def market_probabilities(home_mean, away_mean, market, line, price, maximum=30):
     """Home AH/over OU probabilities from independent home/away expected goals.
 
@@ -56,7 +109,6 @@ def market_probabilities(home_mean, away_mean, market, line, price, maximum=30):
         raise ValueError("Unknown market")
     home, away = _poisson(home_mean, maximum), _poisson(away_mean, maximum)
     sums = {x: 0.0 for x in ("FULL_WIN", "HALF_WIN", "PUSH", "HALF_LOSS", "FULL_LOSS")}
-    expected = 0.
     for h, hp in enumerate(home):
         for a, ap in enumerate(away):
             mass = hp * ap
@@ -64,12 +116,12 @@ def market_probabilities(home_mean, away_mean, market, line, price, maximum=30):
                       a - h if market == "AH_AWAY" else
                       h + a if market == "OU_OVER" else
                       -(h + a))
-            state, profit = _asian_result(metric, line, price)
+            state, _ = _asian_result(metric, line, price)
             sums[state] += mass
-            expected += mass * profit
     coverage = sum(sums.values())
-    return {"states": {k: v / coverage for k, v in sums.items()},
-            "expected_profit_per_unit": expected / coverage,
+    state_probabilities = {k: v / coverage for k, v in sums.items()}
+    return {"states": state_probabilities,
+            "expected_profit_per_unit": expected_unit_return(state_probabilities, price),
             "score_grid_probability_coverage": coverage}
 
 
