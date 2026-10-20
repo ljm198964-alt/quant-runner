@@ -2908,3 +2908,13 @@
 - 审计发现原有 `probabilities.py` 已实现 quarter-line 结算和比分网格 EV，因此移除本轮曾短暂增加的重复计算器，将 exact-score AH/OU 结算及五状态 EV 汇总加入原模块，并在原测试文件扩充3项测试。当前 43/43 suite PASS（penaltyblog 1.13.1）；稳定性 workflow 触发路径纳入 `probabilities.py` 与其测试，以后续 Actions 验收替代早先对重复模块的45项测试验收。无生产链路改动。
 - 对当前影子账本检查：4,215 个 canonical forecast（历史重发/显式 supersession 事件仍完整保留），fixture 日历字段范围 `2026-10-23` 至 `2027-05-30`；审计时 UTC 日期为 `2026-10-20`，故0场已到期、0条可据此结算。ledger SHA 保持 `0645da41b79bbec056081188ba6fb52b4b4a40b077f743eccc7e6645fefbc21e`，Crown snapshot=0、settlement=0。此检查沿用源数据未指定时区的日历日期，仅判断没有已成熟条目，不推断精确开赛 UTC。
 - 汇总上述代码改动的 PR HEAD `86e2e9eaf25e8b3896df39f4d62650afa24aa71a` 由 Actions [39427828868](https://github.com/ljm198964-alt/quant-runner/actions/runs/39427828868) 于 `2026-10-20T13:08:07Z`–`13:09:01Z` 完整验收：43/43 tests、saved OOS stability、shadow ledger audit 均 SUCCESS；`M3_STABILITY_REPORT_UNCHANGED`。输出/输入无变化，无新预测、结算或学习结果。PR #51 与 main diff 状态 `CLEAN`，仍 OPEN，工作区干净。
+
+
+## 2026-10-20 M3 Crown 授权/历史配对续审
+- 主分支当前 HEAD `a6f88e187c1257d8edca23b36fb3de27be4a50bd`（PR #51 merge commit `e6298aded2d009752d37e10ce879f306119b8c9d`）；本轮新配对接口及报告改动仍在工作区，尚未提交/Actions 验收。
+- 公开仓库检查确认 GitHub secret 名称 `TOTALCORNER_TOKEN` 存在且被 M1/MR1 workflow 引用；未读取 secret 值。该事实不证明 M3 自动采集、原始行情留存和公开派生使用授权。没有发起新行情请求。历史 TotalCorner/OddsPapi 接口与协议范围审计见 `research/m3/M3_CROWN_STAGE_A_B_AUDIT.md`。
+- 仅对 M1 范围 Crown OU 报价做值抑制的时间证据审计，未使用 M1 forecast/参数/订单/账本/结算；严格满足 quote 在 M3 forecast 之后且 kickoff 之前的配对数为 0，AH 候选为 0。公开历史 Crown artifact 的唯一 M3 overlap 是 retrospective hindcast，不是 contemporaneous forecast。当前 M3 fixture calendar 没有准确 UTC kickoff；不得用日期字段硬配。
+- 新增 M3-only 离线校验后配对工具 `research/m3/crown_pairing.py`、专项测试及值抑制状态 `research/m3/results/crown/latest_pairing_status.json`。只接受经书面授权引用和严格 UTC/比赛身份检查的独立 M3 记录；无 HTTP、不读 M1/M2/MR1 文件、不写报价值、不创建订单/TG。该状态明确 Crown AH/OU 配对皆 0、EV/ROI 不可计算、没有发请求。
+- 本机 Python 3.9 单独运行接口专项测试通过；完整套件尝试时模型相关两模块因 penaltyblog 未安装而导入失败。隔离安装 pip 长时间无输出后取消。云端基线 run `39430911396` 成功且旧套件 43/43，但尚未包含本轮修改；需在提交后用独立 M3 test workflow/Actions 再验。
+- 最新已确认 workflow: 原版+penaltyblog run `39430911396` success，OpenFootball shadow run `39430911655` success，稳定性 run `39430911610` success。数据输入未变化，shadow 无新预测/结算，没产生新学习信息。M3 未连接生产交易链路、未发 Telegram、未自动提升模型、未添加交易 Gate。
+- 下一步：提交并云端验证本轮离线 pairing changes；要启动自动 Crown 采集仍需先在既有授权材料中确认具体包含自动请求、M3 研究、留存与公开派生的范围，以及账户时区证据。当前仍没有合法可验证的 Crown EV/ROI。

@@ -176,3 +176,11 @@ V4 的单场 Crown 适用性也已按原版市场范围核验：run `39407478152
 其次，修复/补充可审计的升降级球队身份历史，使未覆盖比例下降但不对历史球队身份作未来推断；延长更多赛季的跨季稳定性评估；为 V4 源码许可寻求上游明确说明；最后再独立验证一个有差异且有许可的 OU 方法。
 
 当前报告能证明研究流水线和历史结果可复现，不能证明可盈利、Crown 可交易覆盖充足，亦不能据此启动正式下注。
+
+## Crown 继续审计与 M3 配对状态（2026-10-20）
+
+只读检查公开仓库的 Crown/TotalCorner/OddsPapi 调用和 secret 元数据后，确认存在 GitHub Actions secret 名称 `TOTALCORNER_TOKEN`，且被 M1/MR1 workflow 引用；没有读取 secret 值。secret 存在和其它工作流使用均不能证明它覆盖 M3 自动采集、历史原始报价留存或公开派生结果。没有发起 TotalCorner/OddsPapi 请求。私有 M1 范围的 Crown OU 报价仅由值抑制审计检查时间证据，不读取或复用 M1 forecast、模型参数、订单、账本或结算；与当前 M3 前瞻预测严格时间配对为 0，AH 候选为 0。公开历史 artifact 中唯一重叠比赛是回测后生成的 hindcast，不能视为赛前 M3 预测。
+
+当前 OpenFootball M3 shadow 日历只有无时区说明的日期键，不含准确 UTC kickoff；不能与 Crown 记录硬配。逐场 shadow 产物目前仅包含 AH0 和 O2.5 单点概率，缺完整比分概率网格，故任意 Crown 线的 EV/概率评分不可计算。Crown 同期有效匹配覆盖仍为 AH=0、OU=0；Crown EV、ROI、收益序列与最大回撤均不可计算。详见 [`results/crown/latest_pairing_status.json`](results/crown/latest_pairing_status.json)。
+
+新增 M3-only 离线配对审计器 `crown_pairing.py`：输入必须先符合书面授权引用、Crown 来源标识、精确 fixture 映射、UTC kickoff、模型截止时间和报价时序校验；输出仅保留分市场配对计数，不落公开报价值、不联网、不读其它模型数据、不触发订单/TG。真实配对/EV 尚无；本地新增接口专项测试通过。完整测试套件在该机器因 Python 3.9 环境未安装 penaltyblog、且 pip 安装长时间无输出而中断；已知云端基线验收 run `39430911396`（HEAD `e6298ad`）为 43/43 测试通过，但它早于本轮新接口，因此新接口尚未由 Actions 验收。

@@ -21,3 +21,7 @@ The resulting summary contains counts and UTC timing only; it omits team names, 
 The validator's `VALID_PREMATCH_CROWN_EVIDENCE` status means only that these structural and timestamp checks passed. It is not execution proof, a profitability result, an admission rule or permission to trade. AH and OU remain separately evaluated. No freshness, EV, confidence, volume or league gates are introduced.
 
 Synthetic records in `test_crown_evidence.py` are test fixtures only; they are not sports observations and must never be used as research results.
+
+## M3-only pairing audit
+
+`python -m research.m3.crown_pairing /private/path/authorized-m3-crown-records.json --output research/m3/results/crown/latest_pairing_status.json` accepts a private JSON array of records that each pass the validator above. It emits market-specific eligible-pair counts and suppresses fixture names, lines, prices and source values. It has no network client and reads no M1/M2/MR1 files. EV/ROI remain uncomputed until a market-specific M3 probability distribution and a predeclared settlement policy are both available. Empty input reports zero coverage, not a forecast-quality result.
