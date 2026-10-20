@@ -1,0 +1,8 @@
+{
+  "protocol": "M3_PENALTYBLOG_SNAPSHOT_COMPARISON_V1",
+  "status": "INITIAL_BASELINE_NO_COMPARISON",
+  "test_set_identity_matches": null,
+  "comparison": [],
+  "automatic_model_promotion": false,
+  "telegram_sent": false
+}

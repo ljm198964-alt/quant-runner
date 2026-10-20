@@ -1,0 +1,238 @@
+{
+  "protocol": "M3_OPENFOOTBALL_SHADOW_RUN_V1",
+  "run_id": "39416174708-1",
+  "generated_utc": "2026-10-20T11:37:26.994079Z",
+  "data_source": "openfootball/football.json",
+  "data_source_license": "CC0-1.0",
+  "data_source_commit": "e6744429ee395bc86f247348c6184bb08d4eb361",
+  "quant_runner_commit": "88091ba765f3dcf726a98ed9a6791e2d3fc74841",
+  "penaltyblog_version": "1.13.1",
+  "input_fingerprint_sha256": "93e0b8b91722f9c967e608ad63ae88d4c8d8b4c466de92948673438704697c8e",
+  "results_fingerprint_sha256": "93e0b8b91722f9c967e608ad63ae88d4c8d8b4c466de92948673438704697c8e",
+  "fixture_fingerprint_sha256": "2db32fe59ae637841be2d3ad7abc1d410e0aa5ea543bca2fe7af61096322f526",
+  "source_file_snapshot_sha256": "1e05ffa9c93d5dc4fd6704cbac63e323b8458fec52a39339a118dbb444896045",
+  "data_changed_vs_previous_snapshot": false,
+  "fixture_schedule_changed_vs_previous_snapshot": false,
+  "training_cutoff_rule": "exclude all source calendar dates on or after current UTC date",
+  "fixture_rule": "ignore source kickoff times; only forecast source calendar dates >= UTC date + 3 days",
+  "fixture_time_semantics": "no source timezone assumption and no kickoff UTC inferred",
+  "scope": [
+    "E0",
+    "D1",
+    "SP1",
+    "I1",
+    "F1",
+    "B1"
+  ],
+  "source_coverage": {
+    "E0": {
+      "files": 10,
+      "result_rows": 3438,
+      "unscored_fixture_rows": 362,
+      "invalid_rows": 0,
+      "status": "available"
+    },
+    "I1": {
+      "files": 10,
+      "result_rows": 3424,
+      "unscored_fixture_rows": 376,
+      "invalid_rows": 0,
+      "status": "available"
+    },
+    "SP1": {
+      "files": 10,
+      "result_rows": 3459,
+      "unscored_fixture_rows": 341,
+      "invalid_rows": 0,
+      "status": "available"
+    },
+    "D1": {
+      "files": 10,
+      "result_rows": 2775,
+      "unscored_fixture_rows": 285,
+      "invalid_rows": 0,
+      "status": "available"
+    },
+    "F1": {
+      "files": 10,
+      "result_rows": 3114,
+      "unscored_fixture_rows": 390,
+      "invalid_rows": 0,
+      "status": "available"
+    },
+    "B1": {
+      "files": 0,
+      "result_rows": 0,
+      "unscored_fixture_rows": 0,
+      "invalid_rows": 0,
+      "status": "source_not_present"
+    }
+  },
+  "unsupported_schedule_leagues": [
+    "B1"
+  ],
+  "eligible_future_fixture_identities": 1405,
+  "forecasts_appended": 0,
+  "superseded_forecasts_appended": 4215,
+  "settlements_appended": 0,
+  "total_forecast_events": 8430,
+  "unique_forecast_keys": 4215,
+  "superseded_forecast_events": 4215,
+  "total_settlement_events": 0,
+  "probability_metrics_by_model": {},
+  "crown_quote_captured": false,
+  "ev_available": false,
+  "roi": null,
+  "maximum_drawdown": null,
+  "formal_order_count": 0,
+  "telegram_sent": false,
+  "ledger_path": "research/m3/results/openfootball/shadow_ledger.jsonl",
+  "ledger_sha256": "0645da41b79bbec056081188ba6fb52b4b4a40b077f743eccc7e6645fefbc21e",
+  "model_parameters_path": "research/m3/results/openfootball/latest_shadow_model_parameters.json",
+  "model_parameters_sha256": "560cddae841a56364a41b8c5acdb949942faa78014566e498635f7a9aa604127",
+  "model_parameters_snapshot_path": "research/m3/results/openfootball/model_parameters/560cddae841a56364a41b8c5acdb949942faa78014566e498635f7a9aa604127.json",
+  "model_versions": [
+    {
+      "league": "D1",
+      "model": "poisson",
+      "model_version_id": "8859af2dfefe07ab7a974d00cb5fe515546d10267b52c2f4919fd51d912bd2af",
+      "training_input_sha256": "4c12b4e53d3727aac18d283c6cfc07650ec11dce4680bbd06d26254440a6598b",
+      "training_rows": 2775
+    },
+    {
+      "league": "D1",
+      "model": "dixon_coles",
+      "model_version_id": "da13c569f00c0a3963a597d0948e984eedd8ec19bb8cb178b93b4ffe7464902e",
+      "training_input_sha256": "4c12b4e53d3727aac18d283c6cfc07650ec11dce4680bbd06d26254440a6598b",
+      "training_rows": 2775
+    },
+    {
+      "league": "D1",
+      "model": "bivariate_poisson",
+      "model_version_id": "60a51a1fecac877289d8e91bd8697e6bace3429030387af8ecc9d892a3a2e5b3",
+      "training_input_sha256": "4c12b4e53d3727aac18d283c6cfc07650ec11dce4680bbd06d26254440a6598b",
+      "training_rows": 2775
+    },
+    {
+      "league": "E0",
+      "model": "poisson",
+      "model_version_id": "a3531e66cfddd4fc64a83c5b965ae0885b238164182ca46c32b3c9ce25729741",
+      "training_input_sha256": "0c4a63c696d40a84f570adee19fb9190f6a31210140a86923b26a4b02ddcdc73",
+      "training_rows": 3438
+    },
+    {
+      "league": "E0",
+      "model": "dixon_coles",
+      "model_version_id": "1c1a403d52863289427e7002f3b9592dd3d20b273ff606b06c6059b0f97832bb",
+      "training_input_sha256": "0c4a63c696d40a84f570adee19fb9190f6a31210140a86923b26a4b02ddcdc73",
+      "training_rows": 3438
+    },
+    {
+      "league": "E0",
+      "model": "bivariate_poisson",
+      "model_version_id": "a51eeaaf5f9a295f38efc6b5c9c63f25cd763e9653ccb3c24022758ad878a241",
+      "training_input_sha256": "0c4a63c696d40a84f570adee19fb9190f6a31210140a86923b26a4b02ddcdc73",
+      "training_rows": 3438
+    },
+    {
+      "league": "F1",
+      "model": "poisson",
+      "model_version_id": "c3addaedcf386b3cbbc76372397fbdbfccfbd6868430db1892864cc7e675da14",
+      "training_input_sha256": "d44dcdb12bcf24951b29416e1d5b04c9b6c1f93ba6f80e24cd7dad48cc768b75",
+      "training_rows": 3114
+    },
+    {
+      "league": "F1",
+      "model": "dixon_coles",
+      "model_version_id": "d75b1e1578e28b9adcee992e899e6c6eed8ca060ea2bb3c6bc3cf714508fdab5",
+      "training_input_sha256": "d44dcdb12bcf24951b29416e1d5b04c9b6c1f93ba6f80e24cd7dad48cc768b75",
+      "training_rows": 3114
+    },
+    {
+      "league": "F1",
+      "model": "bivariate_poisson",
+      "model_version_id": "ea3c2e278130f570ed58aa6e257f1dcff41579c02aebe8726c208229c50b0cff",
+      "training_input_sha256": "d44dcdb12bcf24951b29416e1d5b04c9b6c1f93ba6f80e24cd7dad48cc768b75",
+      "training_rows": 3114
+    },
+    {
+      "league": "I1",
+      "model": "poisson",
+      "model_version_id": "a01a8c89e7c0bc31919274965b22e888feb04e50a9d1823990ae605966b194fe",
+      "training_input_sha256": "9868eedb43192d624d69a3c35b7f7068e54b693f955e90181a105598c4cf9f16",
+      "training_rows": 3424
+    },
+    {
+      "league": "I1",
+      "model": "dixon_coles",
+      "model_version_id": "a36bfa4b6baedab46fdc788660aca10a9d55bc26b74d906d188db5aa2c411869",
+      "training_input_sha256": "9868eedb43192d624d69a3c35b7f7068e54b693f955e90181a105598c4cf9f16",
+      "training_rows": 3424
+    },
+    {
+      "league": "I1",
+      "model": "bivariate_poisson",
+      "model_version_id": "eb75d5b8259aad890eda1e3fe930482ada85f8dd41c05a09b58e297f8e7879c8",
+      "training_input_sha256": "9868eedb43192d624d69a3c35b7f7068e54b693f955e90181a105598c4cf9f16",
+      "training_rows": 3424
+    },
+    {
+      "league": "SP1",
+      "model": "poisson",
+      "model_version_id": "e3eb403d3ab943f7dff823da0ecc5dda27367cd94848bccc852afd83b331f82b",
+      "training_input_sha256": "337c6f2f897fc8e0caffd3fc01f5bfe903ef018c79241081c650f9c8ca17b173",
+      "training_rows": 3459
+    },
+    {
+      "league": "SP1",
+      "model": "dixon_coles",
+      "model_version_id": "d7bfa04a23d4fdb0021835c971c5fa04cac8ed276030534718c37158204ab4ce",
+      "training_input_sha256": "337c6f2f897fc8e0caffd3fc01f5bfe903ef018c79241081c650f9c8ca17b173",
+      "training_rows": 3459
+    },
+    {
+      "league": "SP1",
+      "model": "bivariate_poisson",
+      "model_version_id": "575f4597cf7806319b74c98990f338018d67c11b8a0bbde7f7eeb3ba7362772c",
+      "training_input_sha256": "337c6f2f897fc8e0caffd3fc01f5bfe903ef018c79241081c650f9c8ca17b173",
+      "training_rows": 3459
+    }
+  ],
+  "per_league": {
+    "D1": {
+      "training_rows": 2775,
+      "scheduled_fixtures_seen": 285,
+      "future_date_guard_eligible": 252,
+      "forecasts_added": 0,
+      "unseen_team_fixtures": 0
+    },
+    "E0": {
+      "training_rows": 3438,
+      "scheduled_fixtures_seen": 362,
+      "future_date_guard_eligible": 310,
+      "forecasts_added": 0,
+      "unseen_team_fixtures": 0
+    },
+    "F1": {
+      "training_rows": 3114,
+      "scheduled_fixtures_seen": 390,
+      "future_date_guard_eligible": 243,
+      "forecasts_added": 0,
+      "unseen_team_fixtures": 0
+    },
+    "I1": {
+      "training_rows": 3424,
+      "scheduled_fixtures_seen": 376,
+      "future_date_guard_eligible": 310,
+      "forecasts_added": 0,
+      "unseen_team_fixtures": 0
+    },
+    "SP1": {
+      "training_rows": 3459,
+      "scheduled_fixtures_seen": 341,
+      "future_date_guard_eligible": 290,
+      "forecasts_added": 0,
+      "unseen_team_fixtures": 0
+    }
+  }
+}

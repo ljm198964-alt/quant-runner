@@ -1,0 +1,263 @@
+{
+  "protocol": "M3_OPENFOOTBALL_SHADOW_RUN_V1",
+  "run_id": "39415593340-1",
+  "generated_utc": "2026-10-20T11:32:26.653050Z",
+  "data_source": "openfootball/football.json",
+  "data_source_license": "CC0-1.0",
+  "data_source_commit": "e6744429ee395bc86f247348c6184bb08d4eb361",
+  "quant_runner_commit": "3453b3c34456872c26bc0de30256a53fca849323",
+  "penaltyblog_version": "1.13.1",
+  "input_fingerprint_sha256": "93e0b8b91722f9c967e608ad63ae88d4c8d8b4c466de92948673438704697c8e",
+  "results_fingerprint_sha256": "93e0b8b91722f9c967e608ad63ae88d4c8d8b4c466de92948673438704697c8e",
+  "fixture_fingerprint_sha256": "2db32fe59ae637841be2d3ad7abc1d410e0aa5ea543bca2fe7af61096322f526",
+  "source_file_snapshot_sha256": "1e05ffa9c93d5dc4fd6704cbac63e323b8458fec52a39339a118dbb444896045",
+  "data_changed_vs_previous_snapshot": false,
+  "fixture_schedule_changed_vs_previous_snapshot": false,
+  "training_cutoff_rule": "exclude all source calendar dates on or after current UTC date",
+  "fixture_rule": "ignore source kickoff times; only forecast source calendar dates >= UTC date + 3 days",
+  "fixture_time_semantics": "no source timezone assumption and no kickoff UTC inferred",
+  "scope": [
+    "E0",
+    "D1",
+    "SP1",
+    "I1",
+    "F1",
+    "B1"
+  ],
+  "source_coverage": {
+    "E0": {
+      "files": 10,
+      "result_rows": 3438,
+      "unscored_fixture_rows": 362,
+      "invalid_rows": 0,
+      "status": "available"
+    },
+    "I1": {
+      "files": 10,
+      "result_rows": 3424,
+      "unscored_fixture_rows": 376,
+      "invalid_rows": 0,
+      "status": "available"
+    },
+    "SP1": {
+      "files": 10,
+      "result_rows": 3459,
+      "unscored_fixture_rows": 341,
+      "invalid_rows": 0,
+      "status": "available"
+    },
+    "D1": {
+      "files": 10,
+      "result_rows": 2775,
+      "unscored_fixture_rows": 285,
+      "invalid_rows": 0,
+      "status": "available"
+    },
+    "F1": {
+      "files": 10,
+      "result_rows": 3114,
+      "unscored_fixture_rows": 390,
+      "invalid_rows": 0,
+      "status": "available"
+    },
+    "B1": {
+      "files": 0,
+      "result_rows": 0,
+      "unscored_fixture_rows": 0,
+      "invalid_rows": 0,
+      "status": "source_not_present"
+    }
+  },
+  "unsupported_schedule_leagues": [
+    "B1"
+  ],
+  "eligible_future_fixture_identities": 1405,
+  "forecasts_appended": 4215,
+  "settlements_appended": 0,
+  "total_forecast_events": 8430,
+  "total_settlement_events": 0,
+  "probability_metrics_by_model": {
+    "poisson": {
+      "n_settled": 0,
+      "n_probability_scored": 0,
+      "n_unscored_settlements": 0,
+      "ah0_log_loss": null,
+      "ah0_brier": null,
+      "ou_over_2_5_log_loss": null,
+      "ou_over_2_5_brier": null
+    },
+    "dixon_coles": {
+      "n_settled": 0,
+      "n_probability_scored": 0,
+      "n_unscored_settlements": 0,
+      "ah0_log_loss": null,
+      "ah0_brier": null,
+      "ou_over_2_5_log_loss": null,
+      "ou_over_2_5_brier": null
+    },
+    "bivariate_poisson": {
+      "n_settled": 0,
+      "n_probability_scored": 0,
+      "n_unscored_settlements": 0,
+      "ah0_log_loss": null,
+      "ah0_brier": null,
+      "ou_over_2_5_log_loss": null,
+      "ou_over_2_5_brier": null
+    }
+  },
+  "crown_quote_captured": false,
+  "ev_available": false,
+  "roi": null,
+  "maximum_drawdown": null,
+  "formal_order_count": 0,
+  "telegram_sent": false,
+  "ledger_path": "research/m3/results/openfootball/shadow_ledger.jsonl",
+  "ledger_sha256": "cf119352ecb3990acadeef4515ca69f7688451b5881c5a4aa711a90f984581ca",
+  "model_parameters_path": "research/m3/results/openfootball/latest_shadow_model_parameters.json",
+  "model_parameters_sha256": "5a38fa48dd303d0f2c429850ae3eae33c8212eca33c11b40d9b9bc55f1bb2e7b",
+  "model_parameters_snapshot_path": "research/m3/results/openfootball/model_parameters/5a38fa48dd303d0f2c429850ae3eae33c8212eca33c11b40d9b9bc55f1bb2e7b.json",
+  "model_versions": [
+    {
+      "league": "D1",
+      "model": "poisson",
+      "model_version_id": "ebe0173e8f7545a5629c7790d6b22bec91fbaaaea3bb5fef5edc67108d4eb2ef",
+      "training_input_sha256": "4c12b4e53d3727aac18d283c6cfc07650ec11dce4680bbd06d26254440a6598b",
+      "training_rows": 2775
+    },
+    {
+      "league": "D1",
+      "model": "dixon_coles",
+      "model_version_id": "1d53bbbd4d3128e3b2709a081eaedf0738c7ba5def110dde39052b9fad7d94e6",
+      "training_input_sha256": "4c12b4e53d3727aac18d283c6cfc07650ec11dce4680bbd06d26254440a6598b",
+      "training_rows": 2775
+    },
+    {
+      "league": "D1",
+      "model": "bivariate_poisson",
+      "model_version_id": "46f4b023e3e499bb34b80f92b18a97819523ca70ebfc2c932220935c279d6fd3",
+      "training_input_sha256": "4c12b4e53d3727aac18d283c6cfc07650ec11dce4680bbd06d26254440a6598b",
+      "training_rows": 2775
+    },
+    {
+      "league": "E0",
+      "model": "poisson",
+      "model_version_id": "011df16e9b350036ee314d292377f7864211db8e95c638fff7b22b3f3b048e23",
+      "training_input_sha256": "0c4a63c696d40a84f570adee19fb9190f6a31210140a86923b26a4b02ddcdc73",
+      "training_rows": 3438
+    },
+    {
+      "league": "E0",
+      "model": "dixon_coles",
+      "model_version_id": "93c427811f5558f655dfff8f6f37dfc1229184c70d7eef629c3f2662e6d2de2e",
+      "training_input_sha256": "0c4a63c696d40a84f570adee19fb9190f6a31210140a86923b26a4b02ddcdc73",
+      "training_rows": 3438
+    },
+    {
+      "league": "E0",
+      "model": "bivariate_poisson",
+      "model_version_id": "7fef25590e64905f501607a881977e44975181baed8a7d793eb8e25a778cf462",
+      "training_input_sha256": "0c4a63c696d40a84f570adee19fb9190f6a31210140a86923b26a4b02ddcdc73",
+      "training_rows": 3438
+    },
+    {
+      "league": "F1",
+      "model": "poisson",
+      "model_version_id": "4ff4a43b55d3e60c01e293288c21b7f320507649d9c49751abb085010e767006",
+      "training_input_sha256": "d44dcdb12bcf24951b29416e1d5b04c9b6c1f93ba6f80e24cd7dad48cc768b75",
+      "training_rows": 3114
+    },
+    {
+      "league": "F1",
+      "model": "dixon_coles",
+      "model_version_id": "4d74cff64adde737ae404816f5095306f9803669af795379977126d906b1cb94",
+      "training_input_sha256": "d44dcdb12bcf24951b29416e1d5b04c9b6c1f93ba6f80e24cd7dad48cc768b75",
+      "training_rows": 3114
+    },
+    {
+      "league": "F1",
+      "model": "bivariate_poisson",
+      "model_version_id": "b22091daf71d0b7159021a0bfedce1e0ea83a1166c58ad3a7fc1759233252b6a",
+      "training_input_sha256": "d44dcdb12bcf24951b29416e1d5b04c9b6c1f93ba6f80e24cd7dad48cc768b75",
+      "training_rows": 3114
+    },
+    {
+      "league": "I1",
+      "model": "poisson",
+      "model_version_id": "f0a7df96a5df19b41851e12a893eb19f3186e13e1bcd0250cb2bdec986d1fd11",
+      "training_input_sha256": "9868eedb43192d624d69a3c35b7f7068e54b693f955e90181a105598c4cf9f16",
+      "training_rows": 3424
+    },
+    {
+      "league": "I1",
+      "model": "dixon_coles",
+      "model_version_id": "8f46b2d7b0b5261b09b69f2996af39a820364ccbc6d5a9fd692793214633bc7c",
+      "training_input_sha256": "9868eedb43192d624d69a3c35b7f7068e54b693f955e90181a105598c4cf9f16",
+      "training_rows": 3424
+    },
+    {
+      "league": "I1",
+      "model": "bivariate_poisson",
+      "model_version_id": "2df8ed72fa076e28b3fa9d0644c53e8063e2413db5efd5e2b156a59d9c586c8c",
+      "training_input_sha256": "9868eedb43192d624d69a3c35b7f7068e54b693f955e90181a105598c4cf9f16",
+      "training_rows": 3424
+    },
+    {
+      "league": "SP1",
+      "model": "poisson",
+      "model_version_id": "de146be760c1f326cd168d6e2726091672f7fad0c027af37a121058b6a57521a",
+      "training_input_sha256": "337c6f2f897fc8e0caffd3fc01f5bfe903ef018c79241081c650f9c8ca17b173",
+      "training_rows": 3459
+    },
+    {
+      "league": "SP1",
+      "model": "dixon_coles",
+      "model_version_id": "5cd1796f05a376e826d071b6c8d8563daad1510ff104d9baa004b8b0e712f559",
+      "training_input_sha256": "337c6f2f897fc8e0caffd3fc01f5bfe903ef018c79241081c650f9c8ca17b173",
+      "training_rows": 3459
+    },
+    {
+      "league": "SP1",
+      "model": "bivariate_poisson",
+      "model_version_id": "7351cd35307ab8ea02c981176eab9f63f134bd2d1a1bcf14e7e6a892f8219800",
+      "training_input_sha256": "337c6f2f897fc8e0caffd3fc01f5bfe903ef018c79241081c650f9c8ca17b173",
+      "training_rows": 3459
+    }
+  ],
+  "per_league": {
+    "D1": {
+      "training_rows": 2775,
+      "scheduled_fixtures_seen": 285,
+      "future_date_guard_eligible": 252,
+      "forecasts_added": 756,
+      "unseen_team_fixtures": 0
+    },
+    "E0": {
+      "training_rows": 3438,
+      "scheduled_fixtures_seen": 362,
+      "future_date_guard_eligible": 310,
+      "forecasts_added": 930,
+      "unseen_team_fixtures": 0
+    },
+    "F1": {
+      "training_rows": 3114,
+      "scheduled_fixtures_seen": 390,
+      "future_date_guard_eligible": 243,
+      "forecasts_added": 729,
+      "unseen_team_fixtures": 0
+    },
+    "I1": {
+      "training_rows": 3424,
+      "scheduled_fixtures_seen": 376,
+      "future_date_guard_eligible": 310,
+      "forecasts_added": 930,
+      "unseen_team_fixtures": 0
+    },
+    "SP1": {
+      "training_rows": 3459,
+      "scheduled_fixtures_seen": 341,
+      "future_date_guard_eligible": 290,
+      "forecasts_added": 870,
+      "unseen_team_fixtures": 0
+    }
+  }
+}

@@ -1,5 +1,7 @@
 import unittest
-from research.m3.probabilities import _asian_result, evaluate, market_probabilities
+from research.m3.probabilities import (
+    _asian_result, evaluate, expected_unit_return, market_probabilities, settle_score,
+)
 
 
 class IndependentM3Test(unittest.TestCase):
@@ -27,6 +29,38 @@ class IndependentM3Test(unittest.TestCase):
             market_probabilities(-1, 1, "OU_OVER", -2.5, 1.95)
         with self.assertRaises(ValueError):
             market_probabilities(1, 1, "OU_OVER", -2.3, 1.95)
+
+    def test_score_settlement_full_and_quarter_lines(self):
+        checks = [
+            ("AH", -1.5, "home", "FULL_LOSS", -1.0, 1.93, 2, 2),
+            ("AH", -1.5, "away", "FULL_WIN", .95, 1.95, 2, 2),
+            ("OU", 3.5, "over", "FULL_WIN", 1.04, 2.04, 2, 2),
+            ("OU", 3.5, "under", "FULL_LOSS", -1.0, 1.84, 2, 2),
+            ("AH", -0.25, "home", "HALF_LOSS", -.5, 1.9, 1, 1),
+            ("AH", -0.25, "away", "HALF_WIN", .45, 1.9, 1, 1),
+            ("OU", 2.25, "over", "HALF_LOSS", -.5, 2.0, 1, 1),
+            ("OU", 2.25, "under", "HALF_WIN", .5, 2.0, 1, 1),
+        ]
+        for market, line, side, state, profit, odds, home_goals, away_goals in checks:
+            with self.subTest(market=market, line=line, side=side):
+                actual_state, actual_profit = settle_score(market, line, side,
+                                                           home_goals, away_goals, odds)
+                self.assertEqual(actual_state, state)
+                self.assertAlmostEqual(actual_profit, profit)
+
+    def test_ev_from_full_and_half_settlement_probabilities(self):
+        states = {"FULL_WIN": .2, "HALF_WIN": .1, "PUSH": .2,
+                  "HALF_LOSS": .1, "FULL_LOSS": .4}
+        self.assertAlmostEqual(expected_unit_return(states, 2.0), -.2)
+        result = market_probabilities(1.1, .9, "OU_OVER", -2.25, 2.0)
+        self.assertAlmostEqual(expected_unit_return(result["states"], 2.0),
+                               result["expected_profit_per_unit"], places=12)
+
+    def test_score_settlement_validates_scores_and_market(self):
+        with self.assertRaisesRegex(ValueError, "non-negative integer"):
+            settle_score("AH", 0, "home", -1, 0, 1.9)
+        with self.assertRaisesRegex(ValueError, "market must"):
+            settle_score("1X2", 0, "home", 1, 0, 1.9)
 
 
 if __name__ == "__main__":

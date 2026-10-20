@@ -1,0 +1,106 @@
+name: M3 OpenFootball No-Market Shadow Research
+concurrency:
+  group: m3-research-${{ github.ref }}
+  cancel-in-progress: false
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '35 */4 * * *'
+  push:
+    paths:
+      - '.github/workflows/m3-openfootball-shadow.yml'
+      - 'research/m3/openfootball_shadow.py'
+      - 'research/m3/test_openfootball_shadow.py'
+      - 'research/m3/crown_evidence.py'
+      - 'research/m3/test_crown_evidence.py'
+permissions:
+  contents: write
+jobs:
+  openfootball-shadow:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: openfootball/football.json
+          path: upstream/openfootball-football-json
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install pinned M3 model runtime
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install penaltyblog==1.13.1 pandas numpy
+          python -c 'from importlib.metadata import version; print("penaltyblog", version("penaltyblog"))'
+      - name: Run M3 unit tests
+        run: python -m unittest discover -s research/m3 -p 'test_*.py' -v
+      - name: Audit OpenFootball walk-forward and run independent no-market shadow
+        id: shadow
+        run: |
+          source_commit="$(git -C upstream/openfootball-football-json rev-parse HEAD)"
+          python -m research.m3.openfootball_shadow \
+            --input-root upstream/openfootball-football-json \
+            --output-dir research/m3/results/openfootball \
+            --ledger research/m3/results/openfootball/shadow_ledger.jsonl \
+            --source-commit "$source_commit" \
+            --quant-runner-commit "$(git rev-parse HEAD)" \
+            --run-id "$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
+          python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          import os
+          from pathlib import Path
+          root=Path('research/m3/results/openfootball')
+          oos=json.loads((root/'latest_oos_report.json').read_text())
+          shadow=json.loads((root/'latest_shadow_run.json').read_text())
+          print('## M3 OpenFootball walk-forward')
+          print(f"- Source commit: `{shadow['data_source_commit']}`")
+          print(f"- OOS matches: {oos['test_matches_total']}; scored prediction rows: {oos['scored_predictions']}")
+          print(f"- Result data fingerprint: `{shadow['results_fingerprint_sha256']}`")
+          print(f"- Training results changed: `{shadow['data_changed_vs_previous_snapshot']}`")
+          print(f"- New no-market forecast events: {shadow['forecasts_appended']}; new settlements: {shadow['settlements_appended']}")
+          print(f"- Duplicate forecast correction events: {shadow['superseded_forecasts_appended']}; unique forecast keys: {shadow['unique_forecast_keys']}")
+          print(f"- Crown quotes captured: `{shadow['crown_quote_captured']}`; EV/ROI: `N/A`")
+          print(f"- B1 schedule source coverage: `{shadow['source_coverage']['B1']['status']}`")
+          print(f"- Shadow metrics: `{json.dumps(shadow['probability_metrics_by_model'], sort_keys=True)}`")
+          changed=(shadow['data_changed_vs_previous_snapshot'] is not False
+                   or shadow['fixture_schedule_changed_vs_previous_snapshot'] is not False
+                   or shadow['forecasts_appended'] > 0
+                   or shadow['superseded_forecasts_appended'] > 0
+                   or shadow['settlements_appended'] > 0)
+          print(f"- Persistent research state changed: `{changed}`")
+          Path(os.environ['RUNNER_TEMP'], 'm3-shadow-state-changed').write_text(str(changed).lower())
+          PY
+          if [ "$(cat "$RUNNER_TEMP/m3-shadow-state-changed")" = "true" ]; then
+            echo 'state_changed=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'state_changed=false' >> "$GITHUB_OUTPUT"
+          fi
+      - name: Preserve run receipt for every execution
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: m3-openfootball-shadow-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            research/m3/results/openfootball/latest_oos_report.json
+            research/m3/results/openfootball/latest_oos_splits.json
+            research/m3/results/openfootball/latest_oos_predictions.csv
+            research/m3/results/openfootball/latest_shadow_run.json
+            research/m3/results/openfootball/latest_shadow_model_parameters.json
+          if-no-files-found: warn
+          retention-days: 90
+      - name: Persist changed M3 shadow results and ledger
+        if: steps.shadow.outputs.state_changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/m3/results/openfootball
+          if git diff --cached --quiet; then
+            echo 'M3_SHADOW_NO_PERSISTENT_DIFF'
+            exit 0
+          fi
+          git commit -m "Persist M3 OpenFootball shadow research $GITHUB_RUN_ID"
+          git push origin "HEAD:$GITHUB_REF_NAME"

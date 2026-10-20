@@ -18,13 +18,21 @@ def compare(old_path, new_path, run_id):
     comparison = []
     for key in sorted(set(old) & set(new)):
         left, right = old[key], new[key]
+        try:
+            same_n_test = int(float(left.get("n_test", ""))) == int(float(right.get("n_test", "")))
+        except (TypeError, ValueError):
+            same_n_test = False
         diffs = {}
         for metric in METRICS:
             if left.get(metric) in (None, "") or right.get(metric) in (None, ""):
                 continue
             a, b = float(left[metric]), float(right[metric])
-            diffs[metric] = {"previous": a, "current": b, "delta": b - a}
-        comparison.append({"model": key[0], "test_season": key[1], "metrics": diffs})
+            diffs[metric] = {"previous": a, "current": b,
+                             "delta": (b - a) if same_n_test else None}
+        comparison.append({"model": key[0], "test_season": key[1],
+                           "same_test_row_count": same_n_test,
+                           "test_sample_identity_verified": False,
+                           "metrics": diffs})
     return {
         "protocol": "M3_ORIGINAL_V4_SNAPSHOT_COMPARISON_V1",
         "run_id": str(run_id),
@@ -36,7 +44,7 @@ def compare(old_path, new_path, run_id):
         "comparison": comparison,
         "automatic_model_promotion": False,
         "telegram": False,
-        "note": "Descriptive run-to-run differences only. Changes in data, source revision and test coverage can explain deltas. No model is selected or promoted.",
+        "note": "Deltas are emitted only when test-row counts match; identical sample identity is not available in the original upstream metric CSV and is therefore not proven. Differences remain descriptive and may reflect changed input data, source revision or upstream test-set composition. No model is selected or promoted.",
     }
 
 def main():
