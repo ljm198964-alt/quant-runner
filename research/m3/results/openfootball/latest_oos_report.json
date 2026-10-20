@@ -1,12 +1,12 @@
 {
   "protocol": "M3_OPENFOOTBALL_STRICT_WALKFORWARD_V1",
-  "generated_utc": "2026-10-20T11:33:34.176755+00:00",
+  "generated_utc": "2026-10-20T11:38:35.164608+00:00",
   "data_source": "openfootball/football.json",
   "data_source_license": "CC0-1.0",
   "data_source_commit": "e6744429ee395bc86f247348c6184bb08d4eb361",
   "data_source_url": "https://github.com/openfootball/football.json",
   "data_source_time_semantics": "source calendar dates normalized to UTC date keys; source kickoff times ignored and never treated as UTC",
-  "quant_runner_commit": "3453b3c34456872c26bc0de30256a53fca849323",
+  "quant_runner_commit": "88091ba765f3dcf726a98ed9a6791e2d3fc74841",
   "penaltyblog_version": "1.13.1",
   "input_files": [
     {
@@ -361,18 +361,19 @@
     }
   ],
   "input_fingerprint_sha256": "93e0b8b91722f9c967e608ad63ae88d4c8d8b4c466de92948673438704697c8e",
-  "evaluation_fingerprint_sha256": "8d91799cf7e650311862c52b4e181119b9bd3bf8a759542b1385edd38f5d2c47",
+  "evaluation_fingerprint_sha256": "c6bdb7edeb213005b7770219b7572b8b6b809cf962f835311a37bf21675ae631",
+  "evaluation_code_fingerprint_sha256": "b9a1112f050a7e3e63f67b5ebcedc28b3d9646badc018fd1670b6e62e8f81fa1",
   "data_changed_vs_previous_snapshot": false,
   "source_file_snapshot_sha256": "1e05ffa9c93d5dc4fd6704cbac63e323b8458fec52a39339a118dbb444896045",
   "results_rows": 16210,
   "test_matches_total": 14384,
   "scored_predictions": 43152,
-  "prediction_file": "research/m3/results/openfootball/predictions/8d91799cf7e650311862c52b4e181119b9bd3bf8a759542b1385edd38f5d2c47.csv.gz",
+  "prediction_file": "research/m3/results/openfootball/predictions/c6bdb7edeb213005b7770219b7572b8b6b809cf962f835311a37bf21675ae631.csv.gz",
   "prediction_file_sha256": "633ca98e967258ca9e59c243d0a4107f273c5498e105526a07a4b76edb44865e",
   "latest_predictions_file": "research/m3/results/openfootball/latest_oos_predictions.csv",
   "latest_predictions_file_sha256": "24eccf0152e1c8961c29cfd0512fb9a237ebbaaedc8d83390d1f7a96da0d3fe7",
   "splits_file": "research/m3/results/openfootball/latest_oos_splits.json",
-  "splits_snapshot_file": "research/m3/results/openfootball/splits/8d91799cf7e650311862c52b4e181119b9bd3bf8a759542b1385edd38f5d2c47.json",
+  "splits_snapshot_file": "research/m3/results/openfootball/splits/c6bdb7edeb213005b7770219b7572b8b6b809cf962f835311a37bf21675ae631.json",
   "coverage_by_league": {
     "D1": {
       "completed_matches": 2775,
