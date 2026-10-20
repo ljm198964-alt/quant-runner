@@ -1,5 +1,11 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-20 M3原版云端成功及最新真实报告重新核验
+- 已直接通过在线Mac/gh read-only查得公开Runner [run 39360351455](https://github.com/ljm198964-alt/quant-runner/actions/runs/39360351455) status=completed, conclusion=success；V4原版download/features/backtest、penaltyblog安装和Poisson/Dixon-Coles接口smoke、artifacts和持久化全部步骤success。已从GitHub主分支重新读取`research/m3/results/latest_upstream_run.json`，其中`utc=2026-10-20T02:48:50.601804+00:00`、run id 39360351455、V4 outcome success、原报告已存在、AH trained false、Crown ROI null、TG false。回执持久化故障本次验收已恢复；不是仅代码已提交。
+- 读取同次主分支`research/m3/results/latest_v4_original_metrics.csv`，45行，测试季2122-2526。仅含ROI与模拟投注的行、按其投注数加权得：Logistic 3期824单净-45.36U ROI -5.50%；LightGBM 3期883单净-100.55U ROI -11.39%；market_anchored_logistic 3期1935单净-62.91U ROI -3.25%；market_blend_logistic 1期271单净-31.87U ROI -11.76%；market_residual_logistic 2期416单净-22.60U ROI -5.43%。各模型覆盖期不同；不能比较成公平模型排行，或把上游Football-Data赔率结果冒充Crown ROI。以此最新已落库报告替代前一run 39359943178的历史快照。
+- penaltyblog仅完成模型接口调用（in-sample smoke），**尚未完成AH时间前推样本外策略回测**；M3没有Crown交易订单、没有新增Gate、TG仍0、未进行自动模型替换。下一步根据作者说明构建独立AH时间前推预测，并核对Crown盘口证据，但未经用户确认不新增交易筛选条件。
+
+
 ## 2026-10-20 M3真实GitHub Actions运行定位及第一份原版OU回测结果
 - 通过用户已连接且在线的Desktop Commander Mac设备，只读执行`gh run list --repo ljm198964-alt/quant-runner --workflow m3-independent-research.yml`，取得实际Actions run IDs：`39355489195` completed success（原版V4/penaltyblog流程）；`39359943178` completed failure（训练/回测、penaltyblog调用、artifact上传均success，仅最终持久化步骤failure）；`39360351455` 在查询时in_progress，不能称已完成。
 - 读取run `39359943178`失败日志，确切失败是原版V4指标和回执已生成且git commit成功，但`git push origin HEAD:main`被远端新提交拒绝（non-fast-forward），不是训练失败。此前提交的同步主分支重试修复`85d9d3a7d0246a58f347ff92b3625a1a77534d84`正由新run执行，尚无最终成功回执。
