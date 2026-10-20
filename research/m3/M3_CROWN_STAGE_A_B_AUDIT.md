@@ -18,17 +18,28 @@ The source snapshot was received at `2026-10-08T10:46:01.791Z`, before the state
 
 The archived paired-comparison file lists 16 fixtures across mixed competitions. Crown returned a successful response for 14/16; 2/16 were unavailable/non-success. Across the successful responses the source summary records 1,710 AH and 1,485 OU movement rows, but those rows are not all eligible snapshots or M3 fixtures. On a per-fixture basis, 13/16 fixtures have a selected open pre-kickoff observation in each market, 1/16 has no Crown movement history, and 2/16 have no successful Crown response. The 13 selected observations per market precede both their fixture kickoff and the recorded common as-of snapshot. Their quote ages relative to kickoff (minutes) range from 330.95 to 11,643.60 for AH (median 2,354.63), and 332.45 to 23,467.48 for OU (median 4,597.77). These are old selected observations, not evidence of fresh or executable prices. Only one fixture in this artifact joins the existing M3 OOS set; therefore M3 intersection remains 1/17,027 for AH and 1/17,027 for OU, with one selected quote each. The artifact's mixed-scope fixture counts and raw movement-row totals must not be presented as M3 historical coverage or as a Crown universe denominator.
 
-Raw quote lines and prices are intentionally not replicated into this public report. The archive artifact and source response hash are the traceability references. The archived research workflow's Crown source was a paired comparison source, and cannot establish execution or represent all M3 fixtures.
+The selected Crown observations below are the sole M3-linked quotes in this archive. TotalCorner's [API field definition](https://www.totalcorner.com/page/api) specifies the AH pair as home/away and the goal pair as over/under. Values are copied from the Crown-labelled side only; the paired Bet365 prices are not used in any calculation.
+
+| Market | Crown line | Side 1 / decimal | Side 2 / decimal | Observation UTC | 2026-10-09 result |
+|---|---:|---:|---:|---|---|
+| AH | Home -1.5 | Dortmund 1.93 | Werder +1.5 1.95 | 2026-10-08T03:15:22Z | Home full loss; away full win |
+| OU | 3.5 goals | Over 2.04 | Under 1.84 | 2026-10-07T16:51:41Z | Over full win; under full loss |
+
+These are pre-kickoff historical prices from the paired research artifact, not proof of execution. The quote observations predate the 2–2 result and the artifact's Crown response was received before kickoff. The forecast is a strict walk-forward hindcast produced retrospectively; it is not a prediction recorded at the quote time.
 
 ## Line-specific probability and outcome diagnostic
 
 Using the saved D1 2026/27 walk-forward fit parameters and the archived Crown line in memory, the three fitted goal distributions were reconstructed. Their AH and OU probabilities agree with the saved OOS row's relevant goal-distribution probabilities to less than `1e-9` for the checked outcomes. The table reports probabilities for the archived line, not a general AH/OU metric:
 
-| Model | AH home-side probability | AH away-side probability | OU over probability | OU under probability |
+| Model | AH home / away probability | AH home / away EV per unit | OU over / under probability | OU over / under EV per unit |
 |---|---:|---:|---:|---:|
-| Poisson | 0.490364 | 0.509636 | 0.485653 | 0.514347 |
-| Dixon-Coles | 0.487631 | 0.512369 | 0.482778 | 0.517222 |
-| Bivariate Poisson | 0.489722 | 0.510278 | 0.485544 | 0.514456 |
+| Poisson | 0.490364 / 0.509636 | -0.053597 / -0.006210 | 0.485653 / 0.514347 | -0.009268 / -0.053602 |
+| Dixon-Coles | 0.487631 / 0.512369 | -0.058872 / -0.000880 | 0.482778 / 0.517222 | -0.015133 / -0.048312 |
+| Bivariate Poisson | 0.489722 / 0.510278 | -0.054837 / -0.004958 | 0.485544 / 0.514456 | -0.009490 / -0.053401 |
+
+EV is probability × Crown decimal odds − 1 for these single-outcome lines. It uses the displayed line-specific probabilities (rounded to 6 decimals); all 12 model × market × side estimates are negative. This is one retrospective quote, not a strategy return or evidence of an edge. At a counterfactual 1-unit stake, the settled side outcomes are AH home −1.00 / away +0.95 units, and OU over +1.04 / under −1.00 units. No side-selection policy was preregistered; these four side outcomes are separate diagnostics and must not be summed into PnL. Strategy ROI, cumulative return and maximum drawdown therefore remain unavailable. Daily/weekly, season and league subgroups each have n=1 or no samples and are not statistically meaningful. The V4 original target is O2.5, so its five variants have no supported evaluation on this 3.5 goal line.
+
+Reusable settlement and expected-return calculations are implemented in [`crown_market_eval.py`](crown_market_eval.py); they support full/half win, push, half/full loss on quarter lines. They accept caller-supplied verified odds/probabilities but do not fetch quotes, define a side-selection policy, or certify bookmaker provenance. Synthetic coverage is in `test_crown_market_eval.py`.
 
 For this one recorded price pair per market, all 12 model × market × side theoretical unit-EV calculations were negative. That retrospective diagnostic is highly sample-limited and is not an ROI estimate. With the verified 2–2 final score, the selected AH home side lost and away side won; OU over won and under lost. No side-selection policy was fixed in advance and no bet was placed, so there is no valid realized PnL, ROI, or maximum drawdown sequence. The winning-side outcomes do not turn ex-ante negative EV into positive expected value.
 
