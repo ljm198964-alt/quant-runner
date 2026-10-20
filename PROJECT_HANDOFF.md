@@ -1,5 +1,11 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-20 M3用户要求加速训练
+- 用户认为每天一次训练进度过慢，要求提高频率并加快研究出成果。已直接从在线设备`gh run view 39362692844`核实上一轮M3原版训练/penaltyblog接口smoke/指标落库及版本比较全部success，2026-10-20T03:08:18Z开始、03:16:56Z结束，约8分38秒。此轮证明基础自动流程可跑通，不等于预测盈利。
+- 已提交公开Runner`.github/workflows/m3-independent-research.yml` commit `084457156e981e9489225e414b16c0aff981c830`：M3训练调度由UTC每日00:20改为**UTC每4小时第20分钟**；上游原版CLI`python run.py download`改为其**官方已有**`python run.py download --include-current`，让2526之前历史季以外纳入当前2627赛季的数据更新尝试。原版模型算法、时间前推验证和输出保持原样；不新增EV、数量、信心或赛事Gate；正式 Crown 唯一盘口规则不变；不发TG，不自动升级。GitHub Actions可能延迟实际触发、单项下载失败会被上游捕获，必须以真实运行回执和赛季覆盖数验证当前赛季下载成功。
+- 已通过在线设备`gh run list`确认修改push触发新run [39402727958](https://github.com/ljm198964-alt/quant-runner/actions/runs/39402727958)，最后查询仍in_progress，不能称本轮成功。下次应检查其最终步骤和生成报告是否含2627赛季，并检查是否有新赛果；即使高频训练，若数据未更新则只是重复回测。penaltyblog AH 目前仍只有接口smoke，不可把高频OU训练写成AH样本外自动学习；快速出研究成果的关键下一项是AH时间前推和跨期预测质量验证。
+
+
 ## 2026-10-20 M3用户授权定期自动重训练和版本评估（不自动升级）
 - 用户确认实施之前提出的完整自动重训练、自动评估和版本保存，**暂不自动替换正式模型/改变策略/派单**。已在公开Runner添加`research/m3/compare_upstream_snapshots.py`（commit `8f1baa0193932918d2a5f0c4068140967ba68fc1`）：按(model,test_season)相同的记录比较V4原版当前与上一版本的log_loss/brier/ROC AUC/accuracy/ROI/bets/n_test，保留数值和delta，不做自动优选或发单。
 - 已在`.github/workflows/m3-independent-research.yml`添加UTC每日00:20（北京时间08:20）定时研究重训练及每次run`research/m3/results/history/<run-id>-<attempt>/`保留原始V4指标、运行回执、历史对比JSON，commit `3a21308651dfcb49d492b5e2908fa084127334a9`。原版download/features/backtest算法保持不变；`penaltyblog` AH 当前仍只有接口smoke，**尚未实现完整AH自动样本外重训练**，不可称AH正式回测完成。仅原开源上游赔率报告，非Crown交易ROI。没有增加交易Gate，没有TG/自动晋级。
