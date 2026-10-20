@@ -11,6 +11,8 @@ on:
       - '.github/workflows/m3-oos-stability.yml'
       - 'research/m3/openfootball_stability.py'
       - 'research/m3/openfootball_shadow_audit.py'
+      - 'research/m3/openfootball_shadow_performance.py'
+      - 'research/m3/test_openfootball_shadow_performance.py'
       - 'research/m3/crown_totalcorner_import.py'
       - 'research/m3/test_openfootball_stability.py'
       - 'research/m3/test_openfootball_shadow_audit.py'
@@ -57,6 +59,10 @@ jobs:
           python -m research.m3.openfootball_shadow_audit \
             --ledger research/m3/results/openfootball/shadow_ledger.jsonl \
             --output research/m3/results/openfootball/latest_shadow_ledger_audit.json
+          python -m research.m3.openfootball_shadow_performance \
+            --ledger research/m3/results/openfootball/shadow_ledger.jsonl \
+            --output research/m3/results/openfootball/latest_shadow_performance.json \
+            --previous research/m3/results/openfootball/latest_shadow_performance.json
           python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
           import json
           from pathlib import Path
@@ -70,11 +76,16 @@ jobs:
           print(f"- Paired league-season cells: `{json.dumps({k:v['paired_league_season_cells'] for k,v in x['markets'].items()}, sort_keys=True)}`")
           print(f"- Crown quotes used: `{x['crown_quotes_used']}`; Crown EV/ROI: `N/A`")
           ledger=json.loads(Path('research/m3/results/openfootball/latest_shadow_ledger_audit.json').read_text())
+          forward=json.loads(Path('research/m3/results/openfootball/latest_shadow_performance.json').read_text())
           print('## M3 shadow ledger audit (read-only, no model fitting)')
           print(f"- Ledger SHA-256: `{ledger['ledger_sha256']}`")
           print(f"- Logical/canonical forecasts: {ledger['logical_forecast_key_count']}/{ledger['canonical_forecast_count']}; superseded history rows: {ledger['superseded_forecast_count']}")
           print(f"- Settlements/Crown snapshots/EV/ROI: {ledger['settlement_event_count']}/{ledger['crown_quote_captured_count']}/{ledger['ev_calculable_count']}/{ledger['roi_calculable_count']}")
           print(f"- Formal orders/Telegram sends: {ledger['formal_order_count']}/{ledger['telegram_send_count']}")
+          print('## Forward no-market forecast calibration (read-only)')
+          print(f"- Settled forwards/fixtures: {forward['settled_forward_forecast_count']}/{forward['unique_settled_fixture_count']} ({forward['status']})")
+          print(f"- Crown quotes/EV/ROI: {forward['financial_metrics']['Crown_quotes_used']}/{forward['financial_metrics']['EV']}/{forward['financial_metrics']['ROI']}")
+          print(f"- Fixture dates: `{forward['source_date_semantics']}`")
           print('## OOS marginal forecast error by model (predicted minus observed)')
           for model, details in x['probability_bias'].items():
               overall=details['overall']
@@ -88,6 +99,7 @@ jobs:
           mkdir -p "$RUNNER_TEMP/m3-stability-result"
           cp research/m3/results/openfootball/latest_oos_stability.json "$RUNNER_TEMP/m3-stability-result/"
           cp research/m3/results/openfootball/latest_shadow_ledger_audit.json "$RUNNER_TEMP/m3-stability-result/"
+          cp research/m3/results/openfootball/latest_shadow_performance.json "$RUNNER_TEMP/m3-stability-result/"
       - name: Preserve stability receipt
         if: always()
         uses: actions/upload-artifact@v4
@@ -96,6 +108,7 @@ jobs:
           path: |
             research/m3/results/openfootball/latest_oos_stability.json
             research/m3/results/openfootball/latest_shadow_ledger_audit.json
+            research/m3/results/openfootball/latest_shadow_performance.json
           if-no-files-found: warn
           retention-days: 90
       - name: Persist changed stability report with branch sync
@@ -119,10 +132,13 @@ jobs:
           ledger=Path('research/m3/results/openfootball/shadow_ledger.jsonl')
           ledger_digest=hashlib.sha256(ledger.read_bytes()).hexdigest()
           ledger_audit=json.loads(Path(os.environ['RUNNER_TEMP'], 'm3-stability-result', 'latest_shadow_ledger_audit.json').read_text())
+          shadow_performance=json.loads(Path(os.environ['RUNNER_TEMP'], 'm3-stability-result', 'latest_shadow_performance.json').read_text())
           current=(candidate['input_fingerprint_sha256']==report['input_fingerprint_sha256']
                    and candidate['evaluation_fingerprint_sha256']==report['evaluation_fingerprint_sha256']
                    and candidate['prediction_file_sha256']==digest
-                   and ledger_audit['ledger_sha256']==ledger_digest)
+                   and ledger_audit['ledger_sha256']==ledger_digest
+                   and shadow_performance['shadow_ledger_sha256']==ledger_digest
+                   and shadow_performance['analysis_code_sha256']==hashlib.sha256(Path('research/m3/openfootball_shadow_performance.py').read_bytes()).hexdigest())
           print('true' if current else 'false')
           PY
             if [ "$(cat "$RUNNER_TEMP/m3-stability-result/current.txt")" != "true" ]; then
@@ -131,7 +147,8 @@ jobs:
             fi
             cp "$candidate" research/m3/results/openfootball/latest_oos_stability.json
             cp "$RUNNER_TEMP/m3-stability-result/latest_shadow_ledger_audit.json" research/m3/results/openfootball/latest_shadow_ledger_audit.json
-            git add research/m3/results/openfootball/latest_oos_stability.json research/m3/results/openfootball/latest_shadow_ledger_audit.json
+            cp "$RUNNER_TEMP/m3-stability-result/latest_shadow_performance.json" research/m3/results/openfootball/latest_shadow_performance.json
+            git add research/m3/results/openfootball/latest_oos_stability.json research/m3/results/openfootball/latest_shadow_ledger_audit.json research/m3/results/openfootball/latest_shadow_performance.json
             if git diff --cached --quiet; then
               echo 'M3_STABILITY_REPORT_UNCHANGED'
               exit 0
