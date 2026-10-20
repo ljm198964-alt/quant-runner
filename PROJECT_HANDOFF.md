@@ -1,5 +1,11 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-20 M3用户授权定期自动重训练和版本评估（不自动升级）
+- 用户确认实施之前提出的完整自动重训练、自动评估和版本保存，**暂不自动替换正式模型/改变策略/派单**。已在公开Runner添加`research/m3/compare_upstream_snapshots.py`（commit `8f1baa0193932918d2a5f0c4068140967ba68fc1`）：按(model,test_season)相同的记录比较V4原版当前与上一版本的log_loss/brier/ROC AUC/accuracy/ROI/bets/n_test，保留数值和delta，不做自动优选或发单。
+- 已在`.github/workflows/m3-independent-research.yml`添加UTC每日00:20（北京时间08:20）定时研究重训练及每次run`research/m3/results/history/<run-id>-<attempt>/`保留原始V4指标、运行回执、历史对比JSON，commit `3a21308651dfcb49d492b5e2908fa084127334a9`。原版download/features/backtest算法保持不变；`penaltyblog` AH 当前仍只有接口smoke，**尚未实现完整AH自动样本外重训练**，不可称AH正式回测完成。仅原开源上游赔率报告，非Crown交易ROI。没有增加交易Gate，没有TG/自动晋级。
+- 通过在线用户Mac调用`gh run list`确认上述提交已触发 GitHub Actions run [39362692844](https://github.com/ljm198964-alt/quant-runner/actions/runs/39362692844)，查询时status=in_progress，未能据此判断训练/历史版本留存已成功。上次`39360351455`已confirmed completed success且原指标/回执确已持久化。下一轮直接查39362692844步骤和新的history文件，判断版本对比是否正确写回。定时下一轮是否真实触发应以后续真实run确认，不可只凭cron配置宣布长期运行稳定。
+
+
 ## 2026-10-20 M3原版云端成功及最新真实报告重新核验
 - 已直接通过在线Mac/gh read-only查得公开Runner [run 39360351455](https://github.com/ljm198964-alt/quant-runner/actions/runs/39360351455) status=completed, conclusion=success；V4原版download/features/backtest、penaltyblog安装和Poisson/Dixon-Coles接口smoke、artifacts和持久化全部步骤success。已从GitHub主分支重新读取`research/m3/results/latest_upstream_run.json`，其中`utc=2026-10-20T02:48:50.601804+00:00`、run id 39360351455、V4 outcome success、原报告已存在、AH trained false、Crown ROI null、TG false。回执持久化故障本次验收已恢复；不是仅代码已提交。
 - 读取同次主分支`research/m3/results/latest_v4_original_metrics.csv`，45行，测试季2122-2526。仅含ROI与模拟投注的行、按其投注数加权得：Logistic 3期824单净-45.36U ROI -5.50%；LightGBM 3期883单净-100.55U ROI -11.39%；market_anchored_logistic 3期1935单净-62.91U ROI -3.25%；market_blend_logistic 1期271单净-31.87U ROI -11.76%；market_residual_logistic 2期416单净-22.60U ROI -5.43%。各模型覆盖期不同；不能比较成公平模型排行，或把上游Football-Data赔率结果冒充Crown ROI。以此最新已落库报告替代前一run 39359943178的历史快照。
