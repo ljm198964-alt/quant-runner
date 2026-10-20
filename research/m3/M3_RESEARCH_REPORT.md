@@ -61,6 +61,14 @@ Football Predictor V4 检出版本未发现显式 LICENSE 文件；其源码未�
 
 ## Crown 缺口、限制与下一步
 
-M3 当前结果没有可验证的 Crown 同期盘口线、水位或时间戳，因此 Crown 覆盖率不可计算，Crown ROI、收益序列和回撤不报告。不得以其他赔率代填。下一步最有价值的是在用户允许的范围内建立受控的 Crown 历史线价匹配数据，并验证其赛前时间戳；然后分别按 AH、OU 盘口线生成分市场样本外评估。其次，修复/补充可审计的升降级球队身份历史，使未覆盖比例下降但不对历史球队身份作未来推断；延长更多赛季的跨季稳定性评估；为 V4 源码许可寻求上游明确说明；最后再独立验证一个有差异且有许可的 OU 方法。
+M3 原始预测产物没有 Crown 盘口。但对已有公开 Actions 存档作只读身份审计后，在 `Crown Bet365 Paired Research` run [37765506416](https://github.com/ljm198964-alt/quant-runner/actions/runs/37765506416) 中发现 1 场与 D1 2026/27 M3 OOS 测试身份相符的 fixture；该场在 M3 测试表 17,027 场中占 1 场（0.0059%），并有 1 个 Crown AH 与 1 个 Crown OU 报价记录。Crown 来源响应摘要 SHA-256 为 `2b60bd3ff46828451f1d1b06514020bbf52531571155108f6a3749905bd46c52`；配对审计报告标记 `bookmaker_execution_verified=false`。该 run 的其他 15 场不属于 M3 的六联赛测试范围。匹配只代表留存 artifact 中找到的下限，不代表对 Crown 全部历史覆盖作了穷尽统计。
+
+该场模型在归档的 Crown 报价上完成了内存中的线级重算：三种 penaltyblog 模型在 AH / OU 的四个报价方向上，每单位期望收益均为负；但这是单场历史报价诊断，不是预先定义的下注策略。没有真实下单，因此 Crown 实现收益、ROI 和最大回撤均为 **N/A**；不得把单场赛后结算或期望收益叫作实际 ROI。具体盘口线、水位及逐场 quote 明细没有复制到本公开报告，也没有写入 M3 预测产物。
+
+后续 Crown 数据工作的合规前置条件尚未满足。TotalCorner 当前条款（2026-09-02 生效）将自动化抓取/提取列为需事先书面同意的行为；因此本轮不新增自动 Crown 抓取、镜像原始 quote、或把逐价数据写进公开仓库。其 API 文档确实列出历史 odds movement 和 Crown bookmaker endpoint，但接口可用不等于获得自动提取/再发布许可：[TotalCorner Terms](https://www.totalcorner.com/page/terms)、[TotalCorner API](https://www.totalcorner.com/page/api)。如后续获得书面许可，应使用可审计的授权数据源补齐足够的 AH 与 OU 样本，分别报告同期覆盖、线级 OOS 概率评分与按预先固定规则的收益序列；在此之前不能宣称有可估计的 Crown ROI。
+
+另一项局限是 M3 当前逐场产物只保存 AH 0 与 O2.5 概率；除上述单场临时重算外，没有整套 Crown 市场线对应的历史概率面板，故不能对这 17,027 场统一计算 Crown 线级 Log Loss、Brier、收益或回撤。不得用无时区的 Football-Data 日历日去伪造 Crown 精确开赛匹配。
+
+其次，修复/补充可审计的升降级球队身份历史，使未覆盖比例下降但不对历史球队身份作未来推断；延长更多赛季的跨季稳定性评估；为 V4 源码许可寻求上游明确说明；最后再独立验证一个有差异且有许可的 OU 方法。
 
 当前报告能证明研究流水线和历史结果可复现，不能证明可盈利、Crown 可交易覆盖充足，亦不能据此启动正式下注。
