@@ -92,6 +92,8 @@ def validate_record(record: dict) -> dict:
     forecast = record.get("forecast")
     if not isinstance(forecast, dict):
         raise ValueError("forecast object is required")
+    if forecast.get("system") != "M3":
+        raise ValueError("forecast.system must be M3; cross-system forecasts are not accepted")
     if forecast.get("protocol") not in {"RECORDED_FORWARD", "STRICT_WALK_FORWARD_HINDCAST"}:
         raise ValueError("forecast.protocol must distinguish recorded forward from hindcast")
     _required_text(forecast, "model", "forecast.")

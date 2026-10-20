@@ -25,7 +25,7 @@ def synthetic_record():
             },
         },
         "forecast": {
-            "protocol": "STRICT_WALK_FORWARD_HINDCAST", "model": "synthetic",
+            "system": "M3", "protocol": "STRICT_WALK_FORWARD_HINDCAST", "model": "synthetic",
             "model_version": "test-only", "prediction_sha256": "b" * 64,
             "train_end_utc": "2026-09-01T00:00:00Z", "predicted_at_utc": None,
         },
@@ -52,6 +52,12 @@ class CrownEvidenceTests(unittest.TestCase):
         record = synthetic_record()
         record["authorization"]["basis"] = "public_page"
         with self.assertRaisesRegex(ValueError, "written permission"):
+            validate_record(record)
+
+    def test_rejects_forecasts_from_another_system(self):
+        record = synthetic_record()
+        record["forecast"]["system"] = "M1"
+        with self.assertRaisesRegex(ValueError, "forecast.system must be M3"):
             validate_record(record)
 
     def test_rejects_fuzzy_fixture_mapping(self):

@@ -36,4 +36,12 @@ The archived artifact cannot supply a denominator-wide Crown historical panel. N
 
 TotalCorner's current terms prohibit automated extraction without prior written consent ([Terms](https://www.totalcorner.com/page/terms)); its API documentation's historical movement endpoint does not itself establish data collection or redistribution permission ([API](https://www.totalcorner.com/page/api)). The accompanying [offline M3 Crown evidence intake contract](crown_evidence_contract.md) provides structural and UTC validation for separately authorized, operator-supplied evidence. It does not fetch, publish restricted prices, compute ROI or create a trading gate.
 
+### Official API schema and offline intake readiness (2026-10-20)
+
+The current TotalCorner API specification describes `/match/bookmaker_odds/{match_id}`, `bookmaker=crown`, full-time AH and goal-line markets, and optional `asianList` / `goalList` movement arrays. A movement row carries the line, both prices, source-local timestamp, score and closed flag; the API documentation says names/timestamps follow the account profile timezone. The same page says API access requires VIP membership. Separately, the current Terms page (last updated 2026-09-02) prohibits automated data extraction without prior written consent. Therefore an API token or paid membership is not accepted by M3 as a substitute for written collection/use/retention permission. No API call was made in this audit.
+
+An offline adapter, `crown_totalcorner_import.py`, now maps an already-authorized raw response into the private evidence validator's schema. It requires written-permission metadata first, exact source match ID and team identities, evidence for the account IANA timezone, exact independent UTC kickoff agreement, unique Crown bookmaker entry, open pre-match rows only, and valid M3 forecast/hindcast provenance. DST gaps/folds, compound comma-form lines, ambiguous mapping, suspended rows and all rows at/after kickoff fail closed or are excluded. Raw quote values are never printed or committed by the CLI; input retention remains subject to authorization. Unit tests use synthetic fixtures and do not establish real data coverage.
+
+This makes the legal-data intake path implementable after permission is supplied; it does not change any Stage A coverage count. Broad historical Crown AH/OU overlap with M3 forecasts, Crown-specific OOS metrics, EV, PnL, ROI and drawdown remain unavailable.
+
 No production model, formal ledger, strategy rule, Telegram path or non-M3 workflow was changed by this audit.

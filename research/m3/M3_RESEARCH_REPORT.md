@@ -145,6 +145,8 @@ M3 原始预测产物没有 Crown 盘口。但对已有公开 Actions 存档作�
 
 后续 Crown 数据工作的合规前置条件尚未满足。TotalCorner 当前条款（2026-09-02 生效）将自动化抓取/提取列为需事先书面同意的行为；因此本轮不新增自动 Crown 抓取、镜像原始 quote、或把逐价数据写进公开仓库。其 API 文档确实列出历史 odds movement 和 Crown bookmaker endpoint，但接口可用不等于获得自动提取/再发布许可：[TotalCorner Terms](https://www.totalcorner.com/page/terms)、[TotalCorner API](https://www.totalcorner.com/page/api)。如后续获得书面许可，应使用可审计的授权数据源补齐足够的 AH 与 OU 样本，分别报告同期覆盖、线级 OOS 概率评分与按预先固定规则的收益序列；在此之前不能宣称有可估计的 Crown ROI。
 
+本轮依据该 API 文档新增离线适配器 `crown_totalcorner_import.py`：只读用户已在授权环境保存的原始 JSON，不联网。适配器要求书面授权编号、match ID 精确命中、源队名精确映射、账户 IANA 时区证据、API kickoff 与独立核实 UTC kickoff 完全一致；只归一化开赛前、未暂停的 AH/goal-line movement 行，且拒绝 DST 歧义和未定义复合线。CLI 只输出原始响应 hash、引用行计数和 UTC 时间范围，不输出价格、不保存规范化 quote。专项测试使用合成样本，确认转换与失败路径，不是 Crown 真实观察，未改变前述有效覆盖数。接口说明见 [`crown_totalcorner_import_contract.md`](crown_totalcorner_import_contract.md)。
+
 另一项局限是 M3 当前逐场产物只保存 AH 0 与 O2.5 概率；除上述单场临时重算外，没有整套 Crown 市场线对应的历史概率面板，故不能对这 17,027 场统一计算 Crown 线级 Log Loss、Brier、收益或回撤。不得用无时区的 Football-Data 日历日去伪造 Crown 精确开赛匹配。
 
 其次，修复/补充可审计的升降级球队身份历史，使未覆盖比例下降但不对历史球队身份作未来推断；延长更多赛季的跨季稳定性评估；为 V4 源码许可寻求上游明确说明；最后再独立验证一个有差异且有许可的 OU 方法。

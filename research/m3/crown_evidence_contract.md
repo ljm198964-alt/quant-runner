@@ -1,6 +1,6 @@
 # M3 Crown evidence intake contract
 
-This is an **offline validation contract**, not a collector. It accepts an operator-supplied normalized JSON record only after the operator has confirmed written permission for the particular collection, use and retention. The validator does not make HTTP requests, access TotalCorner, read M1/M2/MR1, persist the input, compute EV/ROI, create orders or send Telegram messages.
+This is an **offline validation contract**, not a collector. It accepts an operator-supplied normalized JSON record only after the operator has confirmed written permission for the particular collection, use and retention. The companion [`crown_totalcorner_import.py`](crown_totalcorner_import_contract.md) can normalize an already captured authorized TotalCorner response offline; it does not make HTTP requests or collect odds. The validator does not access TotalCorner, read M1/M2/MR1, persist the input, compute EV/ROI, create orders or send Telegram messages.
 
 Run it with:
 
@@ -15,7 +15,7 @@ The resulting summary contains counts and UTC timing only; it omits team names, 
 - `authorization.basis` is `written_permission`, with a traceable authorization reference.
 - Source is the TotalCorner `crown` bookmaker endpoint, and capture method is an authorized manual export or authorized API. A public endpoint or API credential alone does not establish permission.
 - Fixture identity is exact via a shared provider ID or an official fixture cross-check; fuzzy team-name joins are rejected. Store UTC kickoff and the evidence reference.
-- Forecast identity includes model version, training cutoff and prediction digest. A recorded-forward prediction requires its actual prediction UTC timestamp. A retrospectively generated strict walk-forward result must be labelled `STRICT_WALK_FORWARD_HINDCAST` and is not represented as a contemporaneous live forecast.
+- Forecast identity must explicitly name `system: M3`, plus model version, training cutoff and prediction digest. M1/M2/MR1 forecasts are rejected. A recorded-forward prediction requires its actual prediction UTC timestamp. A retrospectively generated strict walk-forward result must be labelled `STRICT_WALK_FORWARD_HINDCAST` and is not represented as a contemporaneous live forecast.
 - Every quote is an open, pre-match AH or OU record with both decimal prices, an observation UTC timestamp before kickoff and source receipt, and a source-row digest. It must postdate the training cutoff; a recorded forecast must predate the quote.
 
 The validator's `VALID_PREMATCH_CROWN_EVIDENCE` status means only that these structural and timestamp checks passed. It is not execution proof, a profitability result, an admission rule or permission to trade. AH and OU remain separately evaluated. No freshness, EV, confidence, volume or league gates are introduced.
