@@ -147,6 +147,8 @@ M3 原始预测产物没有 Crown 盘口。但对已有公开 Actions 存档作�
 
 本轮依据该 API 文档新增离线适配器 `crown_totalcorner_import.py`：只读用户已在授权环境保存的原始 JSON，不联网。适配器要求书面授权编号、match ID 精确命中、源队名精确映射、账户 IANA 时区证据、API kickoff 与独立核实 UTC kickoff 完全一致；只归一化开赛前、未暂停的 AH/goal-line movement 行，且拒绝 DST 歧义和未定义复合线。CLI 只输出原始响应 hash、引用行计数和 UTC 时间范围，不输出价格、不保存规范化 quote。专项测试使用合成样本，确认转换与失败路径，不是 Crown 真实观察，未改变前述有效覆盖数。接口说明见 [`crown_totalcorner_import_contract.md`](crown_totalcorner_import_contract.md)。
 
+该适配器以提交 `feb6f4dfabb19653bbedaaba2a212644e86a85d0` 和 Actions [39421816343](https://github.com/ljm198964-alt/quant-runner/actions/runs/39421816343) 完成真实云端验收：UTC `2026-10-20T12:23:01Z`–`12:23:40Z`，40/40 M3 tests 通过；同一 run 对已存 OOS/shadow 文件完成无重训审计，3 模型各11,254个评分样本，逐行复核33,762条训练 cutoff，Crown quotes used=false，结果无变化。该 run 不重新拟合，也没有新增样本或 Crown 数据。
+
 另一项局限是 M3 当前逐场产物只保存 AH 0 与 O2.5 概率；除上述单场临时重算外，没有整套 Crown 市场线对应的历史概率面板，故不能对这 17,027 场统一计算 Crown 线级 Log Loss、Brier、收益或回撤。不得用无时区的 Football-Data 日历日去伪造 Crown 精确开赛匹配。
 
 其次，修复/补充可审计的升降级球队身份历史，使未覆盖比例下降但不对历史球队身份作未来推断；延长更多赛季的跨季稳定性评估；为 V4 源码许可寻求上游明确说明；最后再独立验证一个有差异且有许可的 OU 方法。

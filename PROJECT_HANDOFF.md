@@ -1,3 +1,8 @@
+## 2026-10-20 M3 Crown 授权离线导入适配器与真实 Actions 验收
+- 在 PR #51 分支提交 `feb6f4dfabb19653bbedaaba2a212644e86a85d0`（短 SHA `feb6f4d`）：新增 `research/m3/crown_totalcorner_import.py` 与合约文档，离线解析操作者已经取得且具备书面授权的 TotalCorner 响应。适配器无 HTTP 客户端；书面授权校验先于解析，验证输入原始 UTF-8 JSON 与解析对象完全一致，记录原始/行级哈希，要求精确 match ID/队名、账户 IANA 时区证据、独立 UTC kickoff 对齐、唯一 Crown slug、开赛前开放 AH/OU movement 行及 `forecast.system=M3`。拒绝 DST 缺口/歧义、复合未定义盘口线及其他模型系统。CLI 只输出无价位摘要；不存储原始或规范化报价、不算 EV/ROI、不读 M1/M2/MR1、不下单、不发 TG。
+- GitHub Actions [39421816343](https://github.com/ljm198964-alt/quant-runner/actions/runs/39421816343) 对提交 SHA `feb6f4dfabb19653bbedaaba2a212644e86a85d0` 完成 SUCCESS，UTC `2026-10-20T12:23:01Z`–`12:23:40Z`。40/40 M3 单测通过；无重训 stability/shadow 审计成功。Saved OOS fingerprint `93e0b8b91722f9c967e608ad63ae88d4c8d8b4c466de92948673438704697c8e`，evaluation fingerprint `c6bdb7edeb213005b7770219b7572b8b6b809cf962f835311a37bf21675ae631`，逐场预测 CSV SHA `24eccf0152e1c8961c29cfd0512fb9a237ebbaaedc8d83390d1f7a96da0d3fe7`；3模型各11,254评分场、33,762条 cutoff 检查，Crown quotes used=false。报告 SHA `a727f8b75241eef9becb4fbb85b5f7b5ee4dbdebef9b238095471129c299c304`；shadow audit SHA `9cb01056753bf50fd15e59b8281ceea0fa034b8be16597cfbb6d69377a98dd90`。两份 Actions artifact 均已下载核对；结果与仓库一致，工作流报告 unchanged，未创建伪结果提交、未运行模型拟合。
+- 当前工作流 path-filter 包含适配器和测试；每四小时schedule仍仅在PR合入默认分支后生效。当前没有新增书面授权或真实 Crown 报价，故适配器仅以合成 fixture 测试；Crown AH/OU 广覆盖、Crown 线级 OOS 指标与 ROI/最大回撤未完成，不能报告为0。继续研究需先由用户提供允许自动提取、保留和公开范围的书面授权及独立可审计数据；TotalCorner API 访问凭证本身不作为授权替代。
+
 # 量化亚洲盘｜跨会话工作交接记录
 
 ## 2026-10-20 M3 无重训配对 OOS 稳定性 Actions 验收

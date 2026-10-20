@@ -42,7 +42,7 @@ OpenFootball 评估的 AH 只报告 AH0/DNB 三状态概率，OU 报告固定 O2
 
 `openfootball_shadow_audit.py` 在不拟合、不结算的情况下校验逻辑 forecast 键唯一、supersession 引用、UTC 预测时间和日期 guard、概率归一化、无 Crown 时 EV/ROI 为空及无正式单/TG。当前 ledger 有 8,430 条原始 FORECAST 行，其中 4,215 条明确 superseded，折为 4,215 条有效逻辑预测；零结算、零 Crown 快照、零 EV/ROI。该审计随 Saved OOS Stability 工作流每四小时运行并持久化 `results/openfootball/latest_shadow_ledger_audit.json`，且验证 ledger SHA 与当时账本一致。Actions run [39420305676](https://github.com/ljm198964-alt/quant-runner/actions/runs/39420305676) 于 2026-10-20 SUCCESS，33 项测试通过，上传 artifact 与仓库审计 JSON 一致。该 workflow 只读既存 OOS 产物及 ledger，不重新训练。
 
-如获得书面授权，可用 `crown_totalcorner_import.py` 在本地离线读取既存 TotalCorner Crown API 响应；它要求 IANA 时区证据、精确队伍身份与独立 UTC kickoff、过滤所有不满足赛前条件的移动记录，并且拒绝 DST 歧义及未定义复合线。该 adapter 不联网、不打印或落库价格、不计算 EV/ROI；合成测试只验证转换逻辑，并不增加真实 Crown 覆盖。当前未提供书面授权，因此未执行任何新 Crown 请求。
+如获得书面授权，可用 `crown_totalcorner_import.py` 在本地离线读取既存 TotalCorner Crown API 响应；它要求 IANA 时区证据、精确队伍身份与独立 UTC kickoff、过滤所有不满足赛前条件的移动记录，并且拒绝 DST 歧义及未定义复合线。该 adapter 不联网、不打印或落库价格、不计算 EV/ROI；合成测试只验证转换逻辑，并不增加真实 Crown 覆盖。当前未提供书面授权，因此未执行任何新 Crown 请求。 本适配器提交 `feb6f4dfabb19653bbedaaba2a212644e86a85d0` 已由 Actions [39421816343](https://github.com/ljm198964-alt/quant-runner/actions/runs/39421816343) 真实验收，40 项 M3 tests 通过；该 workflow 是无重训审计，未新增数据或 Crown 覆盖。
 
 运行单元测试：
 
