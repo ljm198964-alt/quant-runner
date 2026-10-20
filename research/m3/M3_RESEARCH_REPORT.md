@@ -85,6 +85,8 @@ Football Predictor V4 检出版本未发现显式 LICENSE 文件；其源码未�
 
 ## Crown 缺口、限制与下一步
 
+离线 Crown evidence contract 提交 `3136522bbdc559e48bb26b651dd59db929f8e857` 已在 Actions [39417655093](https://github.com/ljm198964-alt/quant-runner/actions/runs/39417655093) 上验收：22/22 M3 tests PASS；OpenFootball OOS/shadow step SUCCESS；run 生成 UTC `2026-10-20T11:49:48.243037Z`。输入/结果指纹均为 `93e0b8b91722f9c967e608ad63ae88d4c8d8b4c466de92948673404697c8e`，fixture 指纹也未变；本次新增预测、结算及重复修正均为0，持久化步骤按预期跳过，没有产生新的学习样本或成绩变化。完整 receipt 在 Actions artifact，当前 ledger SHA 保持 `0645da41b79bbec056081188fb6ba52b4b4a40b077f743eccc7e6645fefbc21e`。
+
 本轮对已有 Crown artifact 的逐线复核与覆盖边界见 [M3 Crown Stage A/B audit](M3_CROWN_STAGE_A_B_AUDIT.md)。单场结果不提供 ROI；后续只有在取得书面许可并提供独立授权的数据后，才按 [离线 M3 Crown evidence contract](crown_evidence_contract.md) 校验时间和身份；该契约不执行抓取。
 
 M3 原始预测产物没有 Crown 盘口。但对已有公开 Actions 存档作只读身份审计后，在 `Crown Bet365 Paired Research` run [37765506416](https://github.com/ljm198964-alt/quant-runner/actions/runs/37765506416) 中发现 1 场与 D1 2026/27 M3 OOS 测试身份相符的 fixture；该场在 M3 测试表 17,027 场中占 1 场（0.0059%），并有 1 个 Crown AH 与 1 个 Crown OU 报价记录。Crown 来源响应摘要 SHA-256 为 `2b60bd3ff46828451f1d1b06514020bbf52531571155108f6a3749905bd46c52`；配对审计报告标记 `bookmaker_execution_verified=false`。该 run 的其他 15 场不属于 M3 的六联赛测试范围。匹配只代表留存 artifact 中找到的下限，不代表对 Crown 全部历史覆盖作了穷尽统计。
