@@ -6,6 +6,8 @@
 
 阶段 B 结算工具在 PR HEAD `906bd21bc6e9051725448699e10556c4f83a6f3f` 对应的 Actions [39427250600](https://github.com/ljm198964-alt/quant-runner/actions/runs/39427250600) 中完成云端验收：45/45 tests PASS，OOS stability/ledger audit SUCCESS；workflow 于 `2026-10-20T13:03:57Z`–`13:04:51Z` 运行。输入数据没有变化，Crown quotes used=false，报告未产生新 shadow/OOS 数据或结果提交。真实单场 Crown hindcast 的 EV 与结算复算见 [Stage A/B audit](M3_CROWN_STAGE_A_B_AUDIT.md)。
 
+随后将新增结算 API 合并回既有 `probabilities.py`，避免复制原有 quarter-line 计算。本次 PR HEAD `86e2e9eaf25e8b3896df39f4d62650afa24aa71a` 的 Actions [39427828868](https://github.com/ljm198964-alt/quant-runner/actions/runs/39427828868) 于 `2026-10-20T13:08:07Z`–`13:09:01Z` SUCCESS：43/43 M3 tests PASS，OOS stability 与影子账本 audit PASS，记录 `M3_STABILITY_REPORT_UNCHANGED`。模型输入与 shadow ledger 未变化，没有新训练结果、预测、Crown 报价或结算写入。
+
 ## OpenFootball：独立真实 OOS 与前瞻无盘口影子
 
 GitHub Actions [39415198829](https://github.com/ljm198964-alt/quant-runner/actions/runs/39415198829) 于 2026-10-20T11:30:25Z 全步骤 SUCCESS。研究代码提交 `8c011d68ecbd51ff5a7fa90c3cb88178656e30ce`；结果与影子账本由 Actions 落库提交 `7613522`。报告生成 UTC 为 `2026-10-20T11:30:06.224625+00:00`，影子运行 UTC 为 `2026-10-20T11:29:18.057086Z`。源为 CC0-1.0 的 `openfootball/football.json` commit `e6744429ee395bc86f247348c6184bb08d4eb361`，penaltyblog 固定 1.13.1。
