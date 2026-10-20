@@ -1,0 +1,18 @@
+{
+  "protocol": "M3_CROWN_PAIRING_STATUS_V1",
+  "generated_utc": "2026-10-20T13:42:29.735545Z",
+  "audit_scope": "existing publicly retained Crown-labelled archive plus value-suppressed audit of M1-scoped quote timestamps; no M1 forecasts, signals, orders, ledgers, or settlements read or used",
+  "historical_market_pairs": {
+    "AH": 0,
+    "OU": 0
+  },
+  "historical_pairing_basis": "No eligible contemporaneous M3 recorded-forward forecast and Crown quote pair; the public archive overlap is retrospective hindcast only, while M1-scoped OU quote evidence predates M3 forecasts; no precise UTC kickoff for current M3 calendar fixtures.",
+  "future_capture": "not_started",
+  "crown_api_requests_made": 0,
+  "totalcorner_token_value_read": false,
+  "authorized_m3_collection_scope_verified": false,
+  "EV_and_ROI": "not_calculable",
+  "formal_order": false,
+  "telegram_sent": false,
+  "data_values_or_private_counts_persisted": false
+}

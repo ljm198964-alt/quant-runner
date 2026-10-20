@@ -2908,3 +2908,23 @@
 - 审计发现原有 `probabilities.py` 已实现 quarter-line 结算和比分网格 EV，因此移除本轮曾短暂增加的重复计算器，将 exact-score AH/OU 结算及五状态 EV 汇总加入原模块，并在原测试文件扩充3项测试。当前 43/43 suite PASS（penaltyblog 1.13.1）；稳定性 workflow 触发路径纳入 `probabilities.py` 与其测试，以后续 Actions 验收替代早先对重复模块的45项测试验收。无生产链路改动。
 - 对当前影子账本检查：4,215 个 canonical forecast（历史重发/显式 supersession 事件仍完整保留），fixture 日历字段范围 `2026-10-23` 至 `2027-05-30`；审计时 UTC 日期为 `2026-10-20`，故0场已到期、0条可据此结算。ledger SHA 保持 `0645da41b79bbec056081188ba6fb52b4b4a40b077f743eccc7e6645fefbc21e`，Crown snapshot=0、settlement=0。此检查沿用源数据未指定时区的日历日期，仅判断没有已成熟条目，不推断精确开赛 UTC。
 - 汇总上述代码改动的 PR HEAD `86e2e9eaf25e8b3896df39f4d62650afa24aa71a` 由 Actions [39427828868](https://github.com/ljm198964-alt/quant-runner/actions/runs/39427828868) 于 `2026-10-20T13:08:07Z`–`13:09:01Z` 完整验收：43/43 tests、saved OOS stability、shadow ledger audit 均 SUCCESS；`M3_STABILITY_REPORT_UNCHANGED`。输出/输入无变化，无新预测、结算或学习结果。PR #51 与 main diff 状态 `CLEAN`，仍 OPEN，工作区干净。
+
+
+## 2026-10-20 M3 Crown 授权/历史配对续审
+- PR #51 已合入 main（merge `e6298aded2d009752d37e10ce879f306119b8c9d`）。本轮代码在 PR #52，提交 `c95377c6560828342dd137db3916c6331a10857b`，仍 OPEN。
+- 公开仓库检查确认 GitHub secret 名称 `TOTALCORNER_TOKEN` 存在且被 M1/MR1 workflow 引用；未读取 secret 值。该事实不证明 M3 自动采集、原始行情留存和公开派生使用授权。没有发起新行情请求。历史 TotalCorner/OddsPapi 接口与协议范围审计见 `research/m3/M3_CROWN_STAGE_A_B_AUDIT.md`。
+- 仅对 M1 范围 Crown OU 报价做值抑制的时间证据审计，未使用 M1 forecast/参数/订单/账本/结算；严格满足 quote 在 M3 forecast 之后且 kickoff 之前的配对数为 0，AH 候选为 0。公开历史 Crown artifact 的唯一 M3 overlap 是 retrospective hindcast，不是 contemporaneous forecast。当前 M3 fixture calendar 没有准确 UTC kickoff；不得用日期字段硬配。
+- 新增 M3-only 离线校验后配对工具 `research/m3/crown_pairing.py`、专项测试及值抑制状态 `research/m3/results/crown/latest_pairing_status.json`。只接受经书面授权引用和严格 UTC/比赛身份检查的独立 M3 记录；无 HTTP、不读 M1/M2/MR1 文件、不写报价值、不创建订单/TG。该状态明确 Crown AH/OU 配对皆 0、EV/ROI 不可计算、没有发请求。
+- 本机 Python 3.9 单独运行 Crown 接口专项测试通过；本机完整套件缺 penaltyblog。已由 Actions run `39432967398` 在提交 `c95377c` 上完整验收 46/46 测试通过；saved OOS/ledger audit 成功，报告未变化，未重新拟合。
+- 最新已确认 workflow: 原版+penaltyblog run `39430911396` success，OpenFootball shadow run `39430911655` success，稳定性 run `39430911610` success。数据输入未变化，shadow 无新预测/结算，没产生新学习信息。M3 未连接生产交易链路、未发 Telegram、未自动提升模型、未添加交易 Gate。
+- 下一步：PR #52 待审阅/合并；要启动自动 Crown 采集仍需先在既有授权材料中确认具体包含自动请求、M3 研究、留存与公开派生的范围，以及账户时区证据。当前仍没有合法可验证的 Crown EV/ROI。
+
+## 2026-10-20 M3 私有 Crown 影子账本工程（PR #52 后续）
+- 在 `research/m3/crown_shadow_ledger.py` 新增仓库外私有 JSONL 写入/核验：写入前调用严格 M3 Crown evidence validator；授权范围需明确 `m3_research` 和 `quote_retention`，如来源为 API 还需 `automated_api`。文件强制位于 repository root 以外、权限 0600、SHA-256 链完整、同一证据 hash 幂等；输出 audit 不含球队/价格/盘口线。
+- 专项 22 tests 本地 Python 3.9 pass。新增代码目前尚未提交，稍后推到 PR #52 并由 `m3-oos-stability` Actions 全量验收。
+- 写入器无 HTTP 客户端、无模型账本读取、无正式派单/TG；因为授权范围尚未在现存材料中证明，也没有真实合格 M3 Crown 记录，本轮没有调用它写真实报价。这是阶段 C 的安全隔离存储能力，不代表 Crown collector 或 shadow live run 已启用。Pairing audit was tightened to count only recorded-forward forecast/quote pairs; retrospective hindcasts are reported separately and never enter the private shadow ledger.
+
+- 最新 PR #52 commit `ff60d0d741ae2965b3ee8fda4b693d99786856ab` 由 Actions [39433609568](https://github.com/ljm198964-alt/quant-runner/actions/runs/39433609568) 于 2026-10-20T13:48:31Z–13:49:19Z SUCCESS：51/51 tests、saved OOS 和 shadow ledger audit 均通过，`M3_STABILITY_REPORT_UNCHANGED`。审计修正 hindcast 不算赛前配对、shadow ledger 仅收 recorded-forward。没有重训/行情请求/数据变化。PR #52 OPEN，分支与 main 兼容性尚待最终 review/合并。
+- 私有 Crown shadow writer 如输入带完整 M3 score-probability grid，会计算与每条 Crown 盘口精确匹配的五状态概率和条件 EV 并记录网格覆盖；只有 AH0 三状态 / OU2.5 概率时只算对应支持线，其他线显式 unavailable，V4 O2.5 不外推。ROI 不自动生成；需实际前瞻策略记录和结果结算。合成EV单测不算真实市场结果。
+- 支持线概率/EV 逻辑提交 `56b0261a3a2403be11576cbdbf817c4e8ce49f51` 已由 Actions [39434051526](https://github.com/ljm198964-alt/quant-runner/actions/runs/39434051526) 于 2026-10-20T13:51:33Z–13:52:23Z 成功验收：52/52 tests、saved OOS/shadow ledger audit PASS，稳定性报告 unchanged。合成测试覆盖 AH0、O2.5 scalar 和任意 quarter line score-grid EV；没有真实 Crown 价格输入，不可视为阶段 B 市场结果。
+- 私有目录访问模式保护在 commit `ee459c1c534498f1601fea1844d4a6dd371a5b03` 经 Actions [39434308057](https://github.com/ljm198964-alt/quant-runner/actions/runs/39434308057) 于 2026-10-20T13:53:16Z–13:54:07Z 验收，53/53 tests PASS，OOS/ledger audit PASS，报告 unchanged。PR #52 目前 OPEN，HEAD 为 `ee459c1c534498f1601fea1844d4a6dd371a5b03`；改动只涉及 M3研究文件与 M3稳定性验证 workflow，`git diff --check origin/main...HEAD` clean。

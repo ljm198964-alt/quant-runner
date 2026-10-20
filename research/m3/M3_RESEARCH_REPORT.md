@@ -176,3 +176,27 @@ V4 的单场 Crown 适用性也已按原版市场范围核验：run `39407478152
 其次，修复/补充可审计的升降级球队身份历史，使未覆盖比例下降但不对历史球队身份作未来推断；延长更多赛季的跨季稳定性评估；为 V4 源码许可寻求上游明确说明；最后再独立验证一个有差异且有许可的 OU 方法。
 
 当前报告能证明研究流水线和历史结果可复现，不能证明可盈利、Crown 可交易覆盖充足，亦不能据此启动正式下注。
+
+## Crown 继续审计与 M3 配对状态（2026-10-20）
+
+只读检查公开仓库的 Crown/TotalCorner/OddsPapi 调用和 secret 元数据后，确认存在 GitHub Actions secret 名称 `TOTALCORNER_TOKEN`，且被 M1/MR1 workflow 引用；没有读取 secret 值。secret 存在和其它工作流使用均不能证明它覆盖 M3 自动采集、历史原始报价留存或公开派生结果。没有发起 TotalCorner/OddsPapi 请求。私有 M1 范围的 Crown OU 报价仅由值抑制审计检查时间证据，不读取或复用 M1 forecast、模型参数、订单、账本或结算；与当前 M3 前瞻预测严格时间配对为 0，AH 候选为 0。公开历史 artifact 中唯一重叠比赛是回测后生成的 hindcast，不能视为赛前 M3 预测。
+
+当前 OpenFootball M3 shadow 日历只有无时区说明的日期键，不含准确 UTC kickoff；不能与 Crown 记录硬配。逐场 shadow 产物目前仅包含 AH0 和 O2.5 单点概率，缺完整比分概率网格，故任意 Crown 线的 EV/概率评分不可计算。Crown 同期有效匹配覆盖仍为 AH=0、OU=0；Crown EV、ROI、收益序列与最大回撤均不可计算。详见 [`results/crown/latest_pairing_status.json`](results/crown/latest_pairing_status.json)。
+
+新增 M3-only 离线配对审计器 `crown_pairing.py`：输入必须先符合书面授权引用、Crown 来源标识、精确 fixture 映射、UTC kickoff、模型截止时间和报价时序校验；输出仅保留分市场配对计数，不落公开报价值、不联网、不读其它模型数据、不触发订单/TG。真实配对/EV 尚无；本地新增接口专项测试通过。本机 Python 3.9 环境未安装 penaltyblog，隔离 pip 安装无输出后中断；随后本轮代码由 Actions run `39432967398` 在 Python 3.11 上全量验收，46/46 tests 成功。
+
+
+本轮 `crown_pairing.py` 已由 PR #52 提交 `c95377c` 推送，并在 Actions [39432967398](https://github.com/ljm198964-alt/quant-runner/actions/runs/39432967398) 于 2026-10-20 13:44 UTC 验收成功：46/46 M3 tests 通过，saved OOS / shadow ledger audit 成功，稳定性文件无变化；未重训，Crown 配对数仍为 AH=0、OU=0。PR #52 当前仍开放。
+
+为阶段 C 补充 `crown_shadow_ledger.py`：它把已验证的 M3 Crown 证据追加到仓库外、权限 `0600` 的私有 JSONL，使用链式 SHA-256 校验，重复记录幂等；只在授权记录明确列出 `m3_research` 与 `quote_retention`，且 API 数据另列 `automated_api` 时允许持久化。审计输出只包括市场计数和文件哈希。该工具已实现但**尚无可导入的真实、合规 M3 Crown 记录**，所以未创建报价账本数据，也不计算 EV/ROI；它不是自动采集器或预测概率生成器。
+
+
+配对审计已额外收紧：只有 `RECORDED_FORWARD` forecast 能进入有效 paired quote 计数，带回测标签的 `STRICT_WALK_FORWARD_HINDCAST` 只进入单独排除计数；私有影子账本拒绝 hindcast。避免历史回测生成时间晚于历史报价仍被误称赛前预测。
+
+最新 head `ff60d0d741ae2965b3ee8fda4b693d99786856ab` 由 Actions [39433609568](https://github.com/ljm198964-alt/quant-runner/actions/runs/39433609568) 于 2026-10-20T13:48:31Z–13:49:19Z 成功验收：完整 51/51 M3 tests、保存 OOS 与 shadow ledger 审计成功，`M3_STABILITY_REPORT_UNCHANGED`。该 run 不重新训练、不请求 Crown、不增加预测或报价数据。PR #52 仍 OPEN。
+
+私有 M3 shadow intake 现可在录入真实 recorded-forward 证据时，按 forecast 明确支持范围计算：完整比分概率网格可对该 Crown 记录的精确 AH/OU 线生成五状态概率与条件单位 EV，并记录网格概率覆盖；仅有三状态 AH0 或 O2.5 单点概率时，只评对应的 AH0 / OU2.5。其它盘口线标为不可用，尤其不将 Football Predictor V4 的 O2.5 外推到其他 OU 线。EV 计算单测为合成 fixtures，不是实际 Crown 结果；ROI 仍需独立前瞻策略定义及真实结算序列，本轮保持 null。
+
+PR #52 提交 `56b0261a3a2403be11576cbdbf817c4e8ce49f51` 的 Actions [39434051526](https://github.com/ljm198964-alt/quant-runner/actions/runs/39434051526) 于 2026-10-20T13:51:33Z–13:52:23Z 成功：52/52 M3 tests、保存 OOS 和 shadow ledger audit 通过，`M3_STABILITY_REPORT_UNCHANGED`。该 run 包含私有 Crown ledger 的支持线 EV 计算测试（合成 fixture），没有真实 quote、新训练或新 forecast。PR #52 仍开放。
+
+私有目录权限保护最后由 PR #52 HEAD `ee459c1c534498f1601fea1844d4a6dd371a5b03` 的 Actions [39434308057](https://github.com/ljm198964-alt/quant-runner/actions/runs/39434308057) 于 2026-10-20T13:53:16Z–13:54:07Z 验收：53/53 tests、保存 OOS / shadow ledger audit 成功，稳定性报告不变。测试确认只给新建专用目录设 `0700`，已有宽权限目录会被拒绝且不会被 chmod。无重训、行情请求或研究数据变化。
