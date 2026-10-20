@@ -1,5 +1,12 @@
 # 量化亚洲盘｜跨会话工作交接记录
 
+## 2026-10-20 M3真实GitHub Actions运行定位及第一份原版OU回测结果
+- 通过用户已连接且在线的Desktop Commander Mac设备，只读执行`gh run list --repo ljm198964-alt/quant-runner --workflow m3-independent-research.yml`，取得实际Actions run IDs：`39355489195` completed success（原版V4/penaltyblog流程）；`39359943178` completed failure（训练/回测、penaltyblog调用、artifact上传均success，仅最终持久化步骤failure）；`39360351455` 在查询时in_progress，不能称已完成。
+- 读取run `39359943178`失败日志，确切失败是原版V4指标和回执已生成且git commit成功，但`git push origin HEAD:main`被远端新提交拒绝（non-fast-forward），不是训练失败。此前提交的同步主分支重试修复`85d9d3a7d0246a58f347ff92b3625a1a77534d84`正由新run执行，尚无最终成功回执。
+- 已从run `39359943178`实际下载GitHub Actions artifact：包含`walk_forward_metrics.csv`、`walk_forward_predictions.csv`、`v4_subgroup_metrics.csv`与上下游SHA，真实V4训练证据已恢复。指标共45行，测试赛季2122、2223、2324、2425、2526。各模型仅在有ROI记录的测试期以对应模拟投注数加权：LightGBM 3期/1527笔 ROI -3.557%；Logistic 2期/1204笔 -5.782%；market_anchored_logistic 4期/2282笔 -3.713%；market_blend_logistic 1期/111笔 -3.721%；market_residual_logistic 1期/346笔 -11.780%。**不同模型各期覆盖不一致，不可排名为公平模型对比**；这些全部是上游原版非Crown赔率回测，绝非M3 Crown实际ROI；AH独立时间前推尚未产生。
+- 新run `39360351455`最后一次查询仍in_progress，公开`research/m3/results/latest_upstream_run.json`在该时点仍404；未把尚未落库称为成功。已找出解决路径：使用在线设备上的gh读取实时run日志和artifact，不必反复添加无关代码或要求用户使用终端。用户确定M3独立AH/OU、不加交易Gate、不发TG的约束保持不变。
+
+
 ## 2026-10-20 M3 本轮实际验收尝试与持久化修复
 - 用户要求GPT自己核实M3真实运行，不重复让用户操作终端。已通过GitHub直接读取公开Runner main：`research/m3/results/latest_upstream_run.json` 和 `latest_v4_original_metrics.csv` 均不存在（404），说明尚无能在该路径验证的训练/回测回执；不等于可以断言Actions从未运行。原工作流可读取，已配置V4原版download/features/backtest和penaltyblog接口。
 - GitHub connector不提供按workflow列举最近运行或触发dispatch操作；网页/github API打开失败，容器直连api.github.com DNS失败，因此未取得运行ID/日志。不得将提交工作流等同实际训练成功。
