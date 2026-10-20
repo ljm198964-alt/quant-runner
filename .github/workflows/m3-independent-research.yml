@@ -2,7 +2,7 @@ name: M3 Upstream Open-Source Research
 on:
   workflow_dispatch:
   schedule:
-    - cron: '20 0 * * *'
+    - cron: '20 */4 * * *'
   push:
     paths:
       - '.github/workflows/m3-independent-research.yml'
@@ -43,7 +43,7 @@ jobs:
           python -m venv .venv
           source .venv/bin/activate
           pip install -r requirements.txt
-          python run.py download
+          python run.py download --include-current
           python run.py features
           python run.py backtest
           echo '## Original Football Predictor V4 walk-forward metrics' >> "$GITHUB_STEP_SUMMARY"
