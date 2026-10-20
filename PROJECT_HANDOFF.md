@@ -2923,3 +2923,5 @@
 - 在 `research/m3/crown_shadow_ledger.py` 新增仓库外私有 JSONL 写入/核验：写入前调用严格 M3 Crown evidence validator；授权范围需明确 `m3_research` 和 `quote_retention`，如来源为 API 还需 `automated_api`。文件强制位于 repository root 以外、权限 0600、SHA-256 链完整、同一证据 hash 幂等；输出 audit 不含球队/价格/盘口线。
 - 专项 22 tests 本地 Python 3.9 pass。新增代码目前尚未提交，稍后推到 PR #52 并由 `m3-oos-stability` Actions 全量验收。
 - 写入器无 HTTP 客户端、无模型账本读取、无正式派单/TG；因为授权范围尚未在现存材料中证明，也没有真实合格 M3 Crown 记录，本轮没有调用它写真实报价。这是阶段 C 的安全隔离存储能力，不代表 Crown collector 或 shadow live run 已启用。Pairing audit was tightened to count only recorded-forward forecast/quote pairs; retrospective hindcasts are reported separately and never enter the private shadow ledger.
+
+- 最新 PR #52 commit `ff60d0d741ae2965b3ee8fda4b693d99786856ab` 由 Actions [39433609568](https://github.com/ljm198964-alt/quant-runner/actions/runs/39433609568) 于 2026-10-20T13:48:31Z–13:49:19Z SUCCESS：51/51 tests、saved OOS 和 shadow ledger audit 均通过，`M3_STABILITY_REPORT_UNCHANGED`。审计修正 hindcast 不算赛前配对、shadow ledger 仅收 recorded-forward。没有重训/行情请求/数据变化。PR #52 OPEN，分支与 main 兼容性尚待最终 review/合并。
