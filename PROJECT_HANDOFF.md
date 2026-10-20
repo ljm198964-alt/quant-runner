@@ -2838,3 +2838,8 @@
 - 修复版 GitHub Actions [39416174708](https://github.com/ljm198964-alt/quant-runner/actions/runs/39416174708) completed SUCCESS，结果落库 `8ab0434`：数据与赛程指纹均 `false`（无变化），新增预测0、结算0、追加重复标记4,215；总历史 FORECAST 事件8,430，唯一逻辑预测4,215，被 superseded 4,215，ledger SHA `0645da41b79bbec056081188fb6ba52b4b4a40b077f743eccc7e6645fefbc21e`。修复后再跑 [39416501773](https://github.com/ljm198964-alt/quant-runner/actions/runs/39416501773) completed SUCCESS：forecast/settlement/correction 全为0，账本 SHA 完全一致，持久化步骤预期 skipped。run artifact 中仍有完整 receipt。
 - 两次修复版 run 都重新执行真实 OOS，输入指纹保持 `93e0b8b91722f9c967e608ad63ae88d4c8d8b4c466de92948673438704697c8e`，代码评估 fingerprint 固定为 `c6bdb7edeb213005b7770219b7572b8b6b809cf962f835311a37bf21675ae631`。这两个运行没有新增比赛或赛程信息，不能称为新学习或性能优化。
 - 本次验收和修复记录已追加到 `research/m3/M3_RESEARCH_REPORT.md`、`research/m3/README.md` 与本 handoff。PR #51 保持未合并；默认分支上的 schedule 是否启用，仍需 PR 合并后验证。Crown 历史盘口授权/覆盖、足够的按线 OOS 与 ROI、B1 数据缺口、第三种不同方法 OU、V4 许可均未解决。
+
+### M3 shadow ledger 只读自动审计补记（2026-10-20）
+- 新增 `research/m3/openfootball_shadow_audit.py` 与 6 个单测，并接入 `.github/workflows/m3-oos-stability.yml`：每四小时复核现有 append-only shadow ledger 的唯一逻辑 forecast、重复 supersession、UTC 时间、概率字段、Crown 缺失时 EV/ROI 空值、零正式订单及零 Telegram。全程不拟合、不结算、不抓 Crown；落库前会对 ledger SHA 与同步后的最新账本做一致性校验。
+- 当前真实账本验收为 12,645 事件：8,430 原始 `FORECAST` 行；4,215 条旧重复被明确 superseded；有效 logical/canonical forecast 4,215（三模型各 1,405）；settlement、Crown quote、EV、ROI、正式单和 Telegram 均为 0。ledger SHA-256 `0645da41b79bbec056081188ba6fb52b4b4a40b077f743eccc7e6645fefbc21e`。这修正口径：历史总 FORECAST 行数不能当独立预测数。
+- 本地 shadow audit 专项单测 6/6、M3 全套单测 33/33 通过，真实账本读审计通过；需以本提交对应 GitHub Actions 的实际运行结论和落库提交补齐验收信息。目标 PR #51 仍未合并时，四小时 schedule 只在 PR 分支 push/手动事件运行，不代表默认分支定时已启用。

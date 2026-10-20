@@ -16,7 +16,7 @@ GitHub Actions [39415198829](https://github.com/ljm198964-alt/quant-runner/actio
 
 AH0 的胜/和/负与 DNB win/push/lose 三状态分数一致，但不是任意 Crown 让球线评价；OU 仅固定 O2.5。模型总体分数很接近，未证明复杂模型稳健胜过 Poisson；详细逐测试赛季指标和校准分箱见 `latest_oos_report.json`。这是五联赛 CC0 数据上的独立口径，与 Football-Data 六联赛 OOS 不能直接做性能优劣比较。
 
-同一 run 使用源中的 1,405 个日期至少领先 3 天的 fixture，追加 4,215 条前瞻预测（3 模型×每场），账本为 `shadow_ledger.jsonl`。生成时间、训练输入 hash、模型版本/参数、fixture 和赛果身份均记录；本次是首次持久化运行，故前次数据/赛程指纹为 null；没有已结算影子样本，结算指标、ROI 和最大回撤均为 null。当前不抓 Crown，不记录 EV、下注或 Telegram。源 fixture 的具体时间字段无文档化时区，本协议完全忽略时刻，只使用日历日期并标注“时区未指定”；因此不能声称精确 UTC 开赛窗口。
+同一 run 使用源中的 1,405 个日期至少领先 3 天的 fixture，形成 4,215 个逻辑前瞻预测（3 模型×每场），记录在 append-only `shadow_ledger.jsonl`。历史上因预测身份曾包含仓库 commit，账本实际保留了 8,430 条原始 `FORECAST` 行；随后 4,215 条重复版本均通过 `FORECAST_DUPLICATE_SUPERSEDED` 显式标记，唯一 canonical 预测为 4,215 条，模型各 1,405。该历史没有删除或覆盖。生成时间、训练输入 hash、模型版本/参数、fixture 和赛果身份均记录；首次持久化运行的前次数据/赛程指纹为 null；没有已结算影子样本，结算指标、ROI 和最大回撤均为 null。当前不抓 Crown，不记录 EV、下注或 Telegram。源 fixture 的具体时间字段无文档化时区，本协议完全忽略时刻，只使用日历日期并标注“时区未指定”；因此不能声称精确 UTC 开赛窗口。
 
 ### 固定样本跨季模型稳定性审计（不重训）
 
@@ -36,6 +36,10 @@ AH0 的胜/和/负与 DNB win/push/lose 三状态分数一致，但不是任意 
 另按 45 个联赛×赛季块执行 10,000 次固定种子（20261020）配对区块 bootstrap，比较每个非基准模型的逐场 Log Loss/Brier 相对 Poisson 差值；全部未调整 95% 区间都跨过 0。下列每项先给全样本加权点差，再给区块 bootstrap 区间。AH 的 Dixon-Coles 点差：Log Loss +0.000283 `[-0.000472, 0.001070]`，Brier +0.000048 `[-0.000372, 0.000497]`；Bivariate Poisson 为 +0.000137 `[-0.000551, 0.000834]` 与 -0.000021 `[-0.000368, 0.000325]`。OU Dixon-Coles 为 -0.000010 `[-0.000043, 0.000021]` 与 -0.000003 `[-0.000017, 0.000010]`；Bivariate Poisson 为 +0.000148 `[-0.000293, 0.000658]` 与 +0.000090 `[-0.000118, 0.000335]`。这只是跨联赛×赛季块的描述性不确定区间；45 个块仍有限，比较未做多重检验调整，也不等同策略检验。数据没有支持复杂分布稳定胜过 Poisson 的证据。
 
 三种模型在这 11,254 个 O2.5 预测上的平均概率分别为 Poisson 0.51786、Dixon-Coles 0.51780、Bivariate Poisson 0.51469；Over 实际比例为 0.53874，平均预测低约 2.09、2.09、2.40 个百分点。该偏差是全量描述性校准，不是皇冠线价概率优势；不能对概率做事后修正后再用同一 OOS 集合声称改进。AH 评价仍仅为 DNB 三状态结果，不等价任意 AH 线。
+
+### 无重训影子账本结构审计
+
+`openfootball_shadow_audit.py` 对 append-only ledger 做只读检查，并已接入 `.github/workflows/m3-oos-stability.yml` 的四小时任务。它复核 forecast ID 与逻辑键一对一 canonical、supersession 引用及理由结构、预测 UTC 时间、概率范围/归一化、无 Crown quote 时 EV/ROI 必须为空、无正式单与 Telegram 标记；不训练、不结算、不访问 Crown。首次审计报告见 `latest_shadow_ledger_audit.json`：原始 forecast 8,430、逻辑/有效 forecast 4,215、superseded 4,215、settlement/Crown/EV/ROI/订单/Telegram 均为 0。报告内 ledger SHA 必须等于账本当前 SHA，避免在分支同步竞态下保存过期审计。
 
 可复算命令（只读现存 OOS 产物，不重新训练）：
 

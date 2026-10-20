@@ -36,6 +36,8 @@ OpenFootball 评估的 AH 只报告 AH0/DNB 三状态概率，OU 报告固定 O2
 
 账本 append-only，保留了首次版本身份实现造成的重复预测历史行；随后 4,215 条以 `FORECAST_DUPLICATE_SUPERSEDED` 标记为重复。报告按唯一 forecast key 计有效预测，账本不会把 superseded 行再次计分/结算。修复后的重复 Actions run 已验证新预测、结算、重复修正均为 0，ledger SHA 不变；详情见完整验收报告。
 
+`openfootball_shadow_audit.py` 在不拟合、不结算的情况下校验逻辑 forecast 键唯一、supersession 引用、UTC 预测时间、概率归一化、无 Crown 时 EV/ROI 为空及无正式单/TG。当前 ledger 有 8,430 条原始 FORECAST 行，其中 4,215 条明确 superseded，折为 4,215 条有效逻辑预测；零结算、零 Crown 快照、零 EV/ROI。该审计随 Saved OOS Stability 工作流每四小时运行并持久化 `results/openfootball/latest_shadow_ledger_audit.json`，且验证 ledger SHA 与当时账本一致。该 workflow 只读既存 OOS 产物及 ledger，不重新训练。
+
 运行单元测试：
 
 ```bash

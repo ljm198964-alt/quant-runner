@@ -1,0 +1,31 @@
+{
+  "protocol": "M3_OPENFOOTBALL_SHADOW_LEDGER_AUDIT_V1",
+  "ledger_file": "research/m3/results/openfootball/shadow_ledger.jsonl",
+  "ledger_sha256": "0645da41b79bbec056081188ba6fb52b4b4a40b077f743eccc7e6645fefbc21e",
+  "ledger_event_count": 12645,
+  "forecast_event_count": 8430,
+  "logical_forecast_key_count": 4215,
+  "canonical_forecast_count": 4215,
+  "superseded_forecast_count": 4215,
+  "duplicate_correction_event_count": 4215,
+  "settlement_event_count": 0,
+  "canonical_forecasts_by_model": {
+    "bivariate_poisson": 1405,
+    "dixon_coles": 1405,
+    "poisson": 1405
+  },
+  "canonical_forecasts_by_status": {
+    "PREDICTED_NO_MARKET": 4215
+  },
+  "canonical_forecasts_by_market_data_status": {
+    "NO_CROWN_QUOTE_CAPTURED": 4215
+  },
+  "crown_quote_captured_count": 0,
+  "ev_calculable_count": 0,
+  "roi_calculable_count": 0,
+  "formal_order_count": 0,
+  "telegram_send_count": 0,
+  "unique_forecast_keys_one_canonical_each": true,
+  "strict_utc_forecast_timestamps": true,
+  "no_market_ev_roi_not_fabricated": true
+}
