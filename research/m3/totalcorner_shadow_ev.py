@@ -1,9 +1,25 @@
 """Calculate M3 EV with genuine TotalCorner default AH/OU lines, never represent them as Crown."""
-import argparse,datetime,hashlib,json,os,time,urllib.parse,urllib.request
+import argparse,datetime,hashlib,json,os,time,urllib.parse,urllib.request,difflib
+from research.m3.totalcorner_schedule_discovery import get_schedule,normalize
 from pathlib import Path
 from research.m3.probabilities import settle_score
 
-IDS={'201585693':('1. FSV Mainz 05','SV Werder Bremen'),'201647220':('Aston Villa FC','Manchester City FC'),'201647222':('Arsenal FC','Everton FC')}
+LEAGUES={'D1':'Germany Bundesliga I','E0':'England Premier League','I1':'Italy Serie A','F1':'France Ligue 1','SP1':'Spain La Liga'}
+ALIASES={'1. FSV Mainz 05':'Mainz','SV Werder Bremen':'Werder Bremen','Aston Villa FC':'Aston Villa','Manchester City FC':'Man City','Arsenal FC':'Arsenal','Everton FC':'Everton','RB Leipzig':'RB Leipzig','SV 07 Elversberg':'Elversberg','FC Augsburg':'Augsburg','1. FC Union Berlin':'Union Berlin','Cagliari Calcio':'Cagliari','Bologna FC 1909':'Bologna','Como 1907':'Como','US Sassuolo Calcio':'Sassuolo'}
+def fixture_matches(f,m):
+    if m.get('l')!=LEAGUES.get(f.get('league')):return False
+    return normalize(ALIASES.get(f['home_team'],f['home_team']))==normalize(m.get('h')) and normalize(ALIASES.get(f['away_team'],f['away_team']))==normalize(m.get('a'))
+def discover(events,token):
+    today=datetime.datetime.now(datetime.timezone.utc).date()
+    dates=sorted({r.get('source_fixture_date') for r in events if r.get('event_type')=='FORECAST' and r.get('forecast_status')=='PREDICTED_NO_MARKET' and r.get('source_fixture_date') and today<=datetime.date.fromisoformat(r['source_fixture_date'])<=today+datetime.timedelta(days=5)})
+    fixtures=[]
+    for day in dates:
+        schedule,_=get_schedule(day,token)
+        for f in (r for r in events if r.get('event_type')=='FORECAST' and r.get('source_fixture_date')==day):
+            eligible=[m for m in schedule if fixture_matches(f,m)]
+            if len(eligible)==1: fixtures.append((f,eligible[0]))
+        time.sleep(2.5)
+    return fixtures
 def fetch(mid,token):
     url='https://api.totalcorner.com/v1/match/odds/'+mid+'?'+urllib.parse.urlencode({'token':token,'columns':'asianList,goalList'})
     for i in range(7):
@@ -49,10 +65,13 @@ def main():
     token=os.environ['TOTALCORNER_TOKEN']
     events=[json.loads(x) for x in a.ledger.open() if x.strip()]
     records=[]
-    for mid,(home,away) in IDS.items():
+    discovered=discover(events,token)
+    by_match={}
+    for f,m in discovered: by_match.setdefault(str(m['id']),[]).append(f)
+    print(json.dumps({'discovered_fixture_ids':len(by_match),'matched_forecasts':len(discovered)}))
+    for mid,forecasts in by_match.items():
         match=fetch(mid,token)
         if not match.get('h') or not match.get('a'):raise ValueError('missing TotalCorner match names')
-        forecasts=[f for f in events if f.get('event_type')=='FORECAST' and f.get('home_team')==home and f.get('away_team')==away and f.get('source_fixture_date')=='2026-10-24']
         kickoff=stamp(match['start'])
         print(json.dumps({'match_id':mid,'quote_diagnostics':{m:{'rows':len(match.get(k,[])),'lines':sorted(set(str(row[1]) for row in match.get(k,[]) if isinstance(row,list) and len(row)>4))} for m,k in [('AH','asian_list'),('OU','goal_list')]},'forecast_rows':len(forecasts)}))
         for f in forecasts:
