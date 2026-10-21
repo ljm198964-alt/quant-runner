@@ -1,3 +1,9 @@
+## 2026-10-21 M3 旧版赛事匹配器 UTC 方向修复（GPT 直接执行）
+- 发现 `research/m3/crown_fixture_match.py` 仍用 `predicted > captured` 拒绝赛程证据，和已修复的 `crown_fixture_join_audit.py` 正确时间顺序相反。已在公开 main 将判断改为 `captured > predicted` 才拒绝，同时保留 `predicted < kickoff`，commit `b46b26707817307af64fc46dc5dfff080ed3380a`。
+- 已新增独立旧路径 UTC 回归测试 `research/m3/test_crown_fixture_match.py`，覆盖证据早于预测、证据晚于预测、预测晚于开赛三个场景，commit `74bc77ce85caa5a5d0b78cf465226072a40cc521`。提交测试文件不等于测试已运行成功。
+- 核对 `research/m3/results/openfootball/latest_shadow_performance.json` 仍为 2026-10-20T14:00:44Z 快照：canonical forecast 4,215、settled 0、Crown 0、EV/ROI N/A；`research/m3/results/crown/latest_pairing_status.json` 仍是 2026-10-20T13:42:29Z。不能称实时战绩。2026-10-21 07:44Z 附近最近 MR1 Free Runtime Actions SUCCESS，但不等于正式 TG 已成功或账本已回写。
+- M3 完整 Crown 前瞻采集仍缺真实 TotalCorner match_id/独立 UTC crosswalk 及可核实的数据使用范围；本轮未调用 Crown API、未开 M3 Telegram、未修改其他模型或正式订单。接续应验证新增测试实际运行结果，定位可复用赛事 ID 来源，完成真实配对，而不是重复空 crosswalk 审计。
+
 ## 2026-10-21 M3 GPT直接执行：既存桥接器与 UTC 误判修正
 - 按用户命令由GPT直接动工程，未交Codex。查明main已有`research/m3/crown_bridge.py`：可接受已核验fixture crosswalk、原先录制的M3前瞻FORECAST、授权TotalCorner原始JSON，并调用`crown_totalcorner_import.normalize_totalcorner_payload`及`crown_shadow_ledger.append_records`；但仍是离线链路，没有动态TotalCorner ID/新报价采集。
 - 已通过授权Mac/gh从公开main读取真实`results/openfootball/shadow_ledger.jsonl` 8,430条raw FORECAST、1,405个fixture identity，运行已有`python -m research.m3.crown_bridge --forecast-ledger ... --verified-fixtures []`，结果真实`eligible_forecast_fixture_pairs=0`、API requests=0、TG=false。空verified fixtures无任何配对，不能解释为模型本身不能匹配。
