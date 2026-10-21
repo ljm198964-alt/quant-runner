@@ -1,3 +1,8 @@
+## 2026-10-21 M3 Crown接线实作进度
+- 用户要求停止重复审计、快速复用既有TotalCorner Crown API。已在公开main实际提交`research/m3/crown_fixture_join_audit.py` commit `d47af1da14e6ac1cd0195969e5d808ab9710520e`和`test_crown_fixture_join_audit.py` commit `e67a9c651571dd0cdabcaca10d68fb1d8289b4a1`，实现严格赛事identity + league/season/球队精确匹配、UTC解析、独立kickoff证据采集时间检查，失败拒绝配对，不调用API、不读其他模型账本。
+- 通过授权Mac读取GitHub main提交后文件，实际`py_compile`两文件，运行M3精确ID/UTC有效、无时区拒绝、球队变化拒绝的基础smoke PASS。**仅代码提交与基础测试成功，尚未将预校验接入M3 Crown自动采集、未获得真实Crown报价或EV/ROI，也未触发新GitHub Actions验收。**
+- 下一步必须对接已存在的TotalCorner `bookmaker=crown`采集入口、自动生成独立M3 verified fixture crosswalk及UTC证据，并核实授权留存范围；不得把新增模块当作链路完成。严禁发TG/触动M1/M2/MR1。
+
 ## 2026-10-21 M3用户要求历史研究/数据核验/前瞻监测三线同时开展
 - 已只读复算`research/m3/results/openfootball/latest_oos_stability.json`，11,254 OOS有效场/模型，O2.5平均偏低：Poisson -2.0883个百分点、Dixon-Coles -2.0937、Bivariate -2.4049；Dixon-Coles与Bivariate相比Poisson的AH0对数损失分块bootstrap区间均包含零，**不能声称复杂模型更强或有盈利优势**。
 - 现有`results/crown/latest_pairing_status.json`明确M3同期Crown有效AH/OU均0、自动采集未授权启动；UTC kickoff仍缺，B1候选源`open-matchday`许可及时间语义未核实。未发起Crown API调用。
