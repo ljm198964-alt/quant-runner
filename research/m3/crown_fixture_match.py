@@ -77,7 +77,7 @@ def match_forecasts(events: list[dict], crosswalk: list[dict]) -> dict:
         except (KeyError, ValueError, AttributeError):
             rejected["invalid_prediction_time"] += 1
             continue
-        if predicted >= f["kickoff"] or predicted > f["captured"]:
+        if predicted >= f["kickoff"] or f["captured"] > predicted:
             rejected["no_contemporaneous_evidence"] += 1
             continue
         selected.append({"forecast_id": row["forecast_id"],
