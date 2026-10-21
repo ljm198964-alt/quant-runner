@@ -23,3 +23,12 @@ Status: CANDIDATE_NOT_INTEGRATED. No new M3 fixtures, FT settlements, Crown quot
 5. Recalculate no-market forward performance only when an objectively later FT matches previously recorded forward prediction and meets source/temporal validation; no Crown EV/ROI without verified authorized pre-kickoff quote.
 
 Research only. No new trading gate, automatic promotion, Crown API request or TG.
+
+## Follow-up verification — 2026-10-21 (read-only)
+
+- Fetched `oladeeayo/open-matchday/data/BEL_1_pro-league/fixtures_2627.csv`: 235 fixture rows (plus header) and populated `date,time,home,away`; first prospective fixture is 2026-10-23. These values are *not* audited UTC kickoff timestamps.
+- Fetched `results_2627.csv`: rows include explicit full-time goals and `source=espn`; examples go back to August 2026. This is upstream-derived historical content, not a proof that scores were available at any earlier M3 forecast time.
+- `build_summary.json` is dated 2026-10-20T03:10:46Z; this snapshot is older than the current M3 monitoring time.
+- A request for root `LICENSE` returned GitHub 404; no clear root license was established in this check. Do not infer that copying/redistributing this source is authorized. Underlying ESPN provenance and redistribution terms must be checked separately.
+- Current M3 shadow creates eligible prospective fixtures only when source calendar date is at least UTC today+3 days. Initial 2026-10-20 forecasts therefore mainly begin on/after 2026-10-23, and at 2026-10-21 a zero-settlement state is not evidence of a broken settlement routine. No backfill of historical fixture scores into those future forecasts.
+- No import, permission assumption, Crown API call, Telegram, or settlement write was performed.
