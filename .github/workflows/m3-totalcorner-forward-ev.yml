@@ -1,0 +1,52 @@
+name: M3 Fresh TotalCorner Forward EV Shadow
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '25 */4 * * *'
+permissions:
+  contents: write
+concurrency:
+  group: m3-forward-ev-shadow
+  cancel-in-progress: false
+jobs:
+  independent-forward:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: openfootball/football.json
+          path: upstream/openfootball-football-json
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install pinned M3 model dependencies
+        run: python -m pip install penaltyblog==1.13.1 pandas numpy
+      - name: Capture fresh score matrices and calculate actual TotalCorner line EV
+        env:
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+        run: |
+          python -m research.m3.totalcorner_forward_ev \
+            --input-root upstream/openfootball-football-json \
+            --output research/m3/results/totalcorner/forward_ev_ledger.jsonl \
+            --max-dates 2 --run-id "$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
+      - name: Persist independent append-only forward EV ledger
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add research/m3/results/totalcorner/forward_ev_ledger.jsonl
+          if ! git diff --cached --quiet; then
+            git commit -m 'Persist M3 actual forward TotalCorner EV observations'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+      - name: Keep execution record
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: m3-fresh-totalcorner-ev-${{ github.run_id }}
+          path: research/m3/results/totalcorner/forward_ev_ledger.jsonl
+          retention-days: 90
+          if-no-files-found: warn
