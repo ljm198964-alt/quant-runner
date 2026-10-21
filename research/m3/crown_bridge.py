@@ -72,6 +72,12 @@ def import_authorized_pairs(events, entries, private_ledger, repository_root):
             raise ValueError("recorded forward evidence required")
         if context["forecast"].get("predicted_at_utc") != forecast["forecasted_at_utc"]:
             raise ValueError("prediction time mismatch")
+        if context["forecast"].get("model") != forecast.get("model"):
+            raise ValueError("prediction model mismatch")
+        if context["forecast"].get("model_version") != forecast.get("model_version_id"):
+            raise ValueError("prediction model version mismatch")
+        if context.get("fixture", {}).get("m3_identity", {}).get("league") != forecast.get("league"):
+            raise ValueError("M3 league identity mismatch")
         raw = Path(entry["response_path"]).read_bytes()
         payload = json.loads(raw)
         records.append(normalize_totalcorner_payload(payload, context, raw))
