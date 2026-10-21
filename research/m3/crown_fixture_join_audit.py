@@ -23,4 +23,4 @@ def check_pair(forecast, fixture):
         evidence_at = strict_utc(fixture['kickoff_evidence_captured_at_utc'])
     except (KeyError, ValueError, TypeError, AttributeError):
         return False
-    return predicted <= evidence_at < kickoff
+    return evidence_at <= predicted < kickoff
