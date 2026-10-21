@@ -74,7 +74,7 @@ def run(root,output,max_dates,run_id):
         for fixture,src in pairs:
             sid=str(src['id'])
             if sid not in market_cache:
-                market_cache[sid]=fetch(sid,os.environ['TOTALCORNER_TOKEN'])
+                market_cache[sid]=(fetch(sid,os.environ['TOTALCORNER_TOKEN']),datetime.datetime.now(UTC).isoformat())
                 time.sleep(2.2)
         for model_name,cls in MODELS.items():
             model=cls(league_train.home_goals,league_train.away_goals,league_train.home_team,league_train.away_team)
@@ -87,7 +87,7 @@ def run(root,output,max_dates,run_id):
                 matrix=_serialize_score_probability_grid(distribution)
                 forecast_id=hash_id(['M3_FRESH_FORWARD_V1',run_id,fixture['fixture_identity_id'],model_name,forecasted_at])
                 forecast_count+=1
-                match=market_cache[str(src['id'])]
+                match,market_captured_at=market_cache[str(src['id'])]
                 # Market request was made before the forecast computation; this is
                 # a valid current comparison snapshot, not an execution quote.
                 for market,field,sides in [('AH','asian_list',('home','away')),('OU','goal_list',('over','under'))]:
@@ -104,7 +104,7 @@ def run(root,output,max_dates,run_id):
                             'provider':'TotalCorner','bookmaker':'default_unspecified_NOT_CROWN',
                             'market':market,'line':line,'side':side,'decimal_odd':decimal,
                             'expected_unit_return':calculate(matrix,market,line,side,decimal),
-                            'quote_snapshot_recorded_utc':now.isoformat(),
+                            'quote_snapshot_recorded_utc':market_captured_at,
                             'source_wall_clock_timezone_verified':False,
                             'kickoff_utc_verified':False,'formal_order':False,'telegram_sent':False,
                             'settled':False,'roi':None,'run_id':run_id}
