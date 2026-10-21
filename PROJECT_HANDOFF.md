@@ -1,3 +1,11 @@
+## 2026-10-21 真实 TotalCorner M3 赛程及 Crown API 直接执行
+- 用户明确要求 GPT 马上做，不再空审计。已通过在线授权 Mac、GitHub Actions 公开 Runner 既存 TOTALCORNER_TOKEN 实际发起官方 TotalCorner 请求，未要求用户操作终端或提供新 token。
+- 新增 `research/m3/totalcorner_schedule_discovery.py`、`.github/workflows/m3-totalcorner-live-discovery.yml`，公开 main commit `be417e5`；确切接口为 `/v1/match/schedule?date=YYYYMMDD`。2026-10-23 实际运行 [39565332639](https://github.com/ljm198964-alt/quant-runner/actions/runs/39565332639) SUCCESS，读到 84 场 3 页，与当天 M3 4 场唯一预测暂未找到可靠对应，不能硬配低相似队名。
+- 并发 10-24/10-25 首批执行碰上 API 真实 `TOO_MANY_REQUEST`（响应写明每10秒5次），随后新增带重试的 API 限速处理 commit `44d4767`，重新执行 10-24 [39565591867](https://github.com/ljm198964-alt/quant-runner/actions/runs/39565591867) SUCCESS。读到 371 场 13 页，M3 当日 16 场唯一预测中多场实际出现，包括 Mainz–Werder (`201585693`)、Aston Villa–Man City (`201647220`)、Arsenal–Everton (`201647222`)。名称为候选对照，尚未自动确认为可落账最终 identity。
+- 新增 `research/m3/totalcorner_crown_live_probe.py` 及 `.github/workflows/m3-totalcorner-crown-live-probe.yml`，公开 main commit `fc56e37`，直接对三条实际赛程 ID 访问 `/v1/match/bookmaker_odds/{id}?bookmaker=crown&columns=asianList,goalList`，真实 Actions [39565880884](https://github.com/ljm198964-alt/quant-runner/actions/runs/39565880884) SUCCESS；每场成功返回1场正确 source match 对象和1个唯一 crown bookmaker 对象，但每场 asian_list/goal_list 均0行。因此本轮未获取任何可计算的 AH/OU 价格、EV/ROI 仍N/A。成功的是实时 API 接线而非完整盘口收益闭环。
+- 新程序只在运行日志输出无价格摘要和候选 ID，不存储 Crown 原始报价、不写正式账本、不发 Telegram、没有调整 M1/M2/MR1。用户禁止擅自加入 Gate；后续不要把原先离线桥接器的额外书面许可 gate 当用户确认规则，也不要回到重复空映射审计。
+- 尚需：验证候选赛事准确对应/时区（TotalCorner 开赛时间由账户语言时区设置决定）；实时 Crown 报价何时返回非空及可能字段差异；连接真实报价与已有 M3 模型概率形成独立影子 EV。10-25 第一次执行因 API rate limit 失败，修正后尚未重新运行。勿把 0 movement 说成断连，也勿称端到端完成。
+
 ## 2026-10-21 M3 旧版赛事匹配器 UTC 方向修复（GPT 直接执行）
 - 发现 `research/m3/crown_fixture_match.py` 仍用 `predicted > captured` 拒绝赛程证据，和已修复的 `crown_fixture_join_audit.py` 正确时间顺序相反。已在公开 main 将判断改为 `captured > predicted` 才拒绝，同时保留 `predicted < kickoff`，commit `b46b26707817307af64fc46dc5dfff080ed3380a`。
 - 已新增独立旧路径 UTC 回归测试 `research/m3/test_crown_fixture_match.py`，覆盖证据早于预测、证据晚于预测、预测晚于开赛三个场景，commit `74bc77ce85caa5a5d0b78cf465226072a40cc521`。提交测试文件不等于测试已运行成功。
