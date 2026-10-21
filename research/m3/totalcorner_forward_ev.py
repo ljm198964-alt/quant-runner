@@ -24,7 +24,8 @@ def money(line_raw):
 def get_latest(rows):
     valid=[]
     for r in rows or []:
-        if not isinstance(r,list) or len(r)!=8 or r[0] not in (None,0,'0','') or r[7] not in (0,'0',False):continue
+        if not isinstance(r,list) or len(r) not in (7,8) or r[0] not in (None,0,'0',''):continue
+        if len(r)==8 and r[7] not in (None,0,'0',False):continue
         try:
             line=money(r[1]);a=float(r[2]);b=float(r[3])
             if not(math.isfinite(a) and math.isfinite(b) and a>1 and b>1):continue
