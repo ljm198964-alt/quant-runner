@@ -1,3 +1,9 @@
+## 2026-10-21 M3 TotalCorner 普通盘口 EV 实际执行：真实线位缺概率矩阵
+- 按用户已确认的 M3 备用 TotalCorner 普通 AH/OU（非 Crown）路径，直接新增 `research/m3/totalcorner_shadow_ev.py` commit `08be076`，复用已有 `research/m3/probabilities.py` 的亚洲盘概率/盈亏逻辑，对保存的 M3 forecast 和已知同场 TotalCorner odds 默认盘口尝试计算 AH0、OU2.5 EV。新增手动 Actions workflow `m3-totalcorner-shadow-ev.yml` commit `10adf53`，只在 runner 临时私有文件写 shadow（没有持久化，不能称生产账本成功）。
+- 真实 Actions [39567996621](https://github.com/ljm198964-alt/quant-runner/actions/runs/39567996621) SUCCESS，实算 `ev_rows_appended=0`。提交实际盘口线诊断 commit `3686051`，真实 Actions [39568175630](https://github.com/ljm198964-alt/quant-runner/actions/runs/39568175630) SUCCESS，再次0条EV。真实默认盘口线：Mainz/Werder AH -0.75、OU 3.0/3.25；Aston Villa/Man City AH +0.75、OU 3.0/3.25；Arsenal/Everton AH -1.25/-1.5、OU 2.5/2.75。每个 fixture 6 条 M3 FORECAST（历史两批 × 3模型）。
+- 问题精确定位：仓库持久化的 M3 `shadow_ledger.jsonl` 中旧 forecast 仅有 AH0 3态和 OU over2.5 概率，不含 `score_probability_grid`；与当前盘线没有产生满足时间关系且为精确 AH0/OU2.5 的记录，故不能硬将概率套到其他线位算盈利。M3 shadow 现有代码已能将比分概率矩阵保存到**新预测**，但历史预测不能伪造回填。下一步要实际采集/使用有原始比分矩阵的 contemporaneous M3 forecast，计算精确盘口线的亚洲盘 EV 并确保持久化独立影子账本；不要把 Actions 临时 /tmp 文件说成保存成功。10-21本轮未发 TG、未改 M1/M2/MR1。
+- 关于开赛 UTC：本轮临时探针沿用了此前参考脚本对无时区 TotalCorner `start` 时间附加+08:00的逻辑，尚未独立核实账户时区，不能将这批诊断冒充已证实准确的执行时刻。数据来源必须真实标为 `TotalCorner default NOT Crown`。
+
 ## 2026-10-21 M3 按用户新指令实际接入 TotalCorner 普通 AH/OU 备用盘口
 - 用户最新明确指令：Crown 对应赛事没有盘口时先使用 TotalCorner 普通亚洲盘和大小球，不得继续把 Crown 唯一来源限制强加给 M3。M1/M2/MR1 原有皇冠要求保持不变；M3 普通盘口必须与 Crown 真实来源分别标识，不得混名。
 - GPT 直接通过授权 Mac 修改 `research/m3/totalcorner_crown_live_probe.py`：当对应 Crown AH/OU 任一 market 缺失时，实际请求 `/v1/match/odds/{id}?columns=asianList,goalList` 并输出按源区分的条数。公开 main commit `054e1a0`。
