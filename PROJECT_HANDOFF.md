@@ -1,3 +1,9 @@
+## 2026-10-21 M3 按用户新指令实际接入 TotalCorner 普通 AH/OU 备用盘口
+- 用户最新明确指令：Crown 对应赛事没有盘口时先使用 TotalCorner 普通亚洲盘和大小球，不得继续把 Crown 唯一来源限制强加给 M3。M1/M2/MR1 原有皇冠要求保持不变；M3 普通盘口必须与 Crown 真实来源分别标识，不得混名。
+- GPT 直接通过授权 Mac 修改 `research/m3/totalcorner_crown_live_probe.py`：当对应 Crown AH/OU 任一 market 缺失时，实际请求 `/v1/match/odds/{id}?columns=asianList,goalList` 并输出按源区分的条数。公开 main commit `054e1a0`。
+- [Actions 39567357525](https://github.com/ljm198964-alt/quant-runner/actions/runs/39567357525) **SUCCESS**，实际调用 VIP Token：M3 2026-10-24 候选赛程 ID 201585693（Mainz/Werder）普通 AH 5行、OU10行；201647220（Aston Villa/Man City）AH11、OU7；201647222（Arsenal/Everton）AH11、OU7。同次皇冠三场 AH/OU 均0。历史 Crown 200936028 AH292、OU369，200933914 AH211、OU311。
+- 这证明备用 TotalCorner `match/odds` 对真实前瞻赛事能够提供盘口，而非只有历史皇冠盘口。**尚未实现选取对应预测时点的实际价位、计算 M3 line-specific EV、落独立影子账本；目前只是可运行的实时备用报价探测，并非完整 M3 自动盈利链路**。后续直接把真实普通盘输入 M3 模型概率和独立 EV 账本，保持 TG 关闭；勿再把授权审计写成用户新增 Gate。
+
 ## 2026-10-21 真实 TotalCorner M3 赛程及 Crown API 直接执行
 - 用户明确要求 GPT 马上做，不再空审计。已通过在线授权 Mac、GitHub Actions 公开 Runner 既存 TOTALCORNER_TOKEN 实际发起官方 TotalCorner 请求，未要求用户操作终端或提供新 token。
 - 新增 `research/m3/totalcorner_schedule_discovery.py`、`.github/workflows/m3-totalcorner-live-discovery.yml`，公开 main commit `be417e5`；确切接口为 `/v1/match/schedule?date=YYYYMMDD`。2026-10-23 实际运行 [39565332639](https://github.com/ljm198964-alt/quant-runner/actions/runs/39565332639) SUCCESS，读到 84 场 3 页，与当天 M3 4 场唯一预测暂未找到可靠对应，不能硬配低相似队名。
