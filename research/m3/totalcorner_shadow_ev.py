@@ -25,6 +25,16 @@ def prices(row,market,forecast_at,kickoff):
     if first<=1 or second<=1:return None
     return (observed,market,line,first,second)
 def value(f,market,line,side,odd):
+    grid=f.get('score_probability_grid')
+    if grid:
+        outcome=0.0
+        coverage=0.0
+        for home_goals,row in enumerate(grid):
+            for away_goals,probability in enumerate(row):
+                _,net=settle_score(market,line,side,home_goals,away_goals,odd)
+                outcome+=net*probability
+                coverage+=probability
+        return outcome/coverage
     # Old M3 forecasts have AH0 and OU2.5 probabilities only.
     if market=='AH' and line==0:
         p=[f['ah_home_0_p_win'],f['ah_home_0_p_push'],f['ah_home_0_p_lose']]
