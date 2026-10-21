@@ -1,0 +1,18 @@
+name: M3 TotalCorner Crown Live Quote Probe
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Read Crown book for source IDs identified in live M3 schedule discovery
+        env:
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+        run: python -m research.m3.totalcorner_crown_live_probe --ids 201585693 201647220 201647222
