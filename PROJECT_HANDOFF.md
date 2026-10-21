@@ -1,3 +1,8 @@
+## 2026-10-21 23:12+08 M3 预注册独立候选模型实证框架已接入
+- 用户指令“有方案就直接做，朝可持续进化目标做，不要乱做”。公开 main 新增 `research/m3/evolution_candidates.py` 和 `research/m3/results/totalcorner/evolution_candidate_registration.json` commit `373467c`：对 poisson、dixon_coles、bivariate_poisson 各自的 1X2 概率预注册首个固定的研究 Challenger `0.90 * base + 0.10 / 3`，通过未来时序严格晚于预注册时刻的对应模型同场预测与赛果做配对比较，按时间分前后半组分别测 logloss/Brier，100个独立已结算赛事、20个独立日期和两个半组均超过暂定差值才标记“证据通过供人工审核”，绝不自动发布/调真实TG。此 shrinkage 是研究假设，不是证实优胜策略。现有真实已结算数仍为0，三个候选全部 HOLD_NOT_PROMOTED。
+- 每日控制工作流 `.github/workflows/m3-controlled-evolution.yml` commit `f87134f` 现在同时运行 `evolution_controller.py` 监控和 `evolution_candidates.py` 的正式前瞻配对 Challenger 检查，结果存入 `research/m3/results/totalcorner/evolution_challenger_status.json`。已真实执行 [Actions 39623770777](https://github.com/ljm198964-alt/quant-runner/actions/runs/39623770777) SUCCESS。旧控制器也保留独立结果。
+- 重要边界：已实现*首个预注册候选+每日受控样本外验证自动化*，仍未实现自动搜索多种新参数、完整模型重训练候选/正式自动晋级及安全回滚（没有足够样本验证；不得冒称全自动自我进化已经成型）。目前 shadow 账本用于研究，准确赛程UTC与真实投资 ROI 未验收。M1/MR1 正式模型未动。
+
 ## 2026-10-21 21:56+08 M3 受控持续进化第一阶段正式接入
 - 用户新目标：M3 三模型可持续进化，需各自独立评估、防过拟合，未验证不得自调正式策略。GPT 直接上线 `research/m3/evolution_controller.py` 和每日 UTC 01:10 `.github/workflows/m3-controlled-evolution.yml`，公开 commit `a68733f`，之后补充按赛果/比分概率矩阵计算每模型独立 1X2 logloss 与 Brier score，commit `f747a92`。实际 [Actions 39612641393](https://github.com/ljm198964-alt/quant-runner/actions/runs/39612641393) SUCCESS，运行检查及演进报告已有持久提交 `397471b`；新代码 [Actions 39612878426](https://github.com/ljm198964-alt/quant-runner/actions/runs/39612878426) 已触发，状态尚需核查。
 - 本轮现有真实前瞻结算数：poisson、dixon_coles、bivariate_poisson 均0，因此评分均null、候选自动晋级false；不能声称已学会自主盈利或已部署改进策略。新增门槛100场每模型独立已结算赛事、logloss差0.01、Brier差0.005目前只是候选研究安全阈值，**尚未经样本外验证，不是用户已确认盈利规则**。
