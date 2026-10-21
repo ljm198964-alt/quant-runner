@@ -1,0 +1,36 @@
+name: M3 TotalCorner Automatic Independent Shadow
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '10 */4 * * *'
+permissions:
+  contents: write
+concurrency:
+  group: m3-totalcorner-persistent-shadow
+  cancel-in-progress: false
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Discover future M3 matches and record source provenance
+        env:
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+        run: |
+          python -m research.m3.totalcorner_auto_shadow --ledger research/m3/results/openfootball/shadow_ledger.jsonl --output research/m3/results/totalcorner/independent_shadow_ledger.jsonl
+      - name: Persist append-only isolated M3 shadow ledger
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add research/m3/results/totalcorner/independent_shadow_ledger.jsonl
+          if ! git diff --cached --quiet; then
+            git commit -m 'Persist M3 TotalCorner independent shadow matching evidence'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
