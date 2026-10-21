@@ -1,0 +1,172 @@
+{
+  "generated_at_utc": "2026-10-21T15:24:29.881325+00:00",
+  "models": {
+    "bivariate_poisson": {
+      "candidates": {
+        "shrink_05": {
+          "dates": 0,
+          "half_improvements": [
+            {
+              "brier": null,
+              "logloss": null
+            },
+            {
+              "brier": null,
+              "logloss": null
+            }
+          ],
+          "paired_fixtures": 0,
+          "passed": false
+        },
+        "shrink_10": {
+          "dates": 0,
+          "half_improvements": [
+            {
+              "brier": null,
+              "logloss": null
+            },
+            {
+              "brier": null,
+              "logloss": null
+            }
+          ],
+          "paired_fixtures": 0,
+          "passed": false
+        },
+        "shrink_15": {
+          "dates": 0,
+          "half_improvements": [
+            {
+              "brier": null,
+              "logloss": null
+            },
+            {
+              "brier": null,
+              "logloss": null
+            }
+          ],
+          "paired_fixtures": 0,
+          "passed": false
+        }
+      },
+      "decision": "HOLD",
+      "distinct_dates": 0,
+      "observations": 0,
+      "previous_shadow_active": "baseline",
+      "shadow_active": "baseline"
+    },
+    "dixon_coles": {
+      "candidates": {
+        "shrink_05": {
+          "dates": 0,
+          "half_improvements": [
+            {
+              "brier": null,
+              "logloss": null
+            },
+            {
+              "brier": null,
+              "logloss": null
+            }
+          ],
+          "paired_fixtures": 0,
+          "passed": false
+        },
+        "shrink_10": {
+          "dates": 0,
+          "half_improvements": [
+            {
+              "brier": null,
+              "logloss": null
+            },
+            {
+              "brier": null,
+              "logloss": null
+            }
+          ],
+          "paired_fixtures": 0,
+          "passed": false
+        },
+        "shrink_15": {
+          "dates": 0,
+          "half_improvements": [
+            {
+              "brier": null,
+              "logloss": null
+            },
+            {
+              "brier": null,
+              "logloss": null
+            }
+          ],
+          "paired_fixtures": 0,
+          "passed": false
+        }
+      },
+      "decision": "HOLD",
+      "distinct_dates": 0,
+      "observations": 0,
+      "previous_shadow_active": "baseline",
+      "shadow_active": "baseline"
+    },
+    "poisson": {
+      "candidates": {
+        "shrink_05": {
+          "dates": 0,
+          "half_improvements": [
+            {
+              "brier": null,
+              "logloss": null
+            },
+            {
+              "brier": null,
+              "logloss": null
+            }
+          ],
+          "paired_fixtures": 0,
+          "passed": false
+        },
+        "shrink_10": {
+          "dates": 0,
+          "half_improvements": [
+            {
+              "brier": null,
+              "logloss": null
+            },
+            {
+              "brier": null,
+              "logloss": null
+            }
+          ],
+          "paired_fixtures": 0,
+          "passed": false
+        },
+        "shrink_15": {
+          "dates": 0,
+          "half_improvements": [
+            {
+              "brier": null,
+              "logloss": null
+            },
+            {
+              "brier": null,
+              "logloss": null
+            }
+          ],
+          "paired_fixtures": 0,
+          "passed": false
+        }
+      },
+      "decision": "HOLD",
+      "distinct_dates": 0,
+      "observations": 0,
+      "previous_shadow_active": "baseline",
+      "shadow_active": "baseline"
+    }
+  },
+  "production_changed": false,
+  "protocol": "M3_SHADOW_EVOLUTION_REGISTRY_V1",
+  "registered_at_utc": "2026-10-21T15:12:00Z",
+  "scope": "shadow_calibration_selection_only",
+  "tg_changed": false
+}
