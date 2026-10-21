@@ -1,0 +1,9 @@
+{
+  "protocol": "M3_CANDIDATE_REGISTRATION_V1",
+  "registered_at_utc": "2026-10-21T15:12:00Z",
+  "candidate_id": "M3_SHRINK_1X2_UNIFORM_10PCT_V1",
+  "rule": "candidate_1x2_probability = 0.90 * base_probability + 0.10 / 3",
+  "comparison": "same model, same distinct fixture, strictly after registration, chronological halves",
+  "upgrade_mode": "research_only_manual_review",
+  "production_changes": false
+}
