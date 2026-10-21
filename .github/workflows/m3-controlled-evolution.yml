@@ -23,11 +23,14 @@ jobs:
       - name: Score pre-registered independent challenger on future out-of-sample fixtures
         run: |
           python -m research.m3.evolution_candidates --ledger research/m3/results/totalcorner/forward_ev_ledger.jsonl --registration research/m3/results/totalcorner/evolution_candidate_registration.json --report research/m3/results/totalcorner/evolution_challenger_status.json
+      - name: Update three-model shadow version registry with rollback
+        run: |
+          python -m research.m3.evolution_registry --ledger research/m3/results/totalcorner/forward_ev_ledger.jsonl --registration research/m3/results/totalcorner/evolution_candidate_registration.json --state research/m3/results/totalcorner/evolution_registry.json
       - name: Persist evidence report
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add research/m3/results/totalcorner/evolution_status.json research/m3/results/totalcorner/evolution_challenger_status.json
+          git add research/m3/results/totalcorner/evolution_status.json research/m3/results/totalcorner/evolution_challenger_status.json research/m3/results/totalcorner/evolution_registry.json
           if ! git diff --cached --quiet; then
             git commit -m 'Persist M3 independent evolution eligibility gate'
             git pull --rebase origin main
