@@ -1,0 +1,19 @@
+name: M3 TotalCorner Default Odds EV Read-only
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  shadow:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Live M3 AH0 OU2.5 expected returns with independent non-Crown source label
+        env:
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+        run: |
+          python -m research.m3.totalcorner_shadow_ev --ledger research/m3/results/openfootball/shadow_ledger.jsonl --private-output "$RUNNER_TEMP/m3-totalcorner-default-shadow.jsonl"
