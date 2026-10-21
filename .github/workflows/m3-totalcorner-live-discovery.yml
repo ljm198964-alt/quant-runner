@@ -1,0 +1,24 @@
+name: M3 TotalCorner Live Schedule Discovery
+on:
+  workflow_dispatch:
+    inputs:
+      fixture_date:
+        description: M3 source fixture calendar date YYYY-MM-DD
+        required: true
+        type: string
+permissions:
+  contents: read
+jobs:
+  discovery:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Discover real source IDs for saved M3 fixture date
+        env:
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+          FIXTURE_DATE: ${{ inputs.fixture_date }}
+        run: python -m research.m3.totalcorner_schedule_discovery --ledger research/m3/results/openfootball/shadow_ledger.jsonl --date "$FIXTURE_DATE"
