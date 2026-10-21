@@ -1,18 +1,18 @@
 {
   "protocol": "M3_UPSTREAM_RUN_RECEIPT_V1",
-  "utc": "2026-10-20T23:18:11.102184+00:00",
-  "workflow_run_id": "39513630956",
+  "utc": "2026-10-21T05:03:53.532114+00:00",
+  "workflow_run_id": "39547104915",
   "workflow_attempt": "1",
-  "commit": "8bd15b5e2332a8fbe2fb3485513e6d3ba5184eec",
+  "commit": "a1967c0d919f8900753d4ef559764032cd51e1ef",
   "v4_step_outcome": "success",
   "original_v4_metrics_available": true,
   "ah_trained": true,
   "penaltyblog_oos_report_available": true,
   "crown_roi_claim": null,
   "telegram_sent": false,
-  "penaltyblog_oos_prediction_rows": 51081,
-  "penaltyblog_oos_input_fingerprint_sha256": "5fbdf985cb8be4081e69959dfe7bd4e9685c8c556471a8bb11551c4b38809db1",
+  "penaltyblog_oos_prediction_rows": 45603,
+  "penaltyblog_oos_input_fingerprint_sha256": "8b14da514735ace6b0fd4023af996dea0b3493f2fee526ee399543d0e55e85a1",
   "penaltyblog_version": "1.13.1",
-  "penaltyblog_fitted_models_count": 162,
-  "penaltyblog_model_parameters_sha256": "7c675e2d1c82c704ce3af476c624eb6e6082422e0692c937afff1385f884a795"
+  "penaltyblog_fitted_models_count": 147,
+  "penaltyblog_model_parameters_sha256": "99154e041a83db9c52dd3632ba6a3dc44f3f8dd534c8340cbeacebfb6cd3bd8d"
 }
