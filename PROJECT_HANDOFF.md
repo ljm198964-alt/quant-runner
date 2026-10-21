@@ -1,3 +1,8 @@
+## 2026-10-21 19:57+08 M3 真实预测-盘口-EV 闭环推进
+- 复核公开 Runner 已并行落地 `research/m3/totalcorner_forward_ev.py`，独立定时 `.github/workflows/m3-totalcorner-forward-ev.yml` 每4小时 UTC :25 运行，已成功历史动作记录包括 [39585311635](https://github.com/ljm198964-alt/quant-runner/actions/runs/39585311635)。审计时主分支 `research/m3/results/totalcorner/forward_ev_ledger.jsonl` 包含351事件：`M3_TOTALCORNER_FORWARD_FORECAST_V1` 27条完整比分矩阵前瞻快照、`M3_TOTALCORNER_FORWARD_EV_V1` 324条真实报价 EV 观察（全部 `default_unspecified_NOT_CROWN`），赛事源日2026-10-24；**不是324笔正式投注，尚未实际ROI**。注意这些记录不应归入 M1/MR1 正式实战。
+- 本轮新提交 `f4f1ce5` 修改原 `research/m3/totalcorner_shadow_ev.py`，将此前硬编码三场ID改为按近期日期逐页读 TotalCorner schedule、联赛+严格正规化主客队别名匹配，复用现有已记录 M3 预测；已触发 [Actions 39595894441](https://github.com/ljm198964-alt/quant-runner/actions/runs/39595894441)，最近核对仍 in_progress，不可称其成功或有新EV。此旧预测工作流仍无网格，有可能0条EV；更重要的真实新矩阵链路是独立 `totalcorner_forward_ev.py` 及其持久 forward EV ledger。
+- 剩余不可伪称已完成：M3 交易意义下 exact UTC 开赛验证仍不足（fresh forward ledger `source_wall_clock_timezone_verified=false`、`kickoff_utc_verified=false`）；当前324条为研究 EV 而非已可验证下注时点盘口，结算/ROI 依真实赛果后再核对。历史旧概率矩阵不补写成原始预测。TG保持关闭，正式模型原皇冠来源不变。
+
 ## 2026-10-21 M3 影子报价定时和证据持久化推进（未完结）
 - 用户要求完成全部剩余工作。通过在线授权 Mac 在公开 main 修改 `.github/workflows/m3-totalcorner-shadow-ev.yml` 和 `research/m3/totalcorner_shadow_ev.py`，commit `aa58ccf`：每4小时 UTC :50 定时运行、增加原脚本同文件记录去重，并对每次运行尝试生成的独立 JSONL 作为 GitHub Actions artifact 保存90天（不再只有 runner 临时目录）。
 - 真实 [GitHub Actions 39576539453](https://github.com/ljm198964-alt/quant-runner/actions/runs/39576539453) SUCCESS，`m3-totalcorner-default-ev-39576539453-1` artifact 成功上传、尚未过期、大小 186 bytes；不代表已产生 EV，当前 M3 独立 EV 仍为0。**这是逐运行artifact证据，不是跨运行长期累计不可过期正式账本，不能宣布全部完成。**
