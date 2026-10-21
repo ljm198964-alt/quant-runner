@@ -1,3 +1,8 @@
+## 2026-10-21 M3 Crown独立桥接实作与真实现有账本验证
+- 用户明确要求GPT直接做、不可转Codex。已在公开main提交`research/m3/crown_bridge.py` commit `ef0a0f820c6c5e00cbd662d393e16a16e32fa17e`，并强化预测model/version身份绑定 commit `4a5153d99c9e58dfb3415e067c8231bdd89c4ae9`。该脚本通过已存在的`crown_fixture_join_audit.check_pair`对M3正式已存forward预测+独立证据crosswalk做唯一身份/球队/联赛/UTC核验，合格的私人原始Crown响应交`crown_totalcorner_import.normalize_totalcorner_payload`，再交`crown_shadow_ledger.append_records`进行授权检查、私有报价留存和EV计算；不发HTTP请求、不发TG、不改其他模型。
+- 已经在用户在线Mac实际执行源码Python编译与桥接合成fixture验证PASS，进一步读取生产保存的完整16MB M3 shadow_ledger.jsonl，使用空verified-fixtures只读运行`python -m research.m3.crown_bridge`结果`eligible_forecast_fixture_pairs=0, crown_api_requests=0`。是当前实际**无独立核验fixture crosswalk**，不是桥接程序技术测试失败。另真实本机unittest指定18项PASS，**未执行授权实价导入**。
+- 重要未完成：自动获取`TotalCorner match_id`、独立准确UTC开赛证据/账户时区证据、复用已有授权所允许的M3自动采集留存范围仍无可核实源；新桥接只支持私人已有合法响应的离线导入。现阶段Crown配对和收益仍0/N/A，**不得宣称端到端真实Crown API接入、Actions全链成功或正式战绩**。严禁增加Gate、非Crown赔率、私有仓库默认部署。
+
 ## 2026-10-21 M3 Crown接线实作进度
 - 用户要求停止重复审计、快速复用既有TotalCorner Crown API。已在公开main实际提交`research/m3/crown_fixture_join_audit.py` commit `d47af1da14e6ac1cd0195969e5d808ab9710520e`和`test_crown_fixture_join_audit.py` commit `e67a9c651571dd0cdabcaca10d68fb1d8289b4a1`，实现严格赛事identity + league/season/球队精确匹配、UTC解析、独立kickoff证据采集时间检查，失败拒绝配对，不调用API、不读其他模型账本。
 - 通过授权Mac读取GitHub main提交后文件，实际`py_compile`两文件，运行M3精确ID/UTC有效、无时区拒绝、球队变化拒绝的基础smoke PASS。**仅代码提交与基础测试成功，尚未将预校验接入M3 Crown自动采集、未获得真实Crown报价或EV/ROI，也未触发新GitHub Actions验收。**
