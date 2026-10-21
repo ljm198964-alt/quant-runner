@@ -1,7 +1,7 @@
 {
   "protocol": "M3_PENALTYBLOG_STRICT_SEASON_FORWARD_V1",
   "model_identity": "M3",
-  "generated_utc": "2026-10-21T13:59:37.197356+00:00",
+  "generated_utc": "2026-10-21T20:18:15.355484+00:00",
   "data_source": "Football-Data.co.uk match-result CSV; only Date/HomeTeam/AwayTeam/FTHG/FTAG consumed; bookmaker columns ignored",
   "data_source_url": "https://www.football-data.co.uk/",
   "input_directory": "upstream/football-predictor/data/raw",
@@ -489,7 +489,7 @@
   ],
   "input_fingerprint_sha256": "5fbdf985cb8be4081e69959dfe7bd4e9685c8c556471a8bb11551c4b38809db1",
   "test_set_fingerprint_sha256": "c99206973fbc9bd97730fa428b3f37233c4674ab9328a18f2fcceec0d92193fa",
-  "data_changed_vs_previous_snapshot": true,
+  "data_changed_vs_previous_snapshot": false,
   "usable_matches": 19093,
   "league_counts": {
     "B1": 2637,
@@ -519,7 +519,7 @@
   "handicap_diagnostic": "home Asian Handicap 0.0 (draw-no-bet); generic probability diagnostic only, no Crown price/line linkage or ROI",
   "ou_diagnostic": "Over 2.5 probability diagnostic only; no Crown price/line linkage or ROI",
   "penaltyblog_version": "1.13.1",
-  "quant_runner_commit": "6a582ba6f813a3063ffb86a9ec5bea162fc7bdcd",
+  "quant_runner_commit": "9fcac9f367c4534f6c46c192e8b40ce8e83a9ae8",
   "football_predictor_commit": "2f75be0f26363e26a42aaff34ede68f35635da02",
   "fitted_models_count": 162,
   "models": [
