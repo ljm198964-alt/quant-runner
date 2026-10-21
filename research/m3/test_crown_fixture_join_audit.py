@@ -16,8 +16,8 @@ class FixtureJoinAuditTests(unittest.TestCase):
     def test_unverifiable_source(self):
         self.s.pop('identity_evidence_uri')
         self.assertFalse(check_pair(self.f, self.s))
-    def test_forecast_after_evidence(self):
-        self.s['kickoff_evidence_captured_at_utc'] = '2026-10-21T08:00:00Z'
+    def test_schedule_evidence_created_after_forecast_is_rejected(self):
+        self.s['kickoff_evidence_captured_at_utc'] = '2026-10-21T10:00:00Z'
         self.assertFalse(check_pair(self.f, self.s))
 
 if __name__ == '__main__':
