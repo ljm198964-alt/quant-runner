@@ -1,3 +1,9 @@
+## 2026-10-21 M3影子结算原因确认及B1候选数据核验
+- 已查生产最新M3 shadow performance（generated UTC 2026-10-20T14:00:44Z），4215有效预测、0 settled、无Crown。最新Actions shadow [39514226250](https://github.com/ljm198964-alt/quant-runner/actions/runs/39514226250) 与stability [39514969033](https://github.com/ljm198964-alt/quant-runner/actions/runs/39514969033) 都SUCCESS，但结果文件仍旧、不能推定新增训练或结算。
+- 阅读`research/m3/openfootball_shadow.py`真实结算实现：每次只拿已保存canonical FORECAST的fixture identity与**后来获得且与该身份匹配的正式FT**形成SETTLEMENT；预测只针对源日历日>=当前UTC日期+3天。首批2026-10-20预测的最早候选日为2026-10-23，所以2026-10-21零结算是符合时间窗口的正常现象，非直接证实结算故障。不得使用本次看到的历史FT补写赛前预测或提前结算。
+- 直接读取`oladeeayo/open-matchday`的B1 `fixtures_2627.csv`，235条fixture记录、首条2026-10-23；`results_2627.csv`含FT和`source=espn`；`build_summary.json`最新build UTC2026-10-20T03:10:46Z。根目录`LICENSE`查询返回404，源资料README的time为“CET-1 where known”，IANA时区、DST及衍生许可仍未核实。**不能自动将此数据并入M3或作为精确UTC赛前证据**。新增审计更新commit `5c473382682cbc940f19740799f8b163c8b7efea`。无Crown调用、新EV/ROI或TG，M1/M2/MR1未改。
+- 继续等待首批forecast对应赛果在日期之后正式到达，并在拥有时间/身份/许可证据时只读核验结算；若截至首批比赛完结及上游赛果出现后仍0，再追具体身份不匹配等错误。尚未确认B1可进入自动数据源。
+
 ## 2026-10-20 M3无盘口研究继续：B1来源新线索与现状核对
 - GitHub当前运行核实：M3 OpenFootball shadow `39438762203` SUCCESS、Saved OOS Stability `39438762094` SUCCESS；生产`results/openfootball/latest_shadow_performance.json` generated_utc 2026-10-20T14:00:44Z，canonical=4215，已结算=0，Crown=0，EV/ROI=N/A；`results/crown/latest_pairing_status.json` generated_utc 2026-10-20T13:42:29Z，AH/OU有效历史配对均0、自动前瞻Crown采集尚未开始、权限未验证。没有制造新增结算或盘口。
 - 新只读审计开源`oladeeayo/open-matchday`项目：官方README称75赛事的2026/27 fixtures/results，`leagues.py`显示`BEL_1_pro-league`、ESPN `bel.1`与FD B1映射，可能补齐现有OpenFootball缺的比利时联赛，但`time`字段声称“CET-1 where known”，缺严格IANA UTC/DST证据，且上游衍生许可需验证。不得直接当真实 UTC kickoff/赛前可见信息、不得回填旧预测、不得当Crown报价。研究记录已提交`research/m3/M3_ADDITIONAL_FIXTURE_SOURCE_AUDIT_20261020.md` commit `1475fe332e6b12a473eaf052494857bd0fafcaa0`；**仅发现候选、未接入/未运行新预测或结算**。
