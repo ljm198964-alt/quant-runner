@@ -68,7 +68,19 @@ def main():
                     records.append({'protocol':'M3_TOTALCORNER_DEFAULT_SHADOW_EV_V1','forecast_id':f['forecast_id'],'model':f['model'],'fixture_identity_id':f['fixture_identity_id'],'totalcorner_match_id':mid,'provider':'TotalCorner','bookmaker':'default_unspecified_NOT_CROWN','market':market,'line':line,'side':side,'decimal_odd':odd,'observed_at_utc':observed.isoformat(),'forecasted_at_utc':f['forecasted_at_utc'],'kickoff_at_utc':kickoff.isoformat(),'expected_unit_return':ev,'telegram_sent':False,'formal_order':False,'settled':False})
         time.sleep(2.2)
     a.private_output.parent.mkdir(parents=True,exist_ok=True)
+    # Idempotent append: re-running the shadow scan must not double-count quotes.
+    existing=set()
+    if a.private_output.exists():
+        for line in a.private_output.read_text().splitlines():
+            if line.strip():
+                old=json.loads(line)
+                existing.add((old['forecast_id'],old['totalcorner_match_id'],old['market'],old['line'],old['side'],old['observed_at_utc']))
+    new=[]
+    for r in records:
+        key=(r['forecast_id'],r['totalcorner_match_id'],r['market'],r['line'],r['side'],r['observed_at_utc'])
+        if key not in existing:
+            new.append(r);existing.add(key)
     with a.private_output.open('a') as file:
-        for r in records:file.write(json.dumps(r,ensure_ascii=False)+'\n')
-    print(json.dumps({'status':'COMPLETED','source':'TotalCorner default NOT Crown','ev_rows_appended':len(records),'forecast_ids':len(set(r['forecast_id'] for r in records)),'private_path':str(a.private_output),'telegram_sent':False,'formal_order':False}))
+        for r in new:file.write(json.dumps(r,ensure_ascii=False)+'\n')
+    print(json.dumps({'status':'COMPLETED','source':'TotalCorner default NOT Crown','ev_rows_appended':len(new),'forecast_ids':len(set(r['forecast_id'] for r in records)),'private_path':str(a.private_output),'telegram_sent':False,'formal_order':False}))
 if __name__=='__main__':main()
