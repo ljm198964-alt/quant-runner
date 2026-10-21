@@ -1,3 +1,10 @@
+## 2026-10-21 17:00+08 M3 完整比分矩阵 EV 代码接线与真实运行
+- GPT 直接读取公开 main M3 账本：12,645事件、8,430条raw FORECAST，现存 FORECAST score_probability_grid=0，最新预测仍停在 2026-10-20 两个时间点。旧存储账本不能当作已有任意盘口概率矩阵。
+- 已修改 `research/m3/totalcorner_shadow_ev.py`：当一条**已记录前瞻**提供 `score_probability_grid` 时，直接复用 `research.m3.probabilities.settle_score` 对 AH/OU 精确季度盘口逐比分计算 EV，commit `fcca35329fdca7d4b13ac994df3907cb9d9906d9`（公开 main）；旧无网格 forecast 仅按原有 AH0/OU2.5 概率精确盘口处理，不捏造旧预测。
+- 在线授权 Mac 对矩阵 EV 做了 synthetic score matrix 四例执行（含 AH ±0.75、OU 1.75 的结算），代码路径可执行，**不是当前实际报价 EV 成功**。
+- 已实际触发 M3 官方 shadow Actions [39573779432](https://github.com/ljm198964-alt/quant-runner/actions/runs/39573779432)：SUCCESS，43+单测步骤 success；运行 receipt UTC 2026-10-21T09:02:35Z 指出数据/赛程指纹不变，`forecasts_appended=0`、`settlements_appended=0`、`unique_forecast_keys=4215`、`ev_available=false`、`roi=null`；账本 SHA 仍 `0645da41b79bbec056081188ba6fb52b4b4a40b077f743eccc7e6645fefbc21e`。没有新的带 grid forecast，不能声称本轮已产生真实 EV 或独立持久账本。
+- 仍缺：捕获带 grid 的真正**新产生** M3 前瞻，并关联真实 TotalCorner 普通 AH/OU 行，完成保存可追踪的独立影子 EV 账本；现有 `m3-totalcorner-shadow-ev.yml` 只写 GitHub Runner 临时路径，执行完不会自动持久保留，这一点不能隐瞒。M3 TG、其他实战模型不变，无新增用户规则。
+
 ## 2026-10-21 M3 TotalCorner 普通盘口 EV 实际执行：真实线位缺概率矩阵
 - 按用户已确认的 M3 备用 TotalCorner 普通 AH/OU（非 Crown）路径，直接新增 `research/m3/totalcorner_shadow_ev.py` commit `08be076`，复用已有 `research/m3/probabilities.py` 的亚洲盘概率/盈亏逻辑，对保存的 M3 forecast 和已知同场 TotalCorner odds 默认盘口尝试计算 AH0、OU2.5 EV。新增手动 Actions workflow `m3-totalcorner-shadow-ev.yml` commit `10adf53`，只在 runner 临时私有文件写 shadow（没有持久化，不能称生产账本成功）。
 - 真实 Actions [39567996621](https://github.com/ljm198964-alt/quant-runner/actions/runs/39567996621) SUCCESS，实算 `ev_rows_appended=0`。提交实际盘口线诊断 commit `3686051`，真实 Actions [39568175630](https://github.com/ljm198964-alt/quant-runner/actions/runs/39568175630) SUCCESS，再次0条EV。真实默认盘口线：Mainz/Werder AH -0.75、OU 3.0/3.25；Aston Villa/Man City AH +0.75、OU 3.0/3.25；Arsenal/Everton AH -1.25/-1.5、OU 2.5/2.75。每个 fixture 6 条 M3 FORECAST（历史两批 × 3模型）。
