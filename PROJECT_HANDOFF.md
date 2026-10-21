@@ -1,3 +1,8 @@
+## 2026-10-21 M3 三模型影子版本注册和受控晋级回滚已执行
+- 根据用户“开始吧”，在公开main增加 `research/m3/evolution_registry.py`（commit `ac47a1d`）：对每个 poisson/dixon_coles/bivariate_poisson 分别维护基础版和三个固定的预注册概率校准 challenger（向1/3收缩0.05、0.10、0.15），同模型/同场对照，严格只读取注册后预测以及独立结算，以时间前后半段的 logloss/Brier改善、100场与20独立比赛日的暂定安全资格进行影子版晋级判断；已提升版本不满足条件时回滚基础版。该步骤修改**影子注册表**，不修改实际预测器、生产单或Telegram。由于0场已结算，新候选全部未晋级，三个模型 `HOLD/baseline/0`。
+- .github/workflows/m3-controlled-evolution.yml 每日任务现已生成并持久化 `research/m3/results/totalcorner/evolution_registry.json`。实际运行 [Actions 39625353811](https://github.com/ljm198964-alt/quant-runner/actions/runs/39625353811) **SUCCESS**。代码提交 `ac47a1d`。
+- 重要事实边界：已完成固定候选族的研究版本生成/注册、未来样本外比较、影子晋级回滚状态机制；**尚未实现新的 penaltyblog 模型超参数自动搜索/重训练，亦未将 shadow_active 实际应用到未来比分概率预测或盘口 EV**，不可称已实现真正持续自主更新盈利模型。没有足够赛果，不可声称策略获得改进。验证门槛未获用户确认，只属于保守研究规则。
+
 ## 2026-10-21 23:12+08 M3 预注册独立候选模型实证框架已接入
 - 用户指令“有方案就直接做，朝可持续进化目标做，不要乱做”。公开 main 新增 `research/m3/evolution_candidates.py` 和 `research/m3/results/totalcorner/evolution_candidate_registration.json` commit `373467c`：对 poisson、dixon_coles、bivariate_poisson 各自的 1X2 概率预注册首个固定的研究 Challenger `0.90 * base + 0.10 / 3`，通过未来时序严格晚于预注册时刻的对应模型同场预测与赛果做配对比较，按时间分前后半组分别测 logloss/Brier，100个独立已结算赛事、20个独立日期和两个半组均超过暂定差值才标记“证据通过供人工审核”，绝不自动发布/调真实TG。此 shrinkage 是研究假设，不是证实优胜策略。现有真实已结算数仍为0，三个候选全部 HOLD_NOT_PROMOTED。
 - 每日控制工作流 `.github/workflows/m3-controlled-evolution.yml` commit `f87134f` 现在同时运行 `evolution_controller.py` 监控和 `evolution_candidates.py` 的正式前瞻配对 Challenger 检查，结果存入 `research/m3/results/totalcorner/evolution_challenger_status.json`。已真实执行 [Actions 39623770777](https://github.com/ljm198964-alt/quant-runner/actions/runs/39623770777) SUCCESS。旧控制器也保留独立结果。
