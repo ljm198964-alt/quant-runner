@@ -11,6 +11,7 @@ from research.m3.totalcorner_schedule_discovery import get_schedule
 from research.m3.totalcorner_auto_shadow import match_one
 from research.m3.totalcorner_shadow_ev import fetch
 from research.m3.probabilities import settle_score
+from research.m3.evolution_registry import CANDIDATES
 
 UTC=datetime.timezone.utc
 def hash_id(values):
@@ -77,6 +78,9 @@ def run(root,output,max_dates,run_id):
             if fixture['source_date']!=day:continue
             source=match_one(fixture,schedule)
             if source:matched_by_league.setdefault(fixture['league'],[]).append((fixture,source))
+    registry_path=output.parent/'evolution_registry.json'
+    registry=json.loads(registry_path.read_text()) if registry_path.exists() else {}
+    active={m:v.get('shadow_active','baseline') for m,v in registry.get('models',{}).items()}
     existing=set()
     if output.exists():
         for line in output.read_text().splitlines():
@@ -103,12 +107,24 @@ def run(root,output,max_dates,run_id):
                 forecast_id=hash_id(['M3_FRESH_FORWARD_V1',run_id,fixture['fixture_identity_id'],model_name,forecasted_at])
                 forecast_count+=1
                 grid_hash=hash_id(matrix)
+                shadow_active=active.get(model_name,'baseline')
+                if shadow_active not in ('baseline',*CANDIDATES):raise ValueError('unregistered shadow version')
+                calibrated=None
+                if shadow_active!='baseline':
+                    shrink=CANDIDATES[shadow_active]
+                    # Preserve original full score grid; research calibration alters only
+                    # separate 1X2 diagnostic probabilities, not AH/OU score-grid EV.
+                    home=sum(v for h,row in enumerate(matrix) for a,v in enumerate(row) if h>a)
+                    draw=sum(row[h] for h,row in enumerate(matrix) if h<len(row))
+                    away=max(0.,1-home-draw)
+                    calibrated=[(1-shrink)*p+shrink/3 for p in (home,draw,away)]
                 forecast_event={'protocol':'M3_TOTALCORNER_FORWARD_FORECAST_V1',
                     'forecast_id':forecast_id,'forecasted_at_utc':forecasted_at,
                     'model':model_name,'fixture_identity_id':fixture['fixture_identity_id'],
                     'source_fixture_date':fixture['source_date'],'home_team':fixture['home_team'],
                     'away_team':fixture['away_team'],'score_probability_grid':matrix,
-                    'score_grid_sha256':grid_hash,'training_cutoff_utc_date':now.date().isoformat(),
+                    'score_grid_sha256':grid_hash,'shadow_version':shadow_active,
+                    'shadow_calibrated_1x2':calibrated,'training_cutoff_utc_date':now.date().isoformat(),
                     'formal_order':False,'telegram_sent':False,'run_id':run_id}
                 forecast_event['event_id']=hash_id(['M3_FORECAST_EVENT',forecast_id])
                 if forecast_event['event_id'] not in existing:
@@ -130,7 +146,8 @@ def run(root,output,max_dates,run_id):
                             'source_fixture_date':fixture['source_date'],'home_team':fixture['home_team'],
                             'away_team':fixture['away_team'],'totalcorner_match_id':str(src['id']),
                             'provider':'TotalCorner','bookmaker':bookmaker,
-                            'score_grid_sha256':grid_hash,'market':market,'line':line,'side':side,'decimal_odd':decimal,
+                            'score_grid_sha256':grid_hash,'shadow_version':shadow_active,
+                            'ev_probability_version':'baseline_full_score_grid','market':market,'line':line,'side':side,'decimal_odd':decimal,
                             'expected_unit_return':calculate(matrix,market,line,side,decimal),
                             'quote_snapshot_recorded_utc':market_captured_at,
                             'source_wall_clock_timezone_verified':False,
