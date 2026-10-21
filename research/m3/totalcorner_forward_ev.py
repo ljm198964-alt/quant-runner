@@ -3,7 +3,7 @@
 New records only; never backfills older recorded forecasts. Research shadow, no Telegram.
 """
 from __future__ import annotations
-import argparse,datetime,hashlib,json,math,os,time
+import argparse,datetime,hashlib,json,math,os,time,urllib.parse,urllib.request
 from pathlib import Path
 import pandas as pd
 from research.m3.openfootball_shadow import read_openfootball,MODELS,_serialize_score_probability_grid
@@ -15,6 +15,21 @@ from research.m3.probabilities import settle_score
 UTC=datetime.timezone.utc
 def hash_id(values):
     return hashlib.sha256(json.dumps(values,sort_keys=True,ensure_ascii=False,separators=(',',':')).encode()).hexdigest()
+def fetch_crown(mid,token):
+    url='https://api.totalcorner.com/v1/match/bookmaker_odds/'+mid+'?'+urllib.parse.urlencode({'token':token,'bookmaker':'crown','columns':'asianList,goalList'})
+    for retry in range(7):
+        with urllib.request.urlopen(urllib.request.Request(url,headers={'Accept':'application/json'}),timeout=30) as response:
+            payload=json.load(response)
+        if payload.get('success')==1:
+            matches=[m for m in payload.get('data',[]) if str(m.get('id'))==mid]
+            if len(matches)!=1:return {}
+            books=[x for x in matches[0].get('bookmakers',[]) if x.get('slug')=='crown']
+            return books[0] if len(books)==1 else {}
+        error=payload.get('error')
+        if not isinstance(error,dict) or error.get('code')!='TOO_MANY_REQUEST' or retry==6:
+            return {}
+        time.sleep(11)
+    return {}
 def money(line_raw):
     parts=[float(x) for x in str(line_raw).split(',')]
     if not (1<=len(parts)<=2 and all(math.isfinite(x) for x in parts)):raise ValueError('invalid Asian line')
@@ -74,7 +89,7 @@ def run(root,output,max_dates,run_id):
         for fixture,src in pairs:
             sid=str(src['id'])
             if sid not in market_cache:
-                market_cache[sid]=(fetch(sid,os.environ['TOTALCORNER_TOKEN']),datetime.datetime.now(UTC).isoformat())
+                market_cache[sid]=(fetch(sid,os.environ['TOTALCORNER_TOKEN']),fetch_crown(sid,os.environ['TOTALCORNER_TOKEN']),datetime.datetime.now(UTC).isoformat())
                 time.sleep(2.2)
         for model_name,cls in MODELS.items():
             model=cls(league_train.home_goals,league_train.away_goals,league_train.home_team,league_train.away_team)
@@ -87,12 +102,25 @@ def run(root,output,max_dates,run_id):
                 matrix=_serialize_score_probability_grid(distribution)
                 forecast_id=hash_id(['M3_FRESH_FORWARD_V1',run_id,fixture['fixture_identity_id'],model_name,forecasted_at])
                 forecast_count+=1
-                match,market_captured_at=market_cache[str(src['id'])]
+                grid_hash=hash_id(matrix)
+                forecast_event={'protocol':'M3_TOTALCORNER_FORWARD_FORECAST_V1',
+                    'forecast_id':forecast_id,'forecasted_at_utc':forecasted_at,
+                    'model':model_name,'fixture_identity_id':fixture['fixture_identity_id'],
+                    'source_fixture_date':fixture['source_date'],'home_team':fixture['home_team'],
+                    'away_team':fixture['away_team'],'score_probability_grid':matrix,
+                    'score_grid_sha256':grid_hash,'training_cutoff_utc_date':now.date().isoformat(),
+                    'formal_order':False,'telegram_sent':False,'run_id':run_id}
+                forecast_event['event_id']=hash_id(['M3_FORECAST_EVENT',forecast_id])
+                if forecast_event['event_id'] not in existing:
+                    rows.append(forecast_event);existing.add(forecast_event['event_id'])
+                match,crown,market_captured_at=market_cache[str(src['id'])]
                 # Market request was made before the forecast computation; this is
                 # a valid current comparison snapshot, not an execution quote.
                 for market,field,sides in [('AH','asian_list',('home','away')),('OU','goal_list',('over','under'))]:
-                    quote=get_latest(match.get(field))
+                    crown_quote=get_latest(crown.get(field))
+                    quote=crown_quote if crown_quote is not None else get_latest(match.get(field))
                     if quote is None:continue
+                    bookmaker='crown' if crown_quote is not None else 'default_unspecified_NOT_CROWN'
                     _,line,a,b=quote
                     quote_count+=1
                     for side,decimal in zip(sides,(a,b)):
@@ -101,8 +129,8 @@ def run(root,output,max_dates,run_id):
                             'model':model_name,'fixture_identity_id':fixture['fixture_identity_id'],
                             'source_fixture_date':fixture['source_date'],'home_team':fixture['home_team'],
                             'away_team':fixture['away_team'],'totalcorner_match_id':str(src['id']),
-                            'provider':'TotalCorner','bookmaker':'default_unspecified_NOT_CROWN',
-                            'market':market,'line':line,'side':side,'decimal_odd':decimal,
+                            'provider':'TotalCorner','bookmaker':bookmaker,
+                            'score_grid_sha256':grid_hash,'market':market,'line':line,'side':side,'decimal_odd':decimal,
                             'expected_unit_return':calculate(matrix,market,line,side,decimal),
                             'quote_snapshot_recorded_utc':market_captured_at,
                             'source_wall_clock_timezone_verified':False,
