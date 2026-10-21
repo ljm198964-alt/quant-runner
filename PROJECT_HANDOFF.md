@@ -1,3 +1,8 @@
+## 2026-10-21 M3 影子报价定时和证据持久化推进（未完结）
+- 用户要求完成全部剩余工作。通过在线授权 Mac 在公开 main 修改 `.github/workflows/m3-totalcorner-shadow-ev.yml` 和 `research/m3/totalcorner_shadow_ev.py`，commit `aa58ccf`：每4小时 UTC :50 定时运行、增加原脚本同文件记录去重，并对每次运行尝试生成的独立 JSONL 作为 GitHub Actions artifact 保存90天（不再只有 runner 临时目录）。
+- 真实 [GitHub Actions 39576539453](https://github.com/ljm198964-alt/quant-runner/actions/runs/39576539453) SUCCESS，`m3-totalcorner-default-ev-39576539453-1` artifact 成功上传、尚未过期、大小 186 bytes；不代表已产生 EV，当前 M3 独立 EV 仍为0。**这是逐运行artifact证据，不是跨运行长期累计不可过期正式账本，不能宣布全部完成。**
+- 当前数据障碍：已保存的 8430 FORECAST 没有 score_probability_grid；最新 2026-10-21 M3 运行未产生新预测（forecasts_appended=0，源数据无变化），因此虽有计算矩阵真实 AH/OU 任意盘口线的代码，尚不能得到本轮真实可审计的非零 EV。另 `totalcorner_shadow_ev.py` 的赛事 ID 暂时写死 3 场 2026-10-24，尚未覆盖动态日期/联赛、来源独立开赛时区仍未核实，未来结果不能宣称自动完整。M1/M2/MR1/TG 没有改变。
+
 ## 2026-10-21 17:00+08 M3 完整比分矩阵 EV 代码接线与真实运行
 - GPT 直接读取公开 main M3 账本：12,645事件、8,430条raw FORECAST，现存 FORECAST score_probability_grid=0，最新预测仍停在 2026-10-20 两个时间点。旧存储账本不能当作已有任意盘口概率矩阵。
 - 已修改 `research/m3/totalcorner_shadow_ev.py`：当一条**已记录前瞻**提供 `score_probability_grid` 时，直接复用 `research.m3.probabilities.settle_score` 对 AH/OU 精确季度盘口逐比分计算 EV，commit `fcca35329fdca7d4b13ac994df3907cb9d9906d9`（公开 main）；旧无网格 forecast 仅按原有 AH0/OU2.5 概率精确盘口处理，不捏造旧预测。
