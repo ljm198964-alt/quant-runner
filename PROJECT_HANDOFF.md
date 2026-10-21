@@ -1,3 +1,8 @@
+## 2026-10-21 21:56+08 M3 受控持续进化第一阶段正式接入
+- 用户新目标：M3 三模型可持续进化，需各自独立评估、防过拟合，未验证不得自调正式策略。GPT 直接上线 `research/m3/evolution_controller.py` 和每日 UTC 01:10 `.github/workflows/m3-controlled-evolution.yml`，公开 commit `a68733f`，之后补充按赛果/比分概率矩阵计算每模型独立 1X2 logloss 与 Brier score，commit `f747a92`。实际 [Actions 39612641393](https://github.com/ljm198964-alt/quant-runner/actions/runs/39612641393) SUCCESS，运行检查及演进报告已有持久提交 `397471b`；新代码 [Actions 39612878426](https://github.com/ljm198964-alt/quant-runner/actions/runs/39612878426) 已触发，状态尚需核查。
+- 本轮现有真实前瞻结算数：poisson、dixon_coles、bivariate_poisson 均0，因此评分均null、候选自动晋级false；不能声称已学会自主盈利或已部署改进策略。新增门槛100场每模型独立已结算赛事、logloss差0.01、Brier差0.005目前只是候选研究安全阈值，**尚未经样本外验证，不是用户已确认盈利规则**。
+- 现实完成程度：每日资格检测和三模型独立分数计算代码已接入并可运行；真正自动发现/训练候选版本、时间前后隔离对照试验、正式受控晋级/回滚机制尚未完成。保持M3影子、TG不发、其余模型/原策略不修改，防止将门槛任务当自我优化全部完成。
+
 ## 2026-10-21 20:01+08 M3 动态赛程回归实际验收
 - 本轮公开 main `f4f1ce5` 将旧的按固定3个fixture ID的 `research/m3/totalcorner_shadow_ev.py` 改为近5天按 API 赛程逐页发现、按联赛及标准化球队别名确定匹配，已经执行 [GitHub Actions 39595894441](https://github.com/ljm198964-alt/quant-runner/actions/runs/39595894441) **SUCCESS**；日志明确 `discovered_fixture_ids=7`、`matched_forecasts=42`，`ev_rows_appended=0`、`forecast_ids=0`，说明旧无矩阵 / 有时间条件的研究链不能冒充成功出 EV。
 - 与之独立的**新生成矩阵**正式影子研究已由 `m3-totalcorner-forward-ev.yml` 产生公共持久账本：先前核对351事件（27条 `M3_TOTALCORNER_FORWARD_FORECAST_V1`，324条 `M3_TOTALCORNER_FORWARD_EV_V1`，全部非皇冠普通盘口），有真实非零 EV；此线才是后续主链。历史正式成交仍0，赛果结算及 ROI不能提前认定。
