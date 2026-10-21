@@ -1,3 +1,8 @@
+## 2026-10-21 20:01+08 M3 动态赛程回归实际验收
+- 本轮公开 main `f4f1ce5` 将旧的按固定3个fixture ID的 `research/m3/totalcorner_shadow_ev.py` 改为近5天按 API 赛程逐页发现、按联赛及标准化球队别名确定匹配，已经执行 [GitHub Actions 39595894441](https://github.com/ljm198964-alt/quant-runner/actions/runs/39595894441) **SUCCESS**；日志明确 `discovered_fixture_ids=7`、`matched_forecasts=42`，`ev_rows_appended=0`、`forecast_ids=0`，说明旧无矩阵 / 有时间条件的研究链不能冒充成功出 EV。
+- 与之独立的**新生成矩阵**正式影子研究已由 `m3-totalcorner-forward-ev.yml` 产生公共持久账本：先前核对351事件（27条 `M3_TOTALCORNER_FORWARD_FORECAST_V1`，324条 `M3_TOTALCORNER_FORWARD_EV_V1`，全部非皇冠普通盘口），有真实非零 EV；此线才是后续主链。历史正式成交仍0，赛果结算及 ROI不能提前认定。
+- 经核对 TotalCorner **官方 API 文档** https://www.totalcorner.com/page/api：账号语言和时间戳时区取决于用户 Profile。当前新鲜EV事件中 `source_wall_clock_timezone_verified=false`、`kickoff_utc_verified=false`，因此其 EV 是真实当前读取盘口与新矩阵比较的**研究快照**，不是精确UTC报价/已执行投注。要把它升级为可结算的模拟策略成绩还要确认时区和严格入场时点，并设计不重复统计的影子信号；不可自行把默认盘口称皇冠。
+
 ## 2026-10-21 19:57+08 M3 真实预测-盘口-EV 闭环推进
 - 复核公开 Runner 已并行落地 `research/m3/totalcorner_forward_ev.py`，独立定时 `.github/workflows/m3-totalcorner-forward-ev.yml` 每4小时 UTC :25 运行，已成功历史动作记录包括 [39585311635](https://github.com/ljm198964-alt/quant-runner/actions/runs/39585311635)。审计时主分支 `research/m3/results/totalcorner/forward_ev_ledger.jsonl` 包含351事件：`M3_TOTALCORNER_FORWARD_FORECAST_V1` 27条完整比分矩阵前瞻快照、`M3_TOTALCORNER_FORWARD_EV_V1` 324条真实报价 EV 观察（全部 `default_unspecified_NOT_CROWN`），赛事源日2026-10-24；**不是324笔正式投注，尚未实际ROI**。注意这些记录不应归入 M1/MR1 正式实战。
 - 本轮新提交 `f4f1ce5` 修改原 `research/m3/totalcorner_shadow_ev.py`，将此前硬编码三场ID改为按近期日期逐页读 TotalCorner schedule、联赛+严格正规化主客队别名匹配，复用现有已记录 M3 预测；已触发 [Actions 39595894441](https://github.com/ljm198964-alt/quant-runner/actions/runs/39595894441)，最近核对仍 in_progress，不可称其成功或有新EV。此旧预测工作流仍无网格，有可能0条EV；更重要的真实新矩阵链路是独立 `totalcorner_forward_ev.py` 及其持久 forward EV ledger。
