@@ -32,6 +32,9 @@ jobs:
             --input-root upstream/openfootball-football-json \
             --output research/m3/results/totalcorner/forward_ev_ledger.jsonl \
             --max-dates 2 --run-id "$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
+      - name: Settle finished forward quote candidates without claiming formal ROI
+        run: |
+          python -m research.m3.totalcorner_shadow_settle --input-root upstream/openfootball-football-json --ledger research/m3/results/totalcorner/forward_ev_ledger.jsonl
       - name: Persist independent append-only forward EV ledger
         run: |
           git config user.name 'github-actions[bot]'
