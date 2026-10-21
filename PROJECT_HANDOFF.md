@@ -1,3 +1,9 @@
+## 2026-10-21 M3用户要求历史研究/数据核验/前瞻监测三线同时开展
+- 已只读复算`research/m3/results/openfootball/latest_oos_stability.json`，11,254 OOS有效场/模型，O2.5平均偏低：Poisson -2.0883个百分点、Dixon-Coles -2.0937、Bivariate -2.4049；Dixon-Coles与Bivariate相比Poisson的AH0对数损失分块bootstrap区间均包含零，**不能声称复杂模型更强或有盈利优势**。
+- 现有`results/crown/latest_pairing_status.json`明确M3同期Crown有效AH/OU均0、自动采集未授权启动；UTC kickoff仍缺，B1候选源`open-matchday`许可及时间语义未核实。未发起Crown API调用。
+- 检查`openfootball_shadow.py`实际已有后续FT匹配SETTLEMENT，`m3-openfootball-shadow.yml`每4小时运行；首批预测2026-10-20只涵盖最早2026-10-23源日历比赛，所以目前0结算符合比赛时间。已确认最近持久化报告仍为4215有效预测/0结算，尚未取得新独立信息，不增加新调度和Gate。
+- 已提交综合研究核查文档`research/m3/M3_THREE_TRACK_AUDIT_20261021.md`，commit `c6bc2b2fa6923c0f324190b17b471531b43d8838`。只读核查/归档，不是三个新系统或新Crown收益成功运行；下一关键是首批比赛实际FT到达后自动结算验收以及赛程/授权实证。M1/M2/MR1无修改，M3 TG关。
+
 ## 2026-10-21 M3影子结算原因确认及B1候选数据核验
 - 已查生产最新M3 shadow performance（generated UTC 2026-10-20T14:00:44Z），4215有效预测、0 settled、无Crown。最新Actions shadow [39514226250](https://github.com/ljm198964-alt/quant-runner/actions/runs/39514226250) 与stability [39514969033](https://github.com/ljm198964-alt/quant-runner/actions/runs/39514969033) 都SUCCESS，但结果文件仍旧、不能推定新增训练或结算。
 - 阅读`research/m3/openfootball_shadow.py`真实结算实现：每次只拿已保存canonical FORECAST的fixture identity与**后来获得且与该身份匹配的正式FT**形成SETTLEMENT；预测只针对源日历日>=当前UTC日期+3天。首批2026-10-20预测的最早候选日为2026-10-23，所以2026-10-21零结算是符合时间窗口的正常现象，非直接证实结算故障。不得使用本次看到的历史FT补写赛前预测或提前结算。
