@@ -3,16 +3,21 @@ import argparse, collections, datetime, difflib, json, os, time, urllib.parse, u
 from pathlib import Path
 
 def get_schedule(day, token):
-    page=1; rows=[]
+    page=1; rows=[]; rate_retries=0
     while True:
         params=urllib.parse.urlencode({'token':token,'date':day.replace('-',''),'page':page})
         req=urllib.request.Request('https://api.totalcorner.com/v1/match/schedule?'+params,headers={'Accept':'application/json'})
         with urllib.request.urlopen(req,timeout=25) as response:
             payload=json.load(response)
+        if payload.get('success') != 1 and isinstance(payload.get('error'),dict) and payload['error'].get('code')=='TOO_MANY_REQUEST' and rate_retries < 6:
+            rate_retries += 1
+            time.sleep(11)
+            continue
         if payload.get('success') != 1:
             raise RuntimeError('TotalCorner schedule API unsuccessful: '+str(payload.get('error','unspecified')))
         if not isinstance(payload.get('data'),list):
             raise RuntimeError('Unexpected schedule response shape')
+        rate_retries=0
         rows.extend(payload['data'])
         p=payload.get('pagination') or {}
         if not p.get('next'):
