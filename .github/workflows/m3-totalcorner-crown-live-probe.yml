@@ -15,4 +15,4 @@ jobs:
       - name: Read Crown book for source IDs identified in live M3 schedule discovery
         env:
           TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
-        run: python -m research.m3.totalcorner_crown_live_probe --ids 201585693 201647220 201647222
+        run: python -m research.m3.totalcorner_crown_live_probe --ids 201585693 201647220 201647222 200936028 200933914
