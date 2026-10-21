@@ -44,6 +44,7 @@ def main():
         if not match.get('h') or not match.get('a'):raise ValueError('missing TotalCorner match names')
         forecasts=[f for f in events if f.get('event_type')=='FORECAST' and f.get('home_team')==home and f.get('away_team')==away and f.get('source_fixture_date')=='2026-10-24']
         kickoff=stamp(match['start'])
+        print(json.dumps({'match_id':mid,'quote_diagnostics':{m:{'rows':len(match.get(k,[])),'lines':sorted(set(str(row[1]) for row in match.get(k,[]) if isinstance(row,list) and len(row)>4))} for m,k in [('AH','asian_list'),('OU','goal_list')]},'forecast_rows':len(forecasts)}))
         for f in forecasts:
             predicted=stamp(f['forecasted_at_utc'])
             if predicted>=kickoff:continue
