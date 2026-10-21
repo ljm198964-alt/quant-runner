@@ -1,0 +1,64 @@
+{
+  "protocol": "M3_CHALLENGER_OOS_EVALUATION_V1",
+  "registration": {
+    "protocol": "M3_CANDIDATE_REGISTRATION_V1",
+    "registered_at_utc": "2026-10-21T15:12:00Z",
+    "candidate_id": "M3_SHRINK_1X2_UNIFORM_10PCT_V1",
+    "rule": "candidate_1x2_probability = 0.90 * base_probability + 0.10 / 3",
+    "comparison": "same model, same distinct fixture, strictly after registration, chronological halves",
+    "upgrade_mode": "research_only_manual_review",
+    "production_changes": false
+  },
+  "models": {
+    "poisson": {
+      "settled_unique_fixtures_after_registration": 0,
+      "distinct_dates": 0,
+      "chronological_half_improvements": [
+        {
+          "logloss": null,
+          "brier": null
+        },
+        {
+          "logloss": null,
+          "brier": null
+        }
+      ],
+      "candidate_status": "HOLD_NOT_PROMOTED",
+      "promotion_authorized": false
+    },
+    "dixon_coles": {
+      "settled_unique_fixtures_after_registration": 0,
+      "distinct_dates": 0,
+      "chronological_half_improvements": [
+        {
+          "logloss": null,
+          "brier": null
+        },
+        {
+          "logloss": null,
+          "brier": null
+        }
+      ],
+      "candidate_status": "HOLD_NOT_PROMOTED",
+      "promotion_authorized": false
+    },
+    "bivariate_poisson": {
+      "settled_unique_fixtures_after_registration": 0,
+      "distinct_dates": 0,
+      "chronological_half_improvements": [
+        {
+          "logloss": null,
+          "brier": null
+        },
+        {
+          "logloss": null,
+          "brier": null
+        }
+      ],
+      "candidate_status": "HOLD_NOT_PROMOTED",
+      "promotion_authorized": false
+    }
+  },
+  "production_changed": false,
+  "telegram_sent": false
+}
