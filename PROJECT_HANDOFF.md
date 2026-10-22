@@ -1,3 +1,8 @@
+## 2026-10-22 TotalCorner 官方 API 时区核实
+- 核实 TotalCorner 官方 API 文档 https://www.totalcorner.com/page/api ：API比赛时间与语言依账户 profile timezone 设置，不是固定UTC；官方例子 start 为无偏移的 YYYY-MM-DD HH:MM:SS。账户当前实际profile时区仍未核实，所以任何按固定+08/UTC/London假设的转换都不构成合格交易时间证据。
+- 已读取真实 [Actions 39758470847](https://github.com/ljm198964-alt/quant-runner/actions/runs/39758470847) 结果 SUCCESS：date_count=2 schedule_pages=25 matched_fixtures=0 fresh_forecast_snapshots=0 ev_rows_appended=0（该执行在timing_rejected统计代码提交之前，无法提供精确时间拒绝数）。仅代表workflow成功，并非前瞻生产恢复。
+- 下一个唯一前置任务：从现有授权账户证据确认其TotalCorner用户配置时区，并与至少一场独立准确开球时间交叉核实；再把 source start 映射成明确offset-aware kickoff_utc_verified，按用户90分钟规则恢复自动影子前瞻。不得伪造 UTC 或放宽90分钟门槛。
+
 ## 2026-10-22 用户批准 M3 最低赛前90分钟规则
 - 用户最新明确规则：M3 新预测和盘口采集至少赛前90分钟。公开main commit e454a15 新增 research/m3/kickoff_gate.py 和单测：仅接受独立验证的时区明确 kickoff_utc_verified ISO时间，预测观察UTC至开赛>=90分钟才合格；缺少时区证据或不足90分钟一律阻断进入新的正式研究EV候选。单测对90分钟临界、89分59秒、缺UTC字段均PASS。
 - 现有TotalCorner schedule源没有提供独立核实的 kickoff_utc_verified 字段，**这意味着当前新筛选可能全部阻断，尚未完成赛程UTC来源接线，绝不能把工作流SUCCESS解释成已正常生成新单**。后续应优先核验并接通真实官方UTC开赛时间，而非猜时区、撤销90分钟规则。commit 38250a4 加上 timing_rejected / timing_reasons 可观测性。
