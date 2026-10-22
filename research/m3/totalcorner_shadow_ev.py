@@ -11,7 +11,7 @@ def fixture_matches(f,m):
     return normalize(ALIASES.get(f['home_team'],f['home_team']))==normalize(m.get('h')) and normalize(ALIASES.get(f['away_team'],f['away_team']))==normalize(m.get('a'))
 def discover(events,token):
     today=datetime.datetime.now(datetime.timezone.utc).date()
-    dates=sorted({r.get('source_fixture_date') for r in events if r.get('event_type')=='FORECAST' and r.get('forecast_status')=='PREDICTED_NO_MARKET' and r.get('source_fixture_date') and today<=datetime.date.fromisoformat(r['source_fixture_date'])<=today+datetime.timedelta(days=5)})
+    dates=sorted({r.get('source_fixture_date') for r in events if r.get('event_type')=='FORECAST' and r.get('forecast_status')=='PREDICTED_NO_MARKET' and r.get('source_fixture_date') and today<=datetime.date.fromisoformat(r['source_fixture_date'])})
     fixtures=[]
     for day in dates:
         schedule,_=get_schedule(day,token)
