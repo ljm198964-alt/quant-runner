@@ -1,0 +1,119 @@
+{
+  "generated_at_utc": "2026-10-22T09:06:43.902471+00:00",
+  "models": {
+    "bivariate_poisson": {
+      "candidates": {
+        "rolling_2y": {
+          "chronological_halves": [
+            {
+              "brier": null,
+              "logloss": null
+            },
+            {
+              "brier": null,
+              "logloss": null
+            }
+          ],
+          "distinct_dates": 0,
+          "paired_unique_fixtures": 0,
+          "passed": false
+        },
+        "rolling_4y": {
+          "chronological_halves": [
+            {
+              "brier": null,
+              "logloss": null
+            },
+            {
+              "brier": null,
+              "logloss": null
+            }
+          ],
+          "distinct_dates": 0,
+          "paired_unique_fixtures": 0,
+          "passed": false
+        }
+      },
+      "decision": "HOLD",
+      "previous_rolling_shadow_active": "baseline",
+      "rolling_shadow_active": "baseline"
+    },
+    "dixon_coles": {
+      "candidates": {
+        "rolling_2y": {
+          "chronological_halves": [
+            {
+              "brier": null,
+              "logloss": null
+            },
+            {
+              "brier": null,
+              "logloss": null
+            }
+          ],
+          "distinct_dates": 0,
+          "paired_unique_fixtures": 0,
+          "passed": false
+        },
+        "rolling_4y": {
+          "chronological_halves": [
+            {
+              "brier": null,
+              "logloss": null
+            },
+            {
+              "brier": null,
+              "logloss": null
+            }
+          ],
+          "distinct_dates": 0,
+          "paired_unique_fixtures": 0,
+          "passed": false
+        }
+      },
+      "decision": "HOLD",
+      "previous_rolling_shadow_active": "baseline",
+      "rolling_shadow_active": "baseline"
+    },
+    "poisson": {
+      "candidates": {
+        "rolling_2y": {
+          "chronological_halves": [
+            {
+              "brier": null,
+              "logloss": null
+            },
+            {
+              "brier": null,
+              "logloss": null
+            }
+          ],
+          "distinct_dates": 0,
+          "paired_unique_fixtures": 0,
+          "passed": false
+        },
+        "rolling_4y": {
+          "chronological_halves": [
+            {
+              "brier": null,
+              "logloss": null
+            },
+            {
+              "brier": null,
+              "logloss": null
+            }
+          ],
+          "distinct_dates": 0,
+          "paired_unique_fixtures": 0,
+          "passed": false
+        }
+      },
+      "decision": "HOLD",
+      "previous_rolling_shadow_active": "baseline",
+      "rolling_shadow_active": "baseline"
+    }
+  },
+  "production_changed": false,
+  "protocol": "M3_ROLLING_TRAINING_OOS_REGISTRY_V1",
+  "telegram_sent": false
+}
