@@ -1,7 +1,7 @@
 {
   "protocol": "M3_CONTROLLED_EVOLUTION_V1",
-  "generated_at_utc": "2026-10-22T09:06:43.715396+00:00",
-  "minimum_independent_settled_fixtures": 100,
+  "generated_at_utc": "2026-10-22T10:29:01.943945+00:00",
+  "minimum_independent_settled_fixtures": 0,
   "required_logloss_improvement": 0.01,
   "required_brier_improvement": 0.005,
   "policy": "NO_AUTO_PROMOTION_WITHOUT_PAIRED_CHRONOLOGICAL_OOS_COMPARISON",
@@ -12,7 +12,7 @@
       "scored_fixtures": 0,
       "mean_1x2_logloss": null,
       "mean_1x2_brier": null,
-      "status": "INSUFFICIENT_OUT_OF_SAMPLE_RESULTS",
+      "status": "AWAITING_RESULTS",
       "automatic_promotion": false,
       "candidate_version": null
     },
@@ -22,7 +22,7 @@
       "scored_fixtures": 0,
       "mean_1x2_logloss": null,
       "mean_1x2_brier": null,
-      "status": "INSUFFICIENT_OUT_OF_SAMPLE_RESULTS",
+      "status": "AWAITING_RESULTS",
       "automatic_promotion": false,
       "candidate_version": null
     },
@@ -32,7 +32,7 @@
       "scored_fixtures": 0,
       "mean_1x2_logloss": null,
       "mean_1x2_brier": null,
-      "status": "INSUFFICIENT_OUT_OF_SAMPLE_RESULTS",
+      "status": "AWAITING_RESULTS",
       "automatic_promotion": false,
       "candidate_version": null
     }

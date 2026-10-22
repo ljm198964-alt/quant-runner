@@ -1,35 +1,23 @@
 {
-  "generated_at_utc": "2026-10-22T09:06:43.902471+00:00",
+  "generated_at_utc": "2026-10-22T10:29:02.037122+00:00",
   "models": {
     "bivariate_poisson": {
       "candidates": {
         "rolling_2y": {
-          "chronological_halves": [
-            {
-              "brier": null,
-              "logloss": null
-            },
-            {
-              "brier": null,
-              "logloss": null
-            }
-          ],
           "distinct_dates": 0,
+          "overall_improvement": {
+            "brier": null,
+            "logloss": null
+          },
           "paired_unique_fixtures": 0,
           "passed": false
         },
         "rolling_4y": {
-          "chronological_halves": [
-            {
-              "brier": null,
-              "logloss": null
-            },
-            {
-              "brier": null,
-              "logloss": null
-            }
-          ],
           "distinct_dates": 0,
+          "overall_improvement": {
+            "brier": null,
+            "logloss": null
+          },
           "paired_unique_fixtures": 0,
           "passed": false
         }
@@ -41,32 +29,20 @@
     "dixon_coles": {
       "candidates": {
         "rolling_2y": {
-          "chronological_halves": [
-            {
-              "brier": null,
-              "logloss": null
-            },
-            {
-              "brier": null,
-              "logloss": null
-            }
-          ],
           "distinct_dates": 0,
+          "overall_improvement": {
+            "brier": null,
+            "logloss": null
+          },
           "paired_unique_fixtures": 0,
           "passed": false
         },
         "rolling_4y": {
-          "chronological_halves": [
-            {
-              "brier": null,
-              "logloss": null
-            },
-            {
-              "brier": null,
-              "logloss": null
-            }
-          ],
           "distinct_dates": 0,
+          "overall_improvement": {
+            "brier": null,
+            "logloss": null
+          },
           "paired_unique_fixtures": 0,
           "passed": false
         }
@@ -78,32 +54,20 @@
     "poisson": {
       "candidates": {
         "rolling_2y": {
-          "chronological_halves": [
-            {
-              "brier": null,
-              "logloss": null
-            },
-            {
-              "brier": null,
-              "logloss": null
-            }
-          ],
           "distinct_dates": 0,
+          "overall_improvement": {
+            "brier": null,
+            "logloss": null
+          },
           "paired_unique_fixtures": 0,
           "passed": false
         },
         "rolling_4y": {
-          "chronological_halves": [
-            {
-              "brier": null,
-              "logloss": null
-            },
-            {
-              "brier": null,
-              "logloss": null
-            }
-          ],
           "distinct_dates": 0,
+          "overall_improvement": {
+            "brier": null,
+            "logloss": null
+          },
           "paired_unique_fixtures": 0,
           "passed": false
         }
