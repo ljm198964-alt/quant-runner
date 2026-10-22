@@ -1,3 +1,8 @@
+## M3 持续进化目标进度核对（2026-10-22）
+- 用户明确要求只朝可持续自我进化且能验证盈利的 M3 目标推进，不额外增加任意策略规则。本轮真实核查公开生产账本 research/m3/results/totalcorner/forward_ev_ledger.jsonl：711 个事件，99 个新的 forward FORECAST 快照、612 个 EV 观察，尚无正式结算事件，不能算 ROI；三模型 evolution_registry 与 evolution_rolling_registry 都为 baseline / HOLD。
+- 本轮新增自动晋级与失效回滚的时间配对单测 research/m3/test_evolution_rolling_integration.py，commit 8b6c1db：100 场跨100日的*人工构造测试样本*验证2年 rolling shadow 版本满足证据门槛时确会晋级，以及移除证据后会回滚；同时验证真实无结算时 HOLD。三项单元测试 PASS。人工测试数据绝不混入正式账本或研究成绩。
+- 仍未完成的实际目标：以未来真实赛果验证各模型样本外提升及实际可执行AH/OU EV的盈利能力；目前观察EV不是正式投注ROI，Crown/TotalCorner报价时点及确切UTC比赛时刻尚未独立确认，不能宣称已实现盈利策略。不给用户虚构完成百分比。后续优先完整真实赛果与可执行性验证，避免无关策略附加。
+
 ## 2026-10-22 M3 滚动版本真实比分矩阵切换完成
 - 用户明确批准将经验证滚动影子版本实际用于 M3 后续预测和 AH/OU EV。公开 `research/m3/totalcorner_forward_ev.py` commit `eed6378`：前瞻读取独立 `evolution_rolling_registry.json` 的各模型 `rolling_shadow_active`，仅允许 baseline/rolling_2y/rolling_4y；只有对应候选 `passed=true` 且训练样本充足才以所选滚动窗口的赛果重新拟合相同 penaltyblog 模型，使用其真正生成的完整比分概率矩阵计算 AH/OU EV。否则保留基础模型。新前瞻保存 rolling_shadow_version、training_signature、training_rows，EV 保存所用矩阵版本；概率校准1X2候选仍单独记录，不混成亚洲盘矩阵。
 - [GitHub Actions 39753604800](https://github.com/ljm198964-alt/quant-runner/actions/runs/39753604800) 已确认 SUCCESS，工作流本身运行成功；根据最新滚动注册表三模型均 baseline/HOLD，故未实际发生滚动版替换，不可宣称新滚动策略已实盘验证。
