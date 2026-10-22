@@ -1,3 +1,8 @@
+## 2026-10-22 用户批准 M3 最低赛前90分钟规则
+- 用户最新明确规则：M3 新预测和盘口采集至少赛前90分钟。公开main commit e454a15 新增 research/m3/kickoff_gate.py 和单测：仅接受独立验证的时区明确 kickoff_utc_verified ISO时间，预测观察UTC至开赛>=90分钟才合格；缺少时区证据或不足90分钟一律阻断进入新的正式研究EV候选。单测对90分钟临界、89分59秒、缺UTC字段均PASS。
+- 现有TotalCorner schedule源没有提供独立核实的 kickoff_utc_verified 字段，**这意味着当前新筛选可能全部阻断，尚未完成赛程UTC来源接线，绝不能把工作流SUCCESS解释成已正常生成新单**。后续应优先核验并接通真实官方UTC开赛时间，而非猜时区、撤销90分钟规则。commit 38250a4 加上 timing_rejected / timing_reasons 可观测性。
+- 已触发 [Actions 39758470847](https://github.com/ljm198964-alt/quant-runner/actions/runs/39758470847)，最后检查为in_progress；这是 shadow M3，不改变TG及M1/MR1。
+
 ## 2026-10-22 对手最短提前时间审计与 M3 研究基准
 - 用户明确要求参考邮箱对手最短提前几小时派单。核查 totalcorner-research-bridge/data/opponent/opponent_picks_20260921_20261007.json 至 20261017.json；按 Gmail ID 去重 661 封，其中660条正且合理的间隔。假设无时区email_ts为UTC、kickoff_bj为北京时间，最短样本 2026-10-17 03:17:44 UTC 邮件/J1 2026-10-17 13:00 北京开球/OU，间隔6136秒=1h42m16s。部分历史邮件明确+08:00，统一为UTC计算。该假设对naive email_ts尚未全证实，最短是观测事实的条件结果，不是对手已知策略Gate或盈利证据。
 - 依用户最新指示，把102分钟记入 research/m3/results/totalcorner/opponent_timing_reference.json 作为研究目标基准；暂不可当正式自动入场门槛，因为 M3 TotalCorner source kickoff UTC 和报价时区尚无可信独立证据。未经验证不得声称1h42m前交易完成；不恢复此前私设3-5天筛选。
