@@ -81,6 +81,9 @@ def run(root,output,max_dates,run_id):
     registry_path=output.parent/'evolution_registry.json'
     registry=json.loads(registry_path.read_text()) if registry_path.exists() else {}
     active={m:v.get('shadow_active','baseline') for m,v in registry.get('models',{}).items()}
+    rolling_path=output.parent/'evolution_rolling_registry.json'
+    rolling_registry=json.loads(rolling_path.read_text()) if rolling_path.exists() else {}
+    rolling_active={m:v.get('rolling_shadow_active','baseline') for m,v in rolling_registry.get('models',{}).items()}
     existing=set()
     if output.exists():
         for line in output.read_text().splitlines():
@@ -96,8 +99,24 @@ def run(root,output,max_dates,run_id):
                 market_cache[sid]=(fetch(sid,os.environ['TOTALCORNER_TOKEN']),fetch_crown(sid,os.environ['TOTALCORNER_TOKEN']),datetime.datetime.now(UTC).isoformat())
                 time.sleep(2.2)
         for model_name,cls in MODELS.items():
-            model=cls(league_train.home_goals,league_train.away_goals,league_train.home_team,league_train.away_team)
+            selected_rolling=rolling_active.get(model_name,'baseline')
+            if selected_rolling not in ('baseline','rolling_2y','rolling_4y'):
+                raise ValueError('unregistered rolling model version: '+str(selected_rolling))
+            if selected_rolling!='baseline':
+                evidence=((rolling_registry.get('models') or {}).get(model_name,{}).get('candidates') or {}).get(selected_rolling,{})
+                if evidence.get('passed') is not True:
+                    selected_rolling='baseline'
+            selected_train=league_train
+            if selected_rolling!='baseline':
+                years=int(selected_rolling.split('_')[1][0])
+                start=pd.Timestamp(now.date().isoformat(),tz='UTC')-pd.Timedelta(days=365*years)
+                selected_train=league_train.loc[league_train.match_date_utc>=start]
+                if len(selected_train)<80:
+                    selected_train=league_train
+                    selected_rolling='baseline'
+            model=cls(selected_train.home_goals,selected_train.away_goals,selected_train.home_team,selected_train.away_team)
             model.fit()
+            training_signature=hash_id([model_name,league,selected_rolling,now.date().isoformat(),len(selected_train),model.get_params()])
             known=set(map(str,model.teams))
             for fixture,src in pairs:
                 if fixture['home_team'] not in known or fixture['away_team'] not in known:continue
@@ -124,6 +143,8 @@ def run(root,output,max_dates,run_id):
                     'source_fixture_date':fixture['source_date'],'home_team':fixture['home_team'],
                     'away_team':fixture['away_team'],'score_probability_grid':matrix,
                     'score_grid_sha256':grid_hash,'shadow_version':shadow_active,
+                    'rolling_shadow_version':selected_rolling,'training_signature':training_signature,
+                    'training_rows':len(selected_train),
                     'shadow_calibrated_1x2':calibrated,'training_cutoff_utc_date':now.date().isoformat(),
                     'formal_order':False,'telegram_sent':False,'run_id':run_id}
                 forecast_event['event_id']=hash_id(['M3_FORECAST_EVENT',forecast_id])
@@ -147,7 +168,9 @@ def run(root,output,max_dates,run_id):
                             'away_team':fixture['away_team'],'totalcorner_match_id':str(src['id']),
                             'provider':'TotalCorner','bookmaker':bookmaker,
                             'score_grid_sha256':grid_hash,'shadow_version':shadow_active,
-                            'ev_probability_version':'baseline_full_score_grid','market':market,'line':line,'side':side,'decimal_odd':decimal,
+                    'rolling_shadow_version':selected_rolling,'training_signature':training_signature,
+                    'training_rows':len(selected_train),
+                            'ev_probability_version':selected_rolling+'_full_score_grid','market':market,'line':line,'side':side,'decimal_odd':decimal,
                             'expected_unit_return':calculate(matrix,market,line,side,decimal),
                             'quote_snapshot_recorded_utc':market_captured_at,
                             'source_wall_clock_timezone_verified':False,
