@@ -1,3 +1,7 @@
+## 2026-10-22 对手最短提前时间审计与 M3 研究基准
+- 用户明确要求参考邮箱对手最短提前几小时派单。核查 totalcorner-research-bridge/data/opponent/opponent_picks_20260921_20261007.json 至 20261017.json；按 Gmail ID 去重 661 封，其中660条正且合理的间隔。假设无时区email_ts为UTC、kickoff_bj为北京时间，最短样本 2026-10-17 03:17:44 UTC 邮件/J1 2026-10-17 13:00 北京开球/OU，间隔6136秒=1h42m16s。部分历史邮件明确+08:00，统一为UTC计算。该假设对naive email_ts尚未全证实，最短是观测事实的条件结果，不是对手已知策略Gate或盈利证据。
+- 依用户最新指示，把102分钟记入 research/m3/results/totalcorner/opponent_timing_reference.json 作为研究目标基准；暂不可当正式自动入场门槛，因为 M3 TotalCorner source kickoff UTC 和报价时区尚无可信独立证据。未经验证不得声称1h42m前交易完成；不恢复此前私设3-5天筛选。
+
 ## 2026-10-22 用户明确撤销 M3 未授权提前3至5天预测规则
 - 用户明确指出3-5天预测限制未经用户批准，要求立即取消。公开main commit a21e479 修改 research/m3/openfootball_shadow.py 的 DATE_GUARD_DAYS 为0、取消提前3天的语义描述，research/m3/totalcorner_forward_ev.py 不再只限第3至5天，改为不添加提前日期门槛的当前及未来源日扫描（工作流仍使用已有 --max-dates 2 作为一次API批次限制，而非预测提前天数规则）。commit d559454 额外去除 research/m3/totalcorner_shadow_ev.py 旧影子扫描的未来5日上限。
 - 重要：只按日期选择源日不等于确认当天比赛尚未开赛；源码仍明确不将 unqualified provider calendar date 当作已验证UTC开赛时刻，报价/预测应继续标注研究快照、正式TG关闭，不得虚构盘口执行时效。

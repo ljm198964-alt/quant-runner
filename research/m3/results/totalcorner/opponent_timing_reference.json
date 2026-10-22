@@ -1,0 +1,11 @@
+{
+  "protocol": "M3_OPPONENT_OBSERVED_LEAD_REFERENCE_V1",
+  "target_lead_minutes": 102,
+  "basis": "minimum observed positive email-to-kickoff lead among 661 deduplicated opponent messages through 2026-10-17",
+  "observed_min_seconds": 6136,
+  "email_ts_assumption": "naive timestamps interpreted as UTC",
+  "kickoff_timezone": "Asia/Shanghai",
+  "is_verified_execution_gate": false,
+  "is_optimal_edge_proven": false,
+  "policy": "research timing benchmark only; no execution assertion unless kickoff and observation timestamp independently verified"
+}
