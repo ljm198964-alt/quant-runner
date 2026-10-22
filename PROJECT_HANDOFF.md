@@ -1,3 +1,7 @@
+## 2026-10-22 用户确认 TotalCorner 账户时区为上海
+- 用户明确答复 TotalCorner profile timezone 是上海(Asia/Shanghai, UTC+08)。据官方API时间跟随账户profile配置，更新 research/m3/kickoff_gate.py 用 zoneinfo Asia/Shanghai 将无时区的 source start 解析到UTC（拒绝字段格式异常或自带冲突时区值），并按用户确定的最低提前90分钟 gate 检验；research/m3/totalcorner_forward_ev.py 经转换后的对应赛程仅合格才进入模型预测/Crown优先报价快照，预测账本存 kickoff_utc_verified 与 user_confirmed_TotalCorner_profile_Asia/Shanghai 来源。仓库commit 7d881a7，3个关键时间测试PASS。
+- 已实际触发 [Actions 39760423344](https://github.com/ljm198964-alt/quant-runner/actions/runs/39760423344)，最后查为in_progress，还没核对真实新预测事件和开赛UTC交叉赛事，因此不能宣称生产恢复。用户原规则赛前>=90分钟，保持M3研究影子、无TG正式投注；禁止未经同意增设任意窗口。
+
 ## 2026-10-22 TotalCorner 官方 API 时区核实
 - 核实 TotalCorner 官方 API 文档 https://www.totalcorner.com/page/api ：API比赛时间与语言依账户 profile timezone 设置，不是固定UTC；官方例子 start 为无偏移的 YYYY-MM-DD HH:MM:SS。账户当前实际profile时区仍未核实，所以任何按固定+08/UTC/London假设的转换都不构成合格交易时间证据。
 - 已读取真实 [Actions 39758470847](https://github.com/ljm198964-alt/quant-runner/actions/runs/39758470847) 结果 SUCCESS：date_count=2 schedule_pages=25 matched_fixtures=0 fresh_forecast_snapshots=0 ev_rows_appended=0（该执行在timing_rejected统计代码提交之前，无法提供精确时间拒绝数）。仅代表workflow成功，并非前瞻生产恢复。
