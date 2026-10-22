@@ -1,3 +1,8 @@
+## 2026-10-22 用户明确撤销 M3 未授权提前3至5天预测规则
+- 用户明确指出3-5天预测限制未经用户批准，要求立即取消。公开main commit a21e479 修改 research/m3/openfootball_shadow.py 的 DATE_GUARD_DAYS 为0、取消提前3天的语义描述，research/m3/totalcorner_forward_ev.py 不再只限第3至5天，改为不添加提前日期门槛的当前及未来源日扫描（工作流仍使用已有 --max-dates 2 作为一次API批次限制，而非预测提前天数规则）。commit d559454 额外去除 research/m3/totalcorner_shadow_ev.py 旧影子扫描的未来5日上限。
+- 重要：只按日期选择源日不等于确认当天比赛尚未开赛；源码仍明确不将 unqualified provider calendar date 当作已验证UTC开赛时刻，报价/预测应继续标注研究快照、正式TG关闭，不得虚构盘口执行时效。
+- [Actions 39757417630](https://github.com/ljm198964-alt/quant-runner/actions/runs/39757417630) 已触发，最近检查 in_progress，勿声称成功。三个脚本 py_compile 已成功。不可将自拟的提前3-5日规则再次添加，除非用户明确批准。
+
 ## M3 持续进化目标进度核对（2026-10-22）
 - 用户明确要求只朝可持续自我进化且能验证盈利的 M3 目标推进，不额外增加任意策略规则。本轮真实核查公开生产账本 research/m3/results/totalcorner/forward_ev_ledger.jsonl：711 个事件，99 个新的 forward FORECAST 快照、612 个 EV 观察，尚无正式结算事件，不能算 ROI；三模型 evolution_registry 与 evolution_rolling_registry 都为 baseline / HOLD。
 - 本轮新增自动晋级与失效回滚的时间配对单测 research/m3/test_evolution_rolling_integration.py，commit 8b6c1db：100 场跨100日的*人工构造测试样本*验证2年 rolling shadow 版本满足证据门槛时确会晋级，以及移除证据后会回滚；同时验证真实无结算时 HOLD。三项单元测试 PASS。人工测试数据绝不混入正式账本或研究成绩。
