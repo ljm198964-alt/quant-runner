@@ -72,7 +72,7 @@ def run(root,output,max_dates,run_id):
     next_days=sorted({f['source_date'] for f in fixtures if
         datetime.date.fromisoformat(f['source_date'])>=now.date()})[:max_dates]
     matched_by_league={}
-    pages=0
+    pages=0; timing_rejected=0; timing_reasons={}
     for day in next_days:
         schedule,count=get_schedule(day,os.environ['TOTALCORNER_TOKEN']);pages+=count
         for fixture in fixtures:
@@ -83,6 +83,9 @@ def run(root,output,max_dates,run_id):
                 # has an independently qualified UTC timestamp.
                 allowed,lead,reason=gate(source,datetime.datetime.now(UTC))
                 if allowed:matched_by_league.setdefault(fixture['league'],[]).append((fixture,source))
+                else:
+                    timing_rejected+=1
+                    timing_reasons[reason]=timing_reasons.get(reason,0)+1
     registry_path=output.parent/'evolution_registry.json'
     registry=json.loads(registry_path.read_text()) if registry_path.exists() else {}
     active={m:v.get('shadow_active','baseline') for m,v in registry.get('models',{}).items()}
@@ -190,7 +193,8 @@ def run(root,output,max_dates,run_id):
         'matched_fixtures':sum(len(x) for x in matched_by_league.values()),
         'fresh_forecast_snapshots':forecast_count,'markets_quoted':quote_count,
         'ev_rows_appended':len(rows),'output':str(output),
-        'telegram_sent':False,'settlements':0}))
+        'telegram_sent':False,'settlements':0,'min_lead_minutes':MIN_LEAD_MINUTES,
+        'timing_rejected':timing_rejected,'timing_reasons':timing_reasons}))
 def main():
     p=argparse.ArgumentParser()
     p.add_argument('--input-root',required=True,type=Path)
