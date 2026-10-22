@@ -12,6 +12,7 @@ from research.m3.totalcorner_auto_shadow import match_one
 from research.m3.totalcorner_shadow_ev import fetch
 from research.m3.probabilities import settle_score
 from research.m3.evolution_registry import CANDIDATES
+from research.m3.kickoff_gate import gate,MIN_LEAD_MINUTES
 
 UTC=datetime.timezone.utc
 def hash_id(values):
@@ -77,7 +78,11 @@ def run(root,output,max_dates,run_id):
         for fixture in fixtures:
             if fixture['source_date']!=day:continue
             source=match_one(fixture,schedule)
-            if source:matched_by_league.setdefault(fixture['league'],[]).append((fixture,source))
+            if source:
+                # No prediction/quote is accepted unless the provider kickoff
+                # has an independently qualified UTC timestamp.
+                allowed,lead,reason=gate(source,datetime.datetime.now(UTC))
+                if allowed:matched_by_league.setdefault(fixture['league'],[]).append((fixture,source))
     registry_path=output.parent/'evolution_registry.json'
     registry=json.loads(registry_path.read_text()) if registry_path.exists() else {}
     active={m:v.get('shadow_active','baseline') for m,v in registry.get('models',{}).items()}
