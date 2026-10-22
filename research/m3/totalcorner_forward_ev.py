@@ -12,7 +12,7 @@ from research.m3.totalcorner_auto_shadow import match_one
 from research.m3.totalcorner_shadow_ev import fetch
 from research.m3.probabilities import settle_score
 from research.m3.evolution_registry import CANDIDATES
-from research.m3.kickoff_gate import gate,MIN_LEAD_MINUTES
+from research.m3.kickoff_gate import gate,MIN_LEAD_MINUTES,totalcorner_shanghai_kickoff
 
 UTC=datetime.timezone.utc
 def hash_id(values):
@@ -81,8 +81,10 @@ def run(root,output,max_dates,run_id):
             if source:
                 # No prediction/quote is accepted unless the provider kickoff
                 # has an independently qualified UTC timestamp.
-                allowed,lead,reason=gate(source,datetime.datetime.now(UTC))
-                if allowed:matched_by_league.setdefault(fixture['league'],[]).append((fixture,source))
+                kickoff_utc=totalcorner_shanghai_kickoff(source)
+                source_with_utc={**source,'kickoff_utc_verified':kickoff_utc}
+                allowed,lead,reason=gate(source_with_utc,datetime.datetime.now(UTC))
+                if allowed:matched_by_league.setdefault(fixture['league'],[]).append((fixture,source_with_utc))
                 else:
                     timing_rejected+=1
                     timing_reasons[reason]=timing_reasons.get(reason,0)+1
@@ -148,7 +150,9 @@ def run(root,output,max_dates,run_id):
                 forecast_event={'protocol':'M3_TOTALCORNER_FORWARD_FORECAST_V1',
                     'forecast_id':forecast_id,'forecasted_at_utc':forecasted_at,
                     'model':model_name,'fixture_identity_id':fixture['fixture_identity_id'],
-                    'source_fixture_date':fixture['source_date'],'home_team':fixture['home_team'],
+                    'source_fixture_date':fixture['source_date'],'kickoff_utc_verified':src.get('kickoff_utc_verified'),
+                    'kickoff_timezone_source':'user_confirmed_TotalCorner_profile_Asia/Shanghai',
+                    'home_team':fixture['home_team'],
                     'away_team':fixture['away_team'],'score_probability_grid':matrix,
                     'score_grid_sha256':grid_hash,'shadow_version':shadow_active,
                     'rolling_shadow_version':selected_rolling,'training_signature':training_signature,

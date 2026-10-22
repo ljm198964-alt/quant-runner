@@ -1,6 +1,7 @@
 """User-approved M3 minimum 90-minute lead, requiring independently qualified UTC kickoff."""
 from __future__ import annotations
 import datetime
+from zoneinfo import ZoneInfo
 
 MIN_LEAD_MINUTES = 90
 UTC = datetime.timezone.utc
@@ -14,6 +15,16 @@ def verified_kickoff(row):
     except ValueError:return None
     if ts.tzinfo is None or ts.utcoffset() is None:return None
     return ts.astimezone(UTC)
+
+def totalcorner_shanghai_kickoff(row):
+    """Normalize TotalCorner profile-local start using user-confirmed Asia/Shanghai."""
+    value=row.get('start')
+    if not isinstance(value,str):return None
+    try:
+        local=datetime.datetime.fromisoformat(value.strip().replace('Z','+00:00'))
+    except ValueError:return None
+    if local.tzinfo is not None:return None  # unexpected shape; do not reinterpret
+    return local.replace(tzinfo=ZoneInfo('Asia/Shanghai')).astimezone(UTC).isoformat()
 
 def gate(row,observed_utc):
     kickoff=verified_kickoff(row)
