@@ -39,7 +39,7 @@ MODELS = {
     "bivariate_poisson": BivariatePoissonGoalModel,
 }
 SUPPORTED_SEASON_START = 2017
-DATE_GUARD_DAYS = 3
+DATE_GUARD_DAYS = 0
 FORECAST_MODEL_SEMANTIC_VERSION = "penaltyblog-goal-distribution-v1"
 
 
@@ -614,7 +614,7 @@ def run_shadow(data: pd.DataFrame, fixtures: list[dict], files: list[dict], cove
         "data_changed_vs_previous_snapshot": None if previous_result_fingerprint is None else result_hash != previous_result_fingerprint,
         "fixture_schedule_changed_vs_previous_snapshot": None if previous_fixture_fingerprint is None else fixture_hash != previous_fixture_fingerprint,
         "training_cutoff_rule": "exclude all source calendar dates on or after current UTC date",
-        "fixture_rule": f"ignore source kickoff times; only forecast source calendar dates >= UTC date + {DATE_GUARD_DAYS} days",
+        "fixture_rule": "no minimum advance-day gate; source calendar date alone does not prove unstarted status",
         "fixture_time_semantics": "no source timezone assumption and no kickoff UTC inferred",
         "scope": ["E0", "D1", "SP1", "I1", "F1", "B1"],
         "source_coverage": coverage,

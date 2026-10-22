@@ -65,11 +65,11 @@ def run(root,output,max_dates,run_id):
     data,fixtures,_,_=read_openfootball(root)
     # All model training is limited strictly to past calendar dates.
     train=data.loc[data.match_date_utc.lt(pd.Timestamp(now.date().isoformat(),tz='UTC'))]
-    # At least 3 calendar days out avoids pretending an unqualified provider
-    # wall-clock start is a verified UTC kickoff time.
+    # No user-unapproved advance-day or 3-5 day gate. Source calendar dates
+    # are not evidence of a verified UTC kickoff; quote observations remain
+    # research-only and must not be represented as executable prematch prices.
     next_days=sorted({f['source_date'] for f in fixtures if
-        now.date()+datetime.timedelta(days=3)<=datetime.date.fromisoformat(f['source_date'])<=
-        now.date()+datetime.timedelta(days=5)})[:max_dates]
+        datetime.date.fromisoformat(f['source_date'])>=now.date()})[:max_dates]
     matched_by_league={}
     pages=0
     for day in next_days:
