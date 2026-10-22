@@ -2,7 +2,7 @@ name: M3 TotalCorner Default Odds EV Shadow
 on:
   workflow_dispatch:
   schedule:
-    - cron: '50 */4 * * *'
+    - cron: '0 4,22 * * *'
 permissions:
   contents: read
 concurrency:

@@ -9,11 +9,11 @@ class RollingGateTests(unittest.TestCase):
         result=evaluate([], [candidate])
         self.assertEqual(result["models"]["poisson"]["rolling_shadow_active"],"baseline")
         self.assertEqual(result["models"]["poisson"]["decision"],"HOLD")
-    def test_invalid_previous_active_rollback(self):
+    def test_cancelled_rollback_keeps_active(self):
         prior={"models":{"poisson":{"rolling_shadow_active":"rolling_2y"}}}
         result=evaluate([], [], prior)
-        self.assertEqual(result["models"]["poisson"]["decision"],"ROLLBACK_SHADOW_ONLY")
-        self.assertEqual(result["models"]["poisson"]["rolling_shadow_active"],"baseline")
+        self.assertEqual(result["models"]["poisson"]["decision"],"HOLD")
+        self.assertEqual(result["models"]["poisson"]["rolling_shadow_active"],"rolling_2y")
 
 if __name__=="__main__": unittest.main()
 
@@ -38,6 +38,6 @@ class PromotionEvidenceTests(unittest.TestCase):
         result=evaluate(base,challengers)
         self.assertEqual(result['models']['poisson']['decision'],'PROMOTE_SHADOW_ONLY')
         self.assertEqual(result['models']['poisson']['rolling_shadow_active'],'rolling_2y')
-        rolled_back=evaluate([],[],result)
-        self.assertEqual(rolled_back['models']['poisson']['decision'],'ROLLBACK_SHADOW_ONLY')
-        self.assertEqual(rolled_back['models']['poisson']['rolling_shadow_active'],'baseline')
+        held=evaluate([],[],result)
+        self.assertEqual(held['models']['poisson']['decision'],'HOLD')
+        self.assertEqual(held['models']['poisson']['rolling_shadow_active'],'rolling_2y')

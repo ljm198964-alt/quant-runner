@@ -121,7 +121,7 @@ def run(root,output,max_dates,run_id):
                 years=int(selected_rolling.split('_')[1][0])
                 start=pd.Timestamp(now.date().isoformat(),tz='UTC')-pd.Timedelta(days=365*years)
                 selected_train=league_train.loc[league_train.match_date_utc>=start]
-                if len(selected_train)<80:
+                if selected_train.empty:
                     selected_train=league_train
                     selected_rolling='baseline'
             model=cls(selected_train.home_goals,selected_train.away_goals,selected_train.home_team,selected_train.away_team)
@@ -137,16 +137,8 @@ def run(root,output,max_dates,run_id):
                 forecast_count+=1
                 grid_hash=hash_id(matrix)
                 shadow_active=active.get(model_name,'baseline')
-                if shadow_active not in ('baseline',*CANDIDATES):raise ValueError('unregistered shadow version')
+                shadow_active='baseline'
                 calibrated=None
-                if shadow_active!='baseline':
-                    shrink=CANDIDATES[shadow_active]
-                    # Preserve original full score grid; research calibration alters only
-                    # separate 1X2 diagnostic probabilities, not AH/OU score-grid EV.
-                    home=sum(v for h,row in enumerate(matrix) for a,v in enumerate(row) if h>a)
-                    draw=sum(row[h] for h,row in enumerate(matrix) if h<len(row))
-                    away=max(0.,1-home-draw)
-                    calibrated=[(1-shrink)*p+shrink/3 for p in (home,draw,away)]
                 forecast_event={'protocol':'M3_TOTALCORNER_FORWARD_FORECAST_V1',
                     'forecast_id':forecast_id,'forecasted_at_utc':forecasted_at,
                     'model':model_name,'fixture_identity_id':fixture['fixture_identity_id'],

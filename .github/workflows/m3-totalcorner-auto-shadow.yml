@@ -2,7 +2,7 @@ name: M3 TotalCorner Automatic Independent Shadow
 on:
   workflow_dispatch:
   schedule:
-    - cron: '10 */4 * * *'
+    - cron: '0 4,22 * * *'
 permissions:
   contents: write
 concurrency:

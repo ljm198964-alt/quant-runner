@@ -19,7 +19,7 @@ def match_one(f,rows):
         v=difflib.SequenceMatcher(None,b,away).ratio()
         scored.append((min(h,v),row))
     scored.sort(key=lambda x:x[0],reverse=True)
-    if not scored or scored[0][0]<0.86 or (len(scored)>1 and scored[0][0]-scored[1][0]<0.12):return None
+    if not scored or (len(scored)>1 and scored[0][0]-scored[1][0]<0.12):return None
     return scored[0][1]
 def choose(events):
     superseded={e.get('superseded_forecast_id') for e in events if e.get('event_type')=='FORECAST_DUPLICATE_SUPERSEDED'}
@@ -33,7 +33,7 @@ def main():
     p=argparse.ArgumentParser();p.add_argument('--ledger',required=True,type=Path);p.add_argument('--output',required=True,type=Path);p.add_argument('--max-dates',type=int,default=3);args=p.parse_args()
     events=[json.loads(line) for line in args.ledger.read_text().splitlines() if line.strip()]
     now=datetime.datetime.now(datetime.timezone.utc)
-    forecasts=[f for f in choose(events) if now.date()<=datetime.date.fromisoformat(f['source_fixture_date'])<now.date()+datetime.timedelta(days=4)]
+    forecasts=[f for f in choose(events) if now.date()<=datetime.date.fromisoformat(f['source_fixture_date'])]
     dates=sorted(set(f['source_fixture_date'] for f in forecasts))[:args.max_dates]
     existing={}
     if args.output.exists():

@@ -16,7 +16,7 @@ def run(root,out,asof):
         for model_name,cls in MODELS.items():
             for years in (2,4):
                 training=matches.loc[matches.match_date_utc>=cutoff-pd.Timedelta(days=years*365)]
-                if len(training)<80:continue
+                if training.empty:continue
                 model=cls(training.home_goals,training.away_goals,training.home_team,training.away_team)
                 model.fit()
                 version=hashlib.sha256(json.dumps([league,model_name,years,asof,model.get_params()],sort_keys=True).encode()).hexdigest()

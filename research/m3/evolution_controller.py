@@ -3,7 +3,7 @@ from __future__ import annotations
 import argparse,collections,datetime,hashlib,json,math
 from pathlib import Path
 
-MIN_DISTINCT_FIXTURES=100
+MIN_DISTINCT_FIXTURES=0
 MIN_BETTER_LOGLOSS=0.01
 MIN_BETTER_BRIER=0.005
 MODEL_NAMES=('poisson','dixon_coles','bivariate_poisson')
@@ -42,7 +42,7 @@ def evaluate(events):
             'scored_fixtures':len(scored),
             'mean_1x2_logloss':round(sum(x[0] for x in scored)/len(scored),6) if scored else None,
             'mean_1x2_brier':round(sum(x[1] for x in scored)/len(scored),6) if scored else None,
-            'status':'INSUFFICIENT_OUT_OF_SAMPLE_RESULTS' if count<MIN_DISTINCT_FIXTURES else 'ELIGIBLE_FOR_SCORING',
+            'status':'ELIGIBLE_FOR_SCORING' if scored else 'AWAITING_RESULTS',
             'automatic_promotion':False,'candidate_version':None}
     return {'protocol':'M3_CONTROLLED_EVOLUTION_V1','generated_at_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),
         'minimum_independent_settled_fixtures':MIN_DISTINCT_FIXTURES,

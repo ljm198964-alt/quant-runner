@@ -2,7 +2,7 @@ name: M3 Fresh TotalCorner Forward EV Shadow
 on:
   workflow_dispatch:
   schedule:
-    - cron: '25 */4 * * *'
+    - cron: '0 4,22 * * *'
 permissions:
   contents: write
 concurrency:

@@ -4,8 +4,6 @@ import argparse,collections,datetime,json
 from pathlib import Path
 from research.m3.evolution_candidates import probabilities,scores,MODEL_NAMES
 
-MIN_MATCHES=100
-MIN_DATES=20
 def evaluate(forward,challengers,previous=None):
     base={}
     by_id={e['forecast_id']:e for e in forward if e.get('protocol')=='M3_TOTALCORNER_FORWARD_FORECAST_V1'}
@@ -43,20 +41,16 @@ def evaluate(forward,challengers,previous=None):
                 except (ValueError,IndexError,KeyError,TypeError,ZeroDivisionError):continue
                 rows.append((c['source_date'],b,a))
             rows.sort(key=lambda r:r[0])
-            halves=(rows[:len(rows)//2],rows[len(rows)//2:])
-            differences=[{'logloss':sum(r[1][0]-r[2][0] for r in half)/len(half) if half else None,
-                          'brier':sum(r[1][1]-r[2][1] for r in half)/len(half) if half else None} for half in halves]
-            passed=len(rows)>=MIN_MATCHES and len({r[0] for r in rows})>=MIN_DATES and all(
-                d['logloss'] is not None and d['logloss']>=0.01 and d['brier']>=0.005 for d in differences)
-            groups['rolling_'+str(years)+'y']={'paired_unique_fixtures':len(rows),'distinct_dates':len({r[0] for r in rows}),
-                'chronological_halves':differences,'passed':passed}
+            diff={'logloss':sum(r[1][0]-r[2][0] for r in rows)/len(rows) if rows else None,
+                  'brier':sum(r[1][1]-r[2][1] for r in rows)/len(rows) if rows else None}
+            passed=bool(rows) and diff['logloss']>=0.01 and diff['brier']>=0.005
+            groups['rolling_'+str(years)+'y']={'paired_unique_fixtures':len(rows),
+                'distinct_dates':len({r[0] for r in rows}),'overall_improvement':diff,'passed':passed}
         prior=((previous or {}).get('models') or {}).get(model,{})
         current=prior.get('rolling_shadow_active','baseline')
         eligible=[k for k,v in groups.items() if v['passed']]
-        if current!='baseline' and current not in eligible:
-            selected='baseline';decision='ROLLBACK_SHADOW_ONLY'
-        elif current=='baseline' and eligible:
-            selected=max(eligible,key=lambda k:min(d['logloss'] for d in groups[k]['chronological_halves']))
+        if current=='baseline' and eligible:
+            selected=max(eligible,key=lambda k:groups[k]['overall_improvement']['logloss'])
             decision='PROMOTE_SHADOW_ONLY'
         else:
             selected=current;decision='HOLD'

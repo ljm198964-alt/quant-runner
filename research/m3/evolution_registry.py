@@ -8,7 +8,7 @@ import argparse,datetime,json,math
 from pathlib import Path
 from research.m3.evolution_candidates import probabilities,scores,MODEL_NAMES
 
-CANDIDATES={"shrink_05":0.05,"shrink_10":0.10,"shrink_15":0.15}
+CANDIDATES={}
 MIN_FIXTURES=100
 MIN_DATES=20
 
