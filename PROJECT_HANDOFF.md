@@ -1,3 +1,8 @@
+## 2026-10-22 用户逐项批准 M3 17条配置，已执行
+- 审批 01 修改扫描频率至每日北京时间06:00/12:00（UTC前一日22:00与当日04:00）；对应既有M3每4h工作流均改 cron '0 4,22 * * *'。02 单次日期2日批准，03 API间隔约2.2s/限流11s批准。04 删除旧影子4日未来上限。05 删除球队匹配绝对相似度0.86门槛（06 保留最优-次优>=0.12）。07 保留已有五大联赛自动映射。08 保留2/4年训练窗口。09 删除每联赛最低80场训练门槛（空训练数据仍无法拟合）。10 保留每周二候选重训。11 取消1X2概率shrink 5/10/15候选并从前瞻移除应用；控制演进工作流不再运行该候选/注册表过程。12 取消晋级最低100场门槛。13 取消最低20比赛日门槛。14 保留 logloss>=0.01 与 Brier>=0.005 对基础版改善阈值。15 取消前后半段同时达标要求，改全量已配对比赛平均改善。16 取消不达标自动回滚，已晋级影子版本不会因资格撤销自动回到基础版（这是用户最新确认，需明确潜在风险）。17 保留M3影子不发正式TG。用户未审批项目保持待审。
+- 主变更公开 main [e0947b4](https://github.com/ljm198964-alt/quant-runner/commit/e0947b4)，Python compileall及6项相关测试PASS。真实 [controlled evolution run 39763408548](https://github.com/ljm198964-alt/quant-runner/actions/runs/39763408548) SUCCESS；真实 [forward run 39763415741](https://github.com/ljm198964-alt/quant-runner/actions/runs/39763415741) 已触发，开始检查时in_progress，不能冒称新预测已成功。
+- 注意：用户取消了100场和20日期最低限制，只有1个有效赛果也可能通过保留的logloss/Brier均值差阈值而晋级，既有模型质量风险需如实报告但不可擅自恢复限制；用户取消回滚，不能以安全名义私自复原。未经确认的参数不等于用户批准。
+
 ## 2026-10-22 用户确认 TotalCorner 账户时区为上海
 - 用户明确答复 TotalCorner profile timezone 是上海(Asia/Shanghai, UTC+08)。据官方API时间跟随账户profile配置，更新 research/m3/kickoff_gate.py 用 zoneinfo Asia/Shanghai 将无时区的 source start 解析到UTC（拒绝字段格式异常或自带冲突时区值），并按用户确定的最低提前90分钟 gate 检验；research/m3/totalcorner_forward_ev.py 经转换后的对应赛程仅合格才进入模型预测/Crown优先报价快照，预测账本存 kickoff_utc_verified 与 user_confirmed_TotalCorner_profile_Asia/Shanghai 来源。仓库commit 7d881a7，3个关键时间测试PASS。
 - 已实际触发 [Actions 39760423344](https://github.com/ljm198964-alt/quant-runner/actions/runs/39760423344)，最后查为in_progress，还没核对真实新预测事件和开赛UTC交叉赛事，因此不能宣称生产恢复。用户原规则赛前>=90分钟，保持M3研究影子、无TG正式投注；禁止未经同意增设任意窗口。
