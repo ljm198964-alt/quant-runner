@@ -1,3 +1,9 @@
+## 2026-10-22 M3 滚动版本真实比分矩阵切换完成
+- 用户明确批准将经验证滚动影子版本实际用于 M3 后续预测和 AH/OU EV。公开 `research/m3/totalcorner_forward_ev.py` commit `eed6378`：前瞻读取独立 `evolution_rolling_registry.json` 的各模型 `rolling_shadow_active`，仅允许 baseline/rolling_2y/rolling_4y；只有对应候选 `passed=true` 且训练样本充足才以所选滚动窗口的赛果重新拟合相同 penaltyblog 模型，使用其真正生成的完整比分概率矩阵计算 AH/OU EV。否则保留基础模型。新前瞻保存 rolling_shadow_version、training_signature、training_rows，EV 保存所用矩阵版本；概率校准1X2候选仍单独记录，不混成亚洲盘矩阵。
+- [GitHub Actions 39753604800](https://github.com/ljm198964-alt/quant-runner/actions/runs/39753604800) 已确认 SUCCESS，工作流本身运行成功；根据最新滚动注册表三模型均 baseline/HOLD，故未实际发生滚动版替换，不可宣称新滚动策略已实盘验证。
+- 新增 `research/m3/test_evolution_rolling_integration.py`，在授权在线 Mac 执行2项单元测试均PASS：0结算不得晋级，失去通过资格回滚baseline。M3仍仅影子，未发 TG、无正式订单，其他模型不受影响。
+- 注意：本轮完成的是**资格通过时实际重拟合/切换 EV 矩阵的逻辑和基础版的成功运行**，不是已在有真实样本的生产环境验证过一次晋级。本版本候选参数的实际盈利表现仍待未来赛果，也未通过严格开赛UTC证据完成正式入场价格审计。
+
 ## 2026-10-22 M3 滚动窗口候选样本外闭环接线
 - 用户要求现在把2年/4年滚动重训候选接入受控影子晋级/回滚。公开main已修改候选训练器和每周训练工作流 commit 6d080bb：候选追加保存到 research/m3/results/totalcorner/rolling_candidate_predictions.jsonl，含原始比分矩阵、版本标识、注册UTC时间、训练截止时点，不再只留90天workflow附件。真实 Actions 39752662168 SUCCESS，持久化候选记录已生成。
 - 新增 research/m3/evolution_rolling_gate.py（commit在本轮main）、并修改每日 .github/workflows/m3-controlled-evolution.yml commit 78a56da；匹配同模型+同fixture已结算赛果、基线比分矩阵和对应2/4年候选，要求比赛在候选注册之后，避免未来数据泄漏和重复同场计数；按时间拆半，用logloss/Brier、独立赛事数与日期数门槛标记影子候选晋级或回滚至baseline，写入独立 evolution_rolling_registry.json。真实 Actions 39752853985 SUCCESS，日志 challengers_loaded=72，Poisson/Dixon-Coles/Bivariate Poisson 全部HOLD，尚无足够新赛果。
