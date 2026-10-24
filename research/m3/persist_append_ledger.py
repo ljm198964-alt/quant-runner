@@ -41,6 +41,8 @@ def persist(candidate_path, max_attempts=8):
             w=Path(tmp)/"writer"
             git("worktree","add","--detach",str(w),"origin/main")
             try:
+                git("-C",str(w),"config","user.name","github-actions[bot]")
+                git("-C",str(w),"config","user.email","41898282+github-actions[bot]@users.noreply.github.com")
                 path=w/LEDGER
                 path.write_text(combined)
                 p=subprocess.run(["git","-C",str(w),"add",LEDGER],capture_output=True,text=True)
