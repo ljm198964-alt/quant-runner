@@ -11,7 +11,6 @@ import time
 import urllib.parse
 import urllib.request
 from pathlib import Path
-from research.m3.openfootball_shadow import read_openfootball
 from research.m3.kickoff_gate import totalcorner_shanghai_kickoff
 from research.m3.probabilities import settle_score
 
@@ -105,6 +104,7 @@ def main():
     p.add_argument('--ledger',required=True,type=Path)
     args=p.parse_args()
     events=[json.loads(s) for s in args.ledger.read_text().splitlines() if s.strip()]
+    from research.m3.openfootball_shadow import read_openfootball
     result,_,_,_=read_openfootball(args.input_root)
     finished={r['fixture_identity_id']:r for r in result.to_dict('records')}
     token=os.environ['TOTALCORNER_TOKEN'];now=datetime.datetime.now(UTC)
