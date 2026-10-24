@@ -1,3 +1,10 @@
+## 2026-10-24 M3 用户批准的逐场 FT 结算修复：生产验证成功
+- 用户明确批准：移除 UTC 日界整日阻断，使用 TotalCorner /match/view/{id} 逐场严格 FT（状态/时间/身份）、保留 OpenFootball 独立比分交叉核验；冲突留待结算，只追加既存 EV 快照结算，不修改预测和正式 TG。
+- 公开 main 修复提交 e2d4181、fa15691，独立人工结算工作流 f1f6f41，使用既有 TOTALCORNER_TOKEN，不生成新预测/报价。
+- 手工 Actions 40098513836 SUCCESS，verified_fixtures=1，settlements_added=132，CONFLICTING_FIXTURE_MAPPING=3，formal_bets=0；主仓落账提交 0aa7c55；结算 132 条是单一独立赛事的模型/盘线/快照观察，不可称132场或正式 ROI。
+- 结算比分 2:1；三模型各有 AH 22 条两侧观察合计 -0.315 U、OU 22条两侧观察合计 -0.010 U。双侧报价/重复快照不得冒充模拟策略业绩。
+- 未完成：3组同一 provider ID 多 fixture 映射冲突，严格阻断并待源身份核查；并行前瞻 Actions 40098232309 最终结果尚需追踪。
+
 ## 2026-10-22 用户逐项批准 M3 17条配置，已执行
 - 审批 01 修改扫描频率至每日北京时间06:00/12:00（UTC前一日22:00与当日04:00）；对应既有M3每4h工作流均改 cron '0 4,22 * * *'。02 单次日期2日批准，03 API间隔约2.2s/限流11s批准。04 删除旧影子4日未来上限。05 删除球队匹配绝对相似度0.86门槛（06 保留最优-次优>=0.12）。07 保留已有五大联赛自动映射。08 保留2/4年训练窗口。09 删除每联赛最低80场训练门槛（空训练数据仍无法拟合）。10 保留每周二候选重训。11 取消1X2概率shrink 5/10/15候选并从前瞻移除应用；控制演进工作流不再运行该候选/注册表过程。12 取消晋级最低100场门槛。13 取消最低20比赛日门槛。14 保留 logloss>=0.01 与 Brier>=0.005 对基础版改善阈值。15 取消前后半段同时达标要求，改全量已配对比赛平均改善。16 取消不达标自动回滚，已晋级影子版本不会因资格撤销自动回到基础版（这是用户最新确认，需明确潜在风险）。17 保留M3影子不发正式TG。用户未审批项目保持待审。
 - 主变更公开 main [e0947b4](https://github.com/ljm198964-alt/quant-runner/commit/e0947b4)，Python compileall及6项相关测试PASS。真实 [controlled evolution run 39763408548](https://github.com/ljm198964-alt/quant-runner/actions/runs/39763408548) SUCCESS；真实 [forward run 39763415741](https://github.com/ljm198964-alt/quant-runner/actions/runs/39763415741) 已触发，开始检查时in_progress，不能冒称新预测已成功。
