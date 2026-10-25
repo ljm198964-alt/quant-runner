@@ -1,3 +1,9 @@
+## 2026-10-25 M3 对齐M1/MR1研究赛事范围
+- 用户明确要求M3研究与M1、MR1相同的联赛，而不是仅五大联赛。实读M1正式调用totalcorner-research-bridge/master/m1_runtime_policy.py（scope_status；一级联赛/用户指定国家队赛事纳入、二级联赛及杯赛规则按M1既有配置），MR1 AH正式调用mr1-shadow/master/config/validation-spec.json 的competition_scope（国家include与赛事exclude）。
+- 公开Runner commit e1a845b 保存两套当时真实生产规则引用快照到 research/m3/reference/ 并添加独立 m1_mr1_scope_audit + M3工作流步骤。此项是M3研究池身份标签（M1 OR MR1），不是新的模型策略Gate、不改变TG或已存在正式订单；三模型训练仍只覆盖其实际五联赛历史，不得把研究范围303场说成已能预测303场。
+- 对正式M3 2026-10-25运行 #40200056050 两天2183场的实际清单做独立范围核算：M1且MR1 165、仅M1 38、仅MR1 100，共M1/MR1并集303；两边都不在1880。满足90min的并集83（M1且MR1 54、仅M1 10、仅MR1 19）；范围外且满足90min的252。已通过research/m3.persist_append_ledger正式append-only PERSISTED 2183条M3_M1_MR1_SCOPE_V1到公开主账本，复核主账本中该次scope rows确实2183。MR1规则参考使用配置include/exclude token匹配，未声称完全等价MR1其它模型准入门槛；后续注意保持生产参考同步。
+- 下一任务是支持并集内目前无法建模的82场，数据可用前不可伪造Poisson/DC/Bivariate预测；TotalCorner默认亚洲盘是用户当前明确的M3研究要求。
+
 ## 2026-10-25 M3 真实运行完成：全赛事清单与TotalCorner默认AH/OU成功落账
 - 用户要求不要再等待卡住的运营链路，主动定位修复。本轮发现并修复清单必须等待后续模型全部完成才持久化的工程耦合。公开提交 a946cd9 修改后续自动工作流为赛事清单完成即先持久化，后续即使失败亦在finally提交已有事件。注意 #40200056050 是修复前启动，使用旧工作流，成功落账不代表早入账修复已在后续运行验收。
 - 实际生产 [Actions #40200056050](https://github.com/ljm198964-alt/quant-runner/actions/runs/40200056050) SUCCESS。全量两日TotalCorner赛程74页、2183条独立清单事件；符合赛前>=90min的335场、时间不足1848场；在335场里训练联赛不支持324、球队/映射无预测10、模型预测1场（3个模型各1条）。TotalCorner默认赔率 EV 新增12条 (bookmaker=totalcorner_default_NOT_CROWN)，新增FT结算观察48条，主账本新事件4429条PERSISTED attempt1。总账本8434事件，预测独立比赛29，FT结算独立比赛14；此统计具体时间北京时间2026-10-25约22:10，数据来自上述生产run及公开主账本。不能把清单事件2183说成已预测2183场或把所有结算观察当订单。
