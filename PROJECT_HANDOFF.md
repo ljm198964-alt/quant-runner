@@ -1,3 +1,9 @@
+## 2026-10-25 M3 用户最新指令：先用TotalCorner默认亚洲盘，不再强制 Crown
+- 最新用户明确要求：M3 前瞻研究阶段先用 TotalCorner 默认亚洲盘推进，不能因为逐场Crown报价核查阻碍全赛事扫描；此处新指令优先。M1/MR1等其他正式链路的 Crown 严格要求**未修改**，不可把M3的TotalCorner默认报价报成Crown，也未授权Telegram正式出单。
+- 公开提交 4ad8b53：future_fixture_audit 独立遍历未来2天赛程，去除逐场Crown盘口请求以解除扫描阻塞；M3 已有三模型预测配对盘口改为 TotalCorner /v1/match/odds/{id} 默认AH/OU，账本明确 bookmaker=totalcorner_default_NOT_CROWN；仍严格>=90min，正式单false。提交 f2a7bc8 更正今后工作流步骤文案与清单字段，不再误叫Crown。
+- 历时很长的逐场Crown全量查询工作流 #40198251330 已提交取消请求；新真实扫描 #40200056050 已触发，最后检查inventory阶段 in_progress，切勿宣布成功直到账本提交完成。扫描清单状态与实际模型预测场数分别统计，模型历史训练覆盖仍限5联赛，但不得把这当成限制赛事清单。
+- 待核查 #40200056050 SUCCESS、实际 source_rows/inventory events、独立赛数、Crown非默认区分、model counts、append-only落账；如运行失败立即查日志并修复。不要再默认要求用户重新解释其目标。
+
 ## 2026-10-25 M3 全量未来赛程独立清单：正在生产验收
 - 用户明确要求先完整记录 TotalCorner 未来两天所有赛事，不管模型历史训练能否覆盖；逐场记录赛事/联赛/球队/开球UTC、赛前90分钟核验、合格者查询Crown AH+OU状态，而不是把无训练数据的比赛从扫描入口删掉。禁止伪造概率和下单；保留现有三模型研究线。
 - 已实施独立 M3_TOTALCORNER_FUTURE_INVENTORY_V1 账本事件与覆盖审计，代码公开 main e47f3f6，workflow m3-totalcorner-forward-ev.yml 在模型预测之前先执行 future_fixture_audit.py，所有读取到的赛程即使未建模亦被记录；只对合格赛前时间抓Crown报价（维持约2.2秒间隔）。
