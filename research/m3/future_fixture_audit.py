@@ -26,7 +26,7 @@ def process(schedules,now,quote_lookup,pace=lambda:None):
               'totalcorner_match_id':mid,'source_fixture_date':day,
               'league_source':str(row.get('l') or ''),'home_source':str(row.get('h') or ''),
               'away_source':str(row.get('a') or ''),'kickoff_utc_verified':start,
-              'timing_state':status,'lead_minutes_at_scan':lead,'crown_market_status':markets,
+              'timing_state':status,'lead_minutes_at_scan':lead,'market_audit_status':markets,
               'quote_observed_utc':snapshot,'formal_order':False,'telegram_sent':False}
             records.append(item)
     return records,dict(counts)

@@ -30,14 +30,14 @@ jobs:
         run: python -m research.m3.wait_until_scan_slot --cron "$CRON_EVENT"
       - name: Install pinned M3 model dependencies
         run: python -m pip install penaltyblog==1.13.1 pandas numpy
-      - name: Inventory every upcoming TotalCorner fixture and time-qualified Crown market
+      - name: Inventory future TotalCorner fixtures without odds dependency
         env:
           TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
         run: |
           python -m research.m3.future_fixture_audit \
             --output research/m3/results/totalcorner/forward_ev_ledger.jsonl \
             --max-dates 2 --run-id "$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
-      - name: Capture fresh score matrices and calculate actual TotalCorner line EV
+      - name: Capture fresh M3 forecasts and TotalCorner default AH OU EV
         env:
           TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
         run: |
