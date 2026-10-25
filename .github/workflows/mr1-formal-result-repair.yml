@@ -43,4 +43,16 @@ jobs:
           TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
         run: |
           echo "RUNTIME_BASE_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
-          node src/persist-github-state.js
+          git config user.name mr1-formal-result-repair
+          git config user.email mr1-formal-result-repair@users.noreply.github.com
+          git add data/strategy-shadow-ledger/results data/mr1-v6-cross-market/formal/settled.json data/mr1-v6-cross-market/formal/performance.json
+          if git diff --cached --quiet; then echo NO_NEW_RESULTS; exit 0; fi
+          git commit -m "MR1 formal FT result repair ${GITHUB_RUN_ID}"
+          for attempt in 1 2 3 4; do
+            git fetch origin master
+            if git rebase -X ours origin/master && git push origin HEAD:master; then echo STATE_PERSISTED; exit 0; fi
+            git rebase --abort 2>/dev/null || true
+            sleep 5
+          done
+          echo '::error::MR1 formal evidence persistence failed'
+          exit 1
