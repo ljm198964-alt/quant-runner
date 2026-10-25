@@ -1,12 +1,10 @@
 name: MR1 Formal Result Repair
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '48 0,6,12,18 * * *'
 permissions:
   contents: read
 concurrency:
-  group: totalcorner-api-runtime
+  group: mr1-formal-result-repair
   cancel-in-progress: false
 jobs:
   repair:
