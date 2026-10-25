@@ -3,12 +3,13 @@
 New records only; never backfills older recorded forecasts. Research shadow, no Telegram.
 """
 from __future__ import annotations
-import argparse,datetime,hashlib,json,math,os,time,urllib.parse,urllib.request
+import argparse,collections,datetime,difflib,hashlib,json,math,os,time,urllib.parse,urllib.request
 from pathlib import Path
 import pandas as pd
 from research.m3.openfootball_shadow import read_openfootball,MODELS,_serialize_score_probability_grid
 from research.m3.totalcorner_schedule_discovery import get_schedule
-from research.m3.totalcorner_auto_shadow import match_one
+from research.m3.totalcorner_auto_shadow import LEAGUES,ALIASES
+from research.m3.totalcorner_schedule_discovery import normalize
 from research.m3.totalcorner_shadow_ev import fetch
 from research.m3.probabilities import settle_score
 from research.m3.evolution_registry import CANDIDATES
@@ -66,28 +67,49 @@ def run(root,output,max_dates,run_id):
     data,fixtures,_,_=read_openfootball(root)
     # All model training is limited strictly to past calendar dates.
     train=data.loc[data.match_date_utc.lt(pd.Timestamp(now.date().isoformat(),tz='UTC'))]
-    # No user-unapproved advance-day or 3-5 day gate. Source calendar dates
-    # are not evidence of a verified UTC kickoff; quote observations remain
-    # research-only and must not be represented as executable prematch prices.
-    next_days=sorted({f['source_date'] for f in fixtures if
-        datetime.date.fromisoformat(f['source_date'])>=now.date()})[:max_dates]
+    # TotalCorner drives fixture discovery; OpenFootball is training data only.
+    # The source account timezone has been confirmed as Asia/Shanghai.
+    bj_date=now.astimezone(datetime.timezone(datetime.timedelta(hours=8))).date()
+    next_days=[(bj_date+datetime.timedelta(days=d)).isoformat() for d in range(max_dates)]
     matched_by_league={}
-    pages=0; timing_rejected=0; timing_reasons={}
+    pages=0;timing_rejected=0;timing_reasons={};audit=collections.Counter()
+    train_teams={league:set(map(str,g.home_team))|set(map(str,g.away_team))
+                 for league,g in train.groupby('league')}
     for day in next_days:
         schedule,count=get_schedule(day,os.environ['TOTALCORNER_TOKEN']);pages+=count
-        for fixture in fixtures:
-            if fixture['source_date']!=day:continue
-            source=match_one(fixture,schedule)
-            if source:
-                # No prediction/quote is accepted unless the provider kickoff
-                # has an independently qualified UTC timestamp.
-                kickoff_utc=totalcorner_shanghai_kickoff(source)
-                source_with_utc={**source,'kickoff_utc_verified':kickoff_utc}
-                allowed,lead,reason=gate(source_with_utc,datetime.datetime.now(UTC))
-                if allowed:matched_by_league.setdefault(fixture['league'],[]).append((fixture,source_with_utc))
-                else:
-                    timing_rejected+=1
-                    timing_reasons[reason]=timing_reasons.get(reason,0)+1
+        audit['source_schedule_rows']+=len(schedule)
+        # Restrict prediction only where independently trained model and
+        # unambiguous historical team identities exist; preserve every reject count.
+        for source in schedule:
+            league=next((code for code,label in LEAGUES.items() if source.get('l')==label),None)
+            if not league:
+                audit['no_supported_historical_league']+=1;continue
+            audit['historical_league_candidates']+=1
+            if league not in train_teams or not train_teams[league]:
+                audit['missing_league_training']+=1;continue
+            kickoff=totalcorner_shanghai_kickoff(source)
+            source_with_utc={**source,'kickoff_utc_verified':kickoff}
+            allowed,lead,reason=gate(source_with_utc,datetime.datetime.now(UTC))
+            if not allowed:
+                timing_rejected+=1;timing_reasons[reason]=timing_reasons.get(reason,0)+1
+                continue
+            def resolve(name):
+                key=normalize(name)
+                known=train_teams[league]
+                # Reverse known source aliases; use only a unique identity, not
+                # a guessed match on low-confidence fuzzy names.
+                matches=[n for n in known if normalize(n)==key or ALIASES.get(normalize(n))==key]
+                return matches[0] if len(matches)==1 else None
+            home,away=resolve(source.get('h')),resolve(source.get('a'))
+            if not home or not away or home==away:
+                audit['unmapped_training_team']+=1;continue
+            mid=str(source.get('id',''))
+            if not mid.isdigit():
+                audit['invalid_source_match_id']+=1;continue
+            fixture={'league':league,'home_team':home,'away_team':away,
+                'source_date':day,'fixture_identity_id':hash_id(['M3_TOTALCORNER_FIXTURE_V1',mid])}
+            matched_by_league.setdefault(league,[]).append((fixture,source_with_utc))
+            audit['qualified_fixtures']+=1
     registry_path=output.parent/'evolution_registry.json'
     registry=json.loads(registry_path.read_text()) if registry_path.exists() else {}
     active={m:v.get('shadow_active','baseline') for m,v in registry.get('models',{}).items()}
@@ -106,7 +128,7 @@ def run(root,output,max_dates,run_id):
         for fixture,src in pairs:
             sid=str(src['id'])
             if sid not in market_cache:
-                market_cache[sid]=(fetch(sid,os.environ['TOTALCORNER_TOKEN']),fetch_crown(sid,os.environ['TOTALCORNER_TOKEN']),datetime.datetime.now(UTC).isoformat())
+                market_cache[sid]=(None,fetch_crown(sid,os.environ['TOTALCORNER_TOKEN']),datetime.datetime.now(UTC).isoformat())
                 time.sleep(2.2)
         for model_name,cls in MODELS.items():
             selected_rolling=rolling_active.get(model_name,'baseline')
@@ -159,9 +181,9 @@ def run(root,output,max_dates,run_id):
                 # a valid current comparison snapshot, not an execution quote.
                 for market,field,sides in [('AH','asian_list',('home','away')),('OU','goal_list',('over','under'))]:
                     crown_quote=get_latest(crown.get(field))
-                    quote=crown_quote if crown_quote is not None else get_latest(match.get(field))
+                    quote=crown_quote
                     if quote is None:continue
-                    bookmaker='crown' if crown_quote is not None else 'default_unspecified_NOT_CROWN'
+                    bookmaker='crown'
                     _,line,a,b=quote
                     quote_count+=1
                     for side,decimal in zip(sides,(a,b)):
@@ -190,7 +212,7 @@ def run(root,output,max_dates,run_id):
         'fresh_forecast_snapshots':forecast_count,'markets_quoted':quote_count,
         'ev_rows_appended':len(rows),'output':str(output),
         'telegram_sent':False,'settlements':0,'min_lead_minutes':MIN_LEAD_MINUTES,
-        'timing_rejected':timing_rejected,'timing_reasons':timing_reasons}))
+        'timing_rejected':timing_rejected,'timing_reasons':timing_reasons,'coverage_audit':dict(audit)}))
 def main():
     p=argparse.ArgumentParser()
     p.add_argument('--input-root',required=True,type=Path)
