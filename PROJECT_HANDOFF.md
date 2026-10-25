@@ -1,3 +1,8 @@
+## 2026-10-25 M3 全量未来赛程独立清单：正在生产验收
+- 用户明确要求先完整记录 TotalCorner 未来两天所有赛事，不管模型历史训练能否覆盖；逐场记录赛事/联赛/球队/开球UTC、赛前90分钟核验、合格者查询Crown AH+OU状态，而不是把无训练数据的比赛从扫描入口删掉。禁止伪造概率和下单；保留现有三模型研究线。
+- 已实施独立 M3_TOTALCORNER_FUTURE_INVENTORY_V1 账本事件与覆盖审计，代码公开 main e47f3f6，workflow m3-totalcorner-forward-ev.yml 在模型预测之前先执行 future_fixture_audit.py，所有读取到的赛程即使未建模亦被记录；只对合格赛前时间抓Crown报价（维持约2.2秒间隔）。
+- 真实手动扫描 Actions #40198251330 已触发，在首次检查时 inventory 步骤 in_progress；该提交与触发本身**不等于**真实清单落账成功或账本覆盖已完整。后续核验运行 SUCCESS、events_added、Crown市场状态、主账本持久化数量；如API耗时或错误，按实际结果修复。旧历史账本不重写。
+
 ## 2026-10-25 M3 用户要求立即取消 OpenFootball 赛事入口并跑通
 - 用户明确反对未经批准的 OpenFootball 候选赛事限制，要求立即以 TotalCorner 扫描入口并实际跑通。公开 main e9c0104 修改 research/m3/totalcorner_forward_ev.py，按 TotalCorner 账户 Asia/Shanghai 日期扫描每日2天赛程，OpenFootball 只用于旧有历史训练；保留三种 penaltyblog 模型、>=90min、研究影子无TG；新版新增盘口只接受 Crown（旧历史非Crown记录保持原标记，不重写）。无法唯一映射历史球队/联赛的候选记录 coverage_audit 而不凭空预测。
 - 真正生产 Actions #40197280499 SUCCESS（2026-10-25 UTC约13:28），日期2天、TotalCorner 赛程73页2161条；其中已有历史训练的联赛候选29条，其余2132条无受支持联赛训练；候选因赛前不足90分钟拒绝17、因历史球队无法映射拒绝11、符合条件1场；新增三模型预测3条、Crown盘口EV观察12条；工作流追加总事件15条，PERSISTED added=15 attempt=1，主账本总事件4005，独立预测赛事由28增至29。这个运行是技术链路跑通，但**覆盖不足问题未解决**，严禁宣称全赛事预测已实现。
