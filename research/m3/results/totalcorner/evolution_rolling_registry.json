@@ -1,80 +1,80 @@
 {
-  "generated_at_utc": "2026-10-24T05:47:49.449369+00:00",
+  "generated_at_utc": "2026-10-25T06:03:32.291914+00:00",
   "models": {
     "bivariate_poisson": {
       "candidates": {
         "rolling_2y": {
-          "distinct_dates": 0,
+          "distinct_dates": 1,
           "overall_improvement": {
-            "brier": null,
-            "logloss": null
+            "brier": 0.054789453633017744,
+            "logloss": 0.08519934906502946
           },
-          "paired_unique_fixtures": 0,
-          "passed": false
+          "paired_unique_fixtures": 3,
+          "passed": true
         },
         "rolling_4y": {
-          "distinct_dates": 0,
+          "distinct_dates": 1,
           "overall_improvement": {
-            "brier": null,
-            "logloss": null
+            "brier": 0.07468915535337024,
+            "logloss": 0.11561855707513109
           },
-          "paired_unique_fixtures": 0,
-          "passed": false
+          "paired_unique_fixtures": 3,
+          "passed": true
         }
       },
-      "decision": "HOLD",
+      "decision": "PROMOTE_SHADOW_ONLY",
       "previous_rolling_shadow_active": "baseline",
-      "rolling_shadow_active": "baseline"
+      "rolling_shadow_active": "rolling_4y"
     },
     "dixon_coles": {
       "candidates": {
         "rolling_2y": {
-          "distinct_dates": 0,
+          "distinct_dates": 1,
           "overall_improvement": {
-            "brier": null,
-            "logloss": null
+            "brier": 0.06284191853506862,
+            "logloss": 0.098781457838095
           },
-          "paired_unique_fixtures": 0,
-          "passed": false
+          "paired_unique_fixtures": 3,
+          "passed": true
         },
         "rolling_4y": {
-          "distinct_dates": 0,
+          "distinct_dates": 1,
           "overall_improvement": {
-            "brier": null,
-            "logloss": null
+            "brier": 0.08235745326429848,
+            "logloss": 0.12871831387245133
           },
-          "paired_unique_fixtures": 0,
-          "passed": false
+          "paired_unique_fixtures": 3,
+          "passed": true
         }
       },
-      "decision": "HOLD",
+      "decision": "PROMOTE_SHADOW_ONLY",
       "previous_rolling_shadow_active": "baseline",
-      "rolling_shadow_active": "baseline"
+      "rolling_shadow_active": "rolling_4y"
     },
     "poisson": {
       "candidates": {
         "rolling_2y": {
-          "distinct_dates": 0,
+          "distinct_dates": 1,
           "overall_improvement": {
-            "brier": null,
-            "logloss": null
+            "brier": 0.05376396013638197,
+            "logloss": 0.08227042139043383
           },
-          "paired_unique_fixtures": 0,
-          "passed": false
+          "paired_unique_fixtures": 3,
+          "passed": true
         },
         "rolling_4y": {
-          "distinct_dates": 0,
+          "distinct_dates": 1,
           "overall_improvement": {
-            "brier": null,
-            "logloss": null
+            "brier": 0.07343441009321079,
+            "logloss": 0.11283827399100888
           },
-          "paired_unique_fixtures": 0,
-          "passed": false
+          "paired_unique_fixtures": 3,
+          "passed": true
         }
       },
-      "decision": "HOLD",
+      "decision": "PROMOTE_SHADOW_ONLY",
       "previous_rolling_shadow_active": "baseline",
-      "rolling_shadow_active": "baseline"
+      "rolling_shadow_active": "rolling_4y"
     }
   },
   "production_changed": false,
