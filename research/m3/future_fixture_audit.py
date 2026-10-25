@@ -2,7 +2,6 @@
 import argparse, collections, datetime, hashlib, json, os, time
 from pathlib import Path
 from research.m3.totalcorner_schedule_discovery import get_schedule
-from research.m3.totalcorner_forward_ev import fetch_crown,get_latest
 from research.m3.kickoff_gate import totalcorner_shanghai_kickoff,gate
 UTC=datetime.timezone.utc
 def process(schedules,now,quote_lookup,pace=lambda:None):
@@ -18,20 +17,10 @@ def process(schedules,now,quote_lookup,pace=lambda:None):
             start=totalcorner_shanghai_kickoff(row)
             allowed,lead,reason=gate({'kickoff_utc_verified':start},now)
             status='TIME_QUALIFIED' if allowed else reason
-            markets={'AH':'NOT_CHECKED_TIME','OU':'NOT_CHECKED_TIME'}
+            markets={'AH':'NOT_CHECKED_INVENTORY','OU':'NOT_CHECKED_INVENTORY'}
             snapshot=None
             if allowed:
                 counts['time_qualified']+=1
-                try:
-                    quote_lookup_result=quote_lookup(mid)
-                    snapshot=datetime.datetime.now(UTC).isoformat()
-                    for market,field in [('AH','asian_list'),('OU','goal_list')]:
-                        markets[market]='CROWN_AVAILABLE' if get_latest(quote_lookup_result.get(field)) else 'NO_CROWN_QUOTE'
-                        counts[market+'_'+markets[market]]+=1
-                except Exception:
-                    markets={'AH':'QUOTE_QUERY_FAILED','OU':'QUOTE_QUERY_FAILED'}
-                    counts['quote_query_failed']+=1
-                pace()
             else:counts[reason]+=1
             item={'protocol':'M3_TOTALCORNER_FUTURE_INVENTORY_V1','source':'TotalCorner',
               'totalcorner_match_id':mid,'source_fixture_date':day,
@@ -52,9 +41,7 @@ def main():
         day=(bj+datetime.timedelta(days=offset)).isoformat()
         rows,count=get_schedule(day,os.environ['TOTALCORNER_TOKEN'])
         schedules.append((day,rows));pages+=count
-    records,counts=process(schedules,now,
-        lambda mid:fetch_crown(mid,os.environ['TOTALCORNER_TOKEN']),
-        lambda:time.sleep(2.2))
+    records,counts=process(schedules,now,lambda mid:{})
     a.output.parent.mkdir(parents=True,exist_ok=True)
     with a.output.open('a') as out:
         for r in records:

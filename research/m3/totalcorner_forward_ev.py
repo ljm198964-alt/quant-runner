@@ -128,7 +128,7 @@ def run(root,output,max_dates,run_id):
         for fixture,src in pairs:
             sid=str(src['id'])
             if sid not in market_cache:
-                market_cache[sid]=(None,fetch_crown(sid,os.environ['TOTALCORNER_TOKEN']),datetime.datetime.now(UTC).isoformat())
+                market_cache[sid]=(fetch(sid,os.environ['TOTALCORNER_TOKEN']),{},datetime.datetime.now(UTC).isoformat())
                 time.sleep(2.2)
         for model_name,cls in MODELS.items():
             selected_rolling=rolling_active.get(model_name,'baseline')
@@ -180,10 +180,9 @@ def run(root,output,max_dates,run_id):
                 # Market request was made before the forecast computation; this is
                 # a valid current comparison snapshot, not an execution quote.
                 for market,field,sides in [('AH','asian_list',('home','away')),('OU','goal_list',('over','under'))]:
-                    crown_quote=get_latest(crown.get(field))
-                    quote=crown_quote
+                    quote=get_latest(match.get(field))
                     if quote is None:continue
-                    bookmaker='crown'
+                    bookmaker='totalcorner_default_NOT_CROWN'
                     _,line,a,b=quote
                     quote_count+=1
                     for side,decimal in zip(sides,(a,b)):
