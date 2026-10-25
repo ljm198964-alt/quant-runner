@@ -55,20 +55,20 @@ def main():
     p=argparse.ArgumentParser()
     p.add_argument('--cache-dir',type=Path,required=True);p.add_argument('--ledger',type=Path,required=True)
     p.add_argument('--run-id',required=True);p.add_argument('--max-dates',type=int,default=2)
-    a=p.parse_args()
+    args=p.parse_args()
     now=datetime.datetime.now(UTC)
-    history,coverage=load_history(a.cache_dir,now)
+    history,coverage=load_history(args.cache_dir,now)
     spec=json.loads(MR1_PATH.read_text())
     bj=now.astimezone(datetime.timezone(datetime.timedelta(hours=8))).date()
     found={};counts=collections.Counter();pages=0
-    for delta in range(a.max_dates):
+    for delta in range(args.max_dates):
         day=(bj+datetime.timedelta(days=delta)).isoformat()
         sched,n=get_schedule(day,os.environ['TOTALCORNER_TOKEN']);pages+=n
         for r in sched:
             counts['source_rows']+=1
             reason,info=candidate(r,now,spec,history);counts[reason]+=1
             if info:found[str(r['id'])]=(r,info)
-    prior={json.loads(s)['event_id'] for s in a.ledger.open() if s.strip()}
+    prior={json.loads(s)['event_id'] for s in args.ledger.open() if s.strip()}
     rows=[];forecast_count=0;ev_count=0
     by_league=collections.defaultdict(list)
     for mid,(source,info) in found.items():by_league[info[0]].append((mid,source,info))
@@ -88,7 +88,7 @@ def main():
                 try: matrix=_serialize_score_probability_grid(model.predict(h,a))
                 except Exception:
                     counts['MODEL_PREDICT_FAILED_'+model_name]+=1;continue
-                fid=hash_id(['M3_M1_CACHE_FORWARD_V1',a.run_id,mid,model_name,forecast_at.isoformat()])
+                fid=hash_id(['M3_M1_CACHE_FORWARD_V1',args.run_id,mid,model_name,forecast_at.isoformat()])
                 fixture_id=hash_id(['M3_TOTALCORNER_FIXTURE_V1',mid])
                 ev={'protocol':'M3_TOTALCORNER_FORWARD_FORECAST_V1','forecast_id':fid,
                     'fixture_identity_id':fixture_id,'model':model_name,'source_fixture_date':str(src.get('start',''))[:10],
@@ -98,7 +98,7 @@ def main():
                     'training_rows':len(train),'score_grid_sha256':hash_id(matrix),
                     'training_cutoff_utc':forecast_at.isoformat(),'forecasted_at_utc':forecast_at.isoformat(),
                     'kickoff_utc_verified':start,'score_probability_grid':matrix,
-                    'formal_order':False,'telegram_sent':False,'run_id':a.run_id}
+                    'formal_order':False,'telegram_sent':False,'run_id':args.run_id}
                 ev['event_id']=hash_id(['M3_M1_CACHE_EVENT_V1',fid])
                 if ev['event_id'] not in prior:rows.append(ev);prior.add(ev['event_id'])
                 forecast_count+=1
@@ -125,10 +125,10 @@ def main():
                            'expected_unit_return':calculate(matrix,market,line,side,odd),
                            'quote_snapshot_recorded_utc':captured,
                            'forecasted_at_utc':forecast_at.isoformat(),'formal_order':False,
-                           'telegram_sent':False,'settled':False,'run_id':a.run_id}
+                           'telegram_sent':False,'settled':False,'run_id':args.run_id}
                         record['event_id']=hash_id(['M3_EV',fid,market,line,side])
                         if record['event_id'] not in prior:rows.append(record);prior.add(record['event_id']);ev_count+=1
-    with a.ledger.open('a') as out:
+    with args.ledger.open('a') as out:
         for x in rows:out.write(json.dumps(x,ensure_ascii=False,sort_keys=True)+'\n')
     print(json.dumps({'status':'COMPLETED','pages':pages,'cache_coverage':coverage,'reasons':dict(counts),
           'distinct_predicted_fixtures':len({x['fixture_identity_id'] for x in rows if x['protocol']=='M3_TOTALCORNER_FORWARD_FORECAST_V1'}),
