@@ -63,6 +63,11 @@ jobs:
             --cache-dir upstream/existing-m1-cache/data/m1_history_cache \
             --ledger research/m3/results/totalcorner/forward_ev_ledger.jsonl \
             --max-dates 2 --run-id "$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
+      - name: Lock one AH and one OU shadow order per M3 model forecast
+        run: |
+          python -m research.m3.m3_shadow_orders \
+            --ledger research/m3/results/totalcorner/forward_ev_ledger.jsonl \
+            --run-id "$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
       - name: Record every scanned fixture model screening disposition
         run: |
           python -m research.m3.future_fixture_model_status \
