@@ -1,9 +1,9 @@
 {
   "protocol": "M3_UPSTREAM_RUN_RECEIPT_V1",
-  "utc": "2026-10-25T00:09:28.431409+00:00",
-  "workflow_run_id": "40145225270",
+  "utc": "2026-10-25T09:03:49.550996+00:00",
+  "workflow_run_id": "40178817403",
   "workflow_attempt": "1",
-  "commit": "f47d6383edd0252304d75f0f2bcb5584b445e59f",
+  "commit": "96c8e2de4a18e88d8c60f361d7e7db363c4fee29",
   "v4_step_outcome": "success",
   "original_v4_metrics_available": true,
   "ah_trained": true,
