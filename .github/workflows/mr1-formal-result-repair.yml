@@ -1,0 +1,48 @@
+name: MR1 Formal Result Repair
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '48 0,6,12,18 * * *'
+permissions:
+  contents: read
+concurrency:
+  group: totalcorner-api-runtime
+  cancel-in-progress: false
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    timeout-minutes: 28
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: runner
+      - uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/mr1-shadow
+          ref: master
+          fetch-depth: 0
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          path: source
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Fetch verified FT for pending formal signals
+        working-directory: source
+        env:
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+          MAX_RESULT_CHECKS: '100'
+        run: |
+          cp ../runner/research/mr1/harvest_formal_results.mjs ./harvest_formal_results.mjs
+          sed -i "s|from './src/totalcorner-client.js'|from './src/totalcorner-client.js'|" harvest_formal_results.mjs
+          node harvest_formal_results.mjs
+          rm harvest_formal_results.mjs
+      - name: Reconcile verified FT into formal settlement
+        working-directory: source
+        run: node src/v6-ah-formal-settlement.js
+      - name: Persist result evidence and formal settlement
+        working-directory: source
+        env:
+          TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
+        run: |
+          echo "RUNTIME_BASE_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+          node src/persist-github-state.js
