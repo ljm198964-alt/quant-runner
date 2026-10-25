@@ -48,6 +48,11 @@ jobs:
             --input-root upstream/openfootball-football-json \
             --output research/m3/results/totalcorner/forward_ev_ledger.jsonl \
             --max-dates 2 --run-id "$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
+      - name: Classify prospective fixture research scope using M1 and MR1 references
+        run: |
+          python -m research.m3.m1_mr1_scope_audit \
+            --ledger research/m3/results/totalcorner/forward_ev_ledger.jsonl \
+            --run-id "$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
       - name: Record every scanned fixture model screening disposition
         run: |
           python -m research.m3.future_fixture_model_status \
