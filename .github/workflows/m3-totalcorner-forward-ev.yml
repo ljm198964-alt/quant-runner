@@ -1,6 +1,10 @@
 name: M3 Fresh TotalCorner Forward EV Shadow
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/m3-totalcorner-forward-ev.yml'
   schedule:
     - cron: '0 22 * * *'
     - cron: '0 4 * * *'
@@ -8,7 +12,7 @@ permissions:
   contents: write
 concurrency:
   group: m3-forward-ev-shadow
-  cancel-in-progress: false
+  cancel-in-progress: true
 jobs:
   independent-forward:
     runs-on: ubuntu-latest
