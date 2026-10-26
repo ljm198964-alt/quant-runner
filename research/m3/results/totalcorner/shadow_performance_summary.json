@@ -1,0 +1,96 @@
+{
+  "generated_at_utc": "2026-10-26T11:19:01.934308+00:00",
+  "scope": "M3 SHADOW ONLY; NOT FORMAL TELEGRAM",
+  "source": "research/m3/results/totalcorner/forward_ev_ledger.jsonl",
+  "event_counts": {
+    "M3_TOTALCORNER_FORWARD_EV_V1": 5656,
+    "M3_TOTALCORNER_FORWARD_FORECAST_V1": 1360,
+    "M3_TOTALCORNER_FORWARD_SETTLEMENT_V1": 2890,
+    "M3_TOTALCORNER_FUTURE_INVENTORY_V1": 14162,
+    "M3_FUTURE_MODEL_STATUS_V1": 11941,
+    "M3_M1_MR1_SCOPE_V1": 14162,
+    "M3_SHADOW_ORDER_V1": 1158
+  },
+  "models": {
+    "poisson": {
+      "AH": {
+        "orders": 193,
+        "settled": 25,
+        "unsettled_or_invalid": 168,
+        "full_win": 10,
+        "half_win": 5,
+        "push": 1,
+        "half_loss": 1,
+        "full_loss": 8,
+        "net_units": 2.75,
+        "roi_percent": 11.0
+      },
+      "OU": {
+        "orders": 193,
+        "settled": 25,
+        "unsettled_or_invalid": 168,
+        "full_win": 9,
+        "half_win": 1,
+        "push": 2,
+        "half_loss": 1,
+        "full_loss": 12,
+        "net_units": -4.325,
+        "roi_percent": -17.3
+      }
+    },
+    "dixon_coles": {
+      "AH": {
+        "orders": 193,
+        "settled": 25,
+        "unsettled_or_invalid": 168,
+        "full_win": 8,
+        "half_win": 5,
+        "push": 1,
+        "half_loss": 1,
+        "full_loss": 10,
+        "net_units": -1.15,
+        "roi_percent": -4.6
+      },
+      "OU": {
+        "orders": 193,
+        "settled": 25,
+        "unsettled_or_invalid": 168,
+        "full_win": 9,
+        "half_win": 1,
+        "push": 2,
+        "half_loss": 1,
+        "full_loss": 12,
+        "net_units": -4.325,
+        "roi_percent": -17.3
+      }
+    },
+    "bivariate_poisson": {
+      "AH": {
+        "orders": 193,
+        "settled": 25,
+        "unsettled_or_invalid": 168,
+        "full_win": 10,
+        "half_win": 5,
+        "push": 1,
+        "half_loss": 1,
+        "full_loss": 8,
+        "net_units": 2.75,
+        "roi_percent": 11.0
+      },
+      "OU": {
+        "orders": 193,
+        "settled": 25,
+        "unsettled_or_invalid": 168,
+        "full_win": 10,
+        "half_win": 1,
+        "push": 2,
+        "half_loss": 1,
+        "full_loss": 11,
+        "net_units": -2.525,
+        "roi_percent": -10.1
+      }
+    }
+  },
+  "anomalies": [],
+  "orphan_settlements": 2740
+}
