@@ -1,0 +1,27 @@
+name: M3 Price Dislocation Dataset
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/m3-price-dislocation.yml'
+      - 'research/m3/price_dislocation_prediction.py'
+permissions:
+  contents: read
+jobs:
+  build-dataset:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate timestamp-safe M3 market dislocation features and labels
+        run: |
+          python -m research.m3.price_dislocation_prediction \
+            --ledger research/m3/results/totalcorner/forward_ev_ledger.jsonl \
+            --output research/m3/results/totalcorner/price_dislocation_dataset.json
+      - name: Archive research dataset
+        uses: actions/upload-artifact@v4
+        with:
+          name: m3-price-dislocation-dataset
+          path: research/m3/results/totalcorner/price_dislocation_dataset.json
+          if-no-files-found: error
