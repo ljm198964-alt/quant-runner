@@ -12,6 +12,11 @@ def parse(s):
 def capture(events,token,limit=25,delay=2.2):
     now=datetime.datetime.now(UTC)
     fixtures={}
+    forecast_kickoffs={}
+    for e in events:
+        if e.get("protocol")=="M3_TOTALCORNER_FORWARD_FORECAST_V1":
+            try:forecast_kickoffs[e["forecast_id"]]=parse(e["kickoff_utc_verified"])
+            except (KeyError,TypeError,ValueError):pass
     for e in events:
         if e.get("protocol")!="M3_TOTALCORNER_FORWARD_FORECAST_V1":continue
         mid=str(e.get("totalcorner_match_id") or "")
@@ -24,10 +29,8 @@ def capture(events,token,limit=25,delay=2.2):
     for e in events:
         if e.get("protocol")!="M3_TOTALCORNER_FORWARD_EV_V1":continue
         mid=str(e.get("totalcorner_match_id") or "")
-        try:kickoff=parse(e["kickoff_utc_verified"])
-        except (KeyError,TypeError,ValueError):
-            continue
-        if mid and kickoff>now:fixtures[mid]=kickoff
+        kickoff=forecast_kickoffs.get(e.get("forecast_id"))
+        if mid and kickoff and kickoff>now:fixtures[mid]=kickoff
     last={}
     for e in events:
         if e.get("protocol")!="M3_TOTALCORNER_PRICE_SNAPSHOT_V1":continue
