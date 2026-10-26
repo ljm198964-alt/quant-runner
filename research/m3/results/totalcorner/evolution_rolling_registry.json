@@ -1,79 +1,79 @@
 {
-  "generated_at_utc": "2026-10-25T06:03:32.291914+00:00",
+  "generated_at_utc": "2026-10-26T06:08:02.055170+00:00",
   "models": {
     "bivariate_poisson": {
       "candidates": {
         "rolling_2y": {
-          "distinct_dates": 1,
+          "distinct_dates": 2,
           "overall_improvement": {
-            "brier": 0.054789453633017744,
-            "logloss": 0.08519934906502946
+            "brier": 0.0630163811907754,
+            "logloss": 0.0912291225065309
           },
-          "paired_unique_fixtures": 3,
+          "paired_unique_fixtures": 7,
           "passed": true
         },
         "rolling_4y": {
-          "distinct_dates": 1,
+          "distinct_dates": 2,
           "overall_improvement": {
-            "brier": 0.07468915535337024,
-            "logloss": 0.11561855707513109
+            "brier": 0.059393942236422574,
+            "logloss": 0.08729783327319633
           },
-          "paired_unique_fixtures": 3,
+          "paired_unique_fixtures": 7,
           "passed": true
         }
       },
-      "decision": "PROMOTE_SHADOW_ONLY",
-      "previous_rolling_shadow_active": "baseline",
+      "decision": "HOLD",
+      "previous_rolling_shadow_active": "rolling_4y",
       "rolling_shadow_active": "rolling_4y"
     },
     "dixon_coles": {
       "candidates": {
         "rolling_2y": {
-          "distinct_dates": 1,
+          "distinct_dates": 2,
           "overall_improvement": {
-            "brier": 0.06284191853506862,
-            "logloss": 0.098781457838095
+            "brier": 0.0618878717170024,
+            "logloss": 0.08986307285668506
           },
-          "paired_unique_fixtures": 3,
+          "paired_unique_fixtures": 7,
           "passed": true
         },
         "rolling_4y": {
-          "distinct_dates": 1,
+          "distinct_dates": 2,
           "overall_improvement": {
-            "brier": 0.08235745326429848,
-            "logloss": 0.12871831387245133
+            "brier": 0.061084559361408504,
+            "logloss": 0.0903503543591105
           },
-          "paired_unique_fixtures": 3,
+          "paired_unique_fixtures": 7,
           "passed": true
         }
       },
-      "decision": "PROMOTE_SHADOW_ONLY",
-      "previous_rolling_shadow_active": "baseline",
+      "decision": "HOLD",
+      "previous_rolling_shadow_active": "rolling_4y",
       "rolling_shadow_active": "rolling_4y"
     },
     "poisson": {
       "candidates": {
         "rolling_2y": {
-          "distinct_dates": 1,
+          "distinct_dates": 2,
           "overall_improvement": {
-            "brier": 0.05376396013638197,
-            "logloss": 0.08227042139043383
+            "brier": 0.061467995450587155,
+            "logloss": 0.08809630512871035
           },
-          "paired_unique_fixtures": 3,
+          "paired_unique_fixtures": 7,
           "passed": true
         },
         "rolling_4y": {
-          "distinct_dates": 1,
+          "distinct_dates": 2,
           "overall_improvement": {
-            "brier": 0.07343441009321079,
-            "logloss": 0.11283827399100888
+            "brier": 0.05819571629941633,
+            "logloss": 0.08495745893254783
           },
-          "paired_unique_fixtures": 3,
+          "paired_unique_fixtures": 7,
           "passed": true
         }
       },
-      "decision": "PROMOTE_SHADOW_ONLY",
-      "previous_rolling_shadow_active": "baseline",
+      "decision": "HOLD",
+      "previous_rolling_shadow_active": "rolling_4y",
       "rolling_shadow_active": "rolling_4y"
     }
   },
