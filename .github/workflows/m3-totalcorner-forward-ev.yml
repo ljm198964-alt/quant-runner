@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/m3-totalcorner-forward-ev.yml'
+      - 'research/m3/totalcorner_shadow_settle.py'
   schedule:
     - cron: '0 22 * * *'
     - cron: '0 4 * * *'
@@ -19,11 +20,6 @@ jobs:
     timeout-minutes: 360
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/checkout@v4
-        with:
-          repository: openfootball/football.json
-          path: upstream/openfootball-football-json
-          persist-credentials: false
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -76,7 +72,7 @@ jobs:
         env:
           TOTALCORNER_TOKEN: ${{ secrets.TOTALCORNER_TOKEN }}
         run: |
-          python -m research.m3.totalcorner_shadow_settle --input-root upstream/openfootball-football-json --ledger research/m3/results/totalcorner/forward_ev_ledger.jsonl
+          python -m research.m3.totalcorner_shadow_settle --ledger research/m3/results/totalcorner/forward_ev_ledger.jsonl
       - name: Persist append-only shadow events without rebase conflicts
         if: always()
         run: |
