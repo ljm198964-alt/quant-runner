@@ -7,6 +7,7 @@ on:
       - '.github/workflows/m3-price-dislocation.yml'
       - 'research/m3/price_dislocation_prediction.py'
       - 'research/m3/price_dislocation_answers.py'
+      - 'research/m3/price_movement_fit.py'
 permissions:
   contents: read
 jobs:
@@ -25,6 +26,11 @@ jobs:
           python -m research.m3.price_dislocation_answers \
             --dataset research/m3/results/totalcorner/price_dislocation_dataset.json \
             --output research/m3/results/totalcorner/price_dislocation_answers.json
+      - name: Walk-forward train and evaluate observed price movements
+        run: |
+          python -m research.m3.price_movement_fit \
+            --dataset research/m3/results/totalcorner/price_dislocation_dataset.json \
+            --output research/m3/results/totalcorner/price_movement_walk_forward.json
       - name: Archive research dataset
         uses: actions/upload-artifact@v4
         with:
@@ -32,4 +38,5 @@ jobs:
           path: |
             research/m3/results/totalcorner/price_dislocation_dataset.json
             research/m3/results/totalcorner/price_dislocation_answers.json
+            research/m3/results/totalcorner/price_movement_walk_forward.json
           if-no-files-found: error
