@@ -36,7 +36,7 @@ def build(events,run_id=None):
             if eid in existing:continue
             added.append({'protocol':'M3_SHADOW_ORDER_V1','policy_version':POLICY,'event_id':eid,
                 'run_id':f['run_id'],'forecast_id':fid,'fixture_identity_id':f['fixture_identity_id'],
-                'totalcorner_match_id':f['totalcorner_match_id'],'home_team':f['home_team'],'away_team':f['away_team'],
+                'totalcorner_match_id':selected['totalcorner_match_id'],'home_team':f['home_team'],'away_team':f['away_team'],
                 'kickoff_utc_verified':f['kickoff_utc_verified'],'model':f['model'],
                 'market':market,'side':selected['side'],'line':selected['line'],
                 'decimal_odd':selected['decimal_odd'],'expected_unit_return':selected['expected_unit_return'],
