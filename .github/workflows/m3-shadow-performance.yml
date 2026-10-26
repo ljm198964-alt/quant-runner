@@ -1,0 +1,37 @@
+name: M3 Shadow Performance Reconciliation
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/m3-shadow-performance.yml'
+permissions:
+  contents: write
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Summarize immutable M3 shadow ledger
+        run: |
+          python -m research.m3.shadow_performance_report --ledger research/m3/results/totalcorner/forward_ev_ledger.jsonl --output research/m3/results/totalcorner/shadow_performance_summary.json
+          cat research/m3/results/totalcorner/shadow_performance_summary.json >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: m3-shadow-performance
+          path: research/m3/results/totalcorner/shadow_performance_summary.json
+      - name: Commit summary
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add research/m3/results/totalcorner/shadow_performance_summary.json
+          git diff --cached --quiet && exit 0
+          git commit -m 'Persist M3 shadow performance'
+          for attempt in 1 2 3 4 5; do
+            git fetch origin main
+            if git rebase origin/main && git push origin HEAD:main; then exit 0; fi
+            git rebase --abort || true
+            sleep 5
+          done
+          exit 1
