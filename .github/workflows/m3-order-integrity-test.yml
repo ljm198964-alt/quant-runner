@@ -1,0 +1,22 @@
+name: M3 Order Integrity Regression
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/m3-order-integrity-test.yml'
+      - 'research/m3/m3_shadow_orders.py'
+      - 'research/m3/test_shadow_orders_integrity.py'
+permissions:
+  contents: read
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Test M3 order integrity without API or live ledger mutation
+        run: python -m unittest research.m3.test_shadow_orders_integrity -v
