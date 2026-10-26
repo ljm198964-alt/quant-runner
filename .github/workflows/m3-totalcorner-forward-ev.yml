@@ -2,8 +2,8 @@ name: M3 Fresh TotalCorner Forward EV Shadow
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 17 * * *'
-    - cron: '0 23 * * *'
+    - cron: '0 22 * * *'
+    - cron: '0 4 * * *'
 permissions:
   contents: write
 concurrency:
@@ -23,11 +23,6 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Wait for approved Beijing scan slot (scheduled runs only)
-        if: github.event_name == 'schedule'
-        env:
-          CRON_EVENT: ${{ github.event.schedule }}
-        run: python -m research.m3.wait_until_scan_slot --cron "$CRON_EVENT"
       - name: Install pinned M3 model dependencies
         run: python -m pip install penaltyblog==1.13.1 pandas numpy
       - name: Inventory future TotalCorner fixtures without odds dependency
