@@ -1,6 +1,6 @@
 """Append-only, shadow-only M3 settlement using verified TotalCorner full-time results.
 
-Never alters forecasts or orders. OpenFootball is independent corroboration when present.
+Never alters forecasts or orders. TotalCorner is the sole full-time score source.
 """
 import argparse
 import datetime
@@ -53,7 +53,7 @@ def fetch_final(match_id,token):
 def reconcile(events,finished,lookup,now):
     forecasts={x['forecast_id']:x for x in events if x.get('protocol')=='M3_TOTALCORNER_FORWARD_FORECAST_V1'}
     existing={x.get('event_id') for x in events}
-    candidates=[x for x in events if x.get('protocol')=='M3_TOTALCORNER_FORWARD_EV_V1']
+    candidates=[x for x in events if x.get('protocol')=='M3_SHADOW_ORDER_V1']
     ids={}
     for e in candidates:
         f=forecasts.get(e.get('forecast_id'))
@@ -70,9 +70,6 @@ def reconcile(events,finished,lookup,now):
             payload=lookup(mid)
             outcome=verified_final(payload,mid,kickoff,now)
             if outcome is None:continue
-            source_result=finished.get(fid)
-            if source_result is not None and (int(source_result['home_goals']),int(source_result['away_goals']))!=outcome[:2]:
-                reasons['OPENFOOTBALL_SCORE_CONFLICT']=reasons.get('OPENFOOTBALL_SCORE_CONFLICT',0)+1;continue
             verified[mid]=outcome
         except Exception:
             reasons['PROVIDER_OR_IDENTITY_UNVERIFIED']=reasons.get('PROVIDER_OR_IDENTITY_UNVERIFIED',0)+1
@@ -87,26 +84,22 @@ def reconcile(events,finished,lookup,now):
         event_id=hashlib.sha256(('M3_RESULT_OBSERVED_V1:'+e['event_id']).encode()).hexdigest()
         if event_id in existing:continue
         new.append({'event_id':event_id,'protocol':'M3_TOTALCORNER_FORWARD_SETTLEMENT_V1',
-            'candidate_event_id':e['event_id'],'forecast_id':e['forecast_id'],
+            'shadow_order_event_id':e['event_id'],'candidate_event_id':e['event_id'],'forecast_id':e['forecast_id'],
             'fixture_identity_id':e['fixture_identity_id'],'home_goals':h,'away_goals':a,
             'market':e['market'],'side':e['side'],'line':e['line'],
             'hypothetical_unit_return':unit,'settlement_state':state,
             'actual_bet_placed':False,'formal_order':False,'telegram_sent':False,
             'result_source':'TotalCorner verified /match/view','result_sha256':digest,
-            'openfootball_crosscheck':'MATCHED' if e['fixture_identity_id'] in finished else 'NOT_AVAILABLE',
             'observed_utc':now.isoformat()})
         existing.add(event_id)
     return new, {'verified_fixtures':len(verified),'rejected':reasons,'candidates':len(candidates)}
 
 def main():
     p=argparse.ArgumentParser()
-    p.add_argument('--input-root',required=True,type=Path)
     p.add_argument('--ledger',required=True,type=Path)
     args=p.parse_args()
     events=[json.loads(s) for s in args.ledger.read_text().splitlines() if s.strip()]
-    from research.m3.openfootball_shadow import read_openfootball
-    result,_,_,_=read_openfootball(args.input_root)
-    finished={r['fixture_identity_id']:r for r in result.to_dict('records')}
+    finished={}
     token=os.environ['TOTALCORNER_TOKEN'];now=datetime.datetime.now(UTC)
     new,stats=reconcile(events,finished,lambda mid:fetch_final(mid,token),now)
     with args.ledger.open('a') as out:
