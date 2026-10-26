@@ -24,6 +24,12 @@ def build(events):
     for q in quotes:
         key=(str(q.get("totalcorner_match_id")),q["bookmaker"],q.get("market"),str(q.get("line")),q.get("side"))
         groups[key].append(q)
+    for e in events:
+        if e.get("protocol")!="M3_TOTALCORNER_PRICE_SNAPSHOT_V1":continue
+        if e.get("provider")!="TotalCorner" or not e.get("bookmaker"):continue
+        if not e.get("captured_at_utc"):continue
+        key=(str(e.get("totalcorner_match_id")),e["bookmaker"],e.get("market"),str(e.get("line")),e.get("side"))
+        groups[key].append({**e,"quote_snapshot_recorded_utc":e["captured_at_utc"]})
     # Each unique market observation is independent of the number of model forecasts.
     times={}
     for key,items in groups.items():
