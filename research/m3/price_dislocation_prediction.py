@@ -46,8 +46,9 @@ def build(events):
             ev=float(q["expected_unit_return"])
         except (KeyError,TypeError,ValueError):
             continue
-        if odd<=1 or ft>t0 or kickoff<=t0:
+        if odd<=1 or kickoff<=max(ft,t0):
             continue
+        decision_time=max(ft,t0)
         key=(str(q.get("totalcorner_match_id")),q["bookmaker"],q.get("market"),str(q.get("line")),q.get("side"))
         # The implied break-even probability and EV are calculated using
         # information available at the quote timestamp only.
@@ -57,9 +58,10 @@ def build(events):
             "fixture_identity_id":f.get("fixture_identity_id"),
             "match_id":key[0],"bookmaker":key[1],"market":key[2],
             "line":key[3],"side":key[4],"quote_event_id":q.get("event_id"),
-            "observed_at_utc":q["quote_snapshot_recorded_utc"],
+            "observed_at_utc":decision_time.isoformat(),
+            "quote_snapshot_recorded_utc":q["quote_snapshot_recorded_utc"],
             "kickoff_utc":f["kickoff_utc_verified"],
-            "minutes_to_kickoff":round((kickoff-t0).total_seconds()/60,3),
+            "minutes_to_kickoff":round((kickoff-decision_time).total_seconds()/60,3),
             "decimal_odd":odd,"implied_break_even_probability":round(1/odd,8),
             "model_expected_unit_return":ev,
             "model_fair_decimal_odd_if_linear":round(odd/(1+ev),8) if 1+ev>0 else None,
@@ -71,7 +73,7 @@ def build(events):
             target=[]
             for later in times[key]:
                 t1=utc(later["quote_snapshot_recorded_utc"])
-                dt=(t1-t0).total_seconds()/60
+                dt=(t1-decision_time).total_seconds()/60
                 if horizon<=dt<=horizon+5 and t1<kickoff:
                     target.append((dt,later))
             if not target:
