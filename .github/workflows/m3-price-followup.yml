@@ -1,6 +1,10 @@
 name: M3 TotalCorner Price Followup
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/m3-price-followup.yml'
   schedule:
     - cron: '*/15 * * * *'
 permissions:
