@@ -101,7 +101,7 @@ def main():
     p.add_argument("--ledger",type=Path,required=True)
     p.add_argument("--output",type=Path,required=True)
     a=p.parse_args()
-    rows=build(json.loads(s) for s in a.ledger.open() if s.strip())
+    rows=build([json.loads(s) for s in a.ledger.open() if s.strip()])
     observed={str(h):sum(r["labels"][str(h)]["status"]=="OBSERVED" for r in rows) for h in HORIZONS}
     a.output.parent.mkdir(parents=True,exist_ok=True)
     a.output.write_text(json.dumps({
