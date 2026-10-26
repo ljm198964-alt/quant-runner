@@ -22,6 +22,13 @@ def audit(events):
         except (TypeError,ValueError):
             reasons["invalid_timestamps"]+=1;continue
         reasons["eligible_time_join"]+=1
+        if f.get("model") not in ("poisson","dixon_coles","bivariate_poisson"):
+            reasons["unsupported_model"]+=1
+        try:
+            float(q["decimal_odd"]);float(q["expected_unit_return"])
+        except (KeyError,TypeError,ValueError):
+            reasons["invalid_quote_numeric_fields"]+=1
+        if q.get("provider")!="TotalCorner": reasons["unexpected_provider"]+=1
     rows=build(events)
     return {"event_counts":dict(c),"quote_diagnostics":dict(reasons),
             "paired_feature_rows":len(rows),
