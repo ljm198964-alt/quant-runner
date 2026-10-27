@@ -12,6 +12,7 @@ on:
       - 'research/m3/price_movement_fit.py'
       - 'research/m3/price_data_diagnostics.py'
       - 'research/m3/ah_reverse_counterfactual.py'
+      - 'research/m3/order_water_movement_audit.py'
 permissions:
   contents: read
 jobs:
@@ -45,6 +46,9 @@ jobs:
           python -m research.m3.ah_reverse_counterfactual \
             --ledger research/m3/results/totalcorner/forward_ev_ledger.jsonl \
             --output research/m3/results/totalcorner/ah_reverse_counterfactual.json
+      - name: Audit actual post-order water movement
+        run: |
+          python -m research.m3.order_water_movement_audit --ledger research/m3/results/totalcorner/forward_ev_ledger.jsonl --output research/m3/results/totalcorner/order_water_movement_audit.json
       - name: Archive research dataset
         uses: actions/upload-artifact@v4
         with:
@@ -55,4 +59,5 @@ jobs:
             research/m3/results/totalcorner/price_movement_walk_forward.json
             research/m3/results/totalcorner/price_data_diagnostics.json
             research/m3/results/totalcorner/ah_reverse_counterfactual.json
+            research/m3/results/totalcorner/order_water_movement_audit.json
           if-no-files-found: error
