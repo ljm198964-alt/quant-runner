@@ -26,4 +26,11 @@ class M3Idempotency(unittest.TestCase):
             self.assertEqual(len(retry),0)
             next_slot,_,_=build(data('first','2026-10-27T04:10:00Z')+first+data('next','2026-10-27T22:15:00Z'),run_id='next')
             self.assertEqual(len(next_slot),2)
+    def test_model_market_fixture_independence(self):
+        from research.m3.m3_shadow_orders import order_identity
+        base={'protocol':'M3_SHADOW_ORDER_V1','forecasted_at_utc':'2026-10-27T04:05:00Z','fixture_identity_id':'f1','model':'poisson','market':'AH'}
+        self.assertEqual(order_identity(base),order_identity(dict(base,forecasted_at_utc='2026-10-27T09:30:00Z')))
+        self.assertNotEqual(order_identity(base),order_identity(dict(base,model='dixon_coles')))
+        self.assertNotEqual(order_identity(base),order_identity(dict(base,market='OU')))
+        self.assertNotEqual(order_identity(base),order_identity(dict(base,fixture_identity_id='f2')))
 if __name__=='__main__':unittest.main()
