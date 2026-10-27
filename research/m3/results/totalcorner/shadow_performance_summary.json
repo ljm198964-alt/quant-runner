@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-10-27T03:08:32.917624+00:00",
+  "generated_at_utc": "2026-10-27T09:17:36.179780+00:00",
   "scope": "M3 SHADOW ONLY; NOT FORMAL TELEGRAM",
   "source": "research/m3/results/totalcorner/forward_ev_ledger.jsonl",
   "event_counts": {
@@ -10,7 +10,7 @@
     "M3_FUTURE_MODEL_STATUS_V1": 15373,
     "M3_M1_MR1_SCOPE_V1": 17594,
     "M3_SHADOW_ORDER_V1": 1608,
-    "M3_TOTALCORNER_PRICE_SNAPSHOT_V1": 224
+    "M3_TOTALCORNER_PRICE_SNAPSHOT_V1": 300
   },
   "models": {
     "poisson": {
