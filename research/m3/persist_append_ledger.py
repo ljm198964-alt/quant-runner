@@ -4,6 +4,7 @@ import json
 import subprocess
 import tempfile
 from pathlib import Path
+from research.m3.m3_shadow_orders import order_identity
 
 LEDGER = "research/m3/results/totalcorner/forward_ev_ledger.jsonl"
 
@@ -32,7 +33,17 @@ def persist(candidate_path, max_attempts=8):
         existing=events(original)
         conflicts=[eid for eid,e in candidate.items() if eid in existing and existing[eid]!=e]
         if conflicts:raise ValueError("immutable existing event mismatch: "+str(len(conflicts)))
-        addition=[e for eid,e in candidate.items() if eid not in existing]
+        already={order_identity(e) for e in existing.values() if e.get('protocol')=='M3_SHADOW_ORDER_V1'}
+        addition=[];suppressed=0
+        for eid,e in candidate.items():
+            if eid in existing:continue
+            key=order_identity(e) if e.get('protocol')=='M3_SHADOW_ORDER_V1' else None
+            if key is not None and key in already:
+                suppressed+=1
+                continue
+            addition.append(e)
+            if key is not None:already.add(key)
+        if suppressed:print(json.dumps({'duplicate_shadow_orders_suppressed':suppressed}))
         if not addition:
             print(json.dumps({"status":"NO_NEW_EVENTS","added":0,"attempt":attempt+1}));return
         combined=original.rstrip("\n")+"\n"+"".join(json.dumps(e,ensure_ascii=False,sort_keys=True)+"\n" for e in addition)
