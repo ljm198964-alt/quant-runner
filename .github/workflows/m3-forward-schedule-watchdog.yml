@@ -22,7 +22,7 @@ jobs:
             const now=Date.now(), hour=3600000;
             const runs=await github.paginate(github.rest.actions.listWorkflowRuns,{
               owner,repo,workflow_id:'m3-totalcorner-forward-ev.yml',per_page:100
-            },response=>response.data);
+            },response=>response.data.workflow_runs);
             // Every Beijing 06:00 and 12:00 is UTC 22:00 previous day / 04:00 today.
             // Recovery is intentionally late (90m) to allow normal GitHub scheduling delay.
             for(let day=0;day<2;day++){
