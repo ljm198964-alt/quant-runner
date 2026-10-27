@@ -13,7 +13,7 @@ class M3Idempotency(unittest.TestCase):
         def data(run,time):
             forecast={'protocol':'M3_TOTALCORNER_FORWARD_FORECAST_V1','forecast_id':run,
               'run_id':run,'forecasted_at_utc':time,'fixture_identity_id':'fixture-1',
-              'model':'poisson','score_probability_grid':[],'kickoff_utc_verified':'2026-10-28T20:00:00Z'}
+              'model':'poisson','home_team':'home','away_team':'away','score_probability_grid':[],'kickoff_utc_verified':'2026-10-28T20:00:00Z'}
             quotes=[{'protocol':'M3_TOTALCORNER_FORWARD_EV_V1','forecast_id':run,'market':m,
               'line':2.5,'side':side,'decimal_odd':1.9,'totalcorner_match_id':'1',
               'expected_unit_return':0,'quote_snapshot_recorded_utc':time}
