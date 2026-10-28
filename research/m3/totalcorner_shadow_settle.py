@@ -68,6 +68,10 @@ def reconcile(events,finished,lookup,now):
         if datetime.datetime.fromisoformat(kickoff).astimezone(UTC)>=now:continue
         try:
             payload=lookup(mid)
+            if mid == '201655492':
+                diagnostic_row=response_row(payload,mid)
+                provider_kickoff=totalcorner_shanghai_kickoff(diagnostic_row)
+                print(json.dumps({'m3_targeted_identity_audit':{'match_id':mid,'saved_kickoff_utc':kickoff,'provider_kickoff_utc':provider_kickoff,'status':diagnostic_row.get('status'),'home':diagnostic_row.get('h'),'away':diagnostic_row.get('a'),'league_id':diagnostic_row.get('l_id'),'home_goals':diagnostic_row.get('hg'),'away_goals':diagnostic_row.get('ag')}},default=str,ensure_ascii=False))
             outcome=verified_final(payload,mid,kickoff,now)
             if outcome is None:continue
             verified[mid]=outcome
