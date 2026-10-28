@@ -71,7 +71,9 @@ def reconcile(events,finished,lookup,now):
             outcome=verified_final(payload,mid,kickoff,now)
             if outcome is None:continue
             verified[mid]=outcome
-        except Exception:
+        except Exception as exc:
+            if mid == '201655492':
+                print(json.dumps({'m3_ft_diagnostic_match_id':mid,'reason_type':type(exc).__name__,'reason':str(exc)},ensure_ascii=False))
             reasons['PROVIDER_OR_IDENTITY_UNVERIFIED']=reasons.get('PROVIDER_OR_IDENTITY_UNVERIFIED',0)+1
     new=[]
     for e in candidates:
