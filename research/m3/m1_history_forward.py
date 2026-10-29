@@ -68,7 +68,17 @@ def main():
             counts['source_rows']+=1
             reason,info=candidate(r,now,spec,history);counts[reason]+=1
             if info:found[str(r['id'])]=(r,info)
-    prior={json.loads(s)['event_id'] for s in args.ledger.open() if s.strip()}
+    # Historical shadow orders remain immutable. Avoid fitting/predicting a fixture
+    # whose model already has both AH and OU shadow orders in any earlier run.
+    prior=set()
+    completed_orders=set()
+    with args.ledger.open() as stream:
+        for line in stream:
+            if not line.strip():continue
+            record=json.loads(line)
+            prior.add(record['event_id'])
+            if record.get('protocol')=='M3_SHADOW_ORDER_V1':
+                completed_orders.add((str(record['fixture_identity_id']),record['model'],record['market']))
     rows=[];forecast_count=0;ev_count=0
     by_league=collections.defaultdict(list)
     for mid,(source,info) in found.items():by_league[info[0]].append((mid,source,info))
@@ -81,6 +91,10 @@ def main():
             except Exception:
                 counts['MODEL_FIT_FAILED_'+model_name]+=1;continue
             for mid,src,(_,h,a,start,_) in fixtures:
+                fixture_key=hash_id(['M3_TOTALCORNER_FIXTURE_V1',mid])
+                if all((fixture_key,model_name,market) in completed_orders for market in ('AH','OU')):
+                    counts['ALREADY_HAS_BOTH_MARKET_ORDERS']+=1
+                    continue
                 forecast_at=datetime.datetime.now(UTC)
                 if not gate({'kickoff_utc_verified':start},forecast_at)[0]:
                     counts['TIMING_EXPIRED_DURING_FIT']+=1
