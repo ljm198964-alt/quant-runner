@@ -67,7 +67,7 @@ jobs:
       - name: Install runtime
         run: pip install numpy scipy requests
 
-      - name: Enforce M1 AH EV below 10 percent at lock and delivery
+      - name: Apply M1 AH EV below 10 percent in base selection
         run: python public_policy/ops/m1_ah_ev_cap.py
 
       - name: Runtime policy selftest
