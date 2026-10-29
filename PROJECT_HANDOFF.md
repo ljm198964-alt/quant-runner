@@ -1,3 +1,10 @@
+## 2026-10-29 M1 AH EV >=10% 正式单停止（用户新确认规则）
+- 用户最新要求：M1 AH 模型预测 EV >=10% 的新单不再正式发送；阈值 0.10 为排除边界，EV <0.10 保留原有规则。仅 M1 AH；不得影响 MR1、M3、M1 OU；已经正式 SENT 的历史订单及其结算不追改。
+- 依据：2026-10-29 M1 TG 正式 AH 结算347单，预测 EV >=10% 有141单，净收益 -8.880U，ROI -6.30%；属于用户明确批准的减法，不推广为其他模型已确认规则。
+- 公开 Runner 新增 ops/m1_ah_ev_cap.py (commit 0af97eb)，工作流 .github/workflows/m1-free-runtime.yml 在检出旧 M1 后检出公开策略，运行时对旧仓库 checkout 临时注入 lock 和 TG dispatch 双重保护 (commit 48faa68)。旧仓库代码未提交新改动；Runner 仍依赖旧仓库 checkout 及 PRIVATE_REPO_TOKEN，不得称已完全脱离旧仓库。
+- 静态核对：现有 m1_formal_runtime.py prepare 和 m1_notification.py dispatch 注入锚点各唯一存在。**仅证明代码已提交/静态匹配；尚无新版工作流执行成功、Telegram 实际截断、新正式账本回写的生产验收证据。**不把此前成功 run 冒充新门槛验收。
+- 待办：下一次运行查看补丁步骤、正式扫描/锁单、TG 派送、落账状态，验证 EV=0.10 与 >0.10 均不正式发送，EV<0.10 不被误阻，保留旧 SENT 单及原结算。
+
 ## 2026-10-25 M3 对齐M1/MR1研究赛事范围
 - 用户明确要求M3研究与M1、MR1相同的联赛，而不是仅五大联赛。实读M1正式调用totalcorner-research-bridge/master/m1_runtime_policy.py（scope_status；一级联赛/用户指定国家队赛事纳入、二级联赛及杯赛规则按M1既有配置），MR1 AH正式调用mr1-shadow/master/config/validation-spec.json 的competition_scope（国家include与赛事exclude）。
 - 公开Runner commit e1a845b 保存两套当时真实生产规则引用快照到 research/m3/reference/ 并添加独立 m1_mr1_scope_audit + M3工作流步骤。此项是M3研究池身份标签（M1 OR MR1），不是新的模型策略Gate、不改变TG或已存在正式订单；三模型训练仍只覆盖其实际五联赛历史，不得把研究范围303场说成已能预测303场。
