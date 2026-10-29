@@ -54,12 +54,21 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.PRIVATE_REPO_TOKEN }}
 
+      - name: Checkout public policy (no private repo changes)
+        uses: actions/checkout@v4
+        with:
+          repository: ljm198964-alt/quant-runner
+          path: public_policy
+
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
       - name: Install runtime
         run: pip install numpy scipy requests
+
+      - name: Enforce M1 AH EV below 10 percent at lock and delivery
+        run: python public_policy/ops/m1_ah_ev_cap.py
 
       - name: Runtime policy selftest
         run: python m1_runtime_policy.py
