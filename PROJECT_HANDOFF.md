@@ -1,3 +1,9 @@
+## 2026-10-29 M3 06:00/12:00 调度可靠性根因排查与 watchdog 修复
+- 北京时区 cron 为 UTC 22:00 / UTC 04:00，main 默认分支无误；10/27-10/29的 schedule 工作流均成功但创建即已延迟数小时，单次实际执行约13-20分钟。没有证据将所有延迟归因于模型运算或UTC换算；GitHub schedule 极大延迟的上游原因尚未证实。
+- 找到自身已存在的 M3 Forward Schedule Watchdog 无法恢复漏跑。run 40890980949（2026-10-29 14:23Z）失败，日志 TypeError: Cannot read properties of undefined (reading 'created_at')。原因 github.paginate listWorkflowRuns 的 callback 使用 response.data.workflow_runs，实际 pagination 归一化返回数组导致 runs 内有 undefined。
+- 公共main commit 3a4348519bbcaac669d583c1b3897fe88d630a54 修正为单页 github.rest.actions.listWorkflowRuns + response.data.workflow_runs + 数组校验，保留原补偿策略与90分钟宽限；未改M3选单/投注/模型/结算规则。手动触发 watchdog run 40899773150 后 status completed/success，代表脚本能执行成功；还未验证真正漏跑时是否成功 dispatch 和新单结算，亦未证实后续准点。
+- Watchdog 也属于 GitHub scheduled workflow，因此其自身可能延迟；不能把修好 watchdog 等同于满足严格06/12准点SLA。下一次计划窗口和 watchdog 执行需实证验收。若要严格准点，需要独立于 GitHub schedule 的外部主动触发系统。
+
 ## 2026-10-29 M3 旧影子账本按新单场唯一口径核算（只读，已完成）
 - 数据源公开仓库 research/m3/results/totalcorner/forward_ev_ledger.jsonl，查询时 115030 行、2628 笔 M3_SHADOW_ORDER_V1、5038 条 M3_TOTALCORNER_FORWARD_SETTLEMENT_V1 事件；不将所有 settlement events 作为影子单结算。逐订单event_id关联结算，确认2298条有效结算、0条字段冲突，135场独立比赛。
 - 按用户新规则 fixture_identity_id × model × market，依 forecasted_at_utc 最早一笔保留，不篡改原账本：810笔唯一影子单（每模型市场135笔），654已结算、156待结算（每线109结/26待）；最早订单未结算而后续重复订单已结算的冲突数0。
