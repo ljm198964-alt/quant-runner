@@ -8,6 +8,7 @@ on:
       - 'research/m3/totalcorner_shadow_settle.py'
       - 'research/m3/shadow_performance_report.py'
       - 'research/m3/m3_shadow_orders.py'
+      - 'research/m3/m1_history_forward.py'
       - 'research/m3/persist_append_ledger.py'
       - 'tests/test_m3_slot_idempotency.py'
   schedule:
@@ -29,7 +30,7 @@ jobs:
           python-version: '3.11'
       - name: Install pinned M3 model dependencies
         run: python -m pip install penaltyblog==1.13.1 pandas numpy
-      - name: Verify M3 slot retry idempotency
+      - name: Verify M3 cross-run fixture order idempotency
         run: python -m unittest discover -s tests -p test_m3_slot_idempotency.py -v
       - name: Inventory future TotalCorner fixtures without odds dependency
         env:
@@ -64,7 +65,7 @@ jobs:
             --cache-dir upstream/existing-m1-cache/data/m1_history_cache \
             --ledger research/m3/results/totalcorner/forward_ev_ledger.jsonl \
             --max-dates 2 --run-id "$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
-      - name: Lock one AH and one OU shadow order per M3 model forecast
+      - name: Lock at most one AH and one OU order per fixture and model
         run: |
           python -m research.m3.m3_shadow_orders \
             --ledger research/m3/results/totalcorner/forward_ev_ledger.jsonl \
