@@ -1,4 +1,4 @@
-"""Locked M3 policy: one AH and one OU shadow order per forecast with both quotes.
+"""Locked M3 policy: one AH and one OU shadow order per fixture and model with both quotes.
 
 Select the side by model-only expected settlement at neutral decimal odds 2.0.
 Actual quoted EV is recorded for evaluation, NEVER used as a gate or direction selector.
@@ -26,8 +26,7 @@ def slot_for(timestamp):
 def order_identity(event):
     if event.get('protocol')!='M3_SHADOW_ORDER_V1':
         return None
-    return (slot_for(event['forecasted_at_utc']),
-            str(event['fixture_identity_id']),event['model'],event['market'])
+    return (str(event['fixture_identity_id']),event['model'],event['market'])
 
 
 def choose(forecast, market, quotes):
@@ -55,7 +54,7 @@ def build(events,run_id=None):
                 missing[market]+=1;continue
             selected,scores=choose(f,market,qs)
             eid=hash_id([POLICY,fid,market])
-            identity=(slot_for(f['forecasted_at_utc']),str(f['fixture_identity_id']),f['model'],market)
+            identity=(str(f['fixture_identity_id']),f['model'],market)
             if eid in existing or identity in existing_orders:continue
             added.append({'protocol':'M3_SHADOW_ORDER_V1','policy_version':POLICY,'event_id':eid,
                 'run_id':f['run_id'],'forecast_id':fid,'fixture_identity_id':f['fixture_identity_id'],
@@ -78,5 +77,5 @@ def main():
     new,missing,n=build(events,None if a.historical_backfill else a.run_id)
     with a.ledger.open('a') as out:
         for e in new:out.write(json.dumps(e,ensure_ascii=False,sort_keys=True)+'\n')
-    print(json.dumps({'policy':POLICY,'forecast_count':n,'new_shadow_orders':len(new),'missing_market_quotes':missing,'historical_backfill':a.historical_backfill,'idempotency':'BEIJING_SLOT_FIXTURE_MODEL_MARKET'}))
+    print(json.dumps({'policy':POLICY,'forecast_count':n,'new_shadow_orders':len(new),'missing_market_quotes':missing,'historical_backfill':a.historical_backfill,'idempotency':'FIXTURE_MODEL_MARKET_ACROSS_ALL_RUNS'}))
 if __name__=='__main__':main()
