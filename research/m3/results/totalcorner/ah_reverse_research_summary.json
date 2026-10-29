@@ -1,0 +1,53 @@
+{
+  "protocol": "M3_AH_REVERSE_RESEARCH_AUDIT_V1",
+  "research_only": true,
+  "formal_order": false,
+  "telegram_sent": false,
+  "quote_source": "TotalCorner default, NOT Crown",
+  "models": {
+    "bivariate_poisson": {
+      "orders": 413,
+      "settled": 357,
+      "paired": 357,
+      "reverse_units": -5.237500000000003,
+      "original_units": -26.59999999999999,
+      "reverse_full_win": 149,
+      "reverse_half_loss": 20,
+      "reverse_full_loss": 147,
+      "reverse_push": 10,
+      "reverse_half_win": 31,
+      "reverse_roi_percent": -1.4671,
+      "original_roi_percent_paired": -7.451
+    },
+    "dixon_coles": {
+      "orders": 413,
+      "settled": 357,
+      "paired": 357,
+      "reverse_units": -2.3125000000000044,
+      "original_units": -29.524999999999967,
+      "reverse_full_win": 151,
+      "reverse_half_loss": 21,
+      "reverse_full_loss": 145,
+      "reverse_push": 10,
+      "reverse_half_win": 30,
+      "reverse_roi_percent": -0.6478,
+      "original_roi_percent_paired": -8.2703
+    },
+    "poisson": {
+      "orders": 413,
+      "settled": 357,
+      "paired": 357,
+      "reverse_units": -4.350000000000005,
+      "original_units": -27.487499999999972,
+      "reverse_full_win": 149,
+      "reverse_half_loss": 19,
+      "reverse_full_loss": 147,
+      "reverse_push": 10,
+      "reverse_half_win": 32,
+      "reverse_roi_percent": -1.2185,
+      "original_roi_percent_paired": -7.6996
+    }
+  },
+  "distinct_quote_decisions": 362,
+  "exclusions": {}
+}
