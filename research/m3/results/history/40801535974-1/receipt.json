@@ -1,0 +1,18 @@
+{
+  "protocol": "M3_UPSTREAM_RUN_RECEIPT_V1",
+  "utc": "2026-10-29T01:41:45.089732+00:00",
+  "workflow_run_id": "40801535974",
+  "workflow_attempt": "1",
+  "commit": "24f0f1ee970d47ebf733f506b2ee673719ed928a",
+  "v4_step_outcome": "success",
+  "original_v4_metrics_available": true,
+  "ah_trained": true,
+  "penaltyblog_oos_report_available": true,
+  "crown_roi_claim": null,
+  "telegram_sent": false,
+  "penaltyblog_oos_prediction_rows": 51252,
+  "penaltyblog_oos_input_fingerprint_sha256": "43bedbcaeef850f3f19d1f38fe15b4242753fb2620468c8fe13e8060055ac5d4",
+  "penaltyblog_version": "1.13.1",
+  "penaltyblog_fitted_models_count": 162,
+  "penaltyblog_model_parameters_sha256": "4bcde68ed84af02110b0e295e9ae7d49dbb04799003f717b3dc7e89144b3aa8f"
+}

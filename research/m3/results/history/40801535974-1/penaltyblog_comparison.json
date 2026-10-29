@@ -1,0 +1,266 @@
+{
+  "protocol": "M3_PENALTYBLOG_SNAPSHOT_COMPARISON_V1",
+  "status": "COMPARABLE_TEST_SET",
+  "previous_run_utc": "2026-10-28T10:28:43.305650+00:00",
+  "current_run_utc": "2026-10-29T01:41:41.931128+00:00",
+  "test_set_identity_matches": true,
+  "input_fingerprint_matches": true,
+  "penaltyblog_version_matches": true,
+  "comparison": [
+    {
+      "model": "bivariate_poisson",
+      "market": "1x2",
+      "metrics": {
+        "log_loss": {
+          "previous": 1.0038606757013133,
+          "current": 1.003860662229439,
+          "delta": -1.3471874282799945e-08
+        },
+        "brier": {
+          "previous": 0.5993333299839969,
+          "current": 0.5993333180141782,
+          "delta": -1.1969818691781597e-08
+        },
+        "n_predicted": {
+          "previous": 14746,
+          "current": 14746,
+          "delta": 0
+        },
+        "n_test_total": {
+          "previous": 17084,
+          "current": 17084,
+          "delta": 0
+        }
+      },
+      "test_set_identity_matches": true,
+      "predicted_row_count_matches": true
+    },
+    {
+      "model": "bivariate_poisson",
+      "market": "ah_home_0",
+      "metrics": {
+        "log_loss": {
+          "previous": 1.0038606757013133,
+          "current": 1.003860662229439,
+          "delta": -1.3471874282799945e-08
+        },
+        "brier": {
+          "previous": 0.5993333299839969,
+          "current": 0.5993333180141782,
+          "delta": -1.1969818691781597e-08
+        },
+        "n_predicted": {
+          "previous": 14746,
+          "current": 14746,
+          "delta": 0
+        },
+        "n_test_total": {
+          "previous": 17084,
+          "current": 17084,
+          "delta": 0
+        }
+      },
+      "test_set_identity_matches": true,
+      "predicted_row_count_matches": true
+    },
+    {
+      "model": "bivariate_poisson",
+      "market": "ou_over_2_5",
+      "metrics": {
+        "log_loss": {
+          "previous": 0.6864620777288464,
+          "current": 0.6864620411260784,
+          "delta": -3.6602767927718105e-08
+        },
+        "brier": {
+          "previous": 0.2465180391110336,
+          "current": 0.24651802218715377,
+          "delta": -1.6923879825325727e-08
+        },
+        "n_predicted": {
+          "previous": 14746,
+          "current": 14746,
+          "delta": 0
+        },
+        "n_test_total": {
+          "previous": 17084,
+          "current": 17084,
+          "delta": 0
+        }
+      },
+      "test_set_identity_matches": true,
+      "predicted_row_count_matches": true
+    },
+    {
+      "model": "dixon_coles",
+      "market": "1x2",
+      "metrics": {
+        "log_loss": {
+          "previous": 1.003878144903614,
+          "current": 1.003869785362983,
+          "delta": -8.359540631053264e-06
+        },
+        "brier": {
+          "previous": 0.5993115119037278,
+          "current": 0.5993056213370781,
+          "delta": -5.890566649680018e-06
+        },
+        "n_predicted": {
+          "previous": 14746,
+          "current": 14746,
+          "delta": 0
+        },
+        "n_test_total": {
+          "previous": 17084,
+          "current": 17084,
+          "delta": 0
+        }
+      },
+      "test_set_identity_matches": true,
+      "predicted_row_count_matches": true
+    },
+    {
+      "model": "dixon_coles",
+      "market": "ah_home_0",
+      "metrics": {
+        "log_loss": {
+          "previous": 1.003878144903614,
+          "current": 1.003869785362983,
+          "delta": -8.359540631053264e-06
+        },
+        "brier": {
+          "previous": 0.5993115119037278,
+          "current": 0.5993056213370781,
+          "delta": -5.890566649680018e-06
+        },
+        "n_predicted": {
+          "previous": 14746,
+          "current": 14746,
+          "delta": 0
+        },
+        "n_test_total": {
+          "previous": 17084,
+          "current": 17084,
+          "delta": 0
+        }
+      },
+      "test_set_identity_matches": true,
+      "predicted_row_count_matches": true
+    },
+    {
+      "model": "dixon_coles",
+      "market": "ou_over_2_5",
+      "metrics": {
+        "log_loss": {
+          "previous": 0.6864638984471555,
+          "current": 0.6864602080808339,
+          "delta": -3.690366321640326e-06
+        },
+        "brier": {
+          "previous": 0.24650617379688067,
+          "current": 0.2465045927464988,
+          "delta": -1.581050381865845e-06
+        },
+        "n_predicted": {
+          "previous": 14746,
+          "current": 14746,
+          "delta": 0
+        },
+        "n_test_total": {
+          "previous": 17084,
+          "current": 17084,
+          "delta": 0
+        }
+      },
+      "test_set_identity_matches": true,
+      "predicted_row_count_matches": true
+    },
+    {
+      "model": "poisson",
+      "market": "1x2",
+      "metrics": {
+        "log_loss": {
+          "previous": 1.0039983100703977,
+          "current": 1.0039983016632554,
+          "delta": -8.40714231564732e-09
+        },
+        "brier": {
+          "previous": 0.5994930518123197,
+          "current": 0.5994930455630004,
+          "delta": -6.249319284279409e-09
+        },
+        "n_predicted": {
+          "previous": 14746,
+          "current": 14746,
+          "delta": 0
+        },
+        "n_test_total": {
+          "previous": 17084,
+          "current": 17084,
+          "delta": 0
+        }
+      },
+      "test_set_identity_matches": true,
+      "predicted_row_count_matches": true
+    },
+    {
+      "model": "poisson",
+      "market": "ah_home_0",
+      "metrics": {
+        "log_loss": {
+          "previous": 1.0039983100703977,
+          "current": 1.0039983016632554,
+          "delta": -8.40714231564732e-09
+        },
+        "brier": {
+          "previous": 0.5994930518123197,
+          "current": 0.5994930455630004,
+          "delta": -6.249319284279409e-09
+        },
+        "n_predicted": {
+          "previous": 14746,
+          "current": 14746,
+          "delta": 0
+        },
+        "n_test_total": {
+          "previous": 17084,
+          "current": 17084,
+          "delta": 0
+        }
+      },
+      "test_set_identity_matches": true,
+      "predicted_row_count_matches": true
+    },
+    {
+      "model": "poisson",
+      "market": "ou_over_2_5",
+      "metrics": {
+        "log_loss": {
+          "previous": 0.6864412436142571,
+          "current": 0.6864412431639244,
+          "delta": -4.5033266005134465e-10
+        },
+        "brier": {
+          "previous": 0.24649616699244928,
+          "current": 0.2464961667149793,
+          "delta": -2.7746999142763684e-10
+        },
+        "n_predicted": {
+          "previous": 14746,
+          "current": 14746,
+          "delta": 0
+        },
+        "n_test_total": {
+          "previous": 17084,
+          "current": 17084,
+          "delta": 0
+        }
+      },
+      "test_set_identity_matches": true,
+      "predicted_row_count_matches": true
+    }
+  ],
+  "automatic_model_promotion": false,
+  "telegram_sent": false,
+  "note": "Metric deltas are emitted only when the full test-set identity and predicted-row count both match. A matching test set does not imply unchanged training inputs or model code; deltas are descriptive and no model is selected or promoted."
+}
