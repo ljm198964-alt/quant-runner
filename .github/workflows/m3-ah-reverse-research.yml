@@ -1,0 +1,35 @@
+name: M3 AH Reverse Research Only
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '25 8 * * *'
+permissions:
+  contents: write
+concurrency:
+  group: m3-ah-reverse-research
+  cancel-in-progress: false
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Audit reverse AH independently
+        run: python -m research.m3.ah_reverse_research --ledger research/m3/results/totalcorner/forward_ev_ledger.jsonl --output research/m3/results/totalcorner/ah_reverse_research_summary.json
+      - name: Persist research-only summary
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/m3/results/totalcorner/ah_reverse_research_summary.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Refresh M3 AH reverse research summary"
+          for i in 1 2 3; do
+            git pull --rebase origin main && git push origin HEAD:main && exit 0
+            sleep 4
+          done
+          exit 1
