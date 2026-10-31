@@ -1,94 +1,94 @@
 {
-  "generated_at_utc": "2026-10-30T20:02:58.806418+00:00",
+  "generated_at_utc": "2026-10-31T09:54:05.578934+00:00",
   "scope": "M3 SHADOW ONLY; NOT FORMAL TELEGRAM",
   "source": "research/m3/results/totalcorner/forward_ev_ledger.jsonl",
   "event_counts": {
     "M3_TOTALCORNER_FORWARD_EV_V1": 11920,
     "M3_TOTALCORNER_FORWARD_FORECAST_V1": 2932,
-    "M3_TOTALCORNER_FORWARD_SETTLEMENT_V1": 5266,
-    "M3_TOTALCORNER_FUTURE_INVENTORY_V1": 45214,
+    "M3_TOTALCORNER_FORWARD_SETTLEMENT_V1": 5590,
+    "M3_TOTALCORNER_FUTURE_INVENTORY_V1": 50051,
     "M3_FUTURE_MODEL_STATUS_V1": 41171,
     "M3_M1_MR1_SCOPE_V1": 43392,
     "M3_SHADOW_ORDER_V1": 3348,
-    "M3_TOTALCORNER_PRICE_SNAPSHOT_V1": 1636
+    "M3_TOTALCORNER_PRICE_SNAPSHOT_V1": 1936
   },
   "models": {
     "poisson": {
       "AH": {
         "orders": 558,
-        "settled": 421,
-        "unsettled_or_invalid": 137,
-        "full_win": 174,
-        "half_win": 22,
-        "push": 11,
-        "half_loss": 36,
-        "full_loss": 178,
-        "net_units": -33.175,
-        "roi_percent": -7.88
+        "settled": 475,
+        "unsettled_or_invalid": 83,
+        "full_win": 202,
+        "half_win": 24,
+        "push": 13,
+        "half_loss": 40,
+        "full_loss": 196,
+        "net_units": -27.0125,
+        "roi_percent": -5.6868
       },
       "OU": {
         "orders": 558,
-        "settled": 421,
-        "unsettled_or_invalid": 137,
-        "full_win": 182,
-        "half_win": 18,
-        "push": 17,
-        "half_loss": 38,
-        "full_loss": 166,
-        "net_units": -13.525,
-        "roi_percent": -3.2126
+        "settled": 475,
+        "unsettled_or_invalid": 83,
+        "full_win": 211,
+        "half_win": 19,
+        "push": 19,
+        "half_loss": 41,
+        "full_loss": 185,
+        "net_units": -7.65,
+        "roi_percent": -1.6105
       }
     },
     "dixon_coles": {
       "AH": {
         "orders": 558,
-        "settled": 421,
-        "unsettled_or_invalid": 137,
-        "full_win": 170,
-        "half_win": 24,
-        "push": 11,
-        "half_loss": 34,
-        "full_loss": 182,
-        "net_units": -39.1625,
-        "roi_percent": -9.3023
+        "settled": 475,
+        "unsettled_or_invalid": 83,
+        "full_win": 198,
+        "half_win": 26,
+        "push": 13,
+        "half_loss": 38,
+        "full_loss": 200,
+        "net_units": -33.2,
+        "roi_percent": -6.9895
       },
       "OU": {
         "orders": 558,
-        "settled": 421,
-        "unsettled_or_invalid": 137,
-        "full_win": 182,
-        "half_win": 18,
-        "push": 17,
-        "half_loss": 38,
-        "full_loss": 166,
-        "net_units": -13.525,
-        "roi_percent": -3.2126
+        "settled": 475,
+        "unsettled_or_invalid": 83,
+        "full_win": 211,
+        "half_win": 19,
+        "push": 19,
+        "half_loss": 41,
+        "full_loss": 185,
+        "net_units": -7.65,
+        "roi_percent": -1.6105
       }
     },
     "bivariate_poisson": {
       "AH": {
         "orders": 558,
-        "settled": 421,
-        "unsettled_or_invalid": 137,
-        "full_win": 174,
-        "half_win": 23,
-        "push": 11,
-        "half_loss": 35,
-        "full_loss": 178,
-        "net_units": -32.2875,
-        "roi_percent": -7.6692
+        "settled": 475,
+        "unsettled_or_invalid": 83,
+        "full_win": 203,
+        "half_win": 25,
+        "push": 13,
+        "half_loss": 39,
+        "full_loss": 195,
+        "net_units": -24.275,
+        "roi_percent": -5.1105
       },
       "OU": {
         "orders": 558,
-        "settled": 421,
-        "unsettled_or_invalid": 137,
-        "full_win": 182,
-        "half_win": 18,
-        "push": 17,
-        "half_loss": 38,
-        "full_loss": 166,
-        "net_units": -13.675,
-        "roi_percent": -3.2482
+        "settled": 475,
+        "unsettled_or_invalid": 83,
+        "full_win": 212,
+        "half_win": 19,
+        "push": 19,
+        "half_loss": 41,
+        "full_loss": 184,
+        "net_units": -6.0,
+        "roi_percent": -1.2632
       }
     }
   },
